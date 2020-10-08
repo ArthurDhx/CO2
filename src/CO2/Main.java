@@ -13,7 +13,8 @@ public class Main extends Application {
     public void start(Stage stage) {
         Model model = new Model();
         ViewTitle viewTitle = new ViewTitle(model);
-        Controller control = new Controller(model, viewTitle);
+        ViewGame viewGame = new ViewGame(model, viewTitle.paneGame);
+        Controller control = new Controller(model, viewTitle, viewGame);
    
         stage.setTitle("Jeu de Société - CO2");
         Scene scene = new Scene(viewTitle.root, model.width, model.height);

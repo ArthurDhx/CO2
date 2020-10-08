@@ -6,10 +6,10 @@ public class Controller {
     protected ViewTitle viewTitle;
     protected ControllerAction actions;
     
-    public Controller(Model model, ViewTitle viewTitle) {
+    public Controller(Model model, ViewTitle viewTitle, ViewGame viewGame) {
 		this.model = model;
 		this.viewTitle = viewTitle;
-		actions = new ControllerAction(model, viewTitle,this);
+		actions = new ControllerAction(model, viewTitle, this);
     }
 
     public void startGame() {

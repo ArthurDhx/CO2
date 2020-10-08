@@ -17,8 +17,6 @@ public class ViewTitle {
 
     Button btn;
     ComboBox<String> comboBox;
-
-    ViewGame currentLevel;
     
     public ViewTitle(Model model) {
 
@@ -70,7 +68,6 @@ public class ViewTitle {
 
     public void startGame() {
 		root.getChildren().clear();
-		currentLevel = new ViewGame(model,paneGame);
 		root.getChildren().add(paneGame);
     }
 }
