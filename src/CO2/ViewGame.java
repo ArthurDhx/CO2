@@ -1,12 +1,9 @@
 package CO2;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
-import javafx.scene.control.*;
 
 public class ViewGame {
 
@@ -31,7 +28,8 @@ public class ViewGame {
     	this.model.init();
 
     	//On récupère l'image de la tuile et on l'ajoute à l'écran
-		Image imgTilesSolarProject = new Image("co2/images/TilesSolarProject.jpg");
+//		Image imgTilesSolarProject = new Image("co2/images/TilesSolarProject.jpg");
+		Image imgTilesSolarProject = new Image(getClass().getResourceAsStream("images/TilesSolarProject.JPG"));
 		ImageView imageViewTilesSolarProject = new ImageView(imgTilesSolarProject);
 		imageViewTilesSolarProject.setX(900);
 		imageViewTilesSolarProject.setY(100);
