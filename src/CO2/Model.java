@@ -19,6 +19,9 @@ public class Model {
 	int curPlayerId;
 	Player curPlayer;
 
+	private Continent[] continents;
+	//private Continent europe;
+
 	public Model() {
 		state = STATE_INIT;
 		width = 1000;
@@ -41,6 +44,7 @@ public class Model {
 
 		// Initialisation des joueurs
 		initPlayers();
+		initContinents();
 	}
 
 	/**
@@ -50,6 +54,15 @@ public class Model {
 		for (int i = 0; i < nbJoueur; i++) {
 			players[i] = Player.createPlayer();
 		}
+	}
+
+	/**
+	 * Initialise les continents
+	 */
+	private void initContinents(){
+		continents = new Continent[6];
+		continents[0] = new Continent("europe", 3);
+		// Initialisation autres continents plus tard
 	}
 
 	/**
@@ -65,9 +78,7 @@ public class Model {
     	return res;
 	}
 
-    public void startGame() {
-		state = STATE_PLAY;
-    }
+    public void startGame() { state = STATE_PLAY; }
 
 	/**
 	 * Ajoute 1 d'expertise au joueur courant pour un type d'energie verte
@@ -78,7 +89,7 @@ public class Model {
 		curPlayer.addExpertise(energyType);
 	}
 
-	public Player getCurentPLayer() {
-		return players[curPlayerId];
-	}
+	public Player getCurentPLayer() { return players[curPlayerId]; }
+
+	public Continent[] getContinents() { return continents; }
 }
