@@ -8,10 +8,17 @@ public class Continent {
     //mettre un attribut des tuiles "agenda régionales" (à voir plus tard)
 
     public Continent(String name, int nbCep) {
-        subventions[0] = new Subvention("argent");
-        subventions[1] = new Subvention("Cubes ressources technologique");
-        subventions[2] = new Subvention("recherche en collaboration");
+        for(int i = 0;i<3;i++) {
+            subventions[i] = new Subvention();
+        }
+        subventions[0].setName("argent");
+        subventions[1].setName("ressources technologiques");
+        subventions[2].setName("recherche collaboration");
         this.name = name;
         this.nbCep = nbCep;
+    }
+
+    public Subvention[] getSubventions() {
+        return subventions;
     }
 }
