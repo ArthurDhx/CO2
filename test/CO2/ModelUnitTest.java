@@ -21,5 +21,11 @@ public class ModelUnitTest {
         // TODO : ajouter les tests pour les autres energies vertes
     }
 
+    @Test
+    public void testAddTilesSolarProjectToSubventionCase() {
+        TilesSolarProject[] t1 = new TilesSolarProject[1];
+        t1[0] = new TilesSolarProject();
+        Assert.assertEquals(model.addTilesSolarProjectToSubventionCase(), t1[0].addOnSubvention());
+    }
 
 }
