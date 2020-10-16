@@ -22,7 +22,6 @@ public class Model {
 	Player curPlayer;
 
 	private Continent[] continents;
-	//private Continent europe;
 
 	public Model() {
 		state = STATE_INIT;
@@ -46,6 +45,7 @@ public class Model {
 
 		// Initialisation des joueurs
 		initPlayers();
+		// Initialisation des continents
 		initContinents();
 	}
 
@@ -63,7 +63,7 @@ public class Model {
 	 */
 	private void initContinents(){
 		continents = new Continent[6];
-		continents[0] = new Continent("europe", 3, new Image(getClass().getResourceAsStream("images/Europe.jpg")));
+		continents[0] = new Continent("Europe", 3, new Image(getClass().getResourceAsStream("images/Europe.jpg")));
 		// Initialisation autres continents plus tard
 	}
 
@@ -91,6 +91,23 @@ public class Model {
 		curPlayer.addExpertise(energyType);
 	}
 
+	/**
+	 * permet d'ajouter la tuile sur la case subvention(recherche en collaboration)
+	 * @return true si la tuile veut être ajoutée sinon retourne false
+	 */
+	public boolean addTilesSolarProjectToSubventionCase(){
+    	// permet d'ajouter la tuile sur la case subvention
+		if(tilesSolarProjects[0].addOnSubvention()){
+			continents[0].getSubventions()[2].hasTilesSolarProject(tilesSolarProjects[0]);
+			return true;
+		}
+		return false;
+	}
+
+	public boolean tilesSolarProjectOnWhichContinent(){
+    	// à développer pour savoir quel continent contient les tuiles de projet solaire
+		return continents[0].isContainsTilesSolarProject();
+	}
 	public Player getCurentPLayer() { return players[curPlayerId]; }
 
 	public Continent[] getContinents() { return continents; }

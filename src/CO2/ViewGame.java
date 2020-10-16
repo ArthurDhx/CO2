@@ -75,7 +75,8 @@ public class ViewGame {
 			k=k+100;
 			pane.getChildren().add(subventionName);
 		}
-		addTuilesToSubvention(3, imageViewTilesSolarProject);
+
+		if(model.addTilesSolarProjectToSubventionCase()) addTuilesToSubvention(3, imageViewTilesSolarProject);
     }
 
 	/** Ajoute la tuile sur la case souhaitée correspondant à une subvention

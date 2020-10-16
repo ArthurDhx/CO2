@@ -7,6 +7,10 @@ package CO2;
 public class TilesSolarProject {
 
     public TilesSolarProject(){
+    }
 
+    public boolean addOnSubvention(){
+        // a développer pour choisir d'ajouter la tuile ou non
+        return true;
     }
 }
