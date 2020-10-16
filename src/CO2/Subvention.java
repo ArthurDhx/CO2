@@ -8,11 +8,7 @@ public class Subvention {
     private TilesSolarProject tilesSolarProject;
 
 
-    public Subvention() { }
-
-    public Subvention(String name) {
-        this.name = name;
-    }
+    public Subvention() {}
 
     public Subvention(String name, String effet) {
         this.name = name;

@@ -1,5 +1,7 @@
 package CO2;
 
+import javafx.scene.image.Image;
+
 public class Model {
 
     final static int STATE_INIT = 1; // Title
@@ -61,7 +63,7 @@ public class Model {
 	 */
 	private void initContinents(){
 		continents = new Continent[6];
-		continents[0] = new Continent("europe", 3);
+		continents[0] = new Continent("europe", 3, new Image(getClass().getResourceAsStream("images/Europe.jpg")));
 		// Initialisation autres continents plus tard
 	}
 

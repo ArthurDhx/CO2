@@ -1,5 +1,6 @@
 package CO2;
 
+import javafx.scene.DepthTest;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
@@ -36,11 +37,11 @@ public class ViewGame {
 	public void init(){
     	System.out.println("Le jeu commence ici avec " + model.nbJoueur + " joueur(s)");
 
-    	//On lance l'initialisation du model qui générera toute les pièces, les joueurs et les valeurs (points,...)
+    	// On lance l'initialisation du model qui générera toute les pièces, les joueurs et les valeurs (points,...)
     	this.model.init();
 
-    	//On récupère l'image de la tuile et on l'ajoute à l'écran
-//		Image imgTilesSolarProject = new Image("CO2/images/TilesSolarProject.jpg");
+    	// On récupère l'image de la tuile et on l'ajoute à l'écran
+		// Image imgTilesSolarProject = new Image("CO2/images/TilesSolarProject.jpg");
 		Image imgTilesSolarProject = new Image(getClass().getResourceAsStream("images/TilesSolarProject.JPG"));
 		ImageView imageViewTilesSolarProject = new ImageView(imgTilesSolarProject);
 		imageViewTilesSolarProject.setX(900);
@@ -48,31 +49,41 @@ public class ViewGame {
 		imageViewTilesSolarProject.setPreserveRatio(true);
 		pane.getChildren().add(imageViewTilesSolarProject);
 
-		//On indique combien il y'a de tuile dans le paquet
+		// On indique combien il y'a de tuile dans le paquet
 		Text nbTilesSolarProject = new Text(880, 190,"Il y a "+model.getNbSolarProject()+" projets solaires");
 		pane.getChildren().add(nbTilesSolarProject);
 
-		Image imgEurope = new Image(getClass().getResourceAsStream("images/Europe.jpg"));
-		ImageView imageViewEurope = new ImageView(imgEurope);
+		// Image du continent Europe
+		ImageView imageViewEurope = new ImageView(model.getContinents()[0].getImgContinent());
 		imageViewEurope.setX(500);
 		imageViewEurope.setY(300);
 		pane.getChildren().add(imageViewEurope);
 
+		// Tableau des cases subventions => "proposer un projet"
 		Rectangle[] tabRectangleSubvention = new Rectangle[3];
 		int k = 100;
 		for(int i = 0;i<3;i++) {
-			tabRectangleSubvention[i] = new Rectangle(80,80, Color.WHITE);
+			tabRectangleSubvention[i] = new Rectangle(75,75, Color.WHITE);
 			tabRectangleSubvention[i].setStroke(Color.BLACK);
 			tabRectangleSubvention[i].setX(k+350);
 			tabRectangleSubvention[i].setY(350);
-			k=k+100;
 			pane.getChildren().add(tabRectangleSubvention[i]);
+			Text subventionName = new Text(model.getContinents()[0].getSubventions()[i].getName());
+			subventionName.setX(k+355);
+			subventionName.setY(390);
+			subventionName.setStyle("-fx-font: 9 arial;");
+			k=k+100;
+			pane.getChildren().add(subventionName);
 		}
 		addTuilesToSubvention(3, imageViewTilesSolarProject);
     }
 
-	public void addTuilesToSubvention(int subventionchoice, ImageView imageViewTilesSolarProject){
-		switch (subventionchoice){
+	/** Ajoute la tuile sur la case souhaitée correspondant à une subvention
+	 * @param subventionChoice
+	 * @param imageViewTilesSolarProject
+	 */
+	public void addTuilesToSubvention(int subventionChoice, ImageView imageViewTilesSolarProject){
+		switch (subventionChoice){
 			case 1 :
 				imageViewTilesSolarProject.setX(450);
 				break;
