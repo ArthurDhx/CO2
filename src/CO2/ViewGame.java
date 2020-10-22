@@ -1,8 +1,12 @@
 package CO2;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.DepthTest;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -22,6 +26,8 @@ public class ViewGame {
 	// TODO : [Theo] ajouter un bouton+indicateur pour demonstration de l'augmentation du niveau d'expertise
 	// temporaire sprint 1
 	Button btnAddSolarExpToCurPlayer;
+	HBox hboxChooseTile ;
+	Button[] btnChooseTile ;
 
     public ViewGame(Model model, Pane pane) {
 		this.model = model;
@@ -77,6 +83,23 @@ public class ViewGame {
 		}
 
 		if(model.addTilesSolarProjectToSubventionCase()) addTuilesToSubvention(3, imageViewTilesSolarProject);
+
+		// TODO : Poubelle
+		hboxChooseTile = new HBox();
+		hboxChooseTile.setPadding(new Insets(15, 12, 15, 12));
+		hboxChooseTile.setSpacing(10);
+
+		btnChooseTile = new Button[6];
+		btnChooseTile[0] = new Button("Choisir une tuile");
+		btnChooseTile[1] = new Button("Projet Solaire");
+		btnChooseTile[2] = new Button("Projet Hydraulique");
+		btnChooseTile[3] = new Button("Projet Recyclage");
+		btnChooseTile[4] = new Button("Projet Eolien");
+		btnChooseTile[5] = new Button("Projet Forestier");
+
+		hboxChooseTile.getChildren().add(btnChooseTile[0]);
+		pane.getChildren().add(hboxChooseTile);
+		// Fin poubelle
     }
 
 	/** Ajoute la tuile sur la case souhaitée correspondant à une subvention
@@ -98,4 +121,19 @@ public class ViewGame {
 		imageViewTilesSolarProject.setY(350);
 		imageViewTilesSolarProject.toFront();
 	}
+	// TODO : Poubelle
+
+
+	public void setButtonController(EventHandler<ActionEvent> handler) {
+		btnChooseTile[0].setOnAction(handler);
+	}
+
+	public void displayChoiceProjectTile() {
+		hboxChooseTile.getChildren().remove(btnChooseTile[0]);
+		for (int i = 1; i < btnChooseTile.length; i++) {
+			hboxChooseTile.getChildren().add(btnChooseTile[i]);
+		}
+	}
+
+	// Fin poubelle
 }
