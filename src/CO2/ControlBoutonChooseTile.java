@@ -16,6 +16,10 @@ public class ControlBoutonChooseTile implements EventHandler<ActionEvent>  {
 
     @Override
     public void handle(ActionEvent event) {
-        viewGame.displayChoiceProjectTile();
+        if (event.getSource() == viewGame.btnChooseTile[1]) {
+            viewGame.addTuilesToSubvention(3, viewGame.imageViewTilesSolarProject);
+        } else {
+            viewGame.displayChoiceProjectTile();
+        }
     }
 }

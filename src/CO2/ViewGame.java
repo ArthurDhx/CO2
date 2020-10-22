@@ -26,6 +26,9 @@ public class ViewGame {
 	// TODO : [Theo] ajouter un bouton+indicateur pour demonstration de l'augmentation du niveau d'expertise
 	// temporaire sprint 1
 	Button btnAddSolarExpToCurPlayer;
+	// TODO : poubelle
+	ImageView imageViewTilesSolarProject;
+	// fin poubelle
 	HBox hboxChooseTile ;
 	Button[] btnChooseTile ;
 
@@ -49,7 +52,8 @@ public class ViewGame {
     	// On récupère l'image de la tuile et on l'ajoute à l'écran
 		// Image imgTilesSolarProject = new Image("CO2/images/TilesSolarProject.jpg");
 		Image imgTilesSolarProject = new Image(getClass().getResourceAsStream("images/TilesSolarProject.JPG"));
-		ImageView imageViewTilesSolarProject = new ImageView(imgTilesSolarProject);
+		// TODO : yass
+		imageViewTilesSolarProject = new ImageView(imgTilesSolarProject);
 		imageViewTilesSolarProject.setX(900);
 		imageViewTilesSolarProject.setY(100);
 		imageViewTilesSolarProject.setPreserveRatio(true);
@@ -58,7 +62,6 @@ public class ViewGame {
 		// On indique combien il y'a de tuile dans le paquet
 		Text nbTilesSolarProject = new Text(880, 190,"Il y a "+model.getNbSolarProject()+" projets solaires");
 		pane.getChildren().add(nbTilesSolarProject);
-
 		// Image du continent Europe
 		ImageView imageViewEurope = new ImageView(model.getContinents()[0].getImgContinent());
 		imageViewEurope.setX(500);
@@ -82,7 +85,8 @@ public class ViewGame {
 			pane.getChildren().add(subventionName);
 		}
 
-		if(model.addTilesSolarProjectToSubventionCase()) addTuilesToSubvention(3, imageViewTilesSolarProject);
+		// TODO : a remettre
+		//if(model.addTilesSolarProjectToSubventionCase()) addTuilesToSubvention(3, imageViewTilesSolarProject);
 
 		// TODO : Poubelle
 		hboxChooseTile = new HBox();
@@ -126,6 +130,7 @@ public class ViewGame {
 
 	public void setButtonController(EventHandler<ActionEvent> handler) {
 		btnChooseTile[0].setOnAction(handler);
+		btnChooseTile[1].setOnAction(handler);
 	}
 
 	public void displayChoiceProjectTile() {
