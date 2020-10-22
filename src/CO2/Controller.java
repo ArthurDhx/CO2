@@ -1,5 +1,4 @@
 package CO2;
-mais
 public class Controller {
 
     // TODO : Poubelle
