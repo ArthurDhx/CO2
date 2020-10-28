@@ -10,10 +10,18 @@ public class Subvention {
     private boolean empty = true;
     // si la case est vide = true
     // si la case contient une tuile = false;
+    private int index ;
+    // L'index ou est placer la subvention sur le continent
 
-    public Subvention() {}
+    public Subvention(int index) {
+        this.index = index ;
+    }
 
     public String getName() { return name; }
+
+    public int getIndex() {
+        return index;
+    }
 
     public void setName(String name) {
         this.name = name;

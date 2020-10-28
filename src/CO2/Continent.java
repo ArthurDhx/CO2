@@ -15,7 +15,7 @@ public class Continent {
     public Continent(String name, int nbCep, Image imgContinent) {
         // initalisation des 3 cases permettant de recevoir des subventions
         for(int i = 0;i<3;i++) {
-            subventions[i] = new Subvention();
+            subventions[i] = new Subvention(i);
         }
         // initalisation du nom de la subvention
         subventions[0].setName("argent");
