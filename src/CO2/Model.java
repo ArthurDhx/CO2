@@ -2,6 +2,9 @@ package CO2;
 
 import javafx.scene.image.Image;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class Model {
 
     final static int STATE_INIT = 1; // Title
@@ -25,8 +28,8 @@ public class Model {
 
 	public Model() {
 		state = STATE_INIT;
-		width = 1000;
-		height = 600;
+		width = 1600;
+		height = 900;
 		nbJoueur = 1;
 
 		players = new Player[nbJoueur];
@@ -63,8 +66,10 @@ public class Model {
 	 */
 	private void initContinents(){
 		continents = new Continent[6];
-		continents[0] = new Continent("Europe", 3, new Image(getClass().getResourceAsStream("images/Europe.jpg")));
-		// Initialisation autres continents plus tard
+		ArrayList<String> nomContinents = new ArrayList<>(Arrays.asList("Europe", "Afrique", "Amérique du Sud", "Amérique du Nord", "Océanie", "Asie"));
+		for(int i=0; i<6 ;i++){
+			continents[i] = new Continent(nomContinents.get(i), 3, new Image(getClass().getResourceAsStream("images/Continents/" + nomContinents.get(i) +".jpg")));
+		}
 	}
 
 	/**

@@ -2,6 +2,8 @@ package CO2;
 
 import javafx.scene.image.Image;
 
+import java.util.Arrays;
+
 public class Continent {
 
     private String name;
@@ -38,5 +40,15 @@ public class Continent {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return "Continent{" +
+                "name='" + name + '\'' +
+                ", subventions=" + Arrays.toString(subventions) +
+                ", nbCep=" + nbCep +
+                ", imgContinent=" + imgContinent +
+                '}';
     }
 }

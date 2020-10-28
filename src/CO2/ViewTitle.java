@@ -34,29 +34,31 @@ public class ViewTitle {
 		btn.setText("Lancer la partie");
 
 		root.getChildren().add(paneIntro);
-		btn.setStyle("-fx-background-color: transparent; -fx-text-fill: #e46d31; -fx-border-color:  #E46D31;-fx-border-width: 2px; -fx-border-style: solid; -fx-border-radius: 30;-fx-font-size: 20px;-fx-fill-width: 150px;");
-		btn.setOnMouseEntered(e -> btn.setStyle("-fx-background-color: #E46D31;-fx-background-radius:30  ;-fx-text-fill: white; -fx-font-size: 20px;-fx-cursor: HAND"));
-		btn.setOnMouseExited(e -> btn.setStyle("-fx-background-color: transparent; -fx-text-fill: #E46D31; -fx-border-color:  #E46D31;-fx-border-width: 2px; -fx-border-style: solid; -fx-border-radius: 30;-fx-font-size: 20px;"));
-		btn.setLayoutX(670);
-		btn.setLayoutY(300);
+		btn.setStyle("-fx-background-color: transparent; -fx-text-fill: #e46d31; -fx-border-color:  #E46D31;-fx-border-width: 2px; -fx-border-style: solid; -fx-border-radius: 30;-fx-font-size: 30px;-fx-fill-width: 150px;");
+		btn.setOnMouseEntered(e -> btn.setStyle("-fx-background-color: #E46D31;-fx-background-radius:30  ;-fx-text-fill: white; -fx-font-size: 30px;-fx-cursor: HAND"));
+		btn.setOnMouseExited(e -> btn.setStyle("-fx-background-color: transparent; -fx-text-fill: #E46D31; -fx-border-color:  #E46D31;-fx-border-width: 2px; -fx-border-style: solid; -fx-border-radius: 30;-fx-font-size: 30px;"));
+		btn.setLayoutX(970);
+		btn.setLayoutY(600);
 
 		Image imgMainTitle = new Image("CO2/images/CO2MainTitle.jpg");
 		ImageView imageViewMainTitle = new ImageView(imgMainTitle);
 		imageViewMainTitle.setX(0);
 		imageViewMainTitle.setY(0);
-		imageViewMainTitle.setPreserveRatio(true);
+		imageViewMainTitle.setFitWidth(model.width);
+		imageViewMainTitle.setFitHeight(model.height);
+
 
 		comboBox = new ComboBox<>();
 		comboBox.getItems().addAll("1","2","3","4","5");
 		comboBox.getSelectionModel().selectFirst();
-		comboBox.setStyle("-fx-background-color: transparent; -fx-text-fill: #E46D31; -fx-border-color:  #E46D31;-fx-border-width: 2px; -fx-border-style: solid; -fx-border-radius: 30;-fx-font-size: 20px;-fx-cursor: HAND");
-		comboBox.setLayoutX(710);
-		comboBox.setLayoutY(190);
+		comboBox.setStyle("-fx-background-color: transparent; -fx-text-fill: #E46D31; -fx-border-color:  #E46D31;-fx-border-width: 2px; -fx-border-style: solid; -fx-border-radius: 30;-fx-font-size: 30px;-fx-cursor: HAND");
+		comboBox.setLayoutX(1050);
+		comboBox.setLayoutY(390);
 
 		Label lbNbJoueur = new Label("Choisir le nombre de joueur : ");
-		lbNbJoueur.setStyle("-fx-text-fill: #E46D31;-fx-font-size: 20;-fx-font-weight: bold");
-		lbNbJoueur.setLayoutX(625);
-		lbNbJoueur.setLayoutY(100);
+		lbNbJoueur.setStyle("-fx-text-fill: #E46D31;-fx-font-size: 30;-fx-font-weight: bold");
+		lbNbJoueur.setLayoutX(900);
+		lbNbJoueur.setLayoutY(300);
 
 		paneIntro.getChildren().add(imageViewMainTitle);
 		paneIntro.getChildren().add(lbNbJoueur);

@@ -1,9 +1,6 @@
 package CO2;
-public class Controller {
 
-    // TODO : Poubelle
-    protected ViewGame viewGame;
-    // Fin poubelle
+public class Controller {
 
     protected Model model;
     protected ViewTitle viewTitle;
@@ -13,11 +10,6 @@ public class Controller {
 		this.model = model;
 		this.viewTitle = viewTitle;
 		actions = new ControllerAction(model, viewTitle, this);
-
-        // TODO : Poubelle
-        this.viewGame = viewGame ;
-        ControlBoutonChooseTile controlBoutonChooseTile = new ControlBoutonChooseTile(model, viewGame);
-        // Fin poubelle
     }
 
     public void startGame() {
