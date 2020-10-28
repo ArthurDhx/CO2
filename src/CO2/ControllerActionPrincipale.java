@@ -27,7 +27,7 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
                 Optional<Subvention> resulltSubv = viewGame.dialogSubvention.showAndWait();
                 // TODO : Mettre a jour le modele
                 resulltSubv.ifPresent(subvention -> {
-                    if(model.addTilesSolarProjectToSubventionCase()) viewGame.addTuilesToSubvention(subvention.getIndex()+1, viewGame.imageViewTilesSolarProject);
+                    if(model.addTilesSolarProjectToSubventionCase()) viewGame.addTuilesToSubvention(subvention.getIndex()+1, viewGame.imageViewTilesSolarProject, continentChoisi);
                     return;
                 });
             });

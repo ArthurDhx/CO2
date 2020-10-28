@@ -94,20 +94,63 @@ public class ViewGame {
 			pane.getChildren().add(imageViewContinents[i]);
 
 		// Tableau des cases subventions => "proposer un projet"
-		Rectangle[] tabRectangleSubvention = new Rectangle[3];
+		Rectangle[] tabRectangleSubventionEurope = new Rectangle[3];
+		Rectangle[] tabRectangleSubventionAfrique = new Rectangle[3];
+		Rectangle[] tabRectangleSubventionAsie = new Rectangle[3];
+		Rectangle[] tabRectangleSubventionAmeriqueSud = new Rectangle[3];
+		Rectangle[] tabRectangleSubventionAmeriqueNord = new Rectangle[3];
+		Rectangle[] tabRectangleSubventionOceanie = new Rectangle[3];
+
+		Text[] subventionName = new Text[6];
 		int k = 100;
 		for(int i = 0;i<3;i++) {
-			tabRectangleSubvention[i] = new Rectangle(75,75, Color.WHITE);
-			tabRectangleSubvention[i].setStroke(Color.BLACK);
-			tabRectangleSubvention[i].setX(k+300);
-			tabRectangleSubvention[i].setY(250);
-			pane.getChildren().add(tabRectangleSubvention[i]);
-			Text subventionName = new Text(model.getContinents()[0].getSubventions()[i].getName());
-			subventionName.setX(k+305);
-			subventionName.setY(290);
-			subventionName.setStyle("-fx-font: 9 arial;");
-			k=k+100;
-			pane.getChildren().add(subventionName);
+			tabRectangleSubventionEurope[i] = new Rectangle(75, 75, Color.WHITE);
+			tabRectangleSubventionAfrique[i] = new Rectangle(75, 75, Color.WHITE);
+			tabRectangleSubventionAsie[i] = new Rectangle(75, 75, Color.WHITE);
+			tabRectangleSubventionAmeriqueSud[i] = new Rectangle(75, 75, Color.WHITE);
+			tabRectangleSubventionAmeriqueNord[i] = new Rectangle(75, 75, Color.WHITE);
+			tabRectangleSubventionOceanie[i] = new Rectangle(75, 75, Color.WHITE);
+
+			tabRectangleSubventionEurope[i].setStroke(Color.BLACK);
+			tabRectangleSubventionAfrique[i].setStroke(Color.BLACK);
+			tabRectangleSubventionAsie[i].setStroke(Color.BLACK);
+			tabRectangleSubventionAmeriqueSud[i].setStroke(Color.BLACK);
+			tabRectangleSubventionAmeriqueNord[i].setStroke(Color.BLACK);
+			tabRectangleSubventionOceanie[i].setStroke(Color.BLACK);
+
+			tabRectangleSubventionEurope[i].setX(k+250);tabRectangleSubventionEurope[i].setY(250);
+			tabRectangleSubventionAfrique[i].setX(k+550);tabRectangleSubventionAfrique[i].setY(100);
+			tabRectangleSubventionAmeriqueSud[i].setX(k+850);tabRectangleSubventionAmeriqueSud[i].setY(250);
+			tabRectangleSubventionAmeriqueNord[i].setX(k+850);tabRectangleSubventionAmeriqueNord[i].setY(600);
+			tabRectangleSubventionOceanie[i].setX(k+550);tabRectangleSubventionOceanie[i].setY(750);
+			tabRectangleSubventionAsie[i].setX(k+250);tabRectangleSubventionAsie[i].setY(600);
+
+			pane.getChildren().add(tabRectangleSubventionAfrique[i]);
+			pane.getChildren().add(tabRectangleSubventionEurope[i]);
+			pane.getChildren().add(tabRectangleSubventionAmeriqueNord[i]);
+			pane.getChildren().add(tabRectangleSubventionAmeriqueSud[i]);
+			pane.getChildren().add(tabRectangleSubventionOceanie[i]);
+			pane.getChildren().add(tabRectangleSubventionAsie[i]);
+
+			subventionName[0] = new Text(model.getContinents()[0].getSubventions()[i].getName());
+			subventionName[1] = new Text(model.getContinents()[1].getSubventions()[i].getName());
+			subventionName[2] = new Text(model.getContinents()[2].getSubventions()[i].getName());
+			subventionName[3] = new Text(model.getContinents()[3].getSubventions()[i].getName());
+			subventionName[4] = new Text(model.getContinents()[4].getSubventions()[i].getName());
+			subventionName[5] = new Text(model.getContinents()[5].getSubventions()[i].getName());
+			subventionName[0].setStyle("-fx-font: 9 arial;");subventionName[1].setStyle("-fx-font: 9 arial;");
+			subventionName[2].setStyle("-fx-font: 9 arial;");subventionName[3].setStyle("-fx-font: 9 arial;");
+			subventionName[4].setStyle("-fx-font: 9 arial;");subventionName[5].setStyle("-fx-font: 9 arial;");
+			subventionName[0].setX(k + 255);subventionName[0].setY(290);
+			subventionName[1].setX(k + 555);subventionName[1].setY(140);
+			subventionName[2].setX(k + 855);subventionName[2].setY(290);
+			subventionName[3].setX(k + 855);subventionName[3].setY(640);
+			subventionName[4].setX(k + 555);subventionName[4].setY(790);
+			subventionName[5].setX(k + 255);subventionName[5].setY(640);
+			pane.getChildren().add(subventionName[0]);pane.getChildren().add(subventionName[1]);
+			pane.getChildren().add(subventionName[2]);pane.getChildren().add(subventionName[3]);
+			pane.getChildren().add(subventionName[4]);pane.getChildren().add(subventionName[5]);
+			k = k + 100;
 		}
 
 		btnActionPrincipale = new Button("Action Principale");
@@ -131,20 +174,99 @@ public class ViewGame {
 	 * @param subventionChoice
 	 * @param imageViewTilesSolarProject
 	 */
-	public void addTuilesToSubvention(int subventionChoice, ImageView imageViewTilesSolarProject){
-		switch (subventionChoice){
-			case 1 :
-				imageViewTilesSolarProject.setX(400);
+	public void addTuilesToSubvention(int subventionChoice, ImageView imageViewTilesSolarProject, Continent continent){
+		switch(continent.getName()) {
+			case "Europe" :
+				switch (subventionChoice) {
+					case 1:
+						imageViewTilesSolarProject.setX(350);
+						break;
+					case 2:
+						imageViewTilesSolarProject.setX(450);
+						break;
+					case 3:
+						imageViewTilesSolarProject.setX(550);
+						break;
+				}
+				imageViewTilesSolarProject.setY(250);
+				imageViewTilesSolarProject.toFront();
 				break;
-			case 2 :
-				imageViewTilesSolarProject.setX(500);
+			case "Afrique" :
+				switch (subventionChoice) {
+					case 1:
+						imageViewTilesSolarProject.setX(650);
+						break;
+					case 2:
+						imageViewTilesSolarProject.setX(750);
+						break;
+					case 3:
+						imageViewTilesSolarProject.setX(850);
+						break;
+				}
+				imageViewTilesSolarProject.setY(100);
+				imageViewTilesSolarProject.toFront();
 				break;
-			case 3 :
-				imageViewTilesSolarProject.setX(600);
-
+			case "Amérique du Sud" :
+				switch (subventionChoice) {
+					case 1:
+						imageViewTilesSolarProject.setX(950);
+						break;
+					case 2:
+						imageViewTilesSolarProject.setX(1050);
+						break;
+					case 3:
+						imageViewTilesSolarProject.setX(1150);
+						break;
+				}
+				imageViewTilesSolarProject.setY(250);
+				imageViewTilesSolarProject.toFront();
+				break;
+			case "Amérique du Nord" :
+				switch (subventionChoice) {
+					case 1:
+						imageViewTilesSolarProject.setX(950);
+						break;
+					case 2:
+						imageViewTilesSolarProject.setX(1050);
+						break;
+					case 3:
+						imageViewTilesSolarProject.setX(1150);
+						break;
+				}
+				imageViewTilesSolarProject.setY(600);
+				imageViewTilesSolarProject.toFront();
+				break;
+			case "Océanie" :
+				switch (subventionChoice) {
+					case 1:
+						imageViewTilesSolarProject.setX(650);
+						break;
+					case 2:
+						imageViewTilesSolarProject.setX(750);
+						break;
+					case 3:
+						imageViewTilesSolarProject.setX(850);
+						break;
+				}
+				imageViewTilesSolarProject.setY(750);
+				imageViewTilesSolarProject.toFront();
+				break;
+			case "Asie" :
+				switch (subventionChoice) {
+					case 1:
+						imageViewTilesSolarProject.setX(350);
+						break;
+					case 2:
+						imageViewTilesSolarProject.setX(450);
+						break;
+					case 3:
+						imageViewTilesSolarProject.setX(550);
+						break;
+				}
+				imageViewTilesSolarProject.setY(600);
+				imageViewTilesSolarProject.toFront();
+				break;
 		}
-		imageViewTilesSolarProject.setY(250);
-		imageViewTilesSolarProject.toFront();
 	}
 
 	public void setButtonActionControler(EventHandler<ActionEvent> handler) {
