@@ -200,7 +200,7 @@ public class ViewGame {
 				subventions[2]
 		);
 		dialogSubvention.setTitle("Choisir une subvention");
-		dialogSubvention.setHeaderText("Veuillez choisir un continent");
+		dialogSubvention.setHeaderText("Veuillez choisir une Subvention");
 		dialogSubvention.setContentText("Subvention :");
 	}
 }
