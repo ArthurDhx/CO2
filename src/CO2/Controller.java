@@ -4,12 +4,15 @@ public class Controller {
 
     protected Model model;
     protected ViewTitle viewTitle;
-    protected ControllerAction actions;
+    protected ControllerTitle titleController;
+    protected ControllerAction controllerAction;
+    protected ViewGame viewGame ;
     
     public Controller(Model model, ViewTitle viewTitle, ViewGame viewGame) {
 		this.model = model;
 		this.viewTitle = viewTitle;
-		actions = new ControllerAction(model, viewTitle, this);
+        titleController = new ControllerTitle(model, viewTitle, this);
+        this.controllerAction = new ControllerAction(model, viewGame);
     }
 
     public void startGame() {

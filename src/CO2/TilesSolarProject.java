@@ -5,7 +5,6 @@ package CO2;
 * Les autres tuiles projet auront comme schéma (TilesProjectType)
 */
 public class TilesSolarProject {
-
     public TilesSolarProject(){
     }
 

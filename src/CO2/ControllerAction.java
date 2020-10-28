@@ -1,26 +1,27 @@
 package CO2;
-import javafx.event.*;
-import javafx.scene.input.MouseEvent;
+
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 
 public class ControllerAction implements EventHandler<ActionEvent>{
+    Model model ;
+    ViewGame viewGame ;
 
-    protected Model model;
-    protected ViewTitle viewTitle;
-    protected Controller control;
-
-    public ControllerAction(Model model, ViewTitle viewTitle, Controller control) {
-        this.model = model;
-        this.viewTitle = viewTitle;
-        this.control = control;
-        viewTitle.setButtonControler(this);
+    public ControllerAction(Model model, ViewGame viewGame) {
+        this.model = model ;
+        this.viewGame = viewGame ;
+        viewGame.setButtonActionControler(this);
     }
 
+    @Override
     public void handle(ActionEvent event) {
-        if (event.getSource() == viewTitle.btn) {
-            if (model.state == Model.STATE_INIT) control.startGame();
+        Object source = event.getSource() ;
+        if (source == viewGame.btnActionPrincipale) {
+            viewGame.displayActionPrincipale() ;
+        } else if (source == viewGame.btnActionGratuite){
+            viewGame.displayActionGratuite() ;
+        } else if (source == viewGame.btnCancelAction) {
+            viewGame.resetHbox();
         }
-        else if (event.getSource() == viewTitle.comboBox){
-            model.nbJoueur = Integer.parseInt(viewTitle.comboBox.getSelectionModel().getSelectedItem());
-        }
-    }    
+    }
 }

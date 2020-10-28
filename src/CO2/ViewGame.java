@@ -1,8 +1,11 @@
 package CO2;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.DepthTest;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -23,7 +26,21 @@ public class ViewGame {
 	// temporaire sprint 1
 	Button btnAddSolarExpToCurPlayer;
 
-    public ViewGame(Model model, Pane pane) {
+	// TEST
+	Button btnActionPrincipale;
+	Button btnProposerProjet;
+	Button btnMettreProjet;
+	Button btnConstruire;
+
+	Button btnActionGratuite;
+	Button btnDeplacerScientifiq;
+	Button btnMarche;
+	Button btnJouerCarte;
+
+	HBox hboxAction;
+	Button btnCancelAction;
+
+	public ViewGame(Model model, Pane pane) {
 		this.model = model;
 		this.pane = pane;
 		pane.getChildren().clear();
@@ -36,7 +53,6 @@ public class ViewGame {
 
 	public void init(){
     	System.out.println("Le jeu commence ici avec " + model.nbJoueur + " joueur(s)");
-
     	// On lance l'initialisation du model qui générera toute les pièces, les joueurs et les valeurs (points,...)
     	this.model.init();
 
@@ -86,6 +102,22 @@ public class ViewGame {
 		}
 
 		if(model.addTilesSolarProjectToSubventionCase()) addTuilesToSubvention(3, imageViewTilesSolarProject);
+
+		btnActionPrincipale = new Button("Action Principale");
+		btnConstruire = new Button("Construire une centrale");
+		btnProposerProjet = new Button("Proposer un projet");
+		btnMettreProjet = new Button("Mettre en place un projet");
+
+		btnActionGratuite = new Button("Action Gratuite");
+		btnDeplacerScientifiq = new Button("Déplacer un scientifque");
+		btnMarche = new Button("Marché au CEP");
+		btnJouerCarte = new Button("Jouer une carte");
+
+		btnCancelAction = new Button("Annuler");
+		hboxAction = new HBox(10);
+		hboxAction.getChildren().addAll(btnActionPrincipale, btnActionGratuite);
+
+		pane.getChildren().add(hboxAction);
     }
 
 	/** Ajoute la tuile sur la case souhaitée correspondant à une subvention
@@ -106,5 +138,26 @@ public class ViewGame {
 		}
 		imageViewTilesSolarProject.setY(250);
 		imageViewTilesSolarProject.toFront();
+	}
+
+	public void setButtonActionControler(EventHandler<ActionEvent> handler) {
+		btnActionGratuite.setOnAction(handler);
+		btnActionPrincipale.setOnAction(handler);
+		btnCancelAction.setOnAction(handler);
+	}
+
+	public void displayActionPrincipale() {
+		hboxAction.getChildren().removeAll(btnActionGratuite,btnActionPrincipale);
+		hboxAction.getChildren().addAll(btnProposerProjet,btnMettreProjet,btnConstruire,btnCancelAction);
+	}
+
+	public void displayActionGratuite() {
+		hboxAction.getChildren().removeAll(btnActionGratuite,btnActionPrincipale);
+		hboxAction.getChildren().addAll(btnDeplacerScientifiq,btnMarche,btnJouerCarte,btnCancelAction);
+	}
+
+	public void resetHbox() {
+		hboxAction.getChildren().removeAll(hboxAction.getChildren());
+		hboxAction.getChildren().addAll(btnActionPrincipale,btnActionGratuite);
 	}
 }
