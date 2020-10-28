@@ -26,5 +26,10 @@ public class Subvention {
         empty = false;
     }
 
+    @Override
+    public String toString() {
+        return name ;
+    }
+
     public boolean isEmpty() { return empty; }
 }

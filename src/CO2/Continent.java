@@ -42,13 +42,12 @@ public class Continent {
         return false;
     }
 
+    public String getName() {
+        return name;
+    }
+
     @Override
     public String toString() {
-        return "Continent{" +
-                "name='" + name + '\'' +
-                ", subventions=" + Arrays.toString(subventions) +
-                ", nbCep=" + nbCep +
-                ", imgContinent=" + imgContinent +
-                '}';
+        return name;
     }
 }

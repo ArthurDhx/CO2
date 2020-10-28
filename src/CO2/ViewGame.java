@@ -5,6 +5,8 @@ import javafx.event.EventHandler;
 import javafx.scene.DepthTest;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.ChoiceDialog;
+import javafx.scene.control.Dialog;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -17,9 +19,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
+import java.util.Optional;
+
 public class ViewGame {
 
-    Model model;
+	Model model;
     Pane pane;
 
 	// TODO : [Theo] ajouter un bouton+indicateur pour demonstration de l'augmentation du niveau d'expertise
@@ -27,8 +31,13 @@ public class ViewGame {
 	Button btnAddSolarExpToCurPlayer;
 
 	// TEST
+
+	ImageView imageViewTilesSolarProject;
+
 	Button btnActionPrincipale;
 	Button btnProposerProjet;
+	ChoiceDialog<Continent> dialogProposerProjet;
+	ChoiceDialog<Subvention> dialogSubvention;
 	Button btnMettreProjet;
 	Button btnConstruire;
 
@@ -59,7 +68,7 @@ public class ViewGame {
     	// On récupère l'image de la tuile et on l'ajoute à l'écran
 		// Image imgTilesSolarProject = new Image("CO2/images/TilesSolarProject.jpg");
 		Image imgTilesSolarProject = new Image(getClass().getResourceAsStream("images/TilesSolarProject.JPG"));
-		ImageView imageViewTilesSolarProject = new ImageView(imgTilesSolarProject);
+		imageViewTilesSolarProject = new ImageView(imgTilesSolarProject);
 		ImageView imageViewTilesSolarProjectInDeck = new ImageView(imgTilesSolarProject);
 		imageViewTilesSolarProjectInDeck.setX(1460);
 		imageViewTilesSolarProjectInDeck.setY(50);
@@ -100,8 +109,6 @@ public class ViewGame {
 			k=k+100;
 			pane.getChildren().add(subventionName);
 		}
-
-		if(model.addTilesSolarProjectToSubventionCase()) addTuilesToSubvention(3, imageViewTilesSolarProject);
 
 		btnActionPrincipale = new Button("Action Principale");
 		btnConstruire = new Button("Construire une centrale");
@@ -159,5 +166,41 @@ public class ViewGame {
 	public void resetHbox() {
 		hboxAction.getChildren().removeAll(hboxAction.getChildren());
 		hboxAction.getChildren().addAll(btnActionPrincipale,btnActionGratuite);
+	}
+
+	public void setButtonActionPrincipaleControler(EventHandler<ActionEvent> handler) {
+		btnProposerProjet.setOnAction(handler);
+		btnMettreProjet.setOnAction(handler);
+		btnConstruire.setOnAction(handler);
+	}
+
+	public void displayProposerProjetChoiceDialog() {
+		Continent[] continent = model.getContinents();
+		dialogProposerProjet = new ChoiceDialog<Continent>(
+				continent[0], // Choix par défaut
+				continent[0],
+				continent[1],
+				continent[2],
+				continent[3],
+				continent[4],
+				continent[5]
+		);
+		dialogProposerProjet.setTitle("Mettre en place un projet");
+		dialogProposerProjet.setHeaderText("Veuillez choisir un continent");
+		dialogProposerProjet.setContentText("Continent:");
+	}
+
+	public void displayChoisirSubventionChoiceDialog(Continent continentChoisi) {
+		// TODO ; implementer une méthdoe dans le modele pour récupere les subvention libre
+		Subvention[] subventions = continentChoisi.getSubventions();
+		dialogSubvention = new ChoiceDialog<Subvention>(
+				subventions[0],
+				subventions[0],
+				subventions[1],
+				subventions[2]
+		);
+		dialogSubvention.setTitle("Choisir une subvention");
+		dialogSubvention.setHeaderText("Veuillez choisir un continent");
+		dialogSubvention.setContentText("Subvention :");
 	}
 }
