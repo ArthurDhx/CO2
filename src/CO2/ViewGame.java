@@ -2,6 +2,7 @@ package CO2;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.DepthTest;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -45,6 +46,8 @@ public class ViewGame {
 	Button btnDeplacerScientifiq;
 	Button btnMarche;
 	Button btnJouerCarte;
+
+    Button btnFinTour;
 
 	HBox hboxAction;
 	Button btnCancelAction;
@@ -162,10 +165,13 @@ public class ViewGame {
 		btnDeplacerScientifiq = new Button("Déplacer un scientifque");
 		btnMarche = new Button("Marché au CEP");
 		btnJouerCarte = new Button("Jouer une carte");
+        btnFinTour = new Button("Fin du tour");
 
 		btnCancelAction = new Button("Annuler");
 		hboxAction = new HBox(10);
-		hboxAction.getChildren().addAll(btnActionPrincipale, btnActionGratuite);
+		hboxAction.getChildren().addAll(btnActionPrincipale, btnActionGratuite,btnFinTour);
+
+        btnFinTour = new Button("Fin du tour");
 
 		pane.getChildren().add(hboxAction);
     }
@@ -273,21 +279,22 @@ public class ViewGame {
 		btnActionGratuite.setOnAction(handler);
 		btnActionPrincipale.setOnAction(handler);
 		btnCancelAction.setOnAction(handler);
+        btnFinTour.setOnAction(handler);
 	}
 
 	public void displayActionPrincipale() {
-		hboxAction.getChildren().removeAll(btnActionGratuite,btnActionPrincipale);
+		hboxAction.getChildren().removeAll(hboxAction.getChildren());
 		hboxAction.getChildren().addAll(btnProposerProjet,btnMettreProjet,btnConstruire,btnCancelAction);
 	}
 
 	public void displayActionGratuite() {
-		hboxAction.getChildren().removeAll(btnActionGratuite,btnActionPrincipale);
+		hboxAction.getChildren().removeAll(hboxAction.getChildren());
 		hboxAction.getChildren().addAll(btnDeplacerScientifiq,btnMarche,btnJouerCarte,btnCancelAction);
 	}
 
 	public void resetHbox() {
 		hboxAction.getChildren().removeAll(hboxAction.getChildren());
-		hboxAction.getChildren().addAll(btnActionPrincipale,btnActionGratuite);
+		hboxAction.getChildren().addAll(btnActionPrincipale,btnActionGratuite,btnFinTour);
 	}
 
 	public void setButtonActionPrincipaleControler(EventHandler<ActionEvent> handler) {

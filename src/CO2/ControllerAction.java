@@ -23,6 +23,8 @@ public class ControllerAction implements EventHandler<ActionEvent>{
             viewGame.displayActionGratuite() ;
         } else if (source == viewGame.btnCancelAction) {
             viewGame.resetHbox();
+        }else if (source == viewGame.btnFinTour) {
+            //Fin du tour
         }
     }
 }
