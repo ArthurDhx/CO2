@@ -1,6 +1,7 @@
 package CO2;
-import javafx.event.*;
-import javafx.scene.input.MouseEvent;
+
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 
 public class ControllerTitle implements EventHandler<ActionEvent>{
 

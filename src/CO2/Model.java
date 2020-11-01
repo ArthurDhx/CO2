@@ -109,6 +109,15 @@ public class Model {
 		return false;
 	}
 
+    /**
+	 * permet de savoir si le joueur peut déplacer un scientifique
+	 * @return true si il peut, sinon false
+	 */
+	public boolean moveScientificOnProject(){
+		// à compléter
+		return true;
+	}
+
 	public boolean tilesSolarProjectOnWhichContinent(){
     	// à développer pour savoir quel continent contient les tuiles de projet solaire
 		return continents[0].isContainsTilesSolarProject();

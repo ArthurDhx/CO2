@@ -7,6 +7,7 @@ public class Controller {
     protected ControllerTitle titleController;
     protected ControllerAction controllerAction;
     protected ControllerActionPrincipale controllerActionPrincipale;
+    protected ControllerActionGratuite controllerActionGratuite;
     protected ViewGame viewGame ;
     
     public Controller(Model model, ViewTitle viewTitle, ViewGame viewGame) {
@@ -15,6 +16,7 @@ public class Controller {
         titleController = new ControllerTitle(model, viewTitle, this);
         controllerAction = new ControllerAction(model, viewGame);
         controllerActionPrincipale = new ControllerActionPrincipale(model, viewGame);
+        controllerActionGratuite = new ControllerActionGratuite(model, viewGame);
     }
 
     public void startGame() {

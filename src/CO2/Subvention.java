@@ -12,6 +12,8 @@ public class Subvention {
     // si la case contient une tuile = false;
     private int index ;
     // L'index ou est placer la subvention sur le continent
+    Continent continent;
+    //Le continent parent de la subvention
 
     public Subvention(int index) {
         this.index = index ;
@@ -23,9 +25,13 @@ public class Subvention {
         return index;
     }
 
+    public Continent getContinent(){ return this.continent;}
+
     public void setName(String name) {
         this.name = name;
     }
+
+    public void setContinent(Continent continent){ this.continent = continent; }
 
     public void hasTilesSolarProject(TilesSolarProject tilesSolarProject){
         // ajout d'une tuile sur le projet sur la case permettant la subvention
@@ -36,7 +42,7 @@ public class Subvention {
 
     @Override
     public String toString() {
-        return name ;
+        return this.continent.getName() +": "+ this.name ;
     }
 
     public boolean isEmpty() { return empty; }

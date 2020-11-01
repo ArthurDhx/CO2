@@ -2,25 +2,17 @@ package CO2;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
-import javafx.scene.DepthTest;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.control.ChoiceDialog;
-import javafx.scene.control.Dialog;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.*;
-import javafx.stage.Stage;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
-import java.util.Optional;
+import java.util.ArrayList;
 
 public class ViewGame {
 
@@ -34,6 +26,7 @@ public class ViewGame {
 	// TEST
 
 	ImageView imageViewTilesSolarProject;
+	ImageView imageViewScientifique;
 
 	Button btnActionPrincipale;
 	Button btnProposerProjet;
@@ -44,6 +37,7 @@ public class ViewGame {
 
 	Button btnActionGratuite;
 	Button btnDeplacerScientifiq;
+	ChoiceDialog<Subvention> dialogDeplacerScientifique;
 	Button btnMarche;
 	Button btnJouerCarte;
 
@@ -78,6 +72,13 @@ public class ViewGame {
 		imageViewTilesSolarProjectInDeck.setPreserveRatio(true);
 		pane.getChildren().add(imageViewTilesSolarProject);
 		pane.getChildren().add(imageViewTilesSolarProjectInDeck);
+
+		//On récupère l'image d'un scientifique et on l'ajoute à l'écran
+		Image imgScientifique = new Image(getClass().getResourceAsStream("images/scientifique.JPG"));
+		imageViewScientifique = new ImageView(imgScientifique);
+		imageViewScientifique.setX(30);
+		imageViewScientifique.setY(100);
+		pane.getChildren().add(imageViewScientifique);
 
 		// On indique combien il y'a de tuile dans le paquet
 		Text nbTilesSolarProject = new Text(1430, 150,"Il y a "+model.getNbSolarProject()+" projets solaires");
@@ -275,6 +276,101 @@ public class ViewGame {
 		}
 	}
 
+	public void addScientifiqueToProject(int projectChoice, ImageView imageViewScientifique, Continent continent){
+		switch(continent.getName()) {
+			case "Europe" :
+				switch (projectChoice) {
+					case 1:
+						imageViewScientifique.setX(350);
+						break;
+					case 2:
+						imageViewScientifique.setX(450);
+						break;
+					case 3:
+						imageViewScientifique.setX(550);
+						break;
+				}
+				imageViewScientifique.setY(250);
+				imageViewScientifique.toFront();
+				break;
+			case "Afrique" :
+				switch (projectChoice) {
+					case 1:
+						imageViewScientifique.setX(650);
+						break;
+					case 2:
+						imageViewScientifique.setX(750);
+						break;
+					case 3:
+						imageViewScientifique.setX(850);
+						break;
+				}
+				imageViewScientifique.setY(100);
+				imageViewScientifique.toFront();
+				break;
+			case "Amérique du Sud" :
+				switch (projectChoice) {
+					case 1:
+						imageViewScientifique.setX(950);
+						break;
+					case 2:
+						imageViewScientifique.setX(1050);
+						break;
+					case 3:
+						imageViewScientifique.setX(1150);
+						break;
+				}
+				imageViewScientifique.setY(250);
+				imageViewScientifique.toFront();
+				break;
+			case "Amérique du Nord" :
+				switch (projectChoice) {
+					case 1:
+						imageViewScientifique.setX(950);
+						break;
+					case 2:
+						imageViewScientifique.setX(1050);
+						break;
+					case 3:
+						imageViewScientifique.setX(1150);
+						break;
+				}
+				imageViewScientifique.setY(600);
+				imageViewScientifique.toFront();
+				break;
+			case "Océanie" :
+				switch (projectChoice) {
+					case 1:
+						imageViewScientifique.setX(650);
+						break;
+					case 2:
+						imageViewScientifique.setX(750);
+						break;
+					case 3:
+						imageViewScientifique.setX(850);
+						break;
+				}
+				imageViewScientifique.setY(750);
+				imageViewScientifique.toFront();
+				break;
+			case "Asie" :
+				switch (projectChoice) {
+					case 1:
+						imageViewScientifique.setX(350);
+						break;
+					case 2:
+						imageViewScientifique.setX(450);
+						break;
+					case 3:
+						imageViewScientifique.setX(550);
+						break;
+				}
+				imageViewScientifique.setY(600);
+				imageViewScientifique.toFront();
+				break;
+		}
+	}
+
 	public void setButtonActionControler(EventHandler<ActionEvent> handler) {
 		btnActionGratuite.setOnAction(handler);
 		btnActionPrincipale.setOnAction(handler);
@@ -303,6 +399,12 @@ public class ViewGame {
 		btnConstruire.setOnAction(handler);
 	}
 
+	public void setButtonActionGratuiteControler(EventHandler<ActionEvent> handler) {
+		btnDeplacerScientifiq.setOnAction(handler);
+		btnMarche.setOnAction(handler);
+		btnJouerCarte.setOnAction(handler);
+	}
+
 	public void displayProposerProjetChoiceDialog() {
 		Continent[] continent = model.getContinents();
 		dialogProposerProjet = new ChoiceDialog<Continent>(
@@ -317,6 +419,26 @@ public class ViewGame {
 		dialogProposerProjet.setTitle("Mettre en place un projet");
 		dialogProposerProjet.setHeaderText("Veuillez choisir un continent");
 		dialogProposerProjet.setContentText("Continent:");
+	}
+
+	public void displayDeplacerScientifiqueChoiceDialog(){
+		Continent[] continent = model.getContinents();
+		ArrayList<Subvention> subventions = new ArrayList<>();
+		for(int i = 0; i<continent.length; i++){
+			Subvention[] subventionsInContinent = continent[i].getSubventions();
+			for(int j = 0; j<subventionsInContinent.length; j++){
+				if(!subventionsInContinent[j].isEmpty()){
+					subventions.add(subventionsInContinent[j]);
+				}
+			}
+		}
+		dialogDeplacerScientifique = new ChoiceDialog<Subvention>(
+				subventions.get(0), // Choix par défaut
+				subventions
+		);
+		dialogDeplacerScientifique.setTitle("Déplacer un scientifique");
+		dialogDeplacerScientifique.setHeaderText("Veuiller choisir un projet");
+		dialogDeplacerScientifique.setContentText("Projet:");
 	}
 
 	public void displayChoisirSubventionChoiceDialog(Continent continentChoisi) {

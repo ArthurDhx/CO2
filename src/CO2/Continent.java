@@ -2,8 +2,6 @@ package CO2;
 
 import javafx.scene.image.Image;
 
-import java.util.Arrays;
-
 public class Continent {
 
     private String name;
@@ -21,6 +19,10 @@ public class Continent {
         subventions[0].setName("argent");
         subventions[1].setName("ressources \ntechnologiques");
         subventions[2].setName("recherche en\ncollaboration");
+        // initialisation du continent de la subvention
+        subventions[0].setContinent(this);
+        subventions[1].setContinent(this);
+        subventions[2].setContinent(this);
         this.name = name;
         this.nbCep = nbCep;
         this.imgContinent = imgContinent;
