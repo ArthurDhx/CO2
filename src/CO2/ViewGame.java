@@ -28,23 +28,7 @@ public class ViewGame {
 	ImageView imageViewTilesSolarProject;
 	ImageView imageViewScientifique;
 
-	Button btnActionPrincipale;
-	Button btnProposerProjet;
-	ChoiceDialog<Continent> dialogProposerProjet;
-	ChoiceDialog<Subvention> dialogSubvention;
-	Button btnMettreProjet;
-	Button btnConstruire;
-
-	Button btnActionGratuite;
-	Button btnDeplacerScientifiq;
-	ChoiceDialog<Subvention> dialogDeplacerScientifique;
-	Button btnMarche;
-	Button btnJouerCarte;
-
-    Button btnFinTour;
-
-	HBox hboxAction;
-	Button btnCancelAction;
+	ViewMenuActionHbox hboxAction;
 
 	public ViewGame(Model model, Pane pane) {
 		this.model = model;
@@ -157,23 +141,8 @@ public class ViewGame {
 			k = k + 100;
 		}
 
-		btnActionPrincipale = new Button("Action Principale");
-		btnConstruire = new Button("Construire une centrale");
-		btnProposerProjet = new Button("Proposer un projet");
-		btnMettreProjet = new Button("Mettre en place un projet");
-
-		btnActionGratuite = new Button("Action Gratuite");
-		btnDeplacerScientifiq = new Button("Déplacer un scientifque");
-		btnMarche = new Button("Marché au CEP");
-		btnJouerCarte = new Button("Jouer une carte");
-        btnFinTour = new Button("Fin du tour");
-
-		btnCancelAction = new Button("Annuler");
-		hboxAction = new HBox(10);
-		hboxAction.getChildren().addAll(btnActionPrincipale, btnActionGratuite,btnFinTour);
-
-        btnFinTour = new Button("Fin du tour");
-
+		hboxAction = new ViewMenuActionHbox(model) ;
+		hboxAction.init();
 		pane.getChildren().add(hboxAction);
     }
 
@@ -371,93 +340,4 @@ public class ViewGame {
 		}
 	}
 
-	public void setButtonActionControler(EventHandler<ActionEvent> handler) {
-		btnActionGratuite.setOnAction(handler);
-		btnActionPrincipale.setOnAction(handler);
-		btnCancelAction.setOnAction(handler);
-        btnFinTour.setOnAction(handler);
-	}
-
-	public void displayActionPrincipale() {
-		hboxAction.getChildren().removeAll(hboxAction.getChildren());
-		hboxAction.getChildren().addAll(btnProposerProjet,btnMettreProjet,btnConstruire,btnCancelAction);
-	}
-
-	public void displayActionGratuite() {
-		boolean[] actionFaite = model.getCurentPLayer().getActionGratuiteDone();
-		hboxAction.getChildren().removeAll(hboxAction.getChildren());
-		if (!actionFaite[0]) hboxAction.getChildren().add(btnDeplacerScientifiq);
-		if (!actionFaite[1]) hboxAction.getChildren().add(btnMarche);
-		if (!actionFaite[2]) hboxAction.getChildren().add(btnJouerCarte);
-		hboxAction.getChildren().add(btnCancelAction);
-	}
-
-	public void resetHbox() {
-		hboxAction.getChildren().removeAll(hboxAction.getChildren());
-		if (!model.getCurentPLayer().isActionPrincipaleDone()) hboxAction.getChildren().add(btnActionPrincipale);
-		if (!model.getCurentPLayer().isAllActionGratuiteDone()) hboxAction.getChildren().add(btnActionGratuite);
-		hboxAction.getChildren().add(btnFinTour);
-	}
-
-	public void setButtonActionPrincipaleControler(EventHandler<ActionEvent> handler) {
-		btnProposerProjet.setOnAction(handler);
-		btnMettreProjet.setOnAction(handler);
-		btnConstruire.setOnAction(handler);
-	}
-
-	public void setButtonActionGratuiteControler(EventHandler<ActionEvent> handler) {
-		btnDeplacerScientifiq.setOnAction(handler);
-		btnMarche.setOnAction(handler);
-		btnJouerCarte.setOnAction(handler);
-	}
-
-	public void displayProposerProjetChoiceDialog() {
-		Continent[] continent = model.getContinents();
-		dialogProposerProjet = new ChoiceDialog<Continent>(
-				continent[0], // Choix par défaut
-				continent[0],
-				continent[1],
-				continent[2],
-				continent[3],
-				continent[4],
-				continent[5]
-		);
-		dialogProposerProjet.setTitle("Mettre en place un projet");
-		dialogProposerProjet.setHeaderText("Veuillez choisir un continent");
-		dialogProposerProjet.setContentText("Continent:");
-	}
-
-	public void displayDeplacerScientifiqueChoiceDialog(){
-		Continent[] continent = model.getContinents();
-		ArrayList<Subvention> subventions = new ArrayList<>();
-		for(int i = 0; i<continent.length; i++){
-			Subvention[] subventionsInContinent = continent[i].getSubventions();
-			for(int j = 0; j<subventionsInContinent.length; j++){
-				if(!subventionsInContinent[j].isEmpty()){
-					subventions.add(subventionsInContinent[j]);
-				}
-			}
-		}
-		dialogDeplacerScientifique = new ChoiceDialog<Subvention>(
-				subventions.get(0), // Choix par défaut
-				subventions
-		);
-		dialogDeplacerScientifique.setTitle("Déplacer un scientifique");
-		dialogDeplacerScientifique.setHeaderText("Veuiller choisir un projet");
-		dialogDeplacerScientifique.setContentText("Projet:");
-	}
-
-	public void displayChoisirSubventionChoiceDialog(Continent continentChoisi) {
-		// TODO ; implementer une méthdoe dans le modele pour récupere les subvention libre
-		Subvention[] subventions = continentChoisi.getSubventions();
-		dialogSubvention = new ChoiceDialog<Subvention>(
-				subventions[0],
-				subventions[0],
-				subventions[1],
-				subventions[2]
-		);
-		dialogSubvention.setTitle("Choisir une subvention");
-		dialogSubvention.setHeaderText("Veuillez choisir une Subvention");
-		dialogSubvention.setContentText("Subvention :");
-	}
 }

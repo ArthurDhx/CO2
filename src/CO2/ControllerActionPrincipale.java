@@ -13,18 +13,18 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
     public ControllerActionPrincipale(Model model, ViewGame viewGame) {
         this.model = model ;
         this.viewGame = viewGame ;
-        viewGame.setButtonActionPrincipaleControler(this);
+        viewGame.hboxAction.setButtonActionPrincipaleControler(this);
     }
 
     @Override
     public void handle(ActionEvent event) {
         Object source = event.getSource() ;
-        if (source == viewGame.btnProposerProjet) {
-            viewGame.displayProposerProjetChoiceDialog() ;
-            Optional<Continent> result = viewGame.dialogProposerProjet.showAndWait();
+        if (source == viewGame.hboxAction.btnProposerProjet) {
+            viewGame.hboxAction.displayProposerProjetChoiceDialog() ;
+            Optional<Continent> result = viewGame.hboxAction.dialogProposerProjet.showAndWait();
             result.ifPresent(continentChoisi -> {
-                viewGame.displayChoisirSubventionChoiceDialog(continentChoisi);
-                Optional<Subvention> resulltSubv = viewGame.dialogSubvention.showAndWait();
+                viewGame.hboxAction.displayChoisirSubventionChoiceDialog(continentChoisi);
+                Optional<Subvention> resulltSubv = viewGame.hboxAction.dialogSubvention.showAndWait();
                 resulltSubv.ifPresent(subvention -> {
                     if(model.addTilesSolarProjectToSubventionCase()) viewGame.addTuilesToSubvention(subvention.getIndex()+1, viewGame.imageViewTilesSolarProject, continentChoisi);
                     // TODO : [Yassine] a vérifier apres refactoring tab vers liste
@@ -33,10 +33,10 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
                     return;
                 });
             });
-            viewGame.resetHbox();
-        } else if (source == viewGame.btnMettreProjet){
+            viewGame.hboxAction.resetHbox();
+        } else if (source == viewGame.hboxAction.btnMettreProjet){
             // A implementer
-        } else if (source == viewGame.btnConstruire) {
+        } else if (source == viewGame.hboxAction.btnConstruire) {
             // A implementer
         }
     }
