@@ -384,13 +384,19 @@ public class ViewGame {
 	}
 
 	public void displayActionGratuite() {
+		boolean[] actionFaite = model.getCurentPLayer().getActionGratuiteDone();
 		hboxAction.getChildren().removeAll(hboxAction.getChildren());
-		hboxAction.getChildren().addAll(btnDeplacerScientifiq,btnMarche,btnJouerCarte,btnCancelAction);
+		if (!actionFaite[0]) hboxAction.getChildren().add(btnDeplacerScientifiq);
+		if (!actionFaite[1]) hboxAction.getChildren().add(btnMarche);
+		if (!actionFaite[2]) hboxAction.getChildren().add(btnJouerCarte);
+		hboxAction.getChildren().add(btnCancelAction);
 	}
 
 	public void resetHbox() {
 		hboxAction.getChildren().removeAll(hboxAction.getChildren());
-		hboxAction.getChildren().addAll(btnActionPrincipale,btnActionGratuite,btnFinTour);
+		if (!model.getCurentPLayer().isActionPrincipaleDone()) hboxAction.getChildren().add(btnActionPrincipale);
+		if (!model.getCurentPLayer().isAllActionGratuiteDone()) hboxAction.getChildren().add(btnActionGratuite);
+		hboxAction.getChildren().add(btnFinTour);
 	}
 
 	public void setButtonActionPrincipaleControler(EventHandler<ActionEvent> handler) {
