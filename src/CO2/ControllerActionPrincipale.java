@@ -2,6 +2,7 @@ package CO2;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.text.Text;
 
 import java.util.Optional;
 
@@ -26,6 +27,8 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
                 Optional<Subvention> resulltSubv = viewGame.dialogSubvention.showAndWait();
                 resulltSubv.ifPresent(subvention -> {
                     if(model.addTilesSolarProjectToSubventionCase()) viewGame.addTuilesToSubvention(subvention.getIndex()+1, viewGame.imageViewTilesSolarProject, continentChoisi);
+                    // TODO : [Yassine] a vérifier apres refactoring tab vers liste
+                    viewGame.nbTilesSolarProject.setText("Il y a "+model.getNbSolarProject()+" projets solaires");
                     model.getCurentPLayer().setActionPrincipaleDone(true);
                     return;
                 });

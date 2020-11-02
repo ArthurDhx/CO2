@@ -23,7 +23,7 @@ public class ViewGame {
 	// temporaire sprint 1
 	Button btnAddSolarExpToCurPlayer;
 
-	// TEST
+	Text nbTilesSolarProject ;
 
 	ImageView imageViewTilesSolarProject;
 	ImageView imageViewScientifique;
@@ -81,7 +81,7 @@ public class ViewGame {
 		pane.getChildren().add(imageViewScientifique);
 
 		// On indique combien il y'a de tuile dans le paquet
-		Text nbTilesSolarProject = new Text(1430, 150,"Il y a "+model.getNbSolarProject()+" projets solaires");
+		nbTilesSolarProject = new Text(1430, 150,"Il y a "+model.getNbSolarProject()+" projets solaires");
 		pane.getChildren().add(nbTilesSolarProject);
 
 		// Tableau des continents
