@@ -10,7 +10,7 @@ public class Player {
     // Identifiant dans le tableau de chaque energie
     public static Map<String, Integer> expertiseId;
     // valeur d'expertise pour chaque energy
-    private int[] expertise = {0};
+    private int[] expertise = {0, 0, 0, 0, 0};
     //le joueur à une liste de scientifique, elle peut être vide ou rempli jusqu'a 4 scientifiques maximum
     private List<Scientifique> scientifiques;
 
@@ -29,6 +29,7 @@ public class Player {
         final int NBACTIONGRATUITE = 3;
         boolean[] actionGratuiteDone = new boolean[NBACTIONGRATUITE];
         Player p = new Player(false , actionGratuiteDone);
+
         /*
          Initialise la map qui attribut un String qui definit
          le type d'energie verte (ex: "Solar")
@@ -36,6 +37,10 @@ public class Player {
         */
         expertiseId = new HashMap<>();
         expertiseId.put("Solar", 0);
+        expertiseId.put("Biomass", 1);
+        expertiseId.put("Recycling", 2);
+        expertiseId.put("Fusion", 3);
+        expertiseId.put("Reforestation", 4);
 
         return p;
     }
@@ -47,14 +52,22 @@ public class Player {
         this.scientifiques.add(new Scientifique());
     }
 
+    /**
+     * Increment le niveau d'expertise dans un source d'energie verte donnee
+     * @param eneryType la source d'energie verte concernee
+     */
+    public void addExpertise(Integer eneryType) {
+        expertise[eneryType]++;
+    }
 
     public int getSolarExpertise() {
         return expertise[expertiseId.get("Solar")];
     }
+    public int getBiomassExpertise() { return expertise[expertiseId.get("Biomass")]; }
+    public int getRecyclingExpertise() { return expertise[expertiseId.get("Recycling")]; }
+    public int getFusionExpertise() { return expertise[expertiseId.get("Fusion")]; }
 
-    public void addExpertise(Integer eneryType) {
-        expertise[eneryType]++;
-    }
+    public int getReforestationExpertise() { return expertise[expertiseId.get("Reforestation")]; }
 
     public boolean isActionPrincipaleDone() {
         return actionPrincipaleDone;

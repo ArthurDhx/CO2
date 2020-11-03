@@ -18,7 +18,14 @@ public class ModelUnitTest {
     public void testIncrementExpertiseJoueurCourant() {
         model.incrementExpertise(Player.expertiseId.get("Solar"));
         Assert.assertEquals(1, model.getCurentPLayer().getSolarExpertise());
-        // TODO : ajouter les tests pour les autres energies vertes
+        model.incrementExpertise(Player.expertiseId.get("Biomass"));
+        Assert.assertEquals(1, model.getCurentPLayer().getBiomassExpertise());
+        model.incrementExpertise(Player.expertiseId.get("Recycling"));
+        Assert.assertEquals(1, model.getCurentPLayer().getRecyclingExpertise());
+        model.incrementExpertise(Player.expertiseId.get("Fusion"));
+        Assert.assertEquals(1, model.getCurentPLayer().getFusionExpertise());
+        model.incrementExpertise(Player.expertiseId.get("Reforestation"));
+        Assert.assertEquals(1, model.getCurentPLayer().getReforestationExpertise());
     }
 
     @Test
