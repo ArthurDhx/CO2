@@ -6,12 +6,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Continent {
 
     private String name;
     private final ArrayList<Subvention> subventions = new ArrayList<>(3);
-    //private final Subvention[] subventions = new Subvention[3];
     private Rectangle[] tabRectangleSubvention = new Rectangle[3];
     private int nbCep;
     private Image imgContinent;
@@ -61,6 +61,12 @@ public class Continent {
     @Override
     public String toString() {
         return name;
+    }
+
+    public void print() {
+        System.out.println("Continent{" +
+                "name='" + name + '\'' +
+                ", subventions=" + subventions.get(0).getTilesSolarProject() + '}');
     }
 
     public AgendaTile getAgendaTile() {

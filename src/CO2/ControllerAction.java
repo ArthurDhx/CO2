@@ -37,7 +37,7 @@ public class ControllerAction implements EventHandler<ActionEvent>{
             viewGame.hboxAction.resetHbox();
             viewGame.reloadTour();
             System.out.println("Tour : " + model.tour + "/" + model.NB_TOUR_PAR_DECENNIE);
-            model.tilesSolarProjects[0].setSubventionPossible(false); // temporaire
+            model.tilesSolarProjects.get(0).setSubventionPossible(false); // temporaire
         }
     }
 }

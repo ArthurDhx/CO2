@@ -2,7 +2,6 @@ package CO2;
 
 import javafx.scene.image.Image;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 public class ContinentUnitTest {
@@ -11,7 +10,7 @@ public class ContinentUnitTest {
     public void testIsContainsTilesSolarProject(){
         Continent c1 = new Continent("Europe", 3, new Image(getClass().getResourceAsStream("images/Europe.jpg")));
         TilesSolarProject t1 = new TilesSolarProject();
-        c1.getSubventions().get(2).hasTilesSolarProject(t1);
+        c1.getSubventions().get(2).addTilesSolarProject(t1);
         Assert.assertTrue(c1.isContainsTilesSolarProject());
     }
 

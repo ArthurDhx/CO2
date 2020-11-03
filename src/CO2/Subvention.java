@@ -33,10 +33,10 @@ public class Subvention {
 
     public void setContinent(Continent continent){ this.continent = continent; }
 
-    public void hasTilesSolarProject(TilesSolarProject tilesSolarProject){
-        // ajout d'une tuile sur le projet sur la case permettant la subvention
+    // ajoute à cette subvention
+    public void addTilesSolarProject(TilesSolarProject tilesSolarProject){
         this.tilesSolarProject = tilesSolarProject;
-        // la case permmettant la subvention se remplit par la tuile
+        // la subvention n'est plus vide
         empty = false;
     }
 
@@ -46,4 +46,8 @@ public class Subvention {
     }
 
     public boolean isEmpty() { return empty; }
+
+    public TilesSolarProject getTilesSolarProject() {
+        return tilesSolarProject;
+    }
 }

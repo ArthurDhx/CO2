@@ -19,7 +19,8 @@ public class Model {
 	int tour;
 
 	//Tableau contenant les 6 tuiles de projet solaire
-	TilesSolarProject[] tilesSolarProjects;
+	//TilesSolarProject[] tilesSolarProjects;
+	ArrayList<TilesSolarProject> tilesSolarProjects;
 
 	// tableau contenant les joueurs
 	private Player[] players;
@@ -45,9 +46,9 @@ public class Model {
 	 */
 	public void init(){
     	// Initialisation du tableau contenant les 6 tuiles de projet solaire
-		tilesSolarProjects = new TilesSolarProject[6];
-		for(int i = 0; i<tilesSolarProjects.length; i++){
-			tilesSolarProjects[i] = new TilesSolarProject();
+		tilesSolarProjects = new ArrayList<TilesSolarProject>();
+		for(int i = 0; i< 6; i++){
+			tilesSolarProjects.add(new TilesSolarProject());
 		}
 		// Initialisation des joueurs
 		initPlayers();
@@ -83,13 +84,7 @@ public class Model {
 	 * @return le nombre de tuiles "Projet Solaire" restantes dans la pile
 	 */
 	public int getNbSolarProject(){
-    	int res = 0;
-    	for(int i = 0; i<tilesSolarProjects.length; i++){
-    		if(tilesSolarProjects[i] != null){
-    			res += 1;
-			}
-		}
-    	return res;
+    	return tilesSolarProjects.size();
 	}
 
     public void startGame() { state = STATE_PLAY; }
@@ -107,15 +102,15 @@ public class Model {
 	 * permet d'ajouter la tuile sur la case subvention(recherche en collaboration)
 	 * @return true si la tuile veut être ajoutée sinon retourne false
 	 */
-	public boolean addTilesSolarProjectToSubventionCase(){
+	public boolean addTilesSolarProjectToSubventionCase(Continent continent, int indexSub){
 		// si l'energie solaire ne peux pas etre placee sur le continent -> action impossible
-		if(!continents[0].getAgendaTile().isPossiblePlacement("Solar")) return false;
+		if(!continent.getAgendaTile().isPossiblePlacement("Solar")) return false;
 
     	// permet d'ajouter la tuile sur la case subvention
-		if(tilesSolarProjects[0].addOnSubvention() && tilesSolarProjects[0].subPossible){
-			continents[0].getSubventions().get(2).hasTilesSolarProject(tilesSolarProjects[0]);
+		if(tilesSolarProjects.get(0).addOnSubvention() && tilesSolarProjects.get(0).subPossible){
+			continent.getSubventions().get(indexSub).addTilesSolarProject(tilesSolarProjects.get(0));
 			// TODO : [Yassine] a vérifier apres refactoring tab vers liste
-			tilesSolarProjects[0].subPossible = false;
+			tilesSolarProjects.get(0).subPossible = false;
 			return true;
 		}
 		return false;

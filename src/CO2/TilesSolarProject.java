@@ -15,6 +15,11 @@ public class TilesSolarProject {
         return true;
     }
 
+    @Override
+    public String toString() {
+        return "TilesSolarProject";
+    }
+
     public void setSubventionPossible(boolean subPossible){
         this.subPossible = subPossible;
     }

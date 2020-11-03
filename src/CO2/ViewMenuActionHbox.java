@@ -111,6 +111,7 @@ public class ViewMenuActionHbox extends HBox {
                 }
             }
         }
+        System.out.println(subventions);
         if(subventions.isEmpty()) return;
         dialogDeplacerScientifique = new ChoiceDialog<Subvention>(
                 subventions.get(0), // Choix par défaut

@@ -25,10 +25,15 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
                 viewGame.hboxAction.displayChoisirSubventionChoiceDialog(continentChoisi);
                 Optional<Subvention> resulltSubv = viewGame.hboxAction.dialogSubvention.showAndWait();
                 resulltSubv.ifPresent(subvention -> {
-                    if(model.addTilesSolarProjectToSubventionCase()) viewGame.addTuilesToSubvention(subvention.getIndex()+1, viewGame.imageViewTilesSolarProject, continentChoisi);
-                    // TODO : [Yassine] a vérifier apres refactoring tab vers liste
-                    viewGame.nbTilesSolarProject.setText("Il y a "+model.getNbSolarProject()+" projets solaires");
-                    model.getCurentPLayer().setActionPrincipaleDone(true);
+                    // vérifie si
+                    if(model.addTilesSolarProjectToSubventionCase(continentChoisi,subvention.getIndex())){
+                        // TODO : [Yassine] a vérifier apres refactoring tab vers liste
+                        // ajoute graphiquement la tuile
+                        viewGame.addTuilesToSubvention(subvention.getIndex()+1, viewGame.imageViewTilesSolarProject, continentChoisi);
+                        model.tilesSolarProjects.remove(0);
+                        viewGame.nbTilesSolarProject.setText("Il y a "+ model.getNbSolarProject()+" projets solaires");
+                        model.getCurentPLayer().setActionPrincipaleDone(true);
+                    }
                     return;
                 });
             });
