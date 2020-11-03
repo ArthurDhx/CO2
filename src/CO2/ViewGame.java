@@ -1,6 +1,5 @@
 package CO2;
 
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -10,10 +9,6 @@ public class ViewGame {
 
 	Model model;
     Pane pane;
-
-	// TODO : [Theo] ajouter un bouton+indicateur pour demonstration de l'augmentation du niveau d'expertise
-	// temporaire sprint 1
-	Button btnAddSolarExpToCurPlayer;
 
 	Text nbTilesSolarProject ;
 	Text nbTour;
@@ -85,17 +80,31 @@ public class ViewGame {
     public void initContinent(){
 		// Tableau des continents
 		ImageView[] imageViewContinents = new ImageView[6];
+		ImageView[] imageViewAgendaTiles = new ImageView[6];
 		for(int i = 0; i<imageViewContinents.length;i++) {
 			imageViewContinents[i] = new ImageView(model.getContinents()[i].getImgContinent());
+			imageViewAgendaTiles[i] = new ImageView(model.getContinents()[i].getAgendaTile().getImageAgendaTile());
 			if(i==0 || i==5) imageViewContinents[i].setX(400);
 			if(i==0 || i==2) imageViewContinents[i].setY(200);
 			if(i==3 || i==5) imageViewContinents[i].setY(550);
 			if(i==1 || i==4) imageViewContinents[i].setX(700);
 			if(i==2 || i==3) imageViewContinents[i].setX(1000);
+
+			if(i==0 || i==5) imageViewAgendaTiles[i].setX(400+50);
+			if(i==0 || i==2) imageViewAgendaTiles[i].setY(200-100);
+			if(i==3 || i==5) imageViewAgendaTiles[i].setY(550-100);
+			if(i==1 || i==4) imageViewAgendaTiles[i].setX(700+50);
+			if(i==2 || i==3) imageViewAgendaTiles[i].setX(1000+50);
 		}
 		imageViewContinents[4].setY(700);
 		imageViewContinents[1].setY(70);
-		for(int i = 0; i<6;i++) pane.getChildren().add(imageViewContinents[i]);
+
+		imageViewAgendaTiles[4].setY(700-125);
+		imageViewAgendaTiles[1].setY(70+125);
+		for(int i = 0; i<6;i++) {
+			pane.getChildren().add(imageViewContinents[i]);
+			pane.getChildren().add(imageViewAgendaTiles[i]);
+		}
 	}
 
 	public void initSubvention(int val, int k){

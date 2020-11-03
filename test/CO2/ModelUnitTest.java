@@ -35,4 +35,23 @@ public class ModelUnitTest {
         Assert.assertEquals(model.addTilesSolarProjectToSubventionCase(), t1[0].addOnSubvention());
     }
 
+    @Test
+    public void testInitContinentAgendaTile() {
+        // test si les continents ont bien l'unique agendaTiles ["Reforesting", "Solar", "Fusion"]
+        String[] tabEnergies = {"Reforesting", "Solar", "Fusion"};
+        Assert.assertEquals(tabEnergies, model.getContinents()[0].getAgendaTile().getEnergies());
+    }
+
+    @Test
+    public void testPlacementPossibleTuileSolaireSurContinent() {
+        // tout les continents on l'agendaTiles ["Reforesting", "Solar", "Fusion"] dans ce sprint
+        Assert.assertTrue(model.getContinents()[0].getAgendaTile().isPossiblePlacement("Solar"));
+    }
+
+    @Test
+    public void testPlacementImpossibleTuileRecyclageSurContinent() {
+        // tout les continents on l'agendaTiles ["Reforesting", "Solar", "Fusion"] dans ce sprint
+        Assert.assertFalse(model.getContinents()[0].getAgendaTile().isPossiblePlacement("Recycling"));
+    }
+
 }

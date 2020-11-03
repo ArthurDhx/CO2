@@ -15,7 +15,8 @@ public class Continent {
     private Rectangle[] tabRectangleSubvention = new Rectangle[3];
     private int nbCep;
     private Image imgContinent;
-    // mettre un attribut des tuiles "agenda régionales" (à voir plus tard)
+    // tuile agenda régionale
+    private AgendaTile agendaTile;
 
     public Continent(String name, int nbCep, Image imgContinent) {
         // initalisation des 3 cases permettant de recevoir des subventions
@@ -60,5 +61,13 @@ public class Continent {
     @Override
     public String toString() {
         return name;
+    }
+
+    public AgendaTile getAgendaTile() {
+        return agendaTile;
+    }
+
+    public void setAgendaTile(AgendaTile agendaTile) {
+        this.agendaTile = agendaTile;
     }
 }

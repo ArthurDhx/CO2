@@ -72,6 +72,10 @@ public class Model {
 		ArrayList<String> nomContinents = new ArrayList<>(Arrays.asList("Europe", "Afrique", "Amérique du Sud", "Amérique du Nord", "Océanie", "Asie"));
 		for(int i=0; i<6 ;i++){
 			continents[i] = new Continent(nomContinents.get(i), 3, new Image(getClass().getResourceAsStream("images/Continents/" + nomContinents.get(i) +".jpg")));
+
+			// TODO dans un prochain sprint, generer les agendaTiles et en prendre une aleatoire par continent
+			AgendaTile agendaTile = new AgendaTile("Reforesting", "Solar", "Fusion", new Image(getClass().getResourceAsStream("images/TileAgenda_Reforestation_Solar_Fusion.png")));
+			continents[i].setAgendaTile(agendaTile);
 		}
 	}
 
@@ -104,6 +108,9 @@ public class Model {
 	 * @return true si la tuile veut être ajoutée sinon retourne false
 	 */
 	public boolean addTilesSolarProjectToSubventionCase(){
+		// si l'energie solaire ne peux pas etre placee sur le continent -> action impossible
+		if(continents[0].getAgendaTile().isPossiblePlacement("Solar"));
+
     	// permet d'ajouter la tuile sur la case subvention
 		if(tilesSolarProjects[0].addOnSubvention() && tilesSolarProjects[0].subPossible){
 			continents[0].getSubventions().get(2).hasTilesSolarProject(tilesSolarProjects[0]);
