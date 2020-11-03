@@ -16,6 +16,7 @@ public class ViewGame {
 	Button btnAddSolarExpToCurPlayer;
 
 	Text nbTilesSolarProject ;
+	Text nbTour;
 
 	ImageView imageViewTilesSolarProject;
 	ImageView imageViewScientifique;
@@ -62,6 +63,10 @@ public class ViewGame {
 		nbTilesSolarProject = new Text(1430, 150,"Il y a "+model.getNbSolarProject()+" projets solaires");
 		pane.getChildren().add(nbTilesSolarProject);
 
+		nbTour = new Text(10, 80,"Tour : "+model.tour+"/" + model.NB_TOUR_PAR_DECENNIE);
+		pane.getChildren().add(nbTour);
+
+
 		initContinent();
 		initSubvention(250, 100);
 
@@ -69,6 +74,12 @@ public class ViewGame {
 		hboxAction.init();
 		pane.getChildren().add(hboxAction);
     }
+
+	public void reloadTour(){
+		pane.getChildren().remove(nbTour);
+		nbTour = new Text(10, 80,"Tour : "+model.tour+"/" + model.NB_TOUR_PAR_DECENNIE);
+		pane.getChildren().add(nbTour);
+	}
 
 
     public void initContinent(){

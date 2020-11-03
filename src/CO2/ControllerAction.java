@@ -32,7 +32,12 @@ public class ControllerAction implements EventHandler<ActionEvent>{
                 //model.getCurentPLayer().addExpertise();
                 return;
             });
+            model.TourSuivant();
+            model.getCurentPLayer().setActionPrincipaleDone(false);
             viewGame.hboxAction.resetHbox();
+            viewGame.reloadTour();
+            System.out.println("Tour : " + model.tour + "/" + model.NB_TOUR_PAR_DECENNIE);
+            model.tilesSolarProjects[0].setSubventionPossible(false); // temporaire
         }
     }
 }

@@ -10,11 +10,13 @@ public class Model {
 
     final static int STATE_INIT = 1; // Title
 	final static int STATE_PLAY = 2; // Game
+	final int NB_TOUR_PAR_DECENNIE = 5;
 
 	int state;
     int width;
     int height;
 	int nbJoueur;
+	int tour;
 
 	//Tableau contenant les 6 tuiles de projet solaire
 	TilesSolarProject[] tilesSolarProjects;
@@ -32,6 +34,7 @@ public class Model {
 		width = 1600;
 		height = 900;
 		nbJoueur = 1;
+		tour = 1;
 
 		players = new Player[nbJoueur];
     	curPlayerId = 0;
@@ -102,10 +105,10 @@ public class Model {
 	 */
 	public boolean addTilesSolarProjectToSubventionCase(){
     	// permet d'ajouter la tuile sur la case subvention
-		if(tilesSolarProjects[0].addOnSubvention()){
+		if(tilesSolarProjects[0].addOnSubvention() && tilesSolarProjects[0].subPossible){
 			continents[0].getSubventions().get(2).hasTilesSolarProject(tilesSolarProjects[0]);
 			// TODO : [Yassine] a vérifier apres refactoring tab vers liste
-			tilesSolarProjects[0] = null ;
+			tilesSolarProjects[0].subPossible = false;
 			return true;
 		}
 		return false;
@@ -135,4 +138,12 @@ public class Model {
 	public Player getCurentPLayer() { return players[curPlayerId]; }
 
 	public Continent[] getContinents() { return continents; }
+
+	public void TourSuivant() {
+		if (tour != NB_TOUR_PAR_DECENNIE) {
+			tour++;
+		} else {
+			//passe à la décennie suivante
+		}
+	}
 }
