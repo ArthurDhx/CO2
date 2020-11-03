@@ -1,11 +1,17 @@
 package CO2;
 
+
+import javafx.scene.shape.Rectangle;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
+import java.util.ArrayList;
 
 public class Continent {
 
     private String name;
+    //private final ArrayList<Subvention> subventions = new ArrayList<>(3);
     private final Subvention[] subventions = new Subvention[3];
+    private Rectangle[] tabRectangleSubvention = new Rectangle[3];
     private int nbCep;
     private Image imgContinent;
     // mettre un attribut des tuiles "agenda régionales" (à voir plus tard)
@@ -13,7 +19,9 @@ public class Continent {
     public Continent(String name, int nbCep, Image imgContinent) {
         // initalisation des 3 cases permettant de recevoir des subventions
         for(int i = 0;i<3;i++) {
-            subventions[i] = new Subvention(i);
+                subventions[i]=new Subvention(i);
+                tabRectangleSubvention[i] = new Rectangle(75, 75, Color.WHITE);
+                tabRectangleSubvention[i].setStroke(Color.BLACK);
         }
         // initalisation du nom de la subvention
         subventions[0].setName("argent");
@@ -28,9 +36,9 @@ public class Continent {
         this.imgContinent = imgContinent;
     }
 
-    public Subvention[] getSubventions() {
-        return subventions;
-    }
+    public Subvention[] getSubventions() { return subventions; }
+
+    public Rectangle[] getTabRectangleSubvention() { return tabRectangleSubvention; }
 
     public Image getImgContinent() {return imgContinent;}
 

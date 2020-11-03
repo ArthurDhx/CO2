@@ -45,7 +45,6 @@ public class Model {
 		for(int i = 0; i<tilesSolarProjects.length; i++){
 			tilesSolarProjects[i] = new TilesSolarProject();
 		}
-
 		// Initialisation des joueurs
 		initPlayers();
 		// Initialisation des continents
