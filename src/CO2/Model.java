@@ -109,7 +109,7 @@ public class Model {
 	 */
 	public boolean addTilesSolarProjectToSubventionCase(){
 		// si l'energie solaire ne peux pas etre placee sur le continent -> action impossible
-		if(continents[0].getAgendaTile().isPossiblePlacement("Solar"));
+		if(continents[0].getAgendaTile().isPossiblePlacement("Solar")) return false;
 
     	// permet d'ajouter la tuile sur la case subvention
 		if(tilesSolarProjects[0].addOnSubvention() && tilesSolarProjects[0].subPossible){
