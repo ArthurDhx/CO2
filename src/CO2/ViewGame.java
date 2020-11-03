@@ -72,8 +72,8 @@ public class ViewGame {
 		nbTilesSolarProject = new Text(1430, 150,"Il y a "+model.getNbSolarProject()+" projets solaires");
 		pane.getChildren().add(nbTilesSolarProject);
 
-		initContinent(700);
-		initSubvention(250);
+		initContinent();
+		initSubvention(250, 100);
 
 		hboxAction = new ViewMenuActionHbox(model) ;
 		hboxAction.init();
@@ -81,7 +81,7 @@ public class ViewGame {
     }
 
 
-    public void initContinent(int x1){
+    public void initContinent(){
 		// Tableau des continents
 		ImageView[] imageViewContinents = new ImageView[6];
 		for(int i = 0; i<imageViewContinents.length;i++) {
@@ -89,49 +89,32 @@ public class ViewGame {
 			if(i==0 || i==5) imageViewContinents[i].setX(400);
 			if(i==0 || i==2) imageViewContinents[i].setY(200);
 			if(i==3 || i==5) imageViewContinents[i].setY(550);
-			if(i==1 || i==4) imageViewContinents[i].setX(x1);
+			if(i==1 || i==4) imageViewContinents[i].setX(700);
 			if(i==2 || i==3) imageViewContinents[i].setX(1000);
 		}
-		imageViewContinents[4].setY(x1);
+		imageViewContinents[4].setY(700);
 		imageViewContinents[1].setY(70);
 		for(int i = 0; i<6;i++) pane.getChildren().add(imageViewContinents[i]);
 	}
 
-	public void initSubvention(int val){
-		//ArrayList<Text> subventionName = new ArrayList<>(6);
-		int k = 100;
+	public void initSubvention(int val, int k){
+		Text[] subventionName = new Text[6];
 		for(int i=0;i<3;i++) {
 			for(int j=0;j<model.getContinents().length;j++) {
-				if(j==0 || j==5) model.getContinents()[j].getTabRectangleSubvention()[i].setX(k+val);
-				if(j==0 || j==2) model.getContinents()[j].getTabRectangleSubvention()[i].setY(val);
-				if(j==1 || j==4) model.getContinents()[j].getTabRectangleSubvention()[i].setX(k+550);
-				if(j==2 || j==3) model.getContinents()[j].getTabRectangleSubvention()[i].setX(k+850);
-				if(j==3 || j==5) model.getContinents()[j].getTabRectangleSubvention()[i].setY(600);
-				model.getContinents()[1].getTabRectangleSubvention()[i].setY(100);
-				model.getContinents()[4].getTabRectangleSubvention()[i].setY(750);
+				subventionName[j] = new Text(model.getContinents()[j].getSubventions().get(i).getName());
+				subventionName[j].setStyle("-fx-font: 9 arial;");
+				if(j==0 || j==5) {model.getContinents()[j].getTabRectangleSubvention()[i].setX(k+val);subventionName[j].setX(k+val+5);}
+				if(j==0 || j==2) {model.getContinents()[j].getTabRectangleSubvention()[i].setY(val);subventionName[j].setY(val+40);}
+				if(j==1 || j==4) {model.getContinents()[j].getTabRectangleSubvention()[i].setX(k+val+300);subventionName[j].setX(k+val+305);}
+				if(j==2 || j==3) {model.getContinents()[j].getTabRectangleSubvention()[i].setX(k+val+600);subventionName[j].setX(k+val+605);}
+				if(j==3 || j==5) {model.getContinents()[j].getTabRectangleSubvention()[i].setY(val+350);subventionName[j].setY(val+390);}
+				if(j==1) {model.getContinents()[j].getTabRectangleSubvention()[i].setY(val-150);subventionName[1].setY(val-110);}
+				if(j==4) {model.getContinents()[4].getTabRectangleSubvention()[i].setY(val+500);subventionName[4].setY(val+540);}
 				pane.getChildren().add(model.getContinents()[j].getTabRectangleSubvention()[i]);
+				pane.getChildren().add(subventionName[j]);
 			}
 			k = k + 100;
 		}
-			/*
-			subventionName[0] = new Text(model.getContinents()[0].getSubventions()[i].getName());
-			subventionName[1] = new Text(model.getContinents()[1].getSubventions()[i].getName());
-			subventionName[2] = new Text(model.getContinents()[2].getSubventions()[i].getName());
-			subventionName[3] = new Text(model.getContinents()[3].getSubventions()[i].getName());
-			subventionName[4] = new Text(model.getContinents()[4].getSubventions()[i].getName());
-			subventionName[5] = new Text(model.getContinents()[5].getSubventions()[i].getName());
-			subventionName[0].setStyle("-fx-font: 9 arial;");subventionName[1].setStyle("-fx-font: 9 arial;");
-			subventionName[2].setStyle("-fx-font: 9 arial;");subventionName[3].setStyle("-fx-font: 9 arial;");
-			subventionName[4].setStyle("-fx-font: 9 arial;");subventionName[5].setStyle("-fx-font: 9 arial;");
-			subventionName[0].setX(k + 255);subventionName[0].setY(290);
-			subventionName[1].setX(k + 555);subventionName[1].setY(140);
-			subventionName[2].setX(k + 855);subventionName[2].setY(290);
-			subventionName[3].setX(k + 855);subventionName[3].setY(640);
-			subventionName[4].setX(k + 555);subventionName[4].setY(790);
-			subventionName[5].setX(k + 255);subventionName[5].setY(640);
-			pane.getChildren().add(subventionName[0]);pane.getChildren().add(subventionName[1]);
-			pane.getChildren().add(subventionName[2]);pane.getChildren().add(subventionName[3]);
-			pane.getChildren().add(subventionName[4]);pane.getChildren().add(subventionName[5]);*/
 	}
 
 	/** Ajoute la tuile sur la case souhaitée correspondant à une subvention

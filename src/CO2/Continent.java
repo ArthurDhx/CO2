@@ -9,8 +9,8 @@ import java.util.ArrayList;
 public class Continent {
 
     private String name;
-    //private final ArrayList<Subvention> subventions = new ArrayList<>(3);
-    private final Subvention[] subventions = new Subvention[3];
+    private final ArrayList<Subvention> subventions = new ArrayList<>(3);
+    //private final Subvention[] subventions = new Subvention[3];
     private Rectangle[] tabRectangleSubvention = new Rectangle[3];
     private int nbCep;
     private Image imgContinent;
@@ -19,24 +19,24 @@ public class Continent {
     public Continent(String name, int nbCep, Image imgContinent) {
         // initalisation des 3 cases permettant de recevoir des subventions
         for(int i = 0;i<3;i++) {
-                subventions[i]=new Subvention(i);
+                subventions.add(new Subvention(i));
                 tabRectangleSubvention[i] = new Rectangle(75, 75, Color.WHITE);
                 tabRectangleSubvention[i].setStroke(Color.BLACK);
         }
         // initalisation du nom de la subvention
-        subventions[0].setName("argent");
-        subventions[1].setName("ressources \ntechnologiques");
-        subventions[2].setName("recherche en\ncollaboration");
+        subventions.get(0).setName("argent");
+        subventions.get(1).setName("ressources \ntechnologiques");
+        subventions.get(2).setName("recherche en\ncollaboration");
         // initialisation du continent de la subvention
-        subventions[0].setContinent(this);
-        subventions[1].setContinent(this);
-        subventions[2].setContinent(this);
+        subventions.get(0).setContinent(this);
+        subventions.get(1).setContinent(this);
+        subventions.get(2).setContinent(this);
         this.name = name;
         this.nbCep = nbCep;
         this.imgContinent = imgContinent;
     }
 
-    public Subvention[] getSubventions() { return subventions; }
+    public ArrayList<Subvention> getSubventions() { return subventions; }
 
     public Rectangle[] getTabRectangleSubvention() { return tabRectangleSubvention; }
 
@@ -44,9 +44,9 @@ public class Continent {
 
     public boolean isContainsTilesSolarProject(){
         // permet de savoir si le continent contient des projets de tuiles solaires
-        if(!subventions[2].isEmpty()){
+        if(!subventions.get(2).isEmpty()){
             System.out.println("Tuile de projet solaire sur case subvention : " +
-                    subventions[2].getName() + ", dans le continent " + name);
+                    subventions.get(2).getName() + ", dans le continent " + name);
             return true;
         }
         return false;

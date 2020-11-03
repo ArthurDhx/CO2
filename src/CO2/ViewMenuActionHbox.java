@@ -102,10 +102,10 @@ public class ViewMenuActionHbox extends HBox {
         Continent[] continent = model.getContinents();
         ArrayList<Subvention> subventions = new ArrayList<>();
         for(int i = 0; i<continent.length; i++){
-            Subvention[] subventionsInContinent = continent[i].getSubventions();
-            for(int j = 0; j<subventionsInContinent.length; j++){
-                if(!subventionsInContinent[j].isEmpty()){
-                    subventions.add(subventionsInContinent[j]);
+            ArrayList<Subvention> subventionsInContinent = continent[i].getSubventions();
+            for(int j = 0; j<subventionsInContinent.size(); j++){
+                if(!subventionsInContinent.get(j).isEmpty()){
+                    subventions.add(subventionsInContinent.get(j));
                 }
             }
         }
@@ -120,12 +120,12 @@ public class ViewMenuActionHbox extends HBox {
 
     public void displayChoisirSubventionChoiceDialog(Continent continentChoisi) {
         // TODO ; implementer une méthdoe dans le modele pour récupere les subvention libre
-        Subvention[] subventions = continentChoisi.getSubventions();
+        ArrayList<Subvention> subventions = continentChoisi.getSubventions();
         dialogSubvention = new ChoiceDialog<Subvention>(
-                subventions[0],
-                subventions[0],
-                subventions[1],
-                subventions[2]
+                subventions.get(0),
+                subventions.get(0),
+                subventions.get(1),
+                subventions.get(2)
         );
         dialogSubvention.setTitle("Choisir une subvention");
         dialogSubvention.setHeaderText("Veuillez choisir une Subvention");

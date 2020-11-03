@@ -102,7 +102,7 @@ public class Model {
 	public boolean addTilesSolarProjectToSubventionCase(){
     	// permet d'ajouter la tuile sur la case subvention
 		if(tilesSolarProjects[0].addOnSubvention()){
-			continents[0].getSubventions()[2].hasTilesSolarProject(tilesSolarProjects[0]);
+			continents[0].getSubventions().get(2).hasTilesSolarProject(tilesSolarProjects[0]);
 			// TODO : [Yassine] a vérifier apres refactoring tab vers liste
 			tilesSolarProjects[0] = null ;
 			return true;
