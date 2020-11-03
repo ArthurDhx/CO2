@@ -20,9 +20,10 @@ public class ControllerActionGratuite implements EventHandler<ActionEvent>{
         Object source = event.getSource();
         if (source == viewGame.hboxAction.btnDeplacerScientifiq) {
             viewGame.hboxAction.displayDeplacerScientifiqueChoiceDialog() ;
+            if(viewGame.hboxAction.dialogDeplacerScientifique == null) return;
             Optional<Subvention> result = viewGame.hboxAction.dialogDeplacerScientifique.showAndWait();
             result.ifPresent(projetChoisi -> {
-                if(model.moveScientificOnProject()) viewGame.addScientifiqueToProject(projetChoisi.getIndex()+1, viewGame.imageViewScientifique, projetChoisi.getContinent());
+                if(model.moveScientificOnProject(projetChoisi.getContinent(), projetChoisi)) viewGame.addScientifiqueToProject(projetChoisi.getIndex()+1, viewGame.imageViewScientifique, projetChoisi.getContinent());
                 model.getCurentPLayer().setDeplacerScientifiqDone(true);
                 return;
             });

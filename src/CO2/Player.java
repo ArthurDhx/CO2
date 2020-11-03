@@ -1,6 +1,8 @@
 package CO2;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Player {
@@ -9,6 +11,8 @@ public class Player {
     public static Map<String, Integer> expertiseId;
     // valeur d'expertise pour chaque energy
     private int[] expertise = {0};
+    //le joueur à une liste de scientifique, elle peut être vide ou rempli jusqu'a 4 scientifiques maximum
+    private List<Scientifique> scientifiques;
 
     private boolean actionPrincipaleDone ;
     private boolean[] actionGratuiteDone ;
@@ -39,6 +43,8 @@ public class Player {
     public Player(boolean actionPrincipaleDone, boolean[] actionGratuiteDone) {
         this.actionPrincipaleDone = actionPrincipaleDone ;
         this.actionGratuiteDone = actionGratuiteDone;
+        this.scientifiques = new ArrayList<>();
+        this.scientifiques.add(new Scientifique());
     }
 
 
@@ -75,5 +81,9 @@ public class Player {
 
     public void setDeplacerScientifiqDone(boolean done){
         this.actionGratuiteDone[0] = done ;
+    }
+
+    public List<Scientifique> getScientifiques(){
+        return this.scientifiques;
     }
 }

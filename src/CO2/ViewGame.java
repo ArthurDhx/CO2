@@ -1,20 +1,10 @@
 package CO2;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-import org.w3c.dom.css.Rect;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class ViewGame {
 

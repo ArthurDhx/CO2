@@ -3,6 +3,8 @@ package CO2;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
+import java.util.Optional;
+
 public class ControllerAction implements EventHandler<ActionEvent>{
     Model model ;
     ViewGame viewGame ;
@@ -24,7 +26,13 @@ public class ControllerAction implements EventHandler<ActionEvent>{
         } else if (source == viewGame.hboxAction.btnCancelAction) {
             viewGame.hboxAction.resetHbox();
         }else if (source == viewGame.hboxAction.btnFinTour) {
-            //Fin du tour
+            viewGame.hboxAction.displayFinTourScientifiqueChoiceDialog() ;
+            Optional<Scientifique> result = viewGame.hboxAction.dialogChoisirScientifique.showAndWait();
+            result.ifPresent(scientifiqueChoisi -> {
+                //model.getCurentPLayer().addExpertise();
+                return;
+            });
+            viewGame.hboxAction.resetHbox();
         }
     }
 }

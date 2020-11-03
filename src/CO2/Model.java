@@ -4,6 +4,7 @@ import javafx.scene.image.Image;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Model {
 
@@ -111,12 +112,20 @@ public class Model {
 	}
 
     /**
-	 * permet de savoir si le joueur peut déplacer un scientifique
+	 * permet de savoir si le joueur peut déplacer un scientifique, et met à jour la "localisation" du scientifique
 	 * @return true si il peut, sinon false
 	 */
-	public boolean moveScientificOnProject(){
+	public boolean moveScientificOnProject(Continent continent, Subvention subvention){
 		// à compléter
-		return true;
+		List<Scientifique> scientifiques = this.getCurentPLayer().getScientifiques();
+		for (Scientifique sc: scientifiques){
+			if(sc.getContinent() == null){
+				sc.setContinent(continent);
+				sc.setSubvention(subvention);
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public boolean tilesSolarProjectOnWhichContinent(){

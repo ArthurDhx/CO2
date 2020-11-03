@@ -7,6 +7,7 @@ import javafx.scene.control.ChoiceDialog;
 import javafx.scene.layout.HBox;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ViewMenuActionHbox extends HBox {
     Model model ;
@@ -24,6 +25,7 @@ public class ViewMenuActionHbox extends HBox {
     Button btnJouerCarte;
 
     Button btnFinTour;
+    ChoiceDialog<Scientifique> dialogChoisirScientifique;
     Button btnCancelAction;
 
     public ViewMenuActionHbox(Model model) {
@@ -109,6 +111,7 @@ public class ViewMenuActionHbox extends HBox {
                 }
             }
         }
+        if(subventions.isEmpty()) return;
         dialogDeplacerScientifique = new ChoiceDialog<Subvention>(
                 subventions.get(0), // Choix par défaut
                 subventions
@@ -116,6 +119,23 @@ public class ViewMenuActionHbox extends HBox {
         dialogDeplacerScientifique.setTitle("Déplacer un scientifique");
         dialogDeplacerScientifique.setHeaderText("Veuiller choisir un projet");
         dialogDeplacerScientifique.setContentText("Projet:");
+    }
+
+    public void displayFinTourScientifiqueChoiceDialog(){
+        List<Scientifique> scientifiques = model.getCurentPLayer().getScientifiques();
+        List<Scientifique> scientifiquesSurProjet = new ArrayList<>();
+        for(Scientifique sc: scientifiques){
+            if(sc != null){
+                scientifiquesSurProjet.add(sc);
+            }
+        }
+        dialogChoisirScientifique = new ChoiceDialog<Scientifique>(
+            scientifiquesSurProjet.get(0),
+            scientifiquesSurProjet
+        );
+        dialogChoisirScientifique.setTitle("Choisir un scientifique");
+        dialogChoisirScientifique.setHeaderText("Veuillez choisir un scientifique pour y récupérer l'expertise");
+        dialogChoisirScientifique.setContentText("Scientifiques: ");
     }
 
     public void displayChoisirSubventionChoiceDialog(Continent continentChoisi) {

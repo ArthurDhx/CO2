@@ -1,9 +1,10 @@
 package CO2;
 
 
-import javafx.scene.shape.Rectangle;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+
 import java.util.ArrayList;
 
 public class Continent {

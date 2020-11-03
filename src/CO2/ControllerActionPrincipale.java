@@ -2,7 +2,6 @@ package CO2;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.text.Text;
 
 import java.util.Optional;
 
