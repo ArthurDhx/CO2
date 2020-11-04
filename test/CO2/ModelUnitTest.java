@@ -32,6 +32,7 @@ public class ModelUnitTest {
     public void testAddTilesSolarProjectToSubventionCase() {
         TilesSolarProject[] t1 = new TilesSolarProject[1];
         t1[0] = new TilesSolarProject();
+        // a refaire modification de la methode addTiles...
         //Assert.assertEquals(model.addTilesSolarProjectToSubventionCase(), t1[0].addOnSubvention());
     }
 

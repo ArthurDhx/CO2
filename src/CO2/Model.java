@@ -10,7 +10,7 @@ public class Model {
 
     final static int STATE_INIT = 1; // Title
 	final static int STATE_PLAY = 2; // Game
-	final int NB_TOUR_PAR_DECENNIE = 5;
+	final int NB_TOUR_PAR_DECENNIE = 6; // 6 pour jeu solo
 
 	int state;
     int width;

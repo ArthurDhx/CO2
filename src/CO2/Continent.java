@@ -10,11 +10,11 @@ import java.util.Arrays;
 
 public class Continent {
 
-    private String name;
+    private final String name;
     private final ArrayList<Subvention> subventions = new ArrayList<>(3);
-    private Rectangle[] tabRectangleSubvention = new Rectangle[3];
+    private final Rectangle[] tabRectangleSubvention = new Rectangle[3];
     private int nbCep;
-    private Image imgContinent;
+    private final Image imgContinent;
     // tuile agenda régionale
     private AgendaTile agendaTile;
 

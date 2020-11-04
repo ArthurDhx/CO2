@@ -4,6 +4,7 @@ import javafx.scene.image.Image;
 
 public class AgendaTile {
 
+    // Type d'energie
     private String[] energies;
     private Image imageAgendaTile;
 
