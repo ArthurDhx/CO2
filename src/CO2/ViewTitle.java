@@ -76,7 +76,7 @@ public class ViewTitle {
 	public void setButtonControler(EventHandler<ActionEvent> handler) {
 		btn.setOnAction(handler);
 		// Choix du joueur desactivé
-		//comboBox.setOnAction(handler);
+		// comboBox.setOnAction(handler);
 	}
 
     public void startGame() {

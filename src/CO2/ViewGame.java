@@ -1,5 +1,6 @@
 package CO2;
 
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -319,6 +320,14 @@ public class ViewGame {
 				imageViewScientifique.toFront();
 				break;
 		}
+	}
+
+	public void displayAlertWithoutHeaderText(String title, String message) {
+		Alert alert = new Alert(Alert.AlertType.INFORMATION);
+		alert.setHeaderText(null);
+		alert.setTitle(title);
+		alert.setContentText(message);
+		alert.showAndWait();
 	}
 
 }

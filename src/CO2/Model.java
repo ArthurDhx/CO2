@@ -54,6 +54,7 @@ public class Model {
 		initPlayers();
 		// Initialisation des continents
 		initContinents();
+
 	}
 
 	/**
@@ -148,4 +149,6 @@ public class Model {
 			//passe à la décennie suivante
 		}
 	}
+
+	public int getNbJoueur() { return players.length; }
 }
