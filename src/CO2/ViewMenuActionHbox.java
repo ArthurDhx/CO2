@@ -11,21 +11,28 @@ import java.util.List;
 
 public class ViewMenuActionHbox extends HBox {
     Model model ;
-    Button btnActionPrincipale;
-    Button btnProposerProjet;
+
+    // Les différents ChoiceDialog s'affichant selon l'action choisis
     ChoiceDialog<Continent> dialogProposerProjet;
     ChoiceDialog<Subvention> dialogSubvention;
+    ChoiceDialog<Subvention> dialogDeplacerScientifique;
+    ChoiceDialog<Scientifique> dialogChoisirScientifique;
+
+
+    // Les boutons associe aux actions principales
+    Button btnActionPrincipale;
+    Button btnProposerProjet;
     Button btnMettreProjet;
     Button btnConstruire;
 
+    // Les boutons associe aux actions gratuites
     Button btnActionGratuite;
-    Button btnDeplacerScientifiq;
-    ChoiceDialog<Subvention> dialogDeplacerScientifique;
     Button btnMarche;
+    Button btnDeplacerScientifiq;
     Button btnJouerCarte;
 
+    // Button present dans le menu
     Button btnFinTour;
-    ChoiceDialog<Scientifique> dialogChoisirScientifique;
     Button btnCancelAction;
 
     public ViewMenuActionHbox(Model model) {
@@ -33,6 +40,9 @@ public class ViewMenuActionHbox extends HBox {
         this.model = model ;
     }
 
+    /**
+     * Initialise le Menu des différentes actions possibles en jeu
+     */
     public void init() {
         btnActionPrincipale = new Button("Action Principale");
         btnConstruire = new Button("Construire une centrale");
@@ -51,55 +61,65 @@ public class ViewMenuActionHbox extends HBox {
         btnFinTour = new Button("Fin du tour");
     }
 
+    /**
+     * Affiche le menu des actions principale a l'ecran
+     */
     public void displayActionPrincipale() {
+        // Enleve tout les elements present dans le menu de la fénetre
         this.getChildren().removeAll(this.getChildren());
         this.getChildren().addAll(btnProposerProjet,btnMettreProjet,btnConstruire,btnCancelAction);
     }
 
-    public void displayActionGratuite() {
-        boolean[] actionFaite = model.getCurentPLayer().getActionGratuiteDone();
-        this.getChildren().removeAll(this.getChildren());
-        if (!actionFaite[0]) this.getChildren().add(btnDeplacerScientifiq);
-        if (!actionFaite[1]) this.getChildren().add(btnMarche);
-        if (!actionFaite[2]) this.getChildren().add(btnJouerCarte);
-        this.getChildren().add(btnCancelAction);
-    }
-
-    public void resetHbox() {
-        this.getChildren().removeAll(this.getChildren());
-        if (!model.getCurentPLayer().isActionPrincipaleDone()) this.getChildren().add(btnActionPrincipale);
-        if (!model.getCurentPLayer().isAllActionGratuiteDone()) this.getChildren().add(btnActionGratuite);
-        this.getChildren().add(btnFinTour);
-    }
-
-    public void setButtonActionPrincipaleControler(EventHandler<ActionEvent> handler) {
-        btnProposerProjet.setOnAction(handler);
-        btnMettreProjet.setOnAction(handler);
-        btnConstruire.setOnAction(handler);
-    }
-
-    public void setButtonActionGratuiteControler(EventHandler<ActionEvent> handler) {
-        btnDeplacerScientifiq.setOnAction(handler);
-        btnMarche.setOnAction(handler);
-        btnJouerCarte.setOnAction(handler);
-    }
-
+    /**
+     * Affiche le ChoiceDialog qui permet de proposer un projet
+     */
     public void displayProposerProjetChoiceDialog() {
+        // Récupere les différents continent
         Continent[] continent = model.getContinents();
+        // Creer les differents choix disponible
         dialogProposerProjet = new ChoiceDialog<Continent>(
                 continent[0], // Choix par défaut
-                continent[0],
-                continent[1],
-                continent[2],
-                continent[3],
-                continent[4],
-                continent[5]
+                continent
         );
         dialogProposerProjet.setTitle("Mettre en place un projet");
         dialogProposerProjet.setHeaderText("Veuillez choisir un continent");
         dialogProposerProjet.setContentText("Continent:");
     }
 
+    /**
+     * Affiche les Subvention disponible sur le continent choisi
+     * @param continentChoisi Le continent choisi par l'utilisateur
+     */
+    public void displayChoisirSubventionChoiceDialog(Continent continentChoisi) {
+        // TODO ; implementer une méthdoe dans le modele pour récupere les subvention libre
+        // Récupere les subvention disponible dans le continent
+        ArrayList<Subvention> subventions = continentChoisi.getSubventions();
+        dialogSubvention = new ChoiceDialog<Subvention>(
+                subventions.get(0), // choix par défaut
+                subventions
+        );
+        dialogSubvention.setTitle("Choisir une subvention");
+        dialogSubvention.setHeaderText("Veuillez choisir une Subvention");
+        dialogSubvention.setContentText("Subvention :");
+    }
+
+    /**
+     * Affiche les actions gratuites disponible sur le menu
+     */
+    public void displayActionGratuite() {
+        // Récupere les actions faite par le joueur
+        boolean[] actionFaite = model.getCurentPLayer().getActionGratuiteDone();
+        this.getChildren().removeAll(this.getChildren());
+        // Si l'action n'a pas déjà été faite affiche le bouton liée a l'action
+        if (!actionFaite[0]) this.getChildren().add(btnDeplacerScientifiq);
+        if (!actionFaite[1]) this.getChildren().add(btnMarche);
+        if (!actionFaite[2]) this.getChildren().add(btnJouerCarte);
+        this.getChildren().add(btnCancelAction);
+    }
+
+    /**
+     * Affiche le ChoiceDialog qui permet de déplacer un scientifique
+     */
     public void displayDeplacerScientifiqueChoiceDialog(){
         Continent[] continent = model.getContinents();
         ArrayList<Subvention> subventions = new ArrayList<>();
@@ -122,6 +142,9 @@ public class ViewMenuActionHbox extends HBox {
         dialogDeplacerScientifique.setContentText("Projet:");
     }
 
+    /**
+     * Affiche le ChoiceDialog permettant de récuperer l'expertise grace au scientifiq en fin de tour
+     */
     public void displayFinTourScientifiqueChoiceDialog(){
         List<Scientifique> scientifiques = model.getCurentPLayer().getScientifiques();
         List<Scientifique> scientifiquesSurProjet = new ArrayList<>();
@@ -139,24 +162,44 @@ public class ViewMenuActionHbox extends HBox {
         dialogChoisirScientifique.setContentText("Scientifiques: ");
     }
 
-    public void displayChoisirSubventionChoiceDialog(Continent continentChoisi) {
-        // TODO ; implementer une méthdoe dans le modele pour récupere les subvention libre
-        ArrayList<Subvention> subventions = continentChoisi.getSubventions();
-        dialogSubvention = new ChoiceDialog<Subvention>(
-                subventions.get(0),
-                subventions.get(0),
-                subventions.get(1),
-                subventions.get(2)
-        );
-        dialogSubvention.setTitle("Choisir une subvention");
-        dialogSubvention.setHeaderText("Veuillez choisir une Subvention");
-        dialogSubvention.setContentText("Subvention :");
+    /**
+     * Reset la hbox a son état initiale selon les actions disponible par le joueur
+     */
+    public void resetHbox() {
+        this.getChildren().removeAll(this.getChildren());
+        if (!model.getCurentPLayer().isActionPrincipaleDone()) this.getChildren().add(btnActionPrincipale);
+        if (!model.getCurentPLayer().isAllActionGratuiteDone()) this.getChildren().add(btnActionGratuite);
+        this.getChildren().add(btnFinTour);
     }
 
+    /**
+     * Associe le controlleur aux élement précise dans la fonction
+     * @param handler Le controller a associé au elements
+     */
     public void setButtonActionControler(EventHandler<ActionEvent> handler) {
         btnActionGratuite.setOnAction(handler);
         btnActionPrincipale.setOnAction(handler);
         btnCancelAction.setOnAction(handler);
         btnFinTour.setOnAction(handler);
+    }
+
+    /**
+     * Associe le controlleur aux button d'action princiapale
+     * @param handler Le controlleur a associé
+     */
+    public void setButtonActionPrincipaleControler(EventHandler<ActionEvent> handler) {
+        btnProposerProjet.setOnAction(handler);
+        btnMettreProjet.setOnAction(handler);
+        btnConstruire.setOnAction(handler);
+    }
+
+    /**
+     * Associe le controlleur aux button d'action gratuite
+     * @param handler Le controlleur a associé
+     */
+    public void setButtonActionGratuiteControler(EventHandler<ActionEvent> handler) {
+        btnDeplacerScientifiq.setOnAction(handler);
+        btnMarche.setOnAction(handler);
+        btnJouerCarte.setOnAction(handler);
     }
 }
