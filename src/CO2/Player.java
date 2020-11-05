@@ -16,6 +16,8 @@ public class Player {
 
     private boolean actionPrincipaleDone ;
     private boolean[] actionGratuiteDone ;
+
+    private int argent;
     /*
     * true si une action a été faite
     * [0] deplacer scientifique
@@ -50,6 +52,7 @@ public class Player {
         this.actionGratuiteDone = actionGratuiteDone;
         this.scientifiques = new ArrayList<>();
         this.scientifiques.add(new Scientifique());
+        setArgent(21);
     }
 
     /**
@@ -98,5 +101,24 @@ public class Player {
 
     public List<Scientifique> getScientifiques(){
         return this.scientifiques;
+    }
+
+    public int getArgent() {
+        return argent;
+    }
+    public void setArgent(int argent) {
+        this.argent = argent;
+    }
+
+    public void gainArgent(int argent) {
+        this.argent += Math.abs(argent);
+    }
+
+    public boolean retirerArgent(int argent) {
+        if ((this.argent-argent) >= 0){
+            this.argent -= Math.abs(argent);
+            return true;
+        }
+        return false;
     }
 }
