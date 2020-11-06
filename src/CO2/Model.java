@@ -12,11 +12,12 @@ public class Model {
 	final static int STATE_PLAY = 2; // Game
 	final int NB_TOUR_PAR_DECENNIE = 6; // 6 pour jeu solo
 
+	private int nbJoueur;
+	private int tour;
+
 	int state;
-    int width;
-    int height;
-	int nbJoueur;
-	int tour;
+	int width;
+	int height;
 
 	//Tableau contenant les 6 tuiles de projet solaire
 	//TilesSolarProject[] tilesSolarProjects;
@@ -52,8 +53,10 @@ public class Model {
 		}
 		// Initialisation des joueurs
 		initPlayers();
+		initTour();
 		// Initialisation des continents
 		initContinents();
+
 	}
 
 	/**
@@ -63,6 +66,15 @@ public class Model {
 		for (int i = 0; i < nbJoueur; i++) {
 			players[i] = Player.createPlayer();
 		}
+	}
+	/**
+	 * Initialise le nombre de tour
+	 */
+	private void initTour(){
+		if (nbJoueur == 2) setTour(5);
+		if (nbJoueur == 3) setTour(4);
+		if (nbJoueur == 4) setTour(3);
+		if (nbJoueur == 5) setTour(2);
 	}
 
 	/**
@@ -141,6 +153,14 @@ public class Model {
 
 	public Continent[] getContinents() { return continents; }
 
+	public int getTour() {
+		return tour;
+	}
+
+	public void setTour(int tour) {
+		this.tour = tour;
+	}
+
 	public void TourSuivant() {
 		if (tour != NB_TOUR_PAR_DECENNIE) {
 			tour++;
@@ -148,4 +168,8 @@ public class Model {
 			//passe à la décennie suivante
 		}
 	}
+
+	public void setNbJoueur(int nbJoueur) { this.nbJoueur = nbJoueur; }
+
+	public int getNbJoueur() { return players.length; }
 }

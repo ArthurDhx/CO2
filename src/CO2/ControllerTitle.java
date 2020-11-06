@@ -20,8 +20,9 @@ public class ControllerTitle implements EventHandler<ActionEvent>{
         if (event.getSource() == viewTitle.btn) {
             if (model.state == Model.STATE_INIT) control.startGame();
         }
+        /* Choix du joueur desactivé
         else if (event.getSource() == viewTitle.comboBox){
             model.nbJoueur = Integer.parseInt(viewTitle.comboBox.getSelectionModel().getSelectedItem());
-        }
+        }*/
     }    
 }

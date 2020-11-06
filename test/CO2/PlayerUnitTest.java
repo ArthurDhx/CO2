@@ -52,4 +52,25 @@ public class PlayerUnitTest {
         Assert.assertEquals(1, p.getReforestationExpertise());
     }
 
+    @Test
+    public void testGainArgent() {
+        p.setArgent(100);
+        p.gainArgent(50);
+        Assert.assertEquals(150, p.getArgent());
+    }
+
+    @Test
+    public void testRetraitArgent1() {
+        p.setArgent(100);
+        Assert.assertTrue(p.retirerArgent(50));
+        Assert.assertEquals(50, p.getArgent());
+    }
+
+    @Test
+    public void testRetraitArgent2() {
+        p.setArgent(100);
+        Assert.assertFalse(p.retirerArgent(120));
+        Assert.assertEquals(100, p.getArgent());
+    }
+
 }

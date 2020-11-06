@@ -1,5 +1,6 @@
 package CO2;
 
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -12,6 +13,7 @@ public class ViewGame {
 
 	Text nbTilesSolarProject ;
 	Text nbTour;
+	Text argentJoueur;
 
 	ImageView imageViewTilesSolarProject;
 	ImageView imageViewScientifique;
@@ -22,15 +24,11 @@ public class ViewGame {
 		this.model = model;
 		this.pane = pane;
 		pane.getChildren().clear();
-
-		Text t = new Text(10, 50, "Le jeu commence ici avec " + model.nbJoueur + " joueur(s)");
-
-		pane.getChildren().add(t);
 		init();
     }
 
 	public void init(){
-    	System.out.println("Le jeu commence ici avec " + model.nbJoueur + " joueur(s)");
+    	System.out.println("Le jeu commence ici avec " + model.getNbJoueur() + " joueur(s)");
     	// On lance l'initialisation du model qui générera toute les pièces, les joueurs et les valeurs (points,...)
     	this.model.init();
 
@@ -58,9 +56,8 @@ public class ViewGame {
 		nbTilesSolarProject = new Text(1430, 150,"Il y a "+model.getNbSolarProject()+" projets solaires");
 		pane.getChildren().add(nbTilesSolarProject);
 
-		nbTour = new Text(10, 80,"Tour : "+model.tour+"/" + model.NB_TOUR_PAR_DECENNIE);
-		pane.getChildren().add(nbTour);
-
+		reloadTour();
+		reloadArgent();
 
 		initContinent();
 		initSubvention(250, 100);
@@ -72,10 +69,15 @@ public class ViewGame {
 
 	public void reloadTour(){
 		pane.getChildren().remove(nbTour);
-		nbTour = new Text(10, 80,"Tour : "+model.tour+"/" + model.NB_TOUR_PAR_DECENNIE);
+		nbTour = new Text(10, 80,"Tour : "+model.getTour()+"/" + model.NB_TOUR_PAR_DECENNIE);
 		pane.getChildren().add(nbTour);
 	}
-
+	//A appeler lors d'une modification de l'argent du joueur
+	public void reloadArgent(){
+		pane.getChildren().remove(argentJoueur);
+		argentJoueur = new Text(10, 50, "Vous avez "+ model.getCurentPLayer().getArgent() + " € ");
+		pane.getChildren().add(argentJoueur);
+	}
 
     public void initContinent(){
 		// Tableau des continents
@@ -319,6 +321,14 @@ public class ViewGame {
 				imageViewScientifique.toFront();
 				break;
 		}
+	}
+
+	public void displayAlertWithoutHeaderText(String title, String message) {
+		Alert alert = new Alert(Alert.AlertType.INFORMATION);
+		alert.setHeaderText(null);
+		alert.setTitle(title);
+		alert.setContentText(message);
+		alert.showAndWait();
 	}
 
 }

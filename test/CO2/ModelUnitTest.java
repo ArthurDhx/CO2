@@ -15,6 +15,11 @@ public class ModelUnitTest {
     }
 
     @Test
+    public void testInitJoueur() {
+        Assert.assertEquals(21,model.getCurentPLayer().getArgent());
+    }
+
+    @Test
     public void testIncrementExpertiseJoueurCourant() {
         model.incrementExpertise(Player.expertiseId.get("Solar"));
         Assert.assertEquals(1, model.getCurentPLayer().getSolarExpertise());
@@ -54,5 +59,4 @@ public class ModelUnitTest {
         // tout les continents on l'agendaTiles ["Reforesting", "Solar", "Fusion"] dans ce sprint
         Assert.assertFalse(model.getContinents()[0].getAgendaTile().isPossiblePlacement("Recycling"));
     }
-
 }

@@ -36,8 +36,10 @@ public class ControllerAction implements EventHandler<ActionEvent>{
             model.getCurentPLayer().setActionPrincipaleDone(false);
             viewGame.hboxAction.resetHbox();
             viewGame.reloadTour();
-            System.out.println("Tour : " + model.tour + "/" + model.NB_TOUR_PAR_DECENNIE);
+            System.out.println("Tour : " + model.getTour() + "/" + model.NB_TOUR_PAR_DECENNIE);
             model.tilesSolarProjects.get(0).setSubventionPossible(false); // temporaire
+            //Vérifier si 6/6 passer à la décennie suivante
         }
+        viewGame.reloadArgent();
     }
 }

@@ -15,18 +15,26 @@ public class ControllerActionGratuite implements EventHandler<ActionEvent>{
         viewGame.hboxAction.setButtonActionGratuiteControler(this);
     }
 
+    /**
+     * Récupere la source de l'evenemenet et le traite selon la source
+     * @param event L'evenement
+     */
     @Override
     public void handle(ActionEvent event) {
         Object source = event.getSource();
         if (source == viewGame.hboxAction.btnDeplacerScientifiq) {
+            // Affiche le ChoiceDialog qui permet de deplacer un scientifque
             viewGame.hboxAction.displayDeplacerScientifiqueChoiceDialog() ;
             if(viewGame.hboxAction.dialogDeplacerScientifique == null) return;
             Optional<Subvention> result = viewGame.hboxAction.dialogDeplacerScientifique.showAndWait();
             result.ifPresent(projetChoisi -> {
-                if(model.moveScientificOnProject(projetChoisi.getContinent(), projetChoisi)) viewGame.addScientifiqueToProject(projetChoisi.getIndex()+1, viewGame.imageViewScientifique, projetChoisi.getContinent());
+                // Si un projet a ete choisi
+                if(model.moveScientificOnProject(projetChoisi.getContinent(), projetChoisi))
+                    viewGame.addScientifiqueToProject(projetChoisi.getIndex()+1, viewGame.imageViewScientifique, projetChoisi.getContinent());
                 model.getCurentPLayer().setDeplacerScientifiqDone(true);
                 return;
             });
+            // Sinon reset la hbox
             viewGame.hboxAction.resetHbox();
         }
         else if (source == viewGame.hboxAction.btnMarche) {
