@@ -4,12 +4,14 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
+
 public class ModelUnitTest {
 
     Model model;
 
     @Before
-    public void setup() {
+    public void setup() throws IOException {
         model = new Model();
         model.init();
     }
