@@ -14,16 +14,18 @@ public class SommetUnitTest {
     @Before
     public void setup() {
         ArrayList<String> lst = new ArrayList<>();
-        lst.add("Solar");
+        lst.add("Fusion");
+        lst.add("Recycling");
         lst.add("Biomass");
-        Image img = new Image(getClass().getResourceAsStream("images/scientifique.png"));
+        Image img = new Image(getClass().getResourceAsStream("images/Sommets/Paris.png"));
         sommetTile = new SommetTile("Paris", lst.size(),lst,img);
     }
 
     @Test
     public void testGetSubjectIndex(){
-        Assert.assertEquals("Solar", sommetTile.getSubjectIndex(0));
-        Assert.assertEquals("Biomass", sommetTile.getSubjectIndex(1));
+        Assert.assertEquals("Fusion", sommetTile.getSubjectIndex(0));
+        Assert.assertEquals("Recycling", sommetTile.getSubjectIndex(1));
+        Assert.assertEquals("Biomass", sommetTile.getSubjectIndex(2));
     }
 
     @Test
@@ -31,6 +33,7 @@ public class SommetUnitTest {
         sommetTile.setAllStaffedAs(true);
         Assert.assertTrue(sommetTile.getStaffed().get(0));
         Assert.assertTrue(sommetTile.getStaffed().get(1));
+        Assert.assertTrue(sommetTile.getStaffed().get(2));
     }
 
     @Test
@@ -38,14 +41,17 @@ public class SommetUnitTest {
         sommetTile.setAllStaffedAs(false);
         Assert.assertFalse(sommetTile.getStaffed().get(0));
         Assert.assertFalse(sommetTile.getStaffed().get(1));
+        Assert.assertFalse(sommetTile.getStaffed().get(2));
     }
 
     @Test
     public void testSetStaffedAsOn(){
         sommetTile.setStaffedAsOn(0, true);
         sommetTile.setStaffedAsOn(1, false);
+        sommetTile.setStaffedAsOn(2, false);
         Assert.assertTrue(sommetTile.getStaffed().get(0));
         Assert.assertFalse(sommetTile.getStaffed().get(1));
+        Assert.assertFalse(sommetTile.getStaffed().get(2));
     }
 
     @Test
@@ -58,6 +64,7 @@ public class SommetUnitTest {
     public void testIsAllStaffed2(){
         sommetTile.setStaffedAsOn(0, true);
         sommetTile.setStaffedAsOn(1, false);
+        sommetTile.setStaffedAsOn(2, true);
         Assert.assertFalse(sommetTile.isAllStaffed());
     }
 
