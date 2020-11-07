@@ -3,6 +3,8 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class Main extends Application {
 
     public static void main(String[] args) {
@@ -10,7 +12,7 @@ public class Main extends Application {
     }
    
     @Override
-    public void start(Stage stage) {
+    public void start(Stage stage) throws IOException {
         Model model = new Model();
         ViewTitle viewTitle = new ViewTitle(model);
         ViewGame viewGame = new ViewGame(model, viewTitle.paneGame);

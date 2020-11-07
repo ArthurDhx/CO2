@@ -6,6 +6,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
+import java.io.IOException;
+
 public class ViewGame {
 
 	Model model;
@@ -20,23 +22,27 @@ public class ViewGame {
 
 	ViewMenuActionHbox hboxAction;
 
-	public ViewGame(Model model, Pane pane) {
+	public ViewGame(Model model, Pane pane) throws IOException {
 		this.model = model;
 		this.pane = pane;
 		pane.getChildren().clear();
 		init();
     }
 
-	public void init(){
-    	System.out.println("Le jeu commence ici avec " + model.getNbJoueur() + " joueur(s)");
+	public void init() throws IOException {
+    	System.out.println("Le jeu commence avec " + model.getNbJoueur() + " joueur(s)");
     	// On lance l'initialisation du model qui générera toute les pièces, les joueurs et les valeurs (points,...)
     	this.model.init();
 
     	// On récupère l'image de la tuile et on l'ajoute à l'écran
 		// Image imgTilesSolarProject = new Image("CO2/images/TilesSolarProject.jpg");
-		Image imgTilesSolarProject = new Image(getClass().getResourceAsStream("images/TilesSolarProject.JPG"));
+		Image imgTilesSolarProject = new Image(getClass().getResourceAsStream("images/Projets/TilesSolarProjectRecto.png"));
 		imageViewTilesSolarProject = new ImageView(imgTilesSolarProject);
+		imageViewTilesSolarProject.setPreserveRatio(true);
+		imageViewTilesSolarProject.setFitWidth(75);
 		ImageView imageViewTilesSolarProjectInDeck = new ImageView(imgTilesSolarProject);
+		imageViewTilesSolarProjectInDeck.setPreserveRatio(true);
+		imageViewTilesSolarProjectInDeck.setFitWidth(75);
 		imageViewTilesSolarProject.setX(1460);
 		imageViewTilesSolarProject.setY(50);
 		imageViewTilesSolarProjectInDeck.setX(1460);
@@ -46,10 +52,12 @@ public class ViewGame {
 		pane.getChildren().add(imageViewTilesSolarProjectInDeck);
 
 		//On récupère l'image d'un scientifique et on l'ajoute à l'écran
-		Image imgScientifique = new Image(getClass().getResourceAsStream("images/scientifique.JPG"));
+		Image imgScientifique = new Image(getClass().getResourceAsStream("images/scientifique.png"));
 		imageViewScientifique = new ImageView(imgScientifique);
 		imageViewScientifique.setX(30);
 		imageViewScientifique.setY(100);
+		imageViewScientifique.setFitWidth(50);
+		imageViewScientifique.setPreserveRatio(true);
 		pane.getChildren().add(imageViewScientifique);
 
 		// On indique combien il y'a de tuile dans le paquet
@@ -83,29 +91,50 @@ public class ViewGame {
 		// Tableau des continents
 		ImageView[] imageViewContinents = new ImageView[6];
 		ImageView[] imageViewAgendaTiles = new ImageView[6];
+		ImageView[] imageViewSommetTiles = new ImageView[6];
 		for(int i = 0; i<imageViewContinents.length;i++) {
 			imageViewContinents[i] = new ImageView(model.getContinents()[i].getImgContinent());
 			imageViewAgendaTiles[i] = new ImageView(model.getContinents()[i].getAgendaTile().getImageAgendaTile());
+			imageViewSommetTiles[i] = new ImageView(model.getContinents()[i].getSommetTile().getImageSommetTile());
+			// Position des continents
 			if(i==0 || i==5) imageViewContinents[i].setX(400);
 			if(i==0 || i==2) imageViewContinents[i].setY(200);
 			if(i==3 || i==5) imageViewContinents[i].setY(550);
 			if(i==1 || i==4) imageViewContinents[i].setX(700);
 			if(i==2 || i==3) imageViewContinents[i].setX(1000);
-
+			// Position des Agendas
 			if(i==0 || i==5) imageViewAgendaTiles[i].setX(400+50);
 			if(i==0 || i==2) imageViewAgendaTiles[i].setY(200-100);
 			if(i==3 || i==5) imageViewAgendaTiles[i].setY(550-100);
 			if(i==1 || i==4) imageViewAgendaTiles[i].setX(700+50);
 			if(i==2 || i==3) imageViewAgendaTiles[i].setX(1000+50);
+			// Position des sommets
+			if(i==0 || i==5) imageViewSommetTiles[i].setX(400-50);
+			if(i==0 || i==2) imageViewSommetTiles[i].setY(200-20);
+			if(i==3 || i==5) imageViewSommetTiles[i].setY(550-20);
+			if(i==1 || i==4) imageViewSommetTiles[i].setX(700-50);
+			if(i==2 || i==3) imageViewSommetTiles[i].setX(1000-50);
+
+			// Redimention
+			imageViewAgendaTiles[i].setFitWidth(75);
+			imageViewAgendaTiles[i].setPreserveRatio(true);
+			imageViewSommetTiles[i].setFitWidth(75);
+			imageViewSommetTiles[i].setPreserveRatio(true);
 		}
 		imageViewContinents[4].setY(700);
 		imageViewContinents[1].setY(70);
 
 		imageViewAgendaTiles[4].setY(700-125);
 		imageViewAgendaTiles[1].setY(70+125);
-		for(int i = 0; i<6;i++) {
+
+		imageViewSommetTiles[4].setY(700-20);
+		imageViewSommetTiles[1].setY(70+115);
+
+		// Ajout au pane
+		for(int i = 0; i < 6; i++) {
 			pane.getChildren().add(imageViewContinents[i]);
 			pane.getChildren().add(imageViewAgendaTiles[i]);
+			pane.getChildren().add(imageViewSommetTiles[i]);
 		}
 	}
 
