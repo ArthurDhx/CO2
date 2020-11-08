@@ -17,6 +17,7 @@ public class ViewMenuActionHbox extends HBox {
     ChoiceDialog<Subvention> dialogSubvention;
     ChoiceDialog<Subvention> dialogDeplacerScientifique;
     ChoiceDialog<Scientifique> dialogChoisirScientifique;
+    ChoiceDialog<Subvention> dialogMettreEnPlaceProjet;
 
 
     // Les boutons associe aux actions principales
@@ -104,6 +105,33 @@ public class ViewMenuActionHbox extends HBox {
     }
 
     /**
+     * Affiche le menu permettant de choisir un projet à mettre en place
+     */
+    public void displayMettreEnPlaceProjetChoiceDialog(){
+        //On récupère les projets
+        Continent[] continent = model.getContinents();
+        ArrayList<Subvention> subventions = new ArrayList<>();
+        for(int i = 0; i<continent.length; i++){
+            ArrayList<Subvention> subventionsInContinent = continent[i].getSubventions();
+            for(int j = 0; j<subventionsInContinent.size(); j++){
+                if(!subventionsInContinent.get(j).isEmpty()){
+                    subventions.add(subventionsInContinent.get(j));
+                }
+            }
+        }
+        System.out.println(subventions);
+        //Si aucun projet n'est mis en place, on ne fait rien
+        if(subventions.isEmpty()) return;
+        dialogMettreEnPlaceProjet = new ChoiceDialog<Subvention>(
+                subventions.get(0), // Choix par défaut
+                subventions
+        );
+        dialogMettreEnPlaceProjet.setTitle("Mettre en place un projet");
+        dialogMettreEnPlaceProjet.setHeaderText("Veuillez choisir un projet");
+        dialogMettreEnPlaceProjet.setContentText("Projet :");
+    }
+
+    /**
      * Affiche les actions gratuites disponible sur le menu
      */
     public void displayActionGratuite() {
@@ -121,6 +149,7 @@ public class ViewMenuActionHbox extends HBox {
      * Affiche le ChoiceDialog qui permet de déplacer un scientifique
      */
     public void displayDeplacerScientifiqueChoiceDialog(){
+        //On récupère les projets
         Continent[] continent = model.getContinents();
         ArrayList<Subvention> subventions = new ArrayList<>();
         for(int i = 0; i<continent.length; i++){
@@ -132,6 +161,7 @@ public class ViewMenuActionHbox extends HBox {
             }
         }
         System.out.println(subventions);
+        //Si aucun projet n'est mis en place, on ne fait rien
         if(subventions.isEmpty()) return;
         dialogDeplacerScientifique = new ChoiceDialog<Subvention>(
                 subventions.get(0), // Choix par défaut
@@ -149,10 +179,11 @@ public class ViewMenuActionHbox extends HBox {
         List<Scientifique> scientifiques = model.getCurentPLayer().getScientifiques();
         List<Scientifique> scientifiquesSurProjet = new ArrayList<>();
         for(Scientifique sc: scientifiques){
-            if(sc != null){
+            if(sc.getContinent() != null){
                 scientifiquesSurProjet.add(sc);
             }
         }
+        if(scientifiquesSurProjet.isEmpty()) return;
         dialogChoisirScientifique = new ChoiceDialog<Scientifique>(
             scientifiquesSurProjet.get(0),
             scientifiquesSurProjet

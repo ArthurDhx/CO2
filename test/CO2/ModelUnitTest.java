@@ -61,4 +61,13 @@ public class ModelUnitTest {
         // tout les continents on l'agendaTiles ["Reforesting", "Solar", "Fusion"] dans ce sprint
         Assert.assertFalse(model.getContinents()[0].getAgendaTile().isPossiblePlacement("Recycling"));
     }
+
+    @Test
+    public void testMettreEnPlaceProjet(){
+        Player p = model.getCurentPLayer();
+        Continent c = model.getContinents()[0];
+        Assert.assertEquals(2,p.getCEP());
+        model.mettreEnPlaceProjet(c,c.getSubventions().get(0));
+        Assert.assertEquals(1,p.getCEP());
+    }
 }

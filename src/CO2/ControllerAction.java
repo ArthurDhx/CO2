@@ -27,11 +27,13 @@ public class ControllerAction implements EventHandler<ActionEvent>{
             viewGame.hboxAction.resetHbox();
         }else if (source == viewGame.hboxAction.btnFinTour) {
             viewGame.hboxAction.displayFinTourScientifiqueChoiceDialog() ;
-            Optional<Scientifique> result = viewGame.hboxAction.dialogChoisirScientifique.showAndWait();
-            result.ifPresent(scientifiqueChoisi -> {
-                //model.getCurentPLayer().addExpertise();
-                return;
-            });
+            if(viewGame.hboxAction.dialogChoisirScientifique != null){
+                Optional<Scientifique> result = viewGame.hboxAction.dialogChoisirScientifique.showAndWait();
+                result.ifPresent(scientifiqueChoisi -> {
+                    //model.getCurentPLayer().addExpertise();
+                    return;
+                });
+            }
             model.TourSuivant();
             model.getCurentPLayer().setActionPrincipaleDone(false);
             viewGame.hboxAction.resetHbox();

@@ -73,4 +73,10 @@ public class PlayerUnitTest {
         Assert.assertEquals(100, p.getArgent());
     }
 
+    @Test
+    public void testMettreEnPlaceProjet(){
+        Assert.assertEquals(2,p.getCEP());
+        p.mettreEnPlaceProjet();
+        Assert.assertEquals(1,p.getCEP());
+    }
 }

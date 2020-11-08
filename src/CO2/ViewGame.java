@@ -18,6 +18,7 @@ public class ViewGame {
 	Text argentJoueur;
 
 	ImageView imageViewTilesSolarProject;
+	ImageView imageViewTilesSolarProjectBack;
 	ImageView imageViewScientifique;
 
 	ViewMenuActionHbox hboxAction;
@@ -40,14 +41,14 @@ public class ViewGame {
 		imageViewTilesSolarProject = new ImageView(imgTilesSolarProject);
 		imageViewTilesSolarProject.setPreserveRatio(true);
 		imageViewTilesSolarProject.setFitWidth(75);
+		imageViewTilesSolarProject.setX(1460);
+		imageViewTilesSolarProject.setY(50);
+		imageViewTilesSolarProject.setPreserveRatio(true);
 		ImageView imageViewTilesSolarProjectInDeck = new ImageView(imgTilesSolarProject);
 		imageViewTilesSolarProjectInDeck.setPreserveRatio(true);
 		imageViewTilesSolarProjectInDeck.setFitWidth(75);
-		imageViewTilesSolarProject.setX(1460);
-		imageViewTilesSolarProject.setY(50);
 		imageViewTilesSolarProjectInDeck.setX(1460);
 		imageViewTilesSolarProjectInDeck.setY(50);
-		imageViewTilesSolarProject.setPreserveRatio(true);
 		pane.getChildren().add(imageViewTilesSolarProject);
 		pane.getChildren().add(imageViewTilesSolarProjectInDeck);
 
@@ -350,6 +351,108 @@ public class ViewGame {
 				imageViewScientifique.toFront();
 				break;
 		}
+	}
+
+	public void mettreEnPlaceProjet(int projectChoice, ImageView imageViewTilesSolarProjectBack, Continent continent){
+		Image imgTilesSolarProjectBack = new Image(getClass().getResourceAsStream("images/Projets/TilesSolarProjectVerso.png"));
+		imageViewTilesSolarProjectBack = new ImageView(imgTilesSolarProjectBack);
+		imageViewTilesSolarProjectBack.setPreserveRatio(true);
+		imageViewTilesSolarProjectBack.setFitWidth(75);
+		imageViewTilesSolarProjectBack.setPreserveRatio(true);
+		switch(continent.getName()) {
+			case "Europe" :
+				switch (projectChoice) {
+					case 1:
+						imageViewTilesSolarProjectBack.setX(350);
+						break;
+					case 2:
+						imageViewTilesSolarProjectBack.setX(450);
+						break;
+					case 3:
+						imageViewTilesSolarProjectBack.setX(550);
+						break;
+				}
+				imageViewTilesSolarProjectBack.setY(250);
+				imageViewTilesSolarProjectBack.toFront();
+				break;
+			case "Afrique" :
+				switch (projectChoice) {
+					case 1:
+						imageViewTilesSolarProjectBack.setX(650);
+						break;
+					case 2:
+						imageViewTilesSolarProjectBack.setX(750);
+						break;
+					case 3:
+						imageViewTilesSolarProjectBack.setX(850);
+						break;
+				}
+				imageViewTilesSolarProjectBack.setY(100);
+				imageViewTilesSolarProjectBack.toFront();
+				break;
+			case "Amérique du Sud" :
+				switch (projectChoice) {
+					case 1:
+						imageViewTilesSolarProjectBack.setX(950);
+						break;
+					case 2:
+						imageViewTilesSolarProjectBack.setX(1050);
+						break;
+					case 3:
+						imageViewTilesSolarProjectBack.setX(1150);
+						break;
+				}
+				imageViewTilesSolarProjectBack.setY(250);
+				imageViewTilesSolarProjectBack.toFront();
+				break;
+			case "Amérique du Nord" :
+				switch (projectChoice) {
+					case 1:
+						imageViewTilesSolarProjectBack.setX(950);
+						break;
+					case 2:
+						imageViewTilesSolarProjectBack.setX(1050);
+						break;
+					case 3:
+						imageViewTilesSolarProjectBack.setX(1150);
+						break;
+				}
+				imageViewTilesSolarProjectBack.setY(600);
+				imageViewTilesSolarProjectBack.toFront();
+				break;
+			case "Océanie" :
+				switch (projectChoice) {
+					case 1:
+						imageViewTilesSolarProjectBack.setX(650);
+						break;
+					case 2:
+						imageViewTilesSolarProjectBack.setX(750);
+						break;
+					case 3:
+						imageViewTilesSolarProjectBack.setX(850);
+						break;
+				}
+				imageViewTilesSolarProjectBack.setY(750);
+				imageViewTilesSolarProjectBack.toFront();
+				break;
+			case "Asie" :
+				switch (projectChoice) {
+					case 1:
+						imageViewTilesSolarProjectBack.setX(350);
+						break;
+					case 2:
+						imageViewTilesSolarProjectBack.setX(450);
+						break;
+					case 3:
+						imageViewTilesSolarProjectBack.setX(550);
+						break;
+				}
+				imageViewTilesSolarProjectBack.setY(600);
+				imageViewTilesSolarProjectBack.toFront();
+				break;
+		}
+		pane.getChildren().add(imageViewTilesSolarProjectBack);
+		this.imageViewScientifique.toFront();
 	}
 
 	public void displayAlertWithoutHeaderText(String title, String message) {

@@ -185,6 +185,19 @@ public class Model {
 		return false;
 	}
 
+	/**
+	 * Permet de savoir si un joueur peut mettre en place un projet
+	 * @return
+	 */
+	public boolean mettreEnPlaceProjet(Continent continent, Subvention subvention){
+		curPlayer = getCurentPLayer();
+		if(curPlayer.getCEP() >= 1){
+			curPlayer.mettreEnPlaceProjet();
+			return true;
+		}
+		return false;
+	}
+
 	public boolean tilesSolarProjectOnWhichContinent(){
     	// à développer pour savoir quel continent contient les tuiles de projet solaire
 		return continents[0].isContainsTilesSolarProject();
