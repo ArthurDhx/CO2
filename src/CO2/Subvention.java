@@ -21,6 +21,7 @@ public class Subvention {
     private typesSubvention type;
 
     public Subvention(int index, Continent continent, Rectangle[] tabRectangleSubvention){
+        this.index = index;
         setType(index);
         this.continent = continent;
         tabRectangleSubvention[index] = new Rectangle(75, 75, Color.WHITE);
@@ -41,9 +42,6 @@ public class Subvention {
         }
     }
 
-    public Subvention(int index) {
-        this.index = index ;
-    }
 
 
     public int getIndex() {
