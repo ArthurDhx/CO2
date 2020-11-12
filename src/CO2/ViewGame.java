@@ -16,6 +16,7 @@ public class ViewGame {
 	Text nbTilesSolarProject ;
 	Text nbTour;
 	Text argentJoueur;
+	Text resourcesTechJoueur;
 
 	ImageView imageViewTilesSolarProject;
 	ImageView imageViewTilesSolarProjectBack;
@@ -68,6 +69,7 @@ public class ViewGame {
 
 		reloadTour();
 		reloadArgent();
+		reloadresourcesTech();
 
 		initContinent();
 		initSubvention(250, 100);
@@ -87,6 +89,12 @@ public class ViewGame {
 		pane.getChildren().remove(argentJoueur);
 		argentJoueur = new Text(10, 50, "Vous avez "+ model.getCurentPLayer().getArgent() + " € ");
 		pane.getChildren().add(argentJoueur);
+	}
+	//A appeler lors d'une modification de l'argent du joueur
+	public void reloadresourcesTech(){
+		pane.getChildren().remove(resourcesTechJoueur);
+		resourcesTechJoueur = new Text(10, 65, "Vous avez "+ model.getCurentPLayer().getResourcesTech() + " ressources technologiques. ");
+		pane.getChildren().add(resourcesTechJoueur);
 	}
 
     public void initContinent(){

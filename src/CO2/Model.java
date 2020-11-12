@@ -217,6 +217,7 @@ public class Model {
 	 */
 	public boolean mettreEnPlaceProjet(Continent continent, Subvention subvention){
 		curPlayer = getCurentPLayer();
+		System.out.println();
 		if(curPlayer.getCEP() >= 1){
 			curPlayer.mettreEnPlaceProjet();
 			return true;
