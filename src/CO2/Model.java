@@ -2,6 +2,11 @@ package CO2;
 
 import javafx.scene.image.Image;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -22,6 +27,9 @@ public class Model {
 	//Tableau contenant les 6 tuiles de projet solaire
 	//TilesSolarProject[] tilesSolarProjects;
 	ArrayList<TilesSolarProject> tilesSolarProjects;
+
+	// Liste des sommets
+	List<SommetTile> allSommetTile;
 
 	// tableau contenant les joueurs
 	private Player[] players;
@@ -45,7 +53,7 @@ public class Model {
 	/**
 	 * Initialisation des attributs
 	 */
-	public void init(){
+	public void init() throws IOException {
     	// Initialisation du tableau contenant les 6 tuiles de projet solaire
 		tilesSolarProjects = new ArrayList<TilesSolarProject>();
 		for(int i = 0; i< 6; i++){
@@ -54,9 +62,10 @@ public class Model {
 		// Initialisation des joueurs
 		initPlayers();
 		initTour();
+		// Initialisation des sommets
+		initSommetTile();
 		// Initialisation des continents
 		initContinents();
-
 	}
 
 	/**
@@ -87,9 +96,42 @@ public class Model {
 			continents[i] = new Continent(nomContinents.get(i), 3, new Image(getClass().getResourceAsStream("images/Continents/" + nomContinents.get(i) +".jpg")));
 
 			// TODO dans un prochain sprint, generer les agendaTiles et en prendre une aleatoire par continent
-			AgendaTile agendaTile = new AgendaTile("Reforesting", "Solar", "Fusion", new Image(getClass().getResourceAsStream("images/TileAgenda_Reforestation_Solar_Fusion.png")));
+			AgendaTile agendaTile = new AgendaTile("Reforesting", "Solar", "Fusion", new Image(getClass().getResourceAsStream("images/Agendas/TileAgenda_Reforestation_Solar_Fusion.png")));
 			continents[i].setAgendaTile(agendaTile);
+
+			SommetTile sommetTile = allSommetTile.get(i);
+			continents[i].setSommetTile(sommetTile);
 		}
+	}
+
+	/**
+	 * Initialise les sommets
+	 */
+	public void initSommetTile() throws IOException {
+		ArrayList<SommetTile> lstAllSommet = new ArrayList<SommetTile>();
+		ArrayList<String> lstSubject = new ArrayList<String>();
+
+		File fichier = new File("src/CO2/sommetTile.txt");
+		BufferedReader bufferedReader = new BufferedReader(new FileReader(fichier));
+		String st;
+
+		while((st = bufferedReader.readLine()) != null) {
+			String location = st.split(" ")[0];
+			String subject1 = st.split(" ")[1];
+			String subject2 = st.split(" ")[2];
+			String subject3 = st.split(" ")[3];
+			String subject4 = st.split(" ")[4];
+
+			lstSubject.add(subject1);
+			lstSubject.add(subject2);
+			if(!subject3.equals("none")) lstSubject.add(subject3);
+			if(!subject4.equals("none")) lstSubject.add(subject4);
+
+			lstAllSommet.add(new SommetTile(location, lstSubject.size(), lstSubject,new Image(getClass().getResourceAsStream("images/Sommets/"+location+".png"))));
+			lstSubject.clear();
+		}
+		bufferedReader.close();
+		this.allSommetTile = lstAllSommet;
 	}
 
 	/**
@@ -98,8 +140,6 @@ public class Model {
 	public int getNbSolarProject(){
     	return tilesSolarProjects.size();
 	}
-
-    public void startGame() { state = STATE_PLAY; }
 
 	/**
 	 * Ajoute 1 d'expertise au joueur courant pour un type d'energie verte
@@ -145,6 +185,19 @@ public class Model {
 		return false;
 	}
 
+	/**
+	 * Permet de savoir si un joueur peut mettre en place un projet
+	 * @return
+	 */
+	public boolean mettreEnPlaceProjet(Continent continent, Subvention subvention){
+		curPlayer = getCurentPLayer();
+		if(curPlayer.getCEP() >= 1){
+			curPlayer.mettreEnPlaceProjet();
+			return true;
+		}
+		return false;
+	}
+
 	public boolean tilesSolarProjectOnWhichContinent(){
     	// à développer pour savoir quel continent contient les tuiles de projet solaire
 		return continents[0].isContainsTilesSolarProject();
@@ -172,4 +225,6 @@ public class Model {
 	public void setNbJoueur(int nbJoueur) { this.nbJoueur = nbJoueur; }
 
 	public int getNbJoueur() { return players.length; }
+
+	public void startGame() { state = STATE_PLAY; }
 }

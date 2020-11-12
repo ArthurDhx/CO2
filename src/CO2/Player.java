@@ -14,6 +14,9 @@ public class Player {
     //le joueur à une liste de scientifique, elle peut être vide ou rempli jusqu'a 4 scientifiques maximum
     private List<Scientifique> scientifiques;
 
+    //le joueur à des CEP
+    int CEP;
+
     private boolean actionPrincipaleDone ;
     private boolean[] actionGratuiteDone ;
 
@@ -52,6 +55,7 @@ public class Player {
         this.actionGratuiteDone = actionGratuiteDone;
         this.scientifiques = new ArrayList<>();
         this.scientifiques.add(new Scientifique());
+        this.CEP = 2;
         setArgent(21);
     }
 
@@ -109,6 +113,9 @@ public class Player {
     public void setArgent(int argent) {
         this.argent = argent;
     }
+
+    public int getCEP() { return CEP; }
+    public void mettreEnPlaceProjet(){ CEP -= 1; }
 
     public void gainArgent(int argent) {
         this.argent += Math.abs(argent);

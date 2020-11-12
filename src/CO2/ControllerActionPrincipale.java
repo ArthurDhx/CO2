@@ -55,7 +55,21 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
             // Si un dialog a été quitté reset la hbox
             viewGame.hboxAction.resetHbox();
         } else if (source == viewGame.hboxAction.btnMettreProjet){
-            // A implementer
+            // On affiche le ChoiceDialog qui permet de mettre en place un projet déjà proposé
+            viewGame.hboxAction.displayMettreEnPlaceProjetChoiceDialog() ;
+            if(viewGame.hboxAction.dialogMettreEnPlaceProjet == null) return;
+            // Le resultat du ChoiceDialog
+            Optional<Subvention> result = viewGame.hboxAction.dialogMettreEnPlaceProjet.showAndWait();
+            result.ifPresent(projetChoisi -> {
+                // Si un projet a ete choisi
+                if(model.mettreEnPlaceProjet(projetChoisi.getContinent(), projetChoisi))
+                    viewGame.mettreEnPlaceProjet(projetChoisi.getIndex()+1, viewGame.imageViewTilesSolarProjectBack, projetChoisi.getContinent());
+                model.getCurentPLayer().setActionPrincipaleDone(true);
+                return;
+            });
+            // Sinon reset la hbox
+            viewGame.hboxAction.resetHbox();
+
         } else if (source == viewGame.hboxAction.btnConstruire) {
             // A implementer
         }

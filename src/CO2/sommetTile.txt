@@ -1,0 +1,18 @@
+Canberra Solar Fusion none none
+Geneve Solar Biomass none none
+Johannesbourg Solar Recycling none none
+Kyoto Solar Reforestation none none
+Londre Biomass Reforestation none none
+Marrakech Biomass Recycling none none
+Stockholm Fusion Recycling none none
+Vienne Fusion Reforestation none none
+Zurich Recycling Reforestation none none
+Moscou Biomass Reforestation Fusion none none
+Nairobi Biomass Fusion Solar none
+New_York Fusion Recycling Reforestation none
+Paris Fusion Recycling Biomass none
+Pekin Fusion Solar Recycling none
+Rio_de_Janeiro Fusion Recycling Solar none
+Rome Recycling Solar Reforestation Biomass
+Seattle Recycling Solar Reforestation Fusion
+Seoul Recycling Biomass Reforestation Fusion

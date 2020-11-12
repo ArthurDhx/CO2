@@ -17,6 +17,8 @@ public class Continent {
     private final Image imgContinent;
     // tuile agenda régionale
     private AgendaTile agendaTile;
+    // Tuile sommet
+    private SommetTile sommetTile;
 
     public Continent(String name, int nbCep, Image imgContinent) {
         // initalisation des 3 cases permettant de recevoir des subventions
@@ -26,9 +28,9 @@ public class Continent {
                 tabRectangleSubvention[i].setStroke(Color.BLACK);
         }
         // initalisation du nom de la subvention
-        subventions.get(0).setName("argent");
-        subventions.get(1).setName("ressources \ntechnologiques");
-        subventions.get(2).setName("recherche en\ncollaboration");
+        subventions.get(0).setName("Argent");
+        subventions.get(1).setName("Ressources \nTechnologiques");
+        subventions.get(2).setName("Recherche en\nCollaboration");
         // initialisation du continent de la subvention
         subventions.get(0).setContinent(this);
         subventions.get(1).setContinent(this);
@@ -75,5 +77,13 @@ public class Continent {
 
     public void setAgendaTile(AgendaTile agendaTile) {
         this.agendaTile = agendaTile;
+    }
+
+    public SommetTile getSommetTile() {
+        return sommetTile;
+    }
+
+    public void setSommetTile(SommetTile sommetTile) {
+        this.sommetTile = sommetTile;
     }
 }

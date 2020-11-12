@@ -4,12 +4,14 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
+
 public class ModelUnitTest {
 
     Model model;
 
     @Before
-    public void setup() {
+    public void setup() throws IOException {
         model = new Model();
         model.init();
     }
@@ -58,5 +60,14 @@ public class ModelUnitTest {
     public void testPlacementImpossibleTuileRecyclageSurContinent() {
         // tout les continents on l'agendaTiles ["Reforesting", "Solar", "Fusion"] dans ce sprint
         Assert.assertFalse(model.getContinents()[0].getAgendaTile().isPossiblePlacement("Recycling"));
+    }
+
+    @Test
+    public void testMettreEnPlaceProjet(){
+        Player p = model.getCurentPLayer();
+        Continent c = model.getContinents()[0];
+        Assert.assertEquals(2,p.getCEP());
+        model.mettreEnPlaceProjet(c,c.getSubventions().get(0));
+        Assert.assertEquals(1,p.getCEP());
     }
 }
