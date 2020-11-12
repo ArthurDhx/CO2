@@ -7,8 +7,11 @@ enum typesSubvention {ARGENT, RESSOURCE, RECHERCHE}
 
 public class Subvention {
 
-    // peut contenir une tuile pour un projet solaire
+    // contient un projet
     private TilesSolarProject tilesSolarProject;
+    /*
+        false si la subvention a un projet
+     */
     private boolean empty = true;
     // si la case est vide = true
     // si la case contient une tuile = false;

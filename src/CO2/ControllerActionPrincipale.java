@@ -38,10 +38,7 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
                 Optional<Subvention> resulltSubv = viewGame.hboxAction.dialogSubvention.showAndWait();
                 resulltSubv.ifPresent(subvention -> {
                     // meme principe que au dessus
-                    System.out.println(subvention);
                     if(model.addTilesSolarProjectToSubventionCase(continentChoisi,subvention.getIndex())){
-
-                        System.out.println("TEEEEST");
                         // Si la tuile peut etre ajouter
                         // TODO : [Yassine] a vérifier apres refactoring tab vers liste
                         // Affiche la tuile a l'ecran
