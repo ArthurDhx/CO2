@@ -6,14 +6,24 @@ public class Scientifique {
      */
     private Continent continent; // Si null, alors il est dans la base du joueur
     private Subvention subvention;
+    private SommetTile sommetTile;
 
     public Scientifique(){
         this.continent = null;
         this.subvention = null;
+        this.sommetTile = null;
     }
 
     public Continent getContinent(){
         return this.continent;
+    }
+
+    public Subvention getSubvention() {
+        return subvention;
+    }
+
+    public SommetTile getSommetTile() {
+        return sommetTile;
     }
 
     public void setContinent(Continent continent){
@@ -22,6 +32,10 @@ public class Scientifique {
 
     public void setSubvention(Subvention subvention){
         this.subvention = subvention;
+    }
+
+    public void setSommetTile(SommetTile sommetTile){
+        this.sommetTile = sommetTile;
     }
 
     public String toString(){

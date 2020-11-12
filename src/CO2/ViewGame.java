@@ -22,6 +22,7 @@ public class ViewGame {
 	ImageView imageViewScientifique;
 
 	ViewMenuActionHbox hboxAction;
+	private Object AlertType;
 
 	public ViewGame(Model model, Pane pane) throws IOException {
 		this.model = model;
@@ -353,6 +354,42 @@ public class ViewGame {
 		}
 	}
 
+	public void addScientifiqueToSommet(ImageView imageViewScientifique, Scientifique scientifique){
+		Continent continent = scientifique.getContinent();
+		switch(continent.getName()) {
+			case "Europe" :
+				imageViewScientifique.setX(400-50);
+				imageViewScientifique.setY(200-20);
+				imageViewScientifique.toFront();
+				break;
+			case "Afrique" :
+				imageViewScientifique.setX(700-50);
+				imageViewScientifique.setY(70+115);
+				imageViewScientifique.toFront();
+				break;
+			case "Amérique du Sud" :
+				imageViewScientifique.setX(1000-50);
+				imageViewScientifique.setY(200-20);
+				imageViewScientifique.toFront();
+				break;
+			case "Amérique du Nord" :
+				imageViewScientifique.setX(1000-50);
+				imageViewScientifique.setY(550-20);
+				imageViewScientifique.toFront();
+				break;
+			case "Océanie" :
+				imageViewScientifique.setX(700-50);
+				imageViewScientifique.setY(700-20);
+				imageViewScientifique.toFront();
+				break;
+			case "Asie" :
+				imageViewScientifique.setX(400-50);
+				imageViewScientifique.setY(550-20);
+				imageViewScientifique.toFront();
+				break;
+		}
+	}
+
 	public void mettreEnPlaceProjet(int projectChoice, ImageView imageViewTilesSolarProjectBack, Continent continent){
 		Image imgTilesSolarProjectBack = new Image(getClass().getResourceAsStream("images/Projets/TilesSolarProjectVerso.png"));
 		imageViewTilesSolarProjectBack = new ImageView(imgTilesSolarProjectBack);
@@ -463,4 +500,11 @@ public class ViewGame {
 		alert.showAndWait();
 	}
 
+	public void sommetInfo() {
+		Alert alert = new Alert(Alert.AlertType.INFORMATION);
+		alert.setTitle("Information sur le sommet");
+		alert.setHeaderText(null);
+		alert.setContentText("Il n'y a pas la votre source d'énergie dans le sommet");
+		alert.showAndWait();
+	}
 }

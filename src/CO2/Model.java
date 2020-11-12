@@ -186,6 +186,32 @@ public class Model {
 	}
 
 	/**
+	 * permet de savoir si le joueur peut déplacer un scientifique d'un projet à un sommet
+	 * @return true si il peut, sinon false
+	 */
+	public boolean moveScientificOnSommet(Subvention subvention){
+		List<Scientifique> scientifiques = this.getCurentPLayer().getScientifiques();
+		Scientifique scientifique = new Scientifique();
+
+		for (Scientifique sc : scientifiques) {
+			if (sc.getSubvention()!= null && sc.getSubvention().equals(subvention)) scientifique = sc;
+		}
+		SommetTile sommetTile = scientifique.getContinent().getSommetTile();
+
+		// A terme vérifié si le type du projet = nécessite  héritage tuile => solaire
+		if (sommetTile.getSubjectInSommet("Solar")){
+			for (Scientifique sc : scientifiques) {
+				if (sc.getSubvention().equals(subvention)) {
+					sommetTile.setStaffedScientifiquesAt(sc,sommetTile.getIndexSubject("Solar"));
+				}
+				return true;
+			}
+		}
+		return false;
+	}
+
+
+	/**
 	 * Permet de savoir si un joueur peut mettre en place un projet
 	 * @return
 	 */

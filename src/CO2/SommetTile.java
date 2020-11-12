@@ -10,6 +10,7 @@ public class SommetTile {
     private int nbSubjects;
     private ArrayList<String> subjects;
     private ArrayList<Boolean> staffed;
+    private ArrayList<Scientifique> scientifiques;
     private Image imageSommetTile;
 
     public SommetTile(){}
@@ -20,6 +21,7 @@ public class SommetTile {
         this.subjects = new ArrayList<String>();
         this.subjects.addAll(subjects);
         this.staffed = new ArrayList<Boolean>();
+        this.scientifiques = new ArrayList<Scientifique>();
         setAllStaffedAs(false);
         this.imageSommetTile = imageSommetTile;
     }
@@ -43,10 +45,28 @@ public class SommetTile {
     public String getSubjectIndex(int index) {
         return subjects.get(index);
     }
+
+    public int getIndexSubject(String subject) {
+        for (int i = 0; i < this.subjects.size() ; i++) {
+            if (this.subjects.get(i).equals(subject)) return i;
+        }
+        return -1;
+    }
+
+    public boolean getSubjectInSommet(String subject){
+        for (String s: this.subjects) {
+            if(s.equals(subject)) return true;
+        }
+        return false;
+    }
     public Image getImageSommetTile() {
         return imageSommetTile;
     }
-    
+
+    public ArrayList<Scientifique> getScientifiques() {
+        return scientifiques;
+    }
+
     /**
      * Retourne vrai ou faux selon si un sujet est occupé
      * @return boolean
@@ -71,6 +91,13 @@ public class SommetTile {
     public void setImageSommetTile(Image imageSommetTile) {
         this.imageSommetTile = imageSommetTile;
     }
+
+    public void setStaffedScientifiquesAt(Scientifique scientifique, int index) {
+        this.scientifiques.add(scientifique);
+        scientifique.setSommetTile(this);
+        setStaffedAsOn(index, true);
+    }
+
 
     /**
      * Donne une valeur à tous les sujets (peut être utilisé pour reset)

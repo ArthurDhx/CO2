@@ -15,7 +15,7 @@ public class ViewMenuActionHbox extends HBox {
     // Les différents ChoiceDialog s'affichant selon l'action choisis
     ChoiceDialog<Continent> dialogProposerProjet;
     ChoiceDialog<Subvention> dialogSubvention;
-    ChoiceDialog<Subvention> dialogDeplacerScientifique;
+    ChoiceDialog<Subvention> dialogDeplacerScientifiqueProjet;
     ChoiceDialog<Scientifique> dialogChoisirScientifique;
     ChoiceDialog<Subvention> dialogMettreEnPlaceProjet;
 
@@ -29,7 +29,8 @@ public class ViewMenuActionHbox extends HBox {
     // Les boutons associe aux actions gratuites
     Button btnActionGratuite;
     Button btnMarche;
-    Button btnDeplacerScientifiq;
+    Button btnDeplacerScientifiqToProject;
+    Button btnDeplacerScientifiqToSommet;
     Button btnJouerCarte;
 
     // Button present dans le menu
@@ -51,7 +52,8 @@ public class ViewMenuActionHbox extends HBox {
         btnMettreProjet = new Button("Mettre en place un projet");
 
         btnActionGratuite = new Button("Action Gratuite");
-        btnDeplacerScientifiq = new Button("Déplacer un scientifque");
+        btnDeplacerScientifiqToProject = new Button("Déplacer un scientifque sur un projet");
+        btnDeplacerScientifiqToSommet = new Button("Déplacer un scientifque sur un sommet");
         btnMarche = new Button("Marché au CEP");
         btnJouerCarte = new Button("Jouer une carte");
         btnFinTour = new Button("Fin du tour");
@@ -139,14 +141,16 @@ public class ViewMenuActionHbox extends HBox {
         boolean[] actionFaite = model.getCurentPLayer().getActionGratuiteDone();
         this.getChildren().removeAll(this.getChildren());
         // Si l'action n'a pas déjà été faite affiche le bouton liée a l'action
-        if (!actionFaite[0]) this.getChildren().add(btnDeplacerScientifiq);
-        if (!actionFaite[1]) this.getChildren().add(btnMarche);
-        if (!actionFaite[2]) this.getChildren().add(btnJouerCarte);
+        if (!actionFaite[0]) this.getChildren().add(btnDeplacerScientifiqToProject);
+        if (!actionFaite[1]) this.getChildren().add(btnDeplacerScientifiqToSommet);
+        if (!actionFaite[2]) this.getChildren().add(btnMarche);
+        if (!actionFaite[3]) this.getChildren().add(btnJouerCarte);
+
         this.getChildren().add(btnCancelAction);
     }
 
     /**
-     * Affiche le ChoiceDialog qui permet de déplacer un scientifique
+     * Affiche le ChoiceDialog qui permet de déplacer un scientifique sur un projet
      */
     public void displayDeplacerScientifiqueChoiceDialog(){
         //On récupère les projets
@@ -163,13 +167,13 @@ public class ViewMenuActionHbox extends HBox {
         System.out.println(subventions);
         //Si aucun projet n'est mis en place, on ne fait rien
         if(subventions.isEmpty()) return;
-        dialogDeplacerScientifique = new ChoiceDialog<Subvention>(
+        dialogDeplacerScientifiqueProjet = new ChoiceDialog<Subvention>(
                 subventions.get(0), // Choix par défaut
                 subventions
         );
-        dialogDeplacerScientifique.setTitle("Déplacer un scientifique");
-        dialogDeplacerScientifique.setHeaderText("Veuiller choisir un projet");
-        dialogDeplacerScientifique.setContentText("Projet:");
+        dialogDeplacerScientifiqueProjet.setTitle("Déplacer un scientifique");
+        dialogDeplacerScientifiqueProjet.setHeaderText("Veuiller choisir un projet");
+        dialogDeplacerScientifiqueProjet.setContentText("Projet:");
     }
 
     /**
@@ -229,7 +233,8 @@ public class ViewMenuActionHbox extends HBox {
      * @param handler Le controlleur a associé
      */
     public void setButtonActionGratuiteControler(EventHandler<ActionEvent> handler) {
-        btnDeplacerScientifiq.setOnAction(handler);
+        btnDeplacerScientifiqToProject.setOnAction(handler);
+        btnDeplacerScientifiqToSommet.setOnAction(handler);
         btnMarche.setOnAction(handler);
         btnJouerCarte.setOnAction(handler);
     }

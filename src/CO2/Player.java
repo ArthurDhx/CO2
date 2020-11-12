@@ -23,15 +23,16 @@ public class Player {
     private int argent;
     /*
     * true si une action a été faite
-    * [0] deplacer scientifique
-    * [1] visite au marche
-    * [2] jouer une carte
+    * [0] deplacer scientifique Projet
+    * [1] deplacer scientifique Sommet
+    * [2] visite au marche
+    * [3] jouer une carte
     */
 
 
 
     public static Player createPlayer() {
-        final int NBACTIONGRATUITE = 3;
+        final int NBACTIONGRATUITE = 4;
         boolean[] actionGratuiteDone = new boolean[NBACTIONGRATUITE];
         Player p = new Player(false , actionGratuiteDone);
 
@@ -112,6 +113,10 @@ public class Player {
     }
     public void setArgent(int argent) {
         this.argent = argent;
+    }
+
+    public Scientifique getCurrentScientifique(){
+        return scientifiques.get(0);// a terme il y aura plus de scientifique
     }
 
     public int getCEP() { return CEP; }
