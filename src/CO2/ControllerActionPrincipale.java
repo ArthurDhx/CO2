@@ -31,13 +31,17 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
             result.ifPresent(continentChoisi -> {
                 // Si le résultat est present ( l'utilisateur n'a pas quitter le ChoiceDialog et a donc choisi
                 // un continent => continentChois )
+                // choix de la subvention
                 viewGame.hboxAction.displayChoisirSubventionChoiceDialog(continentChoisi);
 
                 // la subvention choisis par le joueur
                 Optional<Subvention> resulltSubv = viewGame.hboxAction.dialogSubvention.showAndWait();
                 resulltSubv.ifPresent(subvention -> {
                     // meme principe que au dessus
+                    System.out.println(subvention);
                     if(model.addTilesSolarProjectToSubventionCase(continentChoisi,subvention.getIndex())){
+
+                        System.out.println("TEEEEST");
                         // Si la tuile peut etre ajouter
                         // TODO : [Yassine] a vérifier apres refactoring tab vers liste
                         // Affiche la tuile a l'ecran
