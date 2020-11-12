@@ -22,23 +22,13 @@ public class Continent {
 
     public Continent(String name, int nbCep, Image imgContinent) {
         /* initalisation des 3 cases permettant de recevoir des subventions
-            subventions[0] = argent
-            suventions[1] = ressources
-            subventions[2] = recherche
+            subventions [0] = argent
+            subventions [1] = ressources
+            subventions [2] = recherche
         */
         for(int i = 0;i<3;i++) {
-                subventions.add(new Subvention(i));
-                tabRectangleSubvention[i] = new Rectangle(75, 75, Color.WHITE);
-                tabRectangleSubvention[i].setStroke(Color.BLACK);
+                subventions.add(new Subvention(i,this,tabRectangleSubvention));
         }
-        // initalisation du nom de la subvention
-        subventions.get(0).setName("Argent");
-        subventions.get(1).setName("Ressources \nTechnologiques");
-        subventions.get(2).setName("Recherche en\nCollaboration");
-        // initialisation du continent de la subvention
-        subventions.get(0).setContinent(this);
-        subventions.get(1).setContinent(this);
-        subventions.get(2).setContinent(this);
         this.name = name;
         this.nbCep = nbCep;
         this.imgContinent = imgContinent;
@@ -54,7 +44,7 @@ public class Continent {
         // permet de savoir si le continent contient des projets de tuiles solaires
         if(!subventions.get(2).isEmpty()){
             System.out.println("Tuile de projet solaire sur case subvention : " +
-                    subventions.get(2).getName() + ", dans le continent " + name);
+                    subventions.get(2).getType() + ", dans le continent " + name);
             return true;
         }
         return false;
