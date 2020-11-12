@@ -1,5 +1,7 @@
 package CO2;
 
+import javafx.scene.image.Image;
+import org.junit.Assert;
 import org.junit.Test;
 
 public class SubventionUnitTest {
@@ -12,4 +14,15 @@ public class SubventionUnitTest {
         s1.addTilesSolarProject(t1);
     }
      */
+
+    @Test
+    public void testEffetRessources() {
+        Continent continent = new Continent("Europe", 2, new Image(getClass().getResourceAsStream("images/Continents/Europe.jpg")));
+        Player p = Player.createPlayer();
+
+        Assert.assertEquals(0, p.getResourcesTech());
+        Subvention sub = continent.getSubventions().get(1);
+        sub.effect(p);
+        Assert.assertEquals(2, p.getResourcesTech());
+    }
 }

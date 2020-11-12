@@ -90,19 +90,19 @@ public class ViewGame {
 	//A appeler lors d'une modification de l'argent du joueur
 	public void reloadArgent(){
 		pane.getChildren().remove(argentJoueur);
-		argentJoueur = new Text(10, 50, "Vous avez "+ model.getCurentPLayer().getArgent() + " € ");
+		argentJoueur = new Text(10, 50, "Vous avez "+ model.getCurrentPLayer().getArgent() + " € ");
 		pane.getChildren().add(argentJoueur);
 	}
 	//A appeler lors d'une modification de l'argent du joueur
 	public void reloadresourcesTech() {
 		pane.getChildren().remove(resourcesTechJoueur);
-		resourcesTechJoueur = new Text(10, 80, "Vous avez " + model.getCurentPLayer().getResourcesTech() + " cubes de ressources technologiques. ");
+		resourcesTechJoueur = new Text(10, 80, "Vous avez " + model.getCurrentPLayer().getResourcesTech() + " cubes de ressources technologiques. ");
 		pane.getChildren().add(resourcesTechJoueur);
 	}
 	//A appeler lors d'une modification des CEP
 	public void reloadCEP(){
 		pane.getChildren().remove(CEPJoueur);
-		CEPJoueur = new Text(10,65,"Vous avez "+model.getCurentPLayer().getCEP()+" CEP");
+		CEPJoueur = new Text(10,65,"Vous avez "+model.getCurrentPLayer().getCEP()+" CEP");
 		pane.getChildren().add(CEPJoueur);
 		pane.getChildren().remove(CEPMarche);
 		CEPMarche = new Text(model.width/2-80,model.height/2,

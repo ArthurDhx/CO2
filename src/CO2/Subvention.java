@@ -76,4 +76,21 @@ public class Subvention {
     public typesSubvention getType() {
         return type;
     }
+
+    /**
+     * Applique l'effet de la subvention en fonction de son type
+     * @param currentPLayer le joueur courant
+     */
+    public void effect(Player currentPLayer) {
+        switch (type) {
+            case ARGENT:
+                break;
+            case RESSOURCE:
+                // Ajoute 2 cubes de ressources technologiques au joueur courant
+                currentPLayer.addResourcesTech(2);
+                break;
+            case RECHERCHE:
+                break;
+        }
+    }
 }

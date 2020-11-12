@@ -18,21 +18,21 @@ public class ModelUnitTest {
 
     @Test
     public void testInitJoueur() {
-        Assert.assertEquals(21,model.getCurentPLayer().getArgent());
+        Assert.assertEquals(21,model.getCurrentPLayer().getArgent());
     }
 
     @Test
     public void testIncrementExpertiseJoueurCourant() {
         model.incrementExpertise(Player.expertiseId.get("Solar"));
-        Assert.assertEquals(1, model.getCurentPLayer().getSolarExpertise());
+        Assert.assertEquals(1, model.getCurrentPLayer().getSolarExpertise());
         model.incrementExpertise(Player.expertiseId.get("Biomass"));
-        Assert.assertEquals(1, model.getCurentPLayer().getBiomassExpertise());
+        Assert.assertEquals(1, model.getCurrentPLayer().getBiomassExpertise());
         model.incrementExpertise(Player.expertiseId.get("Recycling"));
-        Assert.assertEquals(1, model.getCurentPLayer().getRecyclingExpertise());
+        Assert.assertEquals(1, model.getCurrentPLayer().getRecyclingExpertise());
         model.incrementExpertise(Player.expertiseId.get("Fusion"));
-        Assert.assertEquals(1, model.getCurentPLayer().getFusionExpertise());
+        Assert.assertEquals(1, model.getCurrentPLayer().getFusionExpertise());
         model.incrementExpertise(Player.expertiseId.get("Reforestation"));
-        Assert.assertEquals(1, model.getCurentPLayer().getReforestationExpertise());
+        Assert.assertEquals(1, model.getCurrentPLayer().getReforestationExpertise());
     }
 
     @Test
@@ -64,7 +64,7 @@ public class ModelUnitTest {
 
     @Test
     public void testMettreEnPlaceProjet(){
-        Player p = model.getCurentPLayer();
+        Player p = model.getCurrentPLayer();
         Continent c = model.getContinents()[0];
         Assert.assertEquals(2,p.getCEP());
         model.mettreEnPlaceProjet(c,c.getSubventions().get(0));

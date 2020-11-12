@@ -2,7 +2,6 @@ package CO2;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.ButtonType;
 
 import java.util.Optional;
 
@@ -32,14 +31,14 @@ public class ControllerActionGratuite implements EventHandler<ActionEvent>{
                 // Si un projet a ete choisi
                 if(model.moveScientificOnProject(projetChoisi.getContinent(), projetChoisi))
                     viewGame.addScientifiqueToProject(projetChoisi.getIndex()+1, viewGame.imageViewScientifique, projetChoisi.getContinent());
-                model.getCurentPLayer().setDeplacerScientifiqDone(true);
+                model.getCurrentPLayer().setDeplacerScientifiqDone(true);
                 return;
             });
             // Sinon reset la hbox
             viewGame.hboxAction.resetHbox();
         } else if (source == viewGame.hboxAction.btnDeplacerScientifiqToSommet) {
-            if(model.moveScientificOnSommet(model.getCurentPLayer().getCurrentScientifique().getSubvention())){
-                viewGame.addScientifiqueToSommet(viewGame.imageViewScientifique, model.getCurentPLayer().getCurrentScientifique());
+            if(model.moveScientificOnSommet(model.getCurrentPLayer().getCurrentScientifique().getSubvention())){
+                viewGame.addScientifiqueToSommet(viewGame.imageViewScientifique, model.getCurrentPLayer().getCurrentScientifique());
             } else {
                 viewGame.sommetInfo();
             }
@@ -47,7 +46,7 @@ public class ControllerActionGratuite implements EventHandler<ActionEvent>{
         }
         else if (source == viewGame.hboxAction.btnMarche) {
             // Affiche le ChoiceDialog qui permet d'acheter ou de vendre des CEPs
-            Player curPlayer = model.getCurentPLayer();
+            Player curPlayer = model.getCurrentPLayer();
             viewGame.hboxAction.displayMarcheCEP();
             Optional<String> result = viewGame.hboxAction.dialogAcheterVendreCEP.showAndWait();
             result.ifPresent(choice -> {
@@ -58,7 +57,7 @@ public class ControllerActionGratuite implements EventHandler<ActionEvent>{
                     else{
                         curPlayer.retirerArgent(model.currentPriceCEP);
                         curPlayer.addCEP();
-                        model.getCurentPLayer().setMarcheCEPDone(true);
+                        model.getCurrentPLayer().setMarcheCEPDone(true);
                         model.achatCEP();
                     }
                 }
@@ -69,7 +68,7 @@ public class ControllerActionGratuite implements EventHandler<ActionEvent>{
                     else{
                         curPlayer.removeCEP();
                         curPlayer.gainArgent(model.currentPriceCEP);
-                        model.getCurentPLayer().setMarcheCEPDone(true);
+                        model.getCurrentPLayer().setMarcheCEPDone(true);
                         model.venteCEP();
                     }
                 }

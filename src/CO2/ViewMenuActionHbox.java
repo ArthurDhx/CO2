@@ -2,7 +2,6 @@ package CO2;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.layout.HBox;
@@ -139,7 +138,7 @@ public class ViewMenuActionHbox extends HBox {
      */
     public void displayActionGratuite() {
         // Récupere les actions faite par le joueur
-        boolean[] actionFaite = model.getCurentPLayer().getActionGratuiteDone();
+        boolean[] actionFaite = model.getCurrentPLayer().getActionGratuiteDone();
         this.getChildren().removeAll(this.getChildren());
         // Si l'action n'a pas déjà été faite affiche le bouton liée a l'action
         if (!actionFaite[0]) this.getChildren().add(btnDeplacerScientifiqToProject);
@@ -181,7 +180,7 @@ public class ViewMenuActionHbox extends HBox {
      * Affiche le ChoiceDialog permettant de récuperer l'expertise grace au scientifiq en fin de tour
      */
     public void displayFinTourScientifiqueChoiceDialog(){
-        List<Scientifique> scientifiques = model.getCurentPLayer().getScientifiques();
+        List<Scientifique> scientifiques = model.getCurrentPLayer().getScientifiques();
         List<Scientifique> scientifiquesSurProjet = new ArrayList<>();
         for(Scientifique sc: scientifiques){
             if(sc.getContinent() != null){
@@ -203,8 +202,8 @@ public class ViewMenuActionHbox extends HBox {
      */
     public void resetHbox() {
         this.getChildren().removeAll(this.getChildren());
-        if (!model.getCurentPLayer().isActionPrincipaleDone()) this.getChildren().add(btnActionPrincipale);
-        if (!model.getCurentPLayer().isAllActionGratuiteDone()) this.getChildren().add(btnActionGratuite);
+        if (!model.getCurrentPLayer().isActionPrincipaleDone()) this.getChildren().add(btnActionPrincipale);
+        if (!model.getCurrentPLayer().isAllActionGratuiteDone()) this.getChildren().add(btnActionGratuite);
         this.getChildren().add(btnFinTour);
     }
 

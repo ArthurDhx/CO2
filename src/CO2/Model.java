@@ -6,7 +6,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -183,7 +182,7 @@ public class Model {
 	 */
 	public boolean moveScientificOnProject(Continent continent, Subvention subvention){
 		// à compléter
-		List<Scientifique> scientifiques = this.getCurentPLayer().getScientifiques();
+		List<Scientifique> scientifiques = this.getCurrentPLayer().getScientifiques();
 		for (Scientifique sc: scientifiques){
 			if(sc.getContinent() == null){
 				sc.setContinent(continent);
@@ -199,7 +198,7 @@ public class Model {
 	 * @return true si il peut, sinon false
 	 */
 	public boolean moveScientificOnSommet(Subvention subvention){
-		List<Scientifique> scientifiques = this.getCurentPLayer().getScientifiques();
+		List<Scientifique> scientifiques = this.getCurrentPLayer().getScientifiques();
 		Scientifique scientifique = new Scientifique();
 
 		for (Scientifique sc : scientifiques) {
@@ -225,7 +224,7 @@ public class Model {
 	 * @return
 	 */
 	public boolean mettreEnPlaceProjet(Continent continent, Subvention subvention){
-		curPlayer = getCurentPLayer();
+		curPlayer = getCurrentPLayer();
 		System.out.println();
 		if(curPlayer.getCEP() >= 1){
 			curPlayer.mettreEnPlaceProjet();
@@ -238,7 +237,7 @@ public class Model {
     	// à développer pour savoir quel continent contient les tuiles de projet solaire
 		return continents[0].isContainsTilesSolarProject();
 	}
-	public Player getCurentPLayer() { return players[curPlayerId]; }
+	public Player getCurrentPLayer() { return players[curPlayerId]; }
 
 	public Continent[] getContinents() { return continents; }
 

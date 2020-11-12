@@ -45,10 +45,13 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
                         viewGame.addTuilesToSubvention(subvention.getIndex()+1, viewGame.imageViewTilesSolarProject, continentChoisi);
                         // Mets a jour le model
                         model.tilesSolarProjects.remove(0);
+                        // Applique l'effet de la subvention choisie
+                        subvention.effect(model.getCurrentPLayer());
+                        viewGame.reloadresourcesTech();
                         // Mets a jour la vue
                         viewGame.nbTilesSolarProject.setText("Il y a "+ model.getNbSolarProject()+" projets solaires");
                         // Le joueur en cours a effectuer son action principale
-                        model.getCurentPLayer().setActionPrincipaleDone(true);
+                        model.getCurrentPLayer().setActionPrincipaleDone(true);
                     }
                     return;
                 });
@@ -65,7 +68,7 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
                 // Si un projet a ete choisi
                 if(model.mettreEnPlaceProjet(projetChoisi.getContinent(), projetChoisi))
                     viewGame.mettreEnPlaceProjet(projetChoisi.getIndex()+1, viewGame.imageViewTilesSolarProjectBack, projetChoisi.getContinent());
-                model.getCurentPLayer().setActionPrincipaleDone(true);
+                model.getCurrentPLayer().setActionPrincipaleDone(true);
                 return;
             });
             // Sinon reset la hbox
