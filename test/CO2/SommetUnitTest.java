@@ -29,6 +29,14 @@ public class SommetUnitTest {
     }
 
     @Test
+    public void testGetSubjectInSommet(){
+        Assert.assertTrue(sommetTile.getSubjectInSommet("Fusion"));
+        Assert.assertTrue(sommetTile.getSubjectInSommet("Recycling"));
+        Assert.assertTrue(sommetTile.getSubjectInSommet("Biomass"));
+        Assert.assertFalse(sommetTile.getSubjectInSommet("Solar"));
+    }
+
+    @Test
     public void testSetAllStaffedAs1(){
         sommetTile.setAllStaffedAs(true);
         Assert.assertTrue(sommetTile.getStaffed().get(0));
@@ -67,5 +75,14 @@ public class SommetUnitTest {
         sommetTile.setStaffedAsOn(2, true);
         Assert.assertFalse(sommetTile.isAllStaffed());
     }
+
+    /*@Test
+    public void testSetStaffedScientifiquesAt(){
+        Scientifique scientifique = new Scientifique();
+
+
+        sommetTile.setStaffedScientifiquesAt(scientifique, 0);
+        Assert.assertEquals(scientifique, sommetTile.getScientifiques().get(0));
+    }*/
 
 }
