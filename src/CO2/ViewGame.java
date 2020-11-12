@@ -16,6 +16,8 @@ public class ViewGame {
 	Text nbTilesSolarProject ;
 	Text nbTour;
 	Text argentJoueur;
+	Text CEPJoueur;
+	Text CEPMarche;
 
 	ImageView imageViewTilesSolarProject;
 	ImageView imageViewTilesSolarProjectBack;
@@ -68,6 +70,7 @@ public class ViewGame {
 
 		reloadTour();
 		reloadArgent();
+		reloadCEP();
 
 		initContinent();
 		initSubvention(250, 100);
@@ -87,6 +90,18 @@ public class ViewGame {
 		pane.getChildren().remove(argentJoueur);
 		argentJoueur = new Text(10, 50, "Vous avez "+ model.getCurentPLayer().getArgent() + " € ");
 		pane.getChildren().add(argentJoueur);
+	}
+	//A appeler lors d'une modification des CEP
+	public void reloadCEP(){
+		pane.getChildren().remove(CEPJoueur);
+		CEPJoueur = new Text(10,65,"Vous avez "+model.getCurentPLayer().getCEP()+" CEP");
+		pane.getChildren().add(CEPJoueur);
+		pane.getChildren().remove(CEPMarche);
+		CEPMarche = new Text(model.width/2-80,model.height/2,
+				"Il y a "+model.nbCEPdispo+" CEP dans le marché\n" +
+						"Le prix actuel est de "+model.currentPriceCEP+" €"
+		);
+		pane.getChildren().add(CEPMarche);
 	}
 
     public void initContinent(){

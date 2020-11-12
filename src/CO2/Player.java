@@ -104,6 +104,10 @@ public class Player {
         this.actionGratuiteDone[0] = done ;
     }
 
+    public void setMarcheCEPDone(boolean done){
+        this.actionGratuiteDone[2] = done;
+    }
+
     public List<Scientifique> getScientifiques(){
         return this.scientifiques;
     }
@@ -120,6 +124,8 @@ public class Player {
     }
 
     public int getCEP() { return CEP; }
+    public void addCEP(){ CEP += 1; }
+    public void removeCEP(){ CEP -= 1; }
     public void mettreEnPlaceProjet(){ CEP -= 1; }
 
     public void gainArgent(int argent) {

@@ -24,6 +24,11 @@ public class Model {
 	int width;
 	int height;
 
+	//prix courant des CEPs
+	int currentPriceCEP;
+	//nombre de CEP disponible au marché
+	int nbCEPdispo;
+
 	//Tableau contenant les 6 tuiles de projet solaire
 	//TilesSolarProject[] tilesSolarProjects;
 	ArrayList<TilesSolarProject> tilesSolarProjects;
@@ -48,6 +53,10 @@ public class Model {
 
 		players = new Player[nbJoueur];
     	curPlayerId = 0;
+    	//On initialise le prix des CEPs à 3
+    	currentPriceCEP = 3;
+    	//On place 2 CEP dans le marché
+		nbCEPdispo = 2;
 	}
 
 	/**
@@ -253,4 +262,17 @@ public class Model {
 	public int getNbJoueur() { return players.length; }
 
 	public void startGame() { state = STATE_PLAY; }
+
+	public void achatCEP(){
+		this.nbCEPdispo -= 1;
+		if(nbCEPdispo == 0){
+			nbCEPdispo += 2;
+			if(currentPriceCEP < 8) currentPriceCEP += 1;
+		}
+	}
+
+	public void venteCEP(){
+		this.nbCEPdispo += 1;
+		if(currentPriceCEP > 1) currentPriceCEP -= 1;
+	}
 }

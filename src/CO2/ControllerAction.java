@@ -36,6 +36,8 @@ public class ControllerAction implements EventHandler<ActionEvent>{
             }
             model.TourSuivant();
             model.getCurentPLayer().setActionPrincipaleDone(false);
+            model.getCurentPLayer().setDeplacerScientifiqDone(false);
+            model.getCurentPLayer().setMarcheCEPDone(false);
             viewGame.hboxAction.resetHbox();
             viewGame.reloadTour();
             System.out.println("Tour : " + model.getTour() + "/" + model.NB_TOUR_PAR_DECENNIE);
