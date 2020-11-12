@@ -21,7 +21,11 @@ public class Continent {
     private SommetTile sommetTile;
 
     public Continent(String name, int nbCep, Image imgContinent) {
-        // initalisation des 3 cases permettant de recevoir des subventions
+        /* initalisation des 3 cases permettant de recevoir des subventions
+            subventions[0] = argent
+            suventions[1] = ressources
+            subventions[2] = recherche
+        */
         for(int i = 0;i<3;i++) {
                 subventions.add(new Subvention(i));
                 tabRectangleSubvention[i] = new Rectangle(75, 75, Color.WHITE);

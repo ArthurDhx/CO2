@@ -1,5 +1,9 @@
 package CO2;
 
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+enum typesSubvention {ARGENT, RESSOURCE, RECHERCHE}
+
 public class Subvention {
 
     private String name;
@@ -12,8 +16,30 @@ public class Subvention {
     // si la case contient une tuile = false;
     private int index ;
     // L'index ou est placer la subvention sur le continent
-    Continent continent;
-    //Le continent parent de la subvention
+    private Continent continent;
+    //Le continent où se situe la subvention
+    private typesSubvention type;
+
+    public Subvention(int index, Continent continent, Rectangle[] tabRectangleSubvention){
+        setType(index);
+        this.continent = continent;
+        tabRectangleSubvention[index] = new Rectangle(75, 75, Color.WHITE);
+        tabRectangleSubvention[index].setStroke(Color.BLACK);
+    }
+
+    private void setType(int index){
+        switch(index){
+            case 0:
+                type = typesSubvention.ARGENT;
+                break;
+            case 1:
+                type = typesSubvention.RESSOURCE;
+                break;
+            case 2:
+                type = typesSubvention.RECHERCHE;
+                break;
+        }
+    }
 
     public Subvention(int index) {
         this.index = index ;
