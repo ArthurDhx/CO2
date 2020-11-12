@@ -2,6 +2,7 @@ package CO2;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.ButtonType;
 
 import java.util.Optional;
 
@@ -45,7 +46,37 @@ public class ControllerActionGratuite implements EventHandler<ActionEvent>{
             viewGame.hboxAction.resetHbox();
         }
         else if (source == viewGame.hboxAction.btnMarche) {
-            System.out.println("bouton marche");
+            // Affiche le ChoiceDialog qui permet d'acheter ou de vendre des CEPs
+            Player curPlayer = model.getCurentPLayer();
+            viewGame.hboxAction.displayMarcheCEP();
+            Optional<String> result = viewGame.hboxAction.dialogAcheterVendreCEP.showAndWait();
+            result.ifPresent(choice -> {
+                if(choice == "Acheter"){
+                    if(curPlayer.getArgent() < model.currentPriceCEP){
+                        viewGame.displayAlertWithoutHeaderText("Problème lors de l'achat","Vous n'avez pas assez d'argent pour acheter un CEP.");
+                    }
+                    else{
+                        curPlayer.retirerArgent(model.currentPriceCEP);
+                        curPlayer.addCEP();
+                        model.getCurentPLayer().setMarcheCEPDone(true);
+                        model.achatCEP();
+                    }
+                }
+                else{
+                    if(curPlayer.getCEP() < 1){
+                        viewGame.displayAlertWithoutHeaderText("Problème lors de la vente","Vous n'avez pas assez de CEP pour en vendre.");
+                    }
+                    else{
+                        curPlayer.removeCEP();
+                        curPlayer.gainArgent(model.currentPriceCEP);
+                        model.getCurentPLayer().setMarcheCEPDone(true);
+                        model.venteCEP();
+                    }
+                }
+                viewGame.reloadArgent();
+                viewGame.reloadCEP();
+                viewGame.hboxAction.resetHbox();
+            });
         }
         else if (source == viewGame.hboxAction.btnJouerCarte) {
             System.out.println("bouton jouer carte");

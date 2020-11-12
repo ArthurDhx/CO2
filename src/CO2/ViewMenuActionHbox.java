@@ -2,6 +2,7 @@ package CO2;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.layout.HBox;
@@ -18,7 +19,7 @@ public class ViewMenuActionHbox extends HBox {
     ChoiceDialog<Subvention> dialogDeplacerScientifiqueProjet;
     ChoiceDialog<Scientifique> dialogChoisirScientifique;
     ChoiceDialog<Subvention> dialogMettreEnPlaceProjet;
-
+    ChoiceDialog<String> dialogAcheterVendreCEP;
 
     // Les boutons associe aux actions principales
     Button btnActionPrincipale;
@@ -238,4 +239,19 @@ public class ViewMenuActionHbox extends HBox {
         btnMarche.setOnAction(handler);
         btnJouerCarte.setOnAction(handler);
     }
+
+    /**
+     * Permet de choisir si l'on veut acheter ou vendre 1 CEP
+     */
+    public void displayMarcheCEP(){
+        dialogAcheterVendreCEP = new ChoiceDialog<String>(
+                "Acheter",
+                "Acheter",
+                        "Vendre"
+        );
+        dialogAcheterVendreCEP.setTitle("Marché au CEP");
+        dialogAcheterVendreCEP.setHeaderText("Voulez-vous acheter ou vendre 1 CEP ?");
+        dialogAcheterVendreCEP.setContentText("Choix: ");
+    }
+
 }

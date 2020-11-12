@@ -78,21 +78,6 @@ public class Player {
      */
     public void addResourcesTech(int montant) { resourcesTech += Math.abs(montant); }
 
-    public void mettreEnPlaceProjet(){ CEP -= 1; }
-
-    public void gainArgent(int argent) {
-        this.argent += Math.abs(argent);
-    }
-
-    public boolean retirerArgent(int argent) {
-        if ((this.argent-argent) >= 0){
-            this.argent -= Math.abs(argent);
-            return true;
-        }
-        return false;
-    }
-
-
     public int getSolarExpertise() {
         return expertise[expertiseId.get("Solar")];
     }
@@ -118,11 +103,6 @@ public class Player {
     public int getArgent() {
         return argent;
     }
-    public int getCEP() { return CEP; }
-
-    public Scientifique getCurrentScientifique(){
-        return scientifiques.get(0);// a terme il y aura plus de scientifique
-    }
 
     public void setActionPrincipaleDone(boolean actionPrincipaleDone) {
         this.actionPrincipaleDone = actionPrincipaleDone;
@@ -133,6 +113,11 @@ public class Player {
     public void setDeplacerScientifiqDone(boolean done){
         this.actionGratuiteDone[0] = done ;
     }
+
+    public void setMarcheCEPDone(boolean done){
+        this.actionGratuiteDone[2] = done;
+    }
+
     public List<Scientifique> getScientifiques(){
         return this.scientifiques;
     }
@@ -140,4 +125,25 @@ public class Player {
         this.argent = argent;
     }
     public void setResourcesTech(int resourcesTech) { this.resourcesTech = resourcesTech; }
+
+    public Scientifique getCurrentScientifique(){
+        return scientifiques.get(0);// a terme il y aura plus de scientifique
+    }
+
+    public int getCEP() { return CEP; }
+    public void addCEP(){ CEP += 1; }
+    public void removeCEP(){ CEP -= 1; }
+    public void mettreEnPlaceProjet(){ CEP -= 1; }
+
+    public void gainArgent(int argent) {
+        this.argent += Math.abs(argent);
+    }
+
+    public boolean retirerArgent(int argent) {
+        if ((this.argent-argent) >= 0){
+            this.argent -= Math.abs(argent);
+            return true;
+        }
+        return false;
+    }
 }
