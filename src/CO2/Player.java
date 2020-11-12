@@ -74,71 +74,34 @@ public class Player {
 
     /**
      * Increment le nombre de ressources technologiques d'un montant donne
-     * @param montant
+     * @param amount
      */
-    public void addResourcesTech(int montant) { resourcesTech += Math.abs(montant); }
+    public void addResourcesTech(int amount) { resourcesTech += Math.abs(amount); }
 
-    public int getSolarExpertise() {
-        return expertise[expertiseId.get("Solar")];
-    }
-    public int getBiomassExpertise() { return expertise[expertiseId.get("Biomass")]; }
-    public int getRecyclingExpertise() { return expertise[expertiseId.get("Recycling")]; }
-    public int getFusionExpertise() { return expertise[expertiseId.get("Fusion")]; }
-    public int getReforestationExpertise() { return expertise[expertiseId.get("Reforestation")]; }
-
-    public boolean isActionPrincipaleDone() {
-        return actionPrincipaleDone;
-    }
-    public boolean isAllActionGratuiteDone() {
-        for (int i = 0; i < actionGratuiteDone.length ; i++) {
-            if (!actionGratuiteDone[i]) return false ;
+    /**
+     * Retire un nombre de ressources technologiques si le joueur a assez de cubes
+     * @param amount
+     * @return
+     */
+    public boolean removeResourcesTech(int amount) {
+        int montant = Math.abs(amount);
+        if ((this.resourcesTech-montant) >= 0){
+            this.resourcesTech -= montant;
+            return true;
         }
-        return true ;
+        return false;
     }
 
-    public int getResourcesTech() { return resourcesTech; }
-    public boolean[] getActionGratuiteDone() {
-        return actionGratuiteDone;
-    }
-    public int getArgent() {
-        return argent;
-    }
+    /**
+     *
+     * @param argent
+     */
+    public void gainArgent(int argent) { this.argent += Math.abs(argent); }
 
-    public void setActionPrincipaleDone(boolean actionPrincipaleDone) {
-        this.actionPrincipaleDone = actionPrincipaleDone;
-    }
-    public void setActionGratuiteDone(boolean[] actionGratuiteDone) {
-        this.actionGratuiteDone = actionGratuiteDone;
-    }
-    public void setDeplacerScientifiqDone(boolean done){
-        this.actionGratuiteDone[0] = done ;
-    }
-
-    public void setMarcheCEPDone(boolean done){
-        this.actionGratuiteDone[2] = done;
-    }
-
-    public List<Scientifique> getScientifiques(){
-        return this.scientifiques;
-    }
-    public void setArgent(int argent) {
-        this.argent = argent;
-    }
-    public void setResourcesTech(int resourcesTech) { this.resourcesTech = resourcesTech; }
-
-    public Scientifique getCurrentScientifique(){
-        return scientifiques.get(0);// a terme il y aura plus de scientifique
-    }
-
-    public int getCEP() { return CEP; }
-    public void addCEP(){ CEP += 1; }
-    public void removeCEP(){ CEP -= 1; }
-    public void mettreEnPlaceProjet(){ CEP -= 1; }
-
-    public void gainArgent(int argent) {
-        this.argent += Math.abs(argent);
-    }
-
+    /**
+     * @param argent
+     * @return
+     */
     public boolean retirerArgent(int argent) {
         if ((this.argent-argent) >= 0){
             this.argent -= Math.abs(argent);
@@ -146,4 +109,62 @@ public class Player {
         }
         return false;
     }
+
+    public int getSolarExpertise() {
+        return expertise[expertiseId.get("Solar")];
+    }
+    public int getBiomassExpertise() { return expertise[expertiseId.get("Biomass")]; }
+    public int getRecyclingExpertise() { return expertise[expertiseId.get("Recycling")]; }
+    public int getFusionExpertise() { return expertise[expertiseId.get("Fusion")]; }
+
+    public int getReforestationExpertise() { return expertise[expertiseId.get("Reforestation")]; }
+    public boolean isActionPrincipaleDone() {
+        return actionPrincipaleDone;
+    }
+
+    public boolean isAllActionGratuiteDone() {
+        for (int i = 0; i < actionGratuiteDone.length ; i++) {
+            if (!actionGratuiteDone[i]) return false ;
+        }
+        return true ;
+    }
+    public int getResourcesTech() { return resourcesTech; }
+    public boolean[] getActionGratuiteDone() {
+        return actionGratuiteDone;
+    }
+
+    public int getArgent() {
+        return argent;
+    }
+    public void setActionPrincipaleDone(boolean actionPrincipaleDone) {
+        this.actionPrincipaleDone = actionPrincipaleDone;
+    }
+    public void setActionGratuiteDone(boolean[] actionGratuiteDone) {
+        this.actionGratuiteDone = actionGratuiteDone;
+    }
+
+    public void setDeplacerScientifiqDone(boolean done){
+        this.actionGratuiteDone[0] = done ;
+    }
+
+    public void setMarcheCEPDone(boolean done){
+        this.actionGratuiteDone[2] = done;
+    }
+    public List<Scientifique> getScientifiques(){
+        return this.scientifiques;
+    }
+    public void setArgent(int argent) {
+        this.argent = argent;
+    }
+
+    public void setResourcesTech(int resourcesTech) { this.resourcesTech = resourcesTech; }
+
+    public Scientifique getCurrentScientifique(){
+        return scientifiques.get(0);// a terme il y aura plus de scientifique
+    }
+    public int getCEP() { return CEP; }
+    public void addCEP(){ CEP += 1; }
+    public void removeCEP(){ CEP -= 1; }
+
+    public void mettreEnPlaceProjet(){ CEP -= 1; }
 }

@@ -96,7 +96,7 @@ public class ViewGame {
 	//A appeler lors d'une modification de l'argent du joueur
 	public void reloadresourcesTech() {
 		pane.getChildren().remove(resourcesTechJoueur);
-		resourcesTechJoueur = new Text(10, 80, "Vous avez " + model.getCurentPLayer().getResourcesTech() + " ressources technologiques. ");
+		resourcesTechJoueur = new Text(10, 80, "Vous avez " + model.getCurentPLayer().getResourcesTech() + " cubes de ressources technologiques. ");
 		pane.getChildren().add(resourcesTechJoueur);
 	}
 	//A appeler lors d'une modification des CEP

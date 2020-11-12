@@ -79,4 +79,27 @@ public class PlayerUnitTest {
         p.mettreEnPlaceProjet();
         Assert.assertEquals(1,p.getCEP());
     }
+
+    @Test
+    public void testIncrementRessourcesTech() {
+        Assert.assertEquals(0, p.getResourcesTech());
+        p.addResourcesTech(5);
+        Assert.assertEquals(5, p.getResourcesTech());
+    }
+
+    @Test
+    public void testDecrementRessourcesTech() {
+        Assert.assertEquals(0, p.getResourcesTech());
+        p.addResourcesTech(5);
+        p.removeResourcesTech(3);
+        Assert.assertEquals(2, p.getResourcesTech());
+    }
+
+    @Test
+    public void testDecrementImpossible() {
+        p.addResourcesTech(5);
+        boolean ret = p.removeResourcesTech(10);
+        Assert.assertFalse(ret);
+        Assert.assertEquals(5, p.getResourcesTech());
+    }
 }
