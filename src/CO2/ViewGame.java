@@ -167,7 +167,7 @@ public class ViewGame {
 		Text[] subventionName = new Text[6];
 		for(int i=0;i<3;i++) {
 			for(int j=0;j<model.getContinents().length;j++) {
-				subventionName[j] = new Text(model.getContinents()[j].getSubventions().get(i).getName());
+				subventionName[j] = new Text(model.getContinents()[j].getSubventions().get(i).getType().toString());
 				subventionName[j].setStyle("-fx-font: 9 arial;");
 				if(j==0 || j==5) {model.getContinents()[j].getTabRectangleSubvention()[i].setX(k+val);subventionName[j].setX(k+val+5);}
 				if(j==0 || j==2) {model.getContinents()[j].getTabRectangleSubvention()[i].setY(val);subventionName[j].setY(val+40);}
