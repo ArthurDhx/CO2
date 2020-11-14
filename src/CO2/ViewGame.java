@@ -15,6 +15,7 @@ public class ViewGame {
 
 	Text nbTilesSolarProject ;
 	Text nbTour;
+	Text nbDecade;
 	Text argentJoueur;
 	Text resourcesTechJoueur;
 	Text CEPJoueur;
@@ -26,6 +27,7 @@ public class ViewGame {
 
 	ViewMenuActionHbox hboxAction;
 	private Object AlertType;
+
 
 	public ViewGame(Model model, Pane pane) throws IOException {
 		this.model = model;
@@ -70,6 +72,7 @@ public class ViewGame {
 		pane.getChildren().add(nbTilesSolarProject);
 
 		reloadTour();
+		reloadDecade();
 		reloadArgent();
 		reloadresourcesTech();
 		reloadCEP();
@@ -84,8 +87,13 @@ public class ViewGame {
 
 	public void reloadTour(){
 		pane.getChildren().remove(nbTour);
-		nbTour = new Text(10, 95,"Tour : "+model.getTour()+"/" + model.NB_TOUR_PAR_DECENNIE);
+		nbTour = new Text(10, 95,"Tour : "+model.getTour()+"/" + (model.NB_TOUR_PAR_DECENNIE-1));
 		pane.getChildren().add(nbTour);
+	}
+	public void reloadDecade(){
+		pane.getChildren().remove(nbDecade);
+		nbDecade = new Text(80, 95,"Décénnie : "+model.getDecade()+"/" + model.NB_DECENNIE);
+		pane.getChildren().add(nbDecade);
 	}
 	//A appeler lors d'une modification de l'argent du joueur
 	public void reloadArgent(){
@@ -112,12 +120,18 @@ public class ViewGame {
 		pane.getChildren().add(CEPMarche);
 	}
 
+	/**
+	 * Initialisation des continents
+	 */
     public void initContinent(){
-		// Tableau des continents
+		// Tableau des images continents
 		ImageView[] imageViewContinents = new ImageView[6];
+		// Tableau des images agenda
 		ImageView[] imageViewAgendaTiles = new ImageView[6];
+		// Tableau des images sommets
 		ImageView[] imageViewSommetTiles = new ImageView[6];
 		for(int i = 0; i<imageViewContinents.length;i++) {
+			// initialisation des Image View pour chaque tableau
 			imageViewContinents[i] = new ImageView(model.getContinents()[i].getImgContinent());
 			imageViewAgendaTiles[i] = new ImageView(model.getContinents()[i].getAgendaTile().getImageAgendaTile());
 			imageViewSommetTiles[i] = new ImageView(model.getContinents()[i].getSommetTile().getImageSommetTile());
@@ -163,12 +177,19 @@ public class ViewGame {
 		}
 	}
 
+	/**
+	 * Initialisation des subventions
+	 */
 	public void initSubvention(int val, int k){
+		// tableau de texte des subvention
 		Text[] subventionName = new Text[6];
 		for(int i=0;i<3;i++) {
 			for(int j=0;j<model.getContinents().length;j++) {
+				// initialisation du texte
 				subventionName[j] = new Text(model.getContinents()[j].getSubventions().get(i).getType().toString());
+				// style du texte
 				subventionName[j].setStyle("-fx-font: 9 arial;");
+				// position du texte (les 3 noms de subvention) pour chaque continent
 				if(j==0 || j==5) {model.getContinents()[j].getTabRectangleSubvention()[i].setX(k+val);subventionName[j].setX(k+val+5);}
 				if(j==0 || j==2) {model.getContinents()[j].getTabRectangleSubvention()[i].setY(val);subventionName[j].setY(val+40);}
 				if(j==1 || j==4) {model.getContinents()[j].getTabRectangleSubvention()[i].setX(k+val+300);subventionName[j].setX(k+val+305);}
@@ -176,6 +197,7 @@ public class ViewGame {
 				if(j==3 || j==5) {model.getContinents()[j].getTabRectangleSubvention()[i].setY(val+350);subventionName[j].setY(val+390);}
 				if(j==1) {model.getContinents()[j].getTabRectangleSubvention()[i].setY(val-150);subventionName[1].setY(val-110);}
 				if(j==4) {model.getContinents()[4].getTabRectangleSubvention()[i].setY(val+500);subventionName[4].setY(val+540);}
+				// ajout au pane
 				pane.getChildren().add(model.getContinents()[j].getTabRectangleSubvention()[i]);
 				pane.getChildren().add(subventionName[j]);
 			}
@@ -188,9 +210,12 @@ public class ViewGame {
 	 * @param imageViewTilesSolarProject
 	 */
 	public void addTuilesToSubvention(int subventionChoice, ImageView imageViewTilesSolarProject, Continent continent){
+		// suivant le nom du continent
 		switch(continent.getName()) {
 			case "Europe" :
+				// suivant la subvention choisie
 				switch (subventionChoice) {
+					// posiitionne les tuiles de projet à l'emplacement correspondant
 					case 1:
 						imageViewTilesSolarProject.setX(350);
 						break;
@@ -202,6 +227,7 @@ public class ViewGame {
 						break;
 				}
 				imageViewTilesSolarProject.setY(250);
+				// mettre l'image en premier plan
 				imageViewTilesSolarProject.toFront();
 				break;
 			case "Afrique" :
@@ -529,5 +555,20 @@ public class ViewGame {
 		alert.setHeaderText(null);
 		alert.setContentText("Il n'y a pas la votre source d'énergie dans le sommet");
 		alert.showAndWait();
+	}
+
+	/**
+	 * vérifie si c'est la fin du jeu
+	 */
+	public void isEndGame(){
+		// si le nombre de décénnie max est atteinte => renvoie true par model.EndGame
+		if(model.endGame()){
+			// message d'alerte
+			Alert alert = new Alert(Alert.AlertType.INFORMATION);
+			alert.setHeaderText(null);
+			alert.setTitle("partie terminé !");
+			alert.setContentText("la partie est terminé, Voulez-vous rejouer?");
+			alert.showAndWait();
+		}
 	}
 }

@@ -14,10 +14,14 @@ public class Model {
 
     final static int STATE_INIT = 1; // Title
 	final static int STATE_PLAY = 2; // Game
-	final int NB_TOUR_PAR_DECENNIE = 6; // 6 pour jeu solo
+	final int NB_TOUR_PAR_DECENNIE = 7; // 6 pour jeu solo + 1 pour pouvoir changer décénnie
+	final int NB_DECENNIE = 2010; // 2010 pour jeu solo, 2020 pour jeu multi
 
 	private int nbJoueur;
 	private int tour;
+
+	private int nbDecade;
+	private int decade;
 
 	int state;
 	int width;
@@ -49,7 +53,8 @@ public class Model {
 		height = 900;
 		nbJoueur = 1;
 		tour = 1;
-
+		nbDecade = 1;
+		decade = 1970;
 		players = new Player[nbJoueur];
     	curPlayerId = 0;
     	//On initialise le prix des CEPs à 3
@@ -70,6 +75,8 @@ public class Model {
 		// Initialisation des joueurs
 		initPlayers();
 		initTour();
+		//initialisation des décénnies
+		initDecade();
 		// Initialisation des sommets
 		initSommetTile();
 		// Initialisation des continents
@@ -92,6 +99,14 @@ public class Model {
 		if (nbJoueur == 3) setTour(4);
 		if (nbJoueur == 4) setTour(3);
 		if (nbJoueur == 5) setTour(2);
+	}
+	/**
+	 * Initialise le nombre de décennie
+	 */
+	private void initDecade(){
+		if (nbDecade == 2) setDecade(1980);
+		if (nbDecade == 3) setDecade(1990);
+		if (nbDecade == 4) setDecade(2000);
 	}
 
 	/**
@@ -233,6 +248,38 @@ public class Model {
 		return false;
 	}
 
+	/**
+	 * vérifier le nombre de tour pour augmenter ou non la décénnie
+	 */
+	public void TourSuivant() {
+		// vérifie si le nombre de tour par décénnie est atteinte
+		if (tour != NB_TOUR_PAR_DECENNIE-1) {
+			// incrémentation de la décénnie
+			tour++;
+		} else {
+			// réinitialise le tour à 1
+			tour = 1;
+			// passe à la décennie suivante
+			decade+=10;
+		}
+	}
+
+	/**
+	 * vérifie le nombre de décénnie
+	 * @return true si le nombre de décénnie max est atteinte, sinon, false
+	 */
+	public boolean endGame() {
+		// si le nombre de décénnie a atteint son maximum
+		if (decade == NB_DECENNIE) {
+			// alors c'est la fin du jeu
+			System.out.println("FIN DU JEU");
+			// return true
+			Model model = new Model();
+			return true;
+		}
+		return false;
+	}
+
 	public boolean tilesSolarProjectOnWhichContinent(){
     	// à développer pour savoir quel continent contient les tuiles de projet solaire
 		return continents[0].isContainsTilesSolarProject();
@@ -249,17 +296,17 @@ public class Model {
 		this.tour = tour;
 	}
 
-	public void TourSuivant() {
-		if (tour != NB_TOUR_PAR_DECENNIE) {
-			tour++;
-		} else {
-			//passe à la décennie suivante
-		}
-	}
-
 	public void setNbJoueur(int nbJoueur) { this.nbJoueur = nbJoueur; }
 
 	public int getNbJoueur() { return players.length; }
+
+	public int getNbDecade() { return nbDecade; }
+
+	public void setNbDecade(int nbDecade) { this.nbDecade = nbDecade; }
+
+	public int getDecade() { return decade; }
+
+	public void setDecade(int decade) { this.decade = decade; }
 
 	public void startGame() { state = STATE_PLAY; }
 

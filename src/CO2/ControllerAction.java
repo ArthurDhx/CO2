@@ -34,15 +34,22 @@ public class ControllerAction implements EventHandler<ActionEvent>{
                     return;
                 });
             }
+            // vérification du nombre de tour et décénnie
             model.TourSuivant();
+            model.endGame();
             model.getCurrentPLayer().setActionPrincipaleDone(false);
             model.getCurrentPLayer().setDeplacerScientifiqDone(false);
             model.getCurrentPLayer().setMarcheCEPDone(false);
             viewGame.hboxAction.resetHbox();
+            // actualisation du nombre de tour et de décénnie
             viewGame.reloadTour();
-            System.out.println("Tour : " + model.getTour() + "/" + model.NB_TOUR_PAR_DECENNIE);
+            viewGame.reloadDecade();
+            // affichage sur la console le nombre de tour et décénnie
+            System.out.println("Tour : " + model.getTour() + "/" + (model.NB_TOUR_PAR_DECENNIE-1));
+            System.out.println("Décénnie : " + model.getDecade() + "/" + model.NB_DECENNIE);
             model.tilesSolarProjects.get(0).setSubventionPossible(false); // temporaire
-            //Vérifier si 6/6 passer à la décennie suivante
+            // affiche message si fin de partie
+            viewGame.isEndGame();
         }
         viewGame.reloadArgent();
     }
