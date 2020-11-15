@@ -110,18 +110,27 @@ public class Player {
         return false;
     }
 
+    public void mettreEnPlaceProjet(){
+        CEP -= 1;
+        actionPrincipaleDone = true;
+
+        // que projet solaire pour l'instant -> a changer par une fonction quand on fait les
+        // mettre en place un projet solaire -> gange 3 ressources technologiques
+        resourcesTech += 3;
+    }
+
     public int getSolarExpertise() {
         return expertise[expertiseId.get("Solar")];
     }
     public int getBiomassExpertise() { return expertise[expertiseId.get("Biomass")]; }
     public int getRecyclingExpertise() { return expertise[expertiseId.get("Recycling")]; }
-    public int getFusionExpertise() { return expertise[expertiseId.get("Fusion")]; }
 
+    public int getFusionExpertise() { return expertise[expertiseId.get("Fusion")]; }
     public int getReforestationExpertise() { return expertise[expertiseId.get("Reforestation")]; }
+
     public boolean isActionPrincipaleDone() {
         return actionPrincipaleDone;
     }
-
     public boolean isAllActionGratuiteDone() {
         for (int i = 0; i < actionGratuiteDone.length ; i++) {
             if (!actionGratuiteDone[i]) return false ;
@@ -129,16 +138,17 @@ public class Player {
         return true ;
     }
     public int getResourcesTech() { return resourcesTech; }
+
     public boolean[] getActionGratuiteDone() {
         return actionGratuiteDone;
     }
-
     public int getArgent() {
         return argent;
     }
     public void setActionPrincipaleDone(boolean actionPrincipaleDone) {
         this.actionPrincipaleDone = actionPrincipaleDone;
     }
+
     public void setActionGratuiteDone(boolean[] actionGratuiteDone) {
         this.actionGratuiteDone = actionGratuiteDone;
     }
@@ -146,25 +156,23 @@ public class Player {
     public void setDeplacerScientifiqDone(boolean done){
         this.actionGratuiteDone[0] = done ;
     }
-
     public void setMarcheCEPDone(boolean done){
         this.actionGratuiteDone[2] = done;
     }
     public List<Scientifique> getScientifiques(){
         return this.scientifiques;
     }
+
     public void setArgent(int argent) {
         this.argent = argent;
     }
 
     public void setResourcesTech(int resourcesTech) { this.resourcesTech = resourcesTech; }
-
     public Scientifique getCurrentScientifique(){
         return scientifiques.get(0);// a terme il y aura plus de scientifique
     }
     public int getCEP() { return CEP; }
     public void addCEP(){ CEP += 1; }
-    public void removeCEP(){ CEP -= 1; }
 
-    public void mettreEnPlaceProjet(){ CEP -= 1; }
+    public void removeCEP(){ CEP -= 1; }
 }

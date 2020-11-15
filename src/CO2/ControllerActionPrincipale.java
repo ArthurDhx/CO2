@@ -66,9 +66,10 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
             Optional<Subvention> result = viewGame.hboxAction.dialogMettreEnPlaceProjet.showAndWait();
             result.ifPresent(projetChoisi -> {
                 // Si un projet a ete choisi
-                if(model.mettreEnPlaceProjet(projetChoisi.getContinent(), projetChoisi))
-                    viewGame.mettreEnPlaceProjet(projetChoisi.getIndex()+1, viewGame.imageViewTilesSolarProjectBack, projetChoisi.getContinent());
-                model.getCurrentPLayer().setActionPrincipaleDone(true);
+                if(model.mettreEnPlaceProjet(projetChoisi.getContinent(), projetChoisi)) {
+                    viewGame.mettreEnPlaceProjet(projetChoisi.getIndex() + 1, viewGame.imageViewTilesSolarProjectBack, projetChoisi.getContinent());
+                    viewGame.reloadresourcesTech();
+                }
                 return;
             });
             // Sinon reset la hbox
