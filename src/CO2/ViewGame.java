@@ -4,6 +4,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
@@ -78,12 +80,33 @@ public class ViewGame {
 		reloadCEP();
 
 		initContinent();
+		initExpertise(50, 5);
 		initSubvention(250, 100);
 
 		hboxAction = new ViewMenuActionHbox(model) ;
 		hboxAction.init();
 		pane.getChildren().add(hboxAction);
     }
+
+	/**
+	 * Affiche les barres d'expertise
+	 */
+	private void initExpertise(int rectWidth, int space) {
+		int offset = 0;
+		for (Expertise expertise : model.expertises) {
+			offset += rectWidth + space;
+			for (int i = 0; i < expertise.getMax(); i++) {
+				Rectangle rect = new Rectangle(rectWidth, rectWidth, Color.WHITE);
+				rect.setStroke(expertise.getColor());
+				rect.setX(1200+offset);
+				rect.setY(800 - ((rectWidth+space) * i));
+				Text nb = new Text((1200+offset), (800 - ((rectWidth+space) * i - 10)), String.valueOf(i+1));
+				nb.setStroke(expertise.getColor());
+				pane.getChildren().add(rect);
+				pane.getChildren().add(nb);
+			}
+		}
+	}
 
 	public void reloadTour(){
 		pane.getChildren().remove(nbTour);

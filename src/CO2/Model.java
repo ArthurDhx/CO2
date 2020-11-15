@@ -1,6 +1,7 @@
 package CO2;
 
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -9,6 +10,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+enum GreenEnergyTypes {SOLAR, BIOMASS, RECYCLING, FUSION, REFORESTATION}
 
 public class Model {
 
@@ -38,6 +41,9 @@ public class Model {
 
 	// Liste des sommets
 	List<SommetTile> allSommetTile;
+
+	// Liste des expertises
+	List<Expertise> expertises;
 
 	// tableau contenant les joueurs
 	private Player[] players;
@@ -81,6 +87,20 @@ public class Model {
 		initSommetTile();
 		// Initialisation des continents
 		initContinents();
+		// Initialisation les barres d'expertise
+		initExpertise();
+	}
+
+	/**
+	 * Initialise les barres d'expertise
+	 */
+	private void initExpertise() {
+		expertises = new ArrayList<>();
+		expertises.add(new Expertise(GreenEnergyTypes.SOLAR, 6, Color.YELLOW));
+		expertises.add(new Expertise(GreenEnergyTypes.BIOMASS, 7, Color.BEIGE));
+		expertises.add(new Expertise(GreenEnergyTypes.RECYCLING, 7, Color.BLUE));
+		expertises.add(new Expertise(GreenEnergyTypes.FUSION, 6, Color.GRAY));
+		expertises.add(new Expertise(GreenEnergyTypes.REFORESTATION, 5, Color.GREEN));
 	}
 
 	/**
