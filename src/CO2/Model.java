@@ -262,7 +262,7 @@ public class Model {
 		curPlayer = getCurrentPLayer();
 		System.out.println();
 		if(curPlayer.getCEP() >= 1){
-			curPlayer.mettreEnPlaceProjet();
+			curPlayer.mettreEnPlaceProjet(GreenEnergyTypes.SOLAR);
 			return true;
 		}
 		return false;

@@ -76,8 +76,15 @@ public class PlayerUnitTest {
     @Test
     public void testMettreEnPlaceProjet(){
         Assert.assertEquals(2,p.getCEP());
-        p.mettreEnPlaceProjet();
+        p.mettreEnPlaceProjet(GreenEnergyTypes.SOLAR);
         Assert.assertEquals(1,p.getCEP());
+    }
+    
+    @Test
+    public void testMettreEnPlaceSolar() {
+        Assert.assertEquals(0, p.getResourcesTech());
+        p.mettreEnPlaceProjet(GreenEnergyTypes.SOLAR);
+        Assert.assertEquals(3, p.getResourcesTech());
     }
 
     @Test

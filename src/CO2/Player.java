@@ -110,13 +110,31 @@ public class Player {
         return false;
     }
 
-    public void mettreEnPlaceProjet(){
+    public void mettreEnPlaceProjet(GreenEnergyTypes type){
         CEP -= 1;
         actionPrincipaleDone = true;
 
-        // que projet solaire pour l'instant -> a changer par une fonction quand on fait les
-        // mettre en place un projet solaire -> gange 3 ressources technologiques
-        resourcesTech += 3;
+        switch (type) {
+            case REFORESTATION:
+                // prendre 2 CEP du marcher
+                break;
+            case SOLAR:
+                resourcesTech += 3;
+                break;
+            case FUSION:
+                resourcesTech += 1;
+                argent +=5;
+                break;
+            case BIOMASS:
+                argent += 3;
+                resourcesTech += 1;
+                // prendre 1 CEP du marché
+                break;
+            case RECYCLING:
+                argent += 5;
+                // prendre 1 CEP du marché
+                break;
+        }
     }
 
     public int getSolarExpertise() {
