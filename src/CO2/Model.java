@@ -354,8 +354,38 @@ public class Model {
 	public void giveRewardsSommet() {
 		for(SommetTile sommet: this.getAllSommetTile()){
 			if(sommet.isFull()){
-				
+				ArrayList<Scientifique> scientifiques =  sommet.getScientifiques();
+				for(Player p: players){
+					for(Scientifique sPlayer: p.getScientifiques()){
+						if(scientifiques.contains(sPlayer)){
+							giveRewardsSommetToPlayer(sPlayer.getSubject().getEnergy(), p);
+						}
+					}
+				}
 			}
+		}
+	}
+
+	/**
+	 * @param energy Energy verte ou était le scientifique
+	 * @param p Le joueur a donnné les bonus
+	 */
+	private void giveRewardsSommetToPlayer(GreenEnergyTypes energy,Player p) {
+		switch (energy){
+			case SOLAR:
+				p.addExpertise(Player.expertiseId.get("Solar"));
+				break;
+			/*
+			case FUSION ->
+					break;
+			case BIOMASS ->
+					break;
+			case RECYCLING ->
+					break;
+			case REFORESTATION ->
+					break;
+			 */
+
 		}
 	}
 }

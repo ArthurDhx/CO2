@@ -14,6 +14,7 @@ public class Subject {
 
     public void setScientifique(Scientifique scientifique) {
         this.scientifique = scientifique;
+        scientifique.setSubject(this);
     }
 
     public GreenEnergyTypes getEnergy() {

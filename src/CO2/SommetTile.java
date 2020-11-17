@@ -36,6 +36,13 @@ public class SommetTile {
         }
         return false;
     }
+    public ArrayList<Scientifique> getScientifiques(){
+        ArrayList<Scientifique> scientifiques = new ArrayList<Scientifique>();
+        for(Subject s: subjects){
+            scientifiques.add(s.getScientifique());
+        }
+        return scientifiques;
+    }
 
     public Subject getSubjectInSommet(GreenEnergyTypes energyTypes){
         for (Subject s: this.subjects) {

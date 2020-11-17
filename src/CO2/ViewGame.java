@@ -534,6 +534,8 @@ public class ViewGame {
 				imageViewScientifique.toFront();
 				break;
 		}
+		// le scientifique quitte le continent lorsqu'il va sur un sommet
+		scientifique.setContinent(null);
 	}
 
 	public void mettreEnPlaceProjet(int projectChoice, ImageView imageViewTilesSolarProjectBack, Continent continent){
