@@ -351,13 +351,19 @@ public class Model {
 		if(currentPriceCEP > 1) currentPriceCEP -= 1;
 	}
 
+	/**
+	 * donne les récompenses de tous les scientifiques
+	 * si ils sont complet
+	 */
 	public void giveRewardsSommet() {
+		// boucle sur tous les sommets du jeu
 		for(SommetTile sommet: this.getAllSommetTile()){
-			if(sommet.isFull()){
-				ArrayList<Scientifique> scientifiques =  sommet.getScientifiques();
+			if(sommet.isFull()){ // si le sommet est rempli de scientifique
+				ArrayList<Scientifique> scientifiques =  sommet.getScientifiques(); // récupère les scientifiques d'un sommet
 				for(Player p: players){
-					for(Scientifique sPlayer: p.getScientifiques()){
-						if(scientifiques.contains(sPlayer)){
+					for(Scientifique sPlayer: p.getScientifiques()){ // récupère tous les scientifiques d'un joueur
+						if(scientifiques.contains(sPlayer)){ // si le sommet contient le scientifique d'un joueur
+							// on donne le bonus du joueur en fonction du sujet étudié par le scientifique
 							giveRewardsSommetToPlayer(sPlayer.getSubject().getEnergy(), p);
 						}
 					}

@@ -1,7 +1,9 @@
 package CO2;
 
 public class Subject {
+    // le sujet peut contenir un scientifique
     private Scientifique scientifique = null;
+    // le sujet à un type d'énergie
     private GreenEnergyTypes energy;
 
     public Subject(GreenEnergyTypes energy) {

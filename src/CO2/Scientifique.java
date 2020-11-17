@@ -7,6 +7,7 @@ public class Scientifique {
     private Continent continent; // Si null, alors il est dans la base du joueur
     private Subvention subvention;
     private SommetTile sommetTile;
+    // le sujet où se trouve le scientifique
     private Subject subject;
 
     public Scientifique(){
