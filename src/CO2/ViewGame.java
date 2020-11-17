@@ -1,6 +1,8 @@
 package CO2;
 
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -9,9 +11,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 import java.awt.image.ImagingOpException;
 import java.io.IOException;
+import java.util.Optional;
 
 public class ViewGame {
 
@@ -36,10 +40,12 @@ public class ViewGame {
 	private Object AlertType;
 	public Image imgTilesSolarProject;
 
+	Scene scene;
 
-	public ViewGame(Model model, Pane pane) throws IOException {
+	public ViewGame(Scene scene, Model model, Pane pane) throws IOException {
 		this.model = model;
 		this.pane = pane;
+		this.scene = scene;
 		pane.getChildren().clear();
 		init();
     }
@@ -665,15 +671,23 @@ public class ViewGame {
 	/**
 	 * vérifie si c'est la fin du jeu
 	 */
-	public void isEndGame(){
+	public void isEndGame() throws IOException {
 		// si le nombre de décénnie max est atteinte => renvoie true par model.EndGame
 		if(model.endGame()){
 			// message d'alerte
-			Alert alert = new Alert(Alert.AlertType.INFORMATION);
+			Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 			alert.setHeaderText(null);
-			alert.setTitle("partie terminé !");
-			alert.setContentText("la partie est terminé, Voulez-vous rejouer?");
-			alert.showAndWait();
+			alert.setTitle("Partie terminé !");
+			alert.setContentText("la partie est terminée, Voulez-vous rejouer?");
+			ButtonType btnRestart = new ButtonType("Oui");
+			alert.getButtonTypes().setAll(btnRestart);
+			Optional<ButtonType> result = alert.showAndWait();
+			if (result.get() == btnRestart) {
+				Stage stage = (Stage) scene.getWindow();
+				stage.close();
+				Main main = new Main();
+				main.start(new Stage());
+			}
 		}
 	}
 }

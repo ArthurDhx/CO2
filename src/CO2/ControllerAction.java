@@ -3,6 +3,7 @@ package CO2;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
+import java.io.IOException;
 import java.util.Optional;
 
 public class ControllerAction implements EventHandler<ActionEvent>{
@@ -46,9 +47,13 @@ public class ControllerAction implements EventHandler<ActionEvent>{
             // affichage sur la console le nombre de tour et décénnie
             System.out.println("Tour : " + model.getTour() + "/" + (model.NB_TOUR_PAR_DECENNIE-1));
             System.out.println("Décénnie : " + model.getDecade() + "/" + model.NB_DECENNIE);
-            model.tilesSolarProjects.get(0).setSubventionPossible(false); // temporaire
+            // model.tilesSolarProjects.get(0).setSubventionPossible(false); // temporaire
             // affiche message si fin de partie
-            viewGame.isEndGame();
+            try {
+                viewGame.isEndGame();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         viewGame.reloadArgent();
     }

@@ -15,11 +15,11 @@ public class Main extends Application {
     public void start(Stage stage) throws IOException {
         Model model = new Model();
         ViewTitle viewTitle = new ViewTitle(model);
-        ViewGame viewGame = new ViewGame(model, viewTitle.paneGame);
+        Scene scene = new Scene(viewTitle.root, model.width, model.height);
+        ViewGame viewGame = new ViewGame(scene, model, viewTitle.paneGame);
         Controller control = new Controller(model, viewTitle, viewGame);
    
         stage.setTitle("Jeu de Société - CO2");
-        Scene scene = new Scene(viewTitle.root, model.width, model.height);
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
