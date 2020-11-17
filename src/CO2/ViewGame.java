@@ -6,6 +6,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
@@ -24,6 +25,8 @@ public class ViewGame {
 	Text resourcesTechJoueur;
 	Text CEPJoueur;
 	Text CEPMarche;
+
+	Circle player;
 
 	ImageView imageViewTilesSolarProject;
 	ImageView imageViewTilesSolarProjectBack;
@@ -93,30 +96,48 @@ public class ViewGame {
 
 	/**
 	 * Affiche les barres d'expertise
+	 * la premiere case de la premiere piste est en bas a gauche
+	 * a partir de (1300, 800)
 	 */
 	private void initExpertise(int rectWidth, int space) {
+		int x = 1300;
+		int y = 800;
+		// nb pixels entre la gauche de la piste courrante
+		// et la gauche de la piste la plus a gauche
 		int offset = 0;
+
+		// pour chaque barre d'expertise
 		for (Expertise expertise : model.expertises) {
-			offset += rectWidth + space;
+			// rapel case
 			int i = 0;
+			// pour chaque case de la piste d'expertise
 			for (CasePisteExpertise c : expertise.getPiste()) {
+				// rectangle de la couleur de l'expertise
 				Rectangle rect = new Rectangle(rectWidth, rectWidth, Color.WHITE);
 				rect.setStroke(expertise.getColor());
-				rect.setX(1200+offset);
-				rect.setY(800 - ((rectWidth+space) * i));
-				Text nb = new Text((1200+offset), (800 - ((rectWidth+space) * i - 10)), String.valueOf(c.getNumero()));
-				ImageView img = new ImageView(c.getImageBonus());
-				img.setFitWidth(rectWidth-5);
-				img.setFitHeight(rectWidth-5);
-				img.setX(1200 + offset + 2.5);
-				img.setY(800 - ((rectWidth+space) * i) + 2.5);
+				rect.setX(x + offset);
+				rect.setY(y - ((rectWidth+space) * i));
+				// nombre de points de la case
+				Text nb = new Text((x+offset), (y - ((rectWidth+space) * i - 10)), String.valueOf(c.getNumero()));
 				nb.setStroke(expertise.getColor());
+
 				pane.getChildren().add(rect);
-				pane.getChildren().add(img);
+				// image bonus si besoin
+				if (c.getImageBonus() != null) {
+					ImageView img = new ImageView(c.getImageBonus());
+					img.setFitWidth(rectWidth - 5);
+					img.setFitHeight(rectWidth - 5);
+					img.setX(x + offset + 2.5);
+					img.setY(y - ((rectWidth + space) * i) + 2.5);
+					pane.getChildren().add(img);
+				}
 				pane.getChildren().add(nb);
 				i++;
 			}
+			offset += rectWidth + space;
 		}
+
+		reloadPlayerExpertise(model.curPlayer);
 	}
 
 	public void reloadTour(){
@@ -124,11 +145,18 @@ public class ViewGame {
 		nbTour = new Text(10, 95,"Tour : "+model.getTour()+"/" + (model.NB_TOUR_PAR_DECENNIE-1));
 		pane.getChildren().add(nbTour);
 	}
+	public void reloadPlayerExpertise(Player p){
+		pane.getChildren().remove(player);
+		player = placePlayerExpertise(p, GreenEnergyTypes.SOLAR);
+		pane.getChildren().add(player);
+	}
+
 	public void reloadDecade(){
 		pane.getChildren().remove(nbDecade);
 		nbDecade = new Text(80, 95,"Décénnie : "+model.getDecade()+"/" + model.NB_DECENNIE);
 		pane.getChildren().add(nbDecade);
 	}
+
 	//A appeler lors d'une modification de l'argent du joueur
 	public void reloadArgent(){
 		pane.getChildren().remove(argentJoueur);
@@ -152,6 +180,36 @@ public class ViewGame {
 						"Le prix actuel est de "+model.currentPriceCEP+" €"
 		);
 		pane.getChildren().add(CEPMarche);
+	}
+
+	/**
+	 * Creer le cercle représentant le jour sur la piste d'expertise
+	 * @param p joueur
+	 * @param type type d'energy verte
+	 * @return cercle
+	 */
+	private Circle placePlayerExpertise(Player p, GreenEnergyTypes type) {
+		// cf valeurs de initExpertise();
+		int xPistes = 1300;
+		int yPistes = 800;
+		int rectWidth = 50;
+		int space = 5;
+
+
+		// pour test le joueur a 6 d'expertise en solar
+		// todo a modifier quand refactor expertise du joueur
+
+		int expertise=6;
+		// int expertise = p.getSolarExpertise();
+		int energyId = 0; // solar type id = 0
+
+
+		int radius = 15;
+		int x = xPistes + energyId*(rectWidth+space) + rectWidth/2;
+		int y = yPistes - (expertise-1)*(rectWidth+space) + rectWidth/2;
+		Circle circle = new Circle(x, y, radius, Color.INDIANRED);
+
+		return circle;
 	}
 
 	/**
