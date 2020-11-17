@@ -94,9 +94,8 @@ public class ViewMenuActionHbox extends HBox {
      * @param continentChoisi Le continent choisi par l'utilisateur
      */
     public void displayChoisirSubventionChoiceDialog(Continent continentChoisi) {
-        // TODO ; implementer une méthdoe dans le modele pour récupere les subvention libre
         // Récupere les subvention disponible dans le continent
-        ArrayList<Subvention> subventions = continentChoisi.getSubventions();
+        ArrayList<Subvention> subventions = continentChoisi.getEmptySubventions();
         dialogSubvention = new ChoiceDialog<Subvention>(
                 subventions.get(0), // choix par défaut
                 subventions

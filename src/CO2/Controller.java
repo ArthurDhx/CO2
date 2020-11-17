@@ -45,7 +45,6 @@ public class Controller {
                         // Affiche la tuile a l'ecran
                         viewGame.addTuilesToSubvention(subvention.getIndex()+1, viewGame.createTileProject(), continent);
                         // Mets a jour le model
-                        //TODO : [Yassine] Il manque certainnement une méthode dans le model permettant de "sauvegarder" le projet en place
                         model.tilesSolarProjects.remove(0);
                         // Mets a jour la vue
                         viewGame.nbTilesSolarProject.setText("Il y a "+ model.getNbSolarProject()+" projets solaires");

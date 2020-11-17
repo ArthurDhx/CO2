@@ -36,6 +36,14 @@ public class Continent {
 
     public ArrayList<Subvention> getSubventions() { return subventions; }
 
+    public ArrayList<Subvention> getEmptySubventions() {
+        ArrayList<Subvention> freeSubvention = new ArrayList<Subvention>();
+        for (Subvention subvention : subventions) {
+            if (subvention.isEmpty()) freeSubvention.add(subvention);
+        }
+        return freeSubvention ;
+    }
+
     public Rectangle[] getTabRectangleSubvention() { return tabRectangleSubvention; }
 
     public Image getImgContinent() {return imgContinent;}

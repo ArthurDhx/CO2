@@ -1,6 +1,7 @@
 package CO2;
 
 import javafx.scene.control.Alert;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -573,6 +574,8 @@ public class ViewGame {
 		ImageView imageView = new ImageView(imgTilesSolarProject);
 		imageView.setPreserveRatio(true);
 		imageView.setFitWidth(75);
+		//TODO : Switch pour tooltip une fois toute les tuiles implementés
+		Tooltip.install(imageView, new Tooltip("+ 3 Ressources technologiques"));
 		pane.getChildren().add(imageView);
 		return imageView ;
 	}

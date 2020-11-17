@@ -42,7 +42,7 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
                         // Si la tuile peut etre ajouter
                         // TODO : [Yassine] a vérifier apres refactoring tab vers liste
                         // Affiche la tuile a l'ecran
-                        viewGame.addTuilesToSubvention(subvention.getIndex()+1, viewGame.imageViewTilesSolarProject, continentChoisi);
+                        viewGame.addTuilesToSubvention(subvention.getIndex()+1, viewGame.createTileProject(), continentChoisi);
                         // Mets a jour le model
                         model.tilesSolarProjects.remove(0);
                         // Applique l'effet de la subvention choisie
