@@ -98,15 +98,23 @@ public class ViewGame {
 		int offset = 0;
 		for (Expertise expertise : model.expertises) {
 			offset += rectWidth + space;
-			for (int i = 0; i < expertise.getMax(); i++) {
+			int i = 0;
+			for (CasePisteExpertise c : expertise.getPiste()) {
 				Rectangle rect = new Rectangle(rectWidth, rectWidth, Color.WHITE);
 				rect.setStroke(expertise.getColor());
 				rect.setX(1200+offset);
 				rect.setY(800 - ((rectWidth+space) * i));
-				Text nb = new Text((1200+offset), (800 - ((rectWidth+space) * i - 10)), String.valueOf(i+1));
+				Text nb = new Text((1200+offset), (800 - ((rectWidth+space) * i - 10)), String.valueOf(c.getNumero()));
+				ImageView img = new ImageView(c.getImageBonus());
+				img.setFitWidth(rectWidth-5);
+				img.setFitHeight(rectWidth-5);
+				img.setX(1200 + offset + 2.5);
+				img.setY(800 - ((rectWidth+space) * i) + 2.5);
 				nb.setStroke(expertise.getColor());
 				pane.getChildren().add(rect);
+				pane.getChildren().add(img);
 				pane.getChildren().add(nb);
+				i++;
 			}
 		}
 	}

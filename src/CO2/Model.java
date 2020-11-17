@@ -97,11 +97,11 @@ public class Model {
 	 */
 	private void initExpertise() {
 		expertises = new ArrayList<>();
-		expertises.add(new Expertise(GreenEnergyTypes.SOLAR, 6, Color.YELLOW));
-		expertises.add(new Expertise(GreenEnergyTypes.BIOMASS, 7, Color.BEIGE));
-		expertises.add(new Expertise(GreenEnergyTypes.RECYCLING, 7, Color.BLUE));
-		expertises.add(new Expertise(GreenEnergyTypes.FUSION, 6, Color.GRAY));
-		expertises.add(new Expertise(GreenEnergyTypes.REFORESTATION, 5, Color.GREEN));
+		expertises.add(new Expertise(GreenEnergyTypes.SOLAR, 6, Color.GOLD));
+		expertises.add(new Expertise(GreenEnergyTypes.BIOMASS, 7, Color.BURLYWOOD));
+		expertises.add(new Expertise(GreenEnergyTypes.RECYCLING, 7, Color.DEEPSKYBLUE));
+		expertises.add(new Expertise(GreenEnergyTypes.FUSION, 6, Color.DARKSLATEGRAY));
+		expertises.add(new Expertise(GreenEnergyTypes.REFORESTATION, 5, Color.SEAGREEN));
 	}
 
 	/**
