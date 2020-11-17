@@ -6,22 +6,18 @@ import java.util.List;
 import java.util.Map;
 
 public class Player {
+    final int NBACTIONGRATUITE = 4;
 
-    // Identifiant dans le tableau de chaque energie
-    public static Map<String, Integer> expertiseId;
     // valeur d'expertise pour chaque energy
-    private int[] expertise = {0, 0, 0, 0, 0};
+    private Map<GreenEnergyTypes, Integer> expertise;
     //le joueur à une liste de scientifique, elle peut être vide ou rempli jusqu'a 4 scientifiques maximum
     private List<Scientifique> scientifiques;
-
     // Nombre de CEP du joueur
     private int CEP;
     // Nombre de ressources technologiques du joueur
     private int resourcesTech;
-
-
+    // argent du joueur
     private int argent;
-
     /*
     * true si une action a été faite
     * [0] deplacer scientifique Projet
@@ -32,44 +28,44 @@ public class Player {
     private boolean[] actionGratuiteDone ;
     private boolean actionPrincipaleDone ;
 
-
-
-    public static Player createPlayer() {
-        final int NBACTIONGRATUITE = 4;
-        boolean[] actionGratuiteDone = new boolean[NBACTIONGRATUITE];
-        Player p = new Player(false , actionGratuiteDone);
-
-        /*
-         Initialise la map qui attribut un String qui definit
-         le type d'energie verte (ex: "Solar")
-         a son id dans le tableau des valeurs [expertise]
-        */
-        expertiseId = new HashMap<>();
-        expertiseId.put("Solar", 0);
-        expertiseId.put("Biomass", 1);
-        expertiseId.put("Recycling", 2);
-        expertiseId.put("Fusion", 3);
-        expertiseId.put("Reforestation", 4);
-
-        return p;
+    public Player() {
+        initExpertise();
+        initScientifiques();
+        actionPrincipaleDone = false;
+        actionGratuiteDone = new boolean[NBACTIONGRATUITE];
+        CEP = 2;
+        resourcesTech = 0;
+        argent = 21;
     }
 
-    private Player(boolean actionPrincipaleDone, boolean[] actionGratuiteDone) {
-        this.actionPrincipaleDone = actionPrincipaleDone ;
-        this.actionGratuiteDone = actionGratuiteDone;
+    /**
+     * Initialise la liste de scientifiques du joueur
+     */
+    private void initScientifiques() {
         this.scientifiques = new ArrayList<>();
         this.scientifiques.add(new Scientifique());
-        this.CEP = 2;
-        this.resourcesTech = 0;
-        setArgent(21);
+    }
+
+    /**
+     * Initialise l'expertise du joueur pour chaque energie verte
+     */
+    private void initExpertise() {
+        expertise = new HashMap<>();
+        expertise.put(GreenEnergyTypes.SOLAR, 0);
+        expertise.put(GreenEnergyTypes.BIOMASS, 0);
+        expertise.put(GreenEnergyTypes.RECYCLING, 0);
+        expertise.put(GreenEnergyTypes.FUSION, 0);
+        expertise.put(GreenEnergyTypes.REFORESTATION, 0);
     }
 
     /**
      * Increment le niveau d'expertise dans un source d'energie verte donnee
-     * @param eneryType la source d'energie verte concernee
+     * @param type la source d'energie verte concernee
+     * @param quantity
      */
-    public void addExpertise(Integer eneryType) {
-        expertise[eneryType]++;
+    public void addExpertise(GreenEnergyTypes type, int quantity) {
+        int cur = expertise.get(type);
+        expertise.replace(type, cur+quantity);
     }
 
     /**
@@ -93,14 +89,15 @@ public class Player {
     }
 
     /**
-     *
+     * Ajoute un montant d'argent au joueur
      * @param argent
      */
     public void gainArgent(int argent) { this.argent += Math.abs(argent); }
 
     /**
+     * Retire un montant d'argent au joueur
      * @param argent
-     * @return
+     * @return true si la transaction est effectuer
      */
     public boolean retirerArgent(int argent) {
         if ((this.argent-argent) >= 0){
@@ -110,7 +107,13 @@ public class Player {
         return false;
     }
 
-    public void mettreEnPlaceProjet(GreenEnergyTypes type){
+    /**
+     * Applique les effets de mise en place d'un projet au joueur :
+     *  - paye le CEP
+     *  - donne la recompense du projet selon le type d'energie
+     * @param type type energie du projet
+     */
+    public void rewardSetupProject(GreenEnergyTypes type){
         CEP -= 1;
         actionPrincipaleDone = true;
 
@@ -137,61 +140,109 @@ public class Player {
         }
     }
 
-    public int getSolarExpertise() {
-        return expertise[expertiseId.get("Solar")];
+    /**
+     * Getter d'expertise pour un type d'energie donnee
+     * @param type type d'energie concernee
+     * @return
+     */
+    public int getExpertise(GreenEnergyTypes type) {
+        return expertise.get(type);
     }
-    public int getBiomassExpertise() { return expertise[expertiseId.get("Biomass")]; }
-    public int getRecyclingExpertise() { return expertise[expertiseId.get("Recycling")]; }
 
-    public int getFusionExpertise() { return expertise[expertiseId.get("Fusion")]; }
-    public int getReforestationExpertise() { return expertise[expertiseId.get("Reforestation")]; }
-
-    public boolean isActionPrincipaleDone() {
-        return actionPrincipaleDone;
-    }
+    /**
+     * Indique si toute les actions gratuites on ete faites
+     * @return true si toutes les actions sont faites
+     */
     public boolean isAllActionGratuiteDone() {
         for (int i = 0; i < actionGratuiteDone.length ; i++) {
             if (!actionGratuiteDone[i]) return false ;
         }
         return true ;
     }
-    public int getResourcesTech() { return resourcesTech; }
 
-    public boolean[] getActionGratuiteDone() {
-        return actionGratuiteDone;
-    }
-    public int getArgent() {
-        return argent;
-    }
-    public void setActionPrincipaleDone(boolean actionPrincipaleDone) {
-        this.actionPrincipaleDone = actionPrincipaleDone;
-    }
-
-    public void setActionGratuiteDone(boolean[] actionGratuiteDone) {
-        this.actionGratuiteDone = actionGratuiteDone;
-    }
-
-    public void setDeplacerScientifiqDone(boolean done){
+    /**
+     * A commenter
+     * @param done
+     */
+    public void setDeplacerScientifiqueDone(boolean done){
         this.actionGratuiteDone[0] = done ;
     }
+
+    /**
+     * A commenter
+     * @param done
+     */
     public void setMarcheCEPDone(boolean done){
         this.actionGratuiteDone[2] = done;
     }
-    public List<Scientifique> getScientifiques(){
-        return this.scientifiques;
+
+    /**
+     * A commenter
+     * @return 
+     */
+    public Scientifique getCurrentScientifique(){
+        return scientifiques.get(0);// a terme il y aura plus de scientifique
+    }
+
+    /**
+     * Incremente le nombre de CEP de l'utiliseur
+     */
+    public void addCEP(){ CEP += 1; }
+
+    /**
+     * Incremente le nombre de CEP de l'utilisateur
+     */
+    public void removeCEP(){ CEP -= 1; }
+
+    public int getNBACTIONGRATUITE() {
+        return NBACTIONGRATUITE;
+    }
+
+    public List<Scientifique> getScientifiques() {
+        return scientifiques;
+    }
+
+    public void setScientifiques(List<Scientifique> scientifiques) {
+        this.scientifiques = scientifiques;
+    }
+
+    public int getCEP() {
+        return CEP;
+    }
+
+    public void setCEP(int CEP) {
+        this.CEP = CEP;
+    }
+
+    public int getResourcesTech() {
+        return resourcesTech;
+    }
+
+    public void setResourcesTech(int resourcesTech) {
+        this.resourcesTech = resourcesTech;
+    }
+
+    public int getArgent() {
+        return argent;
     }
 
     public void setArgent(int argent) {
         this.argent = argent;
     }
 
-    public void setResourcesTech(int resourcesTech) { this.resourcesTech = resourcesTech; }
-    public Scientifique getCurrentScientifique(){
-        return scientifiques.get(0);// a terme il y aura plus de scientifique
+    public boolean[] getActionGratuiteDone() {
+        return actionGratuiteDone;
     }
-    public int getCEP() { return CEP; }
-    public void addCEP(){ CEP += 1; }
 
-    public void removeCEP(){ CEP -= 1; }
+    public void setActionGratuiteDone(boolean[] actionGratuiteDone) {
+        this.actionGratuiteDone = actionGratuiteDone;
+    }
 
+    public boolean isActionPrincipaleDone() {
+        return actionPrincipaleDone;
+    }
+
+    public void setActionPrincipaleDone(boolean actionPrincipaleDone) {
+        this.actionPrincipaleDone = actionPrincipaleDone;
+    }
 }

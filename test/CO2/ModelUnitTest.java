@@ -2,6 +2,7 @@ package CO2;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -23,16 +24,16 @@ public class ModelUnitTest {
 
     @Test
     public void testIncrementExpertiseJoueurCourant() {
-        model.incrementExpertise(Player.expertiseId.get("Solar"));
-        Assert.assertEquals(1, model.getCurrentPLayer().getSolarExpertise());
-        model.incrementExpertise(Player.expertiseId.get("Biomass"));
-        Assert.assertEquals(1, model.getCurrentPLayer().getBiomassExpertise());
-        model.incrementExpertise(Player.expertiseId.get("Recycling"));
-        Assert.assertEquals(1, model.getCurrentPLayer().getRecyclingExpertise());
-        model.incrementExpertise(Player.expertiseId.get("Fusion"));
-        Assert.assertEquals(1, model.getCurrentPLayer().getFusionExpertise());
-        model.incrementExpertise(Player.expertiseId.get("Reforestation"));
-        Assert.assertEquals(1, model.getCurrentPLayer().getReforestationExpertise());
+        model.incrementExpertise(GreenEnergyTypes.SOLAR);
+        Assert.assertEquals(1, model.getCurrentPLayer().getExpertise(GreenEnergyTypes.SOLAR));
+        model.incrementExpertise(GreenEnergyTypes.BIOMASS);
+        Assert.assertEquals(1, model.getCurrentPLayer().getExpertise(GreenEnergyTypes.BIOMASS));
+        model.incrementExpertise(GreenEnergyTypes.RECYCLING);
+        Assert.assertEquals(1, model.getCurrentPLayer().getExpertise(GreenEnergyTypes.RECYCLING));
+        model.incrementExpertise(GreenEnergyTypes.FUSION);
+        Assert.assertEquals(1, model.getCurrentPLayer().getExpertise(GreenEnergyTypes.FUSION));
+        model.incrementExpertise(GreenEnergyTypes.REFORESTATION);
+        Assert.assertEquals(1, model.getCurrentPLayer().getExpertise(GreenEnergyTypes.REFORESTATION));
     }
 
     @Test

@@ -113,7 +113,7 @@ public class Model {
 	 */
 	private void initPlayers() {
 		for (int i = 0; i < nbJoueur; i++) {
-			players[i] = Player.createPlayer();
+			players[i] = new Player();
 		}
 	}
 	/**
@@ -195,11 +195,11 @@ public class Model {
 
 	/**
 	 * Ajoute 1 d'expertise au joueur courant pour un type d'energie verte
-	 * @param energyType type d'energie a modifier
+	 * @param energyType type d'energie concernee
 	 */
-    public void incrementExpertise(int energyType) {
+	public void incrementExpertise(GreenEnergyTypes energyType) {
 		curPlayer = players[curPlayerId];
-		curPlayer.addExpertise(energyType);
+		curPlayer.addExpertise(energyType, 1);
 	}
 
 	/**
@@ -270,7 +270,7 @@ public class Model {
 		curPlayer = getCurrentPLayer();
 		System.out.println();
 		if(curPlayer.getCEP() >= 1){
-			curPlayer.mettreEnPlaceProjet(GreenEnergyTypes.SOLAR);
+			curPlayer.rewardSetupProject(GreenEnergyTypes.SOLAR);
 			return true;
 		}
 		return false;
@@ -379,7 +379,7 @@ public class Model {
 	private void giveRewardsSommetToPlayer(GreenEnergyTypes energy,Player p) {
 		switch (energy){
 			case SOLAR:
-				p.addExpertise(Player.expertiseId.get("Solar"));
+				p.addExpertise(GreenEnergyTypes.SOLAR, 1);
 				break;
 			/*
 			case FUSION ->

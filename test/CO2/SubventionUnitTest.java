@@ -18,7 +18,7 @@ public class SubventionUnitTest {
     @Test
     public void testEffetRessources() {
         Continent continent = new Continent("Europe", 2, new Image(getClass().getResourceAsStream("images/Continents/Europe.jpg")));
-        Player p = Player.createPlayer();
+        Player p = new Player();
 
         Assert.assertEquals(0, p.getResourcesTech());
         Subvention sub = continent.getSubventions().get(1);

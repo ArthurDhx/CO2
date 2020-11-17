@@ -31,7 +31,7 @@ public class ControllerActionGratuite implements EventHandler<ActionEvent>{
                 // Si un projet a ete choisi
                 if(model.moveScientificOnProject(projetChoisi.getContinent(), projetChoisi))
                     viewGame.addScientifiqueToProject(projetChoisi.getIndex()+1, viewGame.imageViewScientifique, projetChoisi.getContinent());
-                model.getCurrentPLayer().setDeplacerScientifiqDone(true);
+                model.getCurrentPLayer().setDeplacerScientifiqueDone(true);
                 return;
             });
             // Sinon reset la hbox
