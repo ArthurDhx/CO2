@@ -17,7 +17,6 @@ public class ControllerAction implements EventHandler<ActionEvent>{
 
     @Override
     public void handle(ActionEvent event) {
-        //TODO : Controller les actions "fesable" et desactiver les boutons non disponible
         Object source = event.getSource() ;
         if (source == viewGame.hboxAction.btnActionPrincipale) {
             viewGame.hboxAction.displayActionPrincipale() ;

@@ -74,8 +74,9 @@ public class Model {
 	 */
 	public void init() throws IOException {
     	// Initialisation du tableau contenant les 6 tuiles de projet solaire
+		//TODO : Rabaisser a 6 une fois toutes les tuiles projet mis en place car sinon il n'y a pas assez de tuiles pour la demo
 		tilesSolarProjects = new ArrayList<TilesSolarProject>();
-		for(int i = 0; i< 6; i++){
+		for(int i = 0; i< 7; i++){
 			tilesSolarProjects.add(new TilesSolarProject());
 		}
 		// Initialisation des joueurs
@@ -204,7 +205,6 @@ public class Model {
     	// permet d'ajouter la tuile sur la case subvention
 		if(tilesSolarProjects.get(0).addOnSubvention() && tilesSolarProjects.get(0).subPossible){
 			continent.getSubventions().get(indexSub).addTilesSolarProject(tilesSolarProjects.get(0));
-			// TODO : [Yassine] a vérifier apres refactoring tab vers liste
 			tilesSolarProjects.get(0).subPossible = false;
 			return true;
 		}

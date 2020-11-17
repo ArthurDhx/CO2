@@ -8,6 +8,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
+import java.awt.image.ImagingOpException;
 import java.io.IOException;
 
 public class ViewGame {
@@ -29,6 +30,7 @@ public class ViewGame {
 
 	ViewMenuActionHbox hboxAction;
 	private Object AlertType;
+	public Image imgTilesSolarProject;
 
 
 	public ViewGame(Model model, Pane pane) throws IOException {
@@ -45,7 +47,7 @@ public class ViewGame {
 
     	// On récupère l'image de la tuile et on l'ajoute à l'écran
 		// Image imgTilesSolarProject = new Image("CO2/images/TilesSolarProject.jpg");
-		Image imgTilesSolarProject = new Image(getClass().getResourceAsStream("images/Projets/TilesSolarProjectRecto.png"));
+		imgTilesSolarProject = new Image(getClass().getResourceAsStream("images/Projets/TilesSolarProjectRecto.png"));
 		imageViewTilesSolarProject = new ImageView(imgTilesSolarProject);
 		imageViewTilesSolarProject.setPreserveRatio(true);
 		imageViewTilesSolarProject.setFitWidth(75);
@@ -233,7 +235,6 @@ public class ViewGame {
 	 * @param imageViewTilesSolarProject
 	 */
 	public void addTuilesToSubvention(int subventionChoice, ImageView imageViewTilesSolarProject, Continent continent){
-		// suivant le nom du continent
 		switch(continent.getName()) {
 			case "Europe" :
 				// suivant la subvention choisie
@@ -562,6 +563,18 @@ public class ViewGame {
 		}
 		pane.getChildren().add(imageViewTilesSolarProjectBack);
 		this.imageViewScientifique.toFront();
+	}
+
+	/**
+	 * Permet de creer une tuiles project et de l'initialiser et l'ajoute au panneau
+	 * @return La tuile prête a être placé a l'ecran
+	 */
+	public ImageView createTileProject() {
+		ImageView imageView = new ImageView(imgTilesSolarProject);
+		imageView.setPreserveRatio(true);
+		imageView.setFitWidth(75);
+		pane.getChildren().add(imageView);
+		return imageView ;
 	}
 
 	public void displayAlertWithoutHeaderText(String title, String message) {

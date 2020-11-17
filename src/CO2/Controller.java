@@ -1,5 +1,8 @@
 package CO2;
 
+import javafx.scene.image.ImageView;
+import java.util.Optional;
+
 public class Controller {
 
     protected Model model;
@@ -30,8 +33,25 @@ public class Controller {
                     "Mode 1 Joueur",
                     "Des projets vont etre affécté aux regions aléatoirement,\n" +
                             "Vous allez devoir choisir sur qu'elle case de subvention ceux-ci seront disposés");
-            for (int i = 0; i < 5; i++) {
-                // TODO : [YASSINE] Créer les 5 types de tuiles, mettre a jour le modele + la vue en proposant les choix a l'utilisateur
+		    //TODO: [Yassine] a retravailler en while une fois toutes les tuiles implementer
+            for (Continent continent: model.getContinents()) {
+                viewGame.hboxAction.displayChoisirSubventionChoiceDialog(continent);
+                // la subvention choisis par le joueur
+                Optional<Subvention> resulltSubv = viewGame.hboxAction.dialogSubvention.showAndWait();
+                resulltSubv.ifPresent(subvention -> {
+                    // meme principe que au dessus
+                    if(model.addTilesSolarProjectToSubventionCase(continent,subvention.getIndex())){
+                        // Si la tuile peut etre ajouter
+                        // Affiche la tuile a l'ecran
+                        viewGame.addTuilesToSubvention(subvention.getIndex()+1, viewGame.createTileProject(), continent);
+                        // Mets a jour le model
+                        //TODO : [Yassine] Il manque certainnement une méthode dans le model permettant de "sauvegarder" le projet en place
+                        model.tilesSolarProjects.remove(0);
+                        // Mets a jour la vue
+                        viewGame.nbTilesSolarProject.setText("Il y a "+ model.getNbSolarProject()+" projets solaires");
+                        // Le joueur en cours a effectuer son action principale
+                    }
+                });
             }
         }
     }
