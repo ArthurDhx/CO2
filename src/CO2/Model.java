@@ -42,6 +42,10 @@ public class Model {
 	// Liste des sommets
 	List<SommetTile> allSommetTile;
 
+	public List<SommetTile> getAllSommetTile() {
+		return allSommetTile;
+	}
+
 	// Liste des expertises
 	List<Expertise> expertises;
 
@@ -153,11 +157,12 @@ public class Model {
 	 */
 	public void initSommetTile() throws IOException {
 		ArrayList<SommetTile> lstAllSommet = new ArrayList<SommetTile>();
-		ArrayList<String> lstSubject = new ArrayList<String>();
+		ArrayList<GreenEnergyTypes> lstSubject = new ArrayList<GreenEnergyTypes>();
 
 		File fichier = new File("src/CO2/sommetTile.txt");
 		BufferedReader bufferedReader = new BufferedReader(new FileReader(fichier));
 		String st;
+
 
 		while((st = bufferedReader.readLine()) != null) {
 			String location = st.split(" ")[0];
@@ -166,12 +171,15 @@ public class Model {
 			String subject3 = st.split(" ")[3];
 			String subject4 = st.split(" ")[4];
 
-			lstSubject.add(subject1);
-			lstSubject.add(subject2);
-			if(!subject3.equals("none")) lstSubject.add(subject3);
-			if(!subject4.equals("none")) lstSubject.add(subject4);
+			// liste de sujets avec comme sujet Soleil et Fusion
+			ArrayList<Subject> subjects= new ArrayList<Subject>(Arrays.asList(new Subject(GreenEnergyTypes.SOLAR),new Subject(GreenEnergyTypes.FUSION)));
 
-			lstAllSommet.add(new SommetTile(location, lstSubject.size(), lstSubject,new Image(getClass().getResourceAsStream("images/Sommets/"+location+".png"))));
+			lstSubject.add(GreenEnergyTypes.SOLAR);
+			lstSubject.add(GreenEnergyTypes.FUSION);
+			if(!subject3.equals("none")) lstSubject.add(GreenEnergyTypes.BIOMASS);
+			if(!subject4.equals("none")) lstSubject.add(GreenEnergyTypes.RECYCLING);
+
+			lstAllSommet.add(new SommetTile(location, lstSubject.size(), subjects,new Image(getClass().getResourceAsStream("images/Sommets/"+location+".png"))));
 			lstSubject.clear();
 		}
 		bufferedReader.close();
@@ -242,10 +250,10 @@ public class Model {
 		SommetTile sommetTile = scientifique.getContinent().getSommetTile();
 
 		// A terme vérifié si le type du projet = nécessite  héritage tuile => solaire
-		if (sommetTile.getSubjectInSommet("Solar")){
+		if (sommetTile.haveEnergy(GreenEnergyTypes.SOLAR)){
 			for (Scientifique sc : scientifiques) {
 				if (sc.getSubvention().equals(subvention)) {
-					sommetTile.setStaffedScientifiquesAt(sc,sommetTile.getIndexSubject("Solar"));
+					sommetTile.addScientifiqueToEnergy(sc,GreenEnergyTypes.SOLAR);
 				}
 				return true;
 			}
@@ -341,5 +349,13 @@ public class Model {
 	public void venteCEP(){
 		this.nbCEPdispo += 1;
 		if(currentPriceCEP > 1) currentPriceCEP -= 1;
+	}
+
+	public void giveRewardsSommet() {
+		for(SommetTile sommet: this.getAllSommetTile()){
+			if(sommet.isFull()){
+				
+			}
+		}
 	}
 }

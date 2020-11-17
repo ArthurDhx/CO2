@@ -25,7 +25,7 @@ public class ControllerAction implements EventHandler<ActionEvent>{
             viewGame.hboxAction.displayActionGratuite() ;
         } else if (source == viewGame.hboxAction.btnCancelAction) {
             viewGame.hboxAction.resetHbox();
-        }else if (source == viewGame.hboxAction.btnFinTour) {
+        }else if (source == viewGame.hboxAction.btnFinTour) { // appuyer sur bouton fin de tour
             viewGame.hboxAction.displayFinTourScientifiqueChoiceDialog() ;
             if(viewGame.hboxAction.dialogChoisirScientifique != null){
                 Optional<Scientifique> result = viewGame.hboxAction.dialogChoisirScientifique.showAndWait();
@@ -37,6 +37,8 @@ public class ControllerAction implements EventHandler<ActionEvent>{
             // vérification du nombre de tour et décénnie
             model.TourSuivant();
             model.endGame();
+            // récompense sommets
+            model.giveRewardsSommet();
             model.getCurrentPLayer().setActionPrincipaleDone(false);
             model.getCurrentPLayer().setDeplacerScientifiqDone(false);
             model.getCurrentPLayer().setMarcheCEPDone(false);
