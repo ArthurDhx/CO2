@@ -69,6 +69,11 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
                 if(model.mettreEnPlaceProjet(projetChoisi.getContinent(), projetChoisi)) {
                     viewGame.mettreEnPlaceProjet(projetChoisi.getIndex() + 1, viewGame.imageViewTilesSolarProjectBack, projetChoisi.getContinent());
                     viewGame.reloadresourcesTech();
+
+                    // TEMPORAIRE DEMO SPRINT 3
+                    // TODO retirer temporaire
+                    viewGame.reloadPlayerExpertise(model.getCurrentPLayer());
+                    // FIN TEMPORAIRE
                 }
                 return;
             });

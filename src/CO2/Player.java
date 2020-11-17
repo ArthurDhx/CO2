@@ -51,11 +51,11 @@ public class Player {
      */
     private void initExpertise() {
         expertise = new HashMap<>();
-        expertise.put(GreenEnergyTypes.SOLAR, 0);
-        expertise.put(GreenEnergyTypes.BIOMASS, 0);
-        expertise.put(GreenEnergyTypes.RECYCLING, 0);
-        expertise.put(GreenEnergyTypes.FUSION, 0);
-        expertise.put(GreenEnergyTypes.REFORESTATION, 0);
+        expertise.put(GreenEnergyTypes.SOLAR, 1);
+        expertise.put(GreenEnergyTypes.BIOMASS, 2);
+        expertise.put(GreenEnergyTypes.RECYCLING, 3);
+        expertise.put(GreenEnergyTypes.FUSION, 4);
+        expertise.put(GreenEnergyTypes.REFORESTATION, 5);
     }
 
     /**
@@ -116,6 +116,15 @@ public class Player {
     public void rewardSetupProject(GreenEnergyTypes type){
         CEP -= 1;
         actionPrincipaleDone = true;
+
+        // TEMPORAIRE DEMO SPRINT 3
+        // TODO retirer temporaire
+        addExpertise(GreenEnergyTypes.SOLAR,1);
+        addExpertise(GreenEnergyTypes.BIOMASS,1);
+        addExpertise(GreenEnergyTypes.RECYCLING,1);
+        addExpertise(GreenEnergyTypes.FUSION,1);
+        addExpertise(GreenEnergyTypes.REFORESTATION,1);
+        // FIN TEMPORAIRE
 
         switch (type) {
             case REFORESTATION:

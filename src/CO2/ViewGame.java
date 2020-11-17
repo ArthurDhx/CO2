@@ -13,8 +13,9 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.awt.image.ImagingOpException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class ViewGame {
@@ -30,7 +31,7 @@ public class ViewGame {
 	Text CEPJoueur;
 	Text CEPMarche;
 
-	Circle player;
+	List<Circle> player1ExpertiseIndicator;
 
 	ImageView imageViewTilesSolarProject;
 	ImageView imageViewTilesSolarProjectBack;
@@ -143,7 +144,7 @@ public class ViewGame {
 			offset += rectWidth + space;
 		}
 
-		reloadPlayerExpertise(model.curPlayer);
+		reloadPlayerExpertise(model.getCurrentPLayer());
 	}
 
 	public void reloadTour(){
@@ -151,10 +152,19 @@ public class ViewGame {
 		nbTour = new Text(10, 95,"Tour : "+model.getTour()+"/" + (model.NB_TOUR_PAR_DECENNIE-1));
 		pane.getChildren().add(nbTour);
 	}
+
 	public void reloadPlayerExpertise(Player p){
-		pane.getChildren().remove(player);
-		player = placePlayerExpertise(p, GreenEnergyTypes.SOLAR);
-		pane.getChildren().add(player);
+		if (player1ExpertiseIndicator != null) pane.getChildren().removeAll(player1ExpertiseIndicator);
+		player1ExpertiseIndicator = new ArrayList<>();
+		int i = 0;
+		for (GreenEnergyTypes energy : GreenEnergyTypes.values()) {
+			int expertise = p.getExpertise(energy);
+			if (expertise > 0) {
+				player1ExpertiseIndicator.add(placePlayerExpertise(expertise, i));
+				i++;
+			}
+		}
+		pane.getChildren().addAll(player1ExpertiseIndicator);
 	}
 
 	public void reloadDecade(){
@@ -189,29 +199,20 @@ public class ViewGame {
 	}
 
 	/**
-	 * Creer le cercle représentant le jour sur la piste d'expertise
-	 * @param p joueur
-	 * @param type type d'energy verte
+	 * Creer un cercle représentant le jour sur la piste d'expertise
+	 * @param expertise expertise du joueur joueur
+	 * @param expertiseId id du type d'energie
 	 * @return cercle
 	 */
-	private Circle placePlayerExpertise(Player p, GreenEnergyTypes type) {
+	private Circle placePlayerExpertise(int expertise, int expertiseId) {
 		// cf valeurs de initExpertise();
 		int xPistes = 1300;
 		int yPistes = 800;
 		int rectWidth = 50;
 		int space = 5;
 
-
-		// pour test le joueur a 6 d'expertise en solar
-		// todo a modifier quand refactor expertise du joueur
-
-		int expertise=6;
-		// int expertise = p.getSolarExpertise();
-		int energyId = 0; // solar type id = 0
-
-
 		int radius = 15;
-		int x = xPistes + energyId*(rectWidth+space) + rectWidth/2;
+		int x = xPistes + expertiseId*(rectWidth+space) + rectWidth/2;
 		int y = yPistes - (expertise-1)*(rectWidth+space) + rectWidth/2;
 		Circle circle = new Circle(x, y, radius, Color.INDIANRED);
 
