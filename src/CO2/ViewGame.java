@@ -650,7 +650,7 @@ public class ViewGame {
 		imageView.setPreserveRatio(true);
 		imageView.setFitWidth(75);
 		//TODO : Switch pour tooltip une fois toute les tuiles implementés
-		Tooltip.install(imageView, new Tooltip("+ 3 Ressources technologiques"));
+		Tooltip.install(imageView, new Tooltip("Mettre en place : + 3 Ressources technologiques"));
 		pane.getChildren().add(imageView);
 		return imageView ;
 	}
