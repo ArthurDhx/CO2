@@ -365,6 +365,8 @@ public class Model {
 						if(scientifiques.contains(sPlayer)){ // si le sommet contient le scientifique d'un joueur
 							// on donne le bonus du joueur en fonction du sujet étudié par le scientifique
 							giveRewardsSommetToPlayer(sPlayer.getSubject().getEnergy(), p);
+							sPlayer.setSubject(null); // le scientifique n'a plus de sujet
+							// TODO redéplacer le scientifique au joueur graphiquement
 						}
 					}
 				}
