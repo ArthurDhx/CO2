@@ -27,6 +27,7 @@ public class ViewGame {
 	Text nbTour;
 	Text nbDecade;
 	Text argentJoueur;
+	Text pointVictoireJoueur;
 	Text resourcesTechJoueur;
 	Text CEPJoueur;
 	Text CEPMarche;
@@ -77,7 +78,7 @@ public class ViewGame {
 		Image imgScientifique = new Image(getClass().getResourceAsStream("images/scientifique.png"));
 		imageViewScientifique = new ImageView(imgScientifique);
 		imageViewScientifique.setX(30);
-		imageViewScientifique.setY(100);
+		imageViewScientifique.setY(180);
 		imageViewScientifique.setFitWidth(50);
 		imageViewScientifique.setPreserveRatio(true);
 		pane.getChildren().add(imageViewScientifique);
@@ -89,6 +90,7 @@ public class ViewGame {
 		reloadTour();
 		reloadDecade();
 		reloadArgent();
+		reloadPointVictoire();
 		reloadresourcesTech();
 		reloadCEP();
 
@@ -149,7 +151,7 @@ public class ViewGame {
 
 	public void reloadTour(){
 		pane.getChildren().remove(nbTour);
-		nbTour = new Text(10, 95,"Tour : "+model.getTour()+"/" + (model.NB_TOUR_PAR_DECENNIE-1));
+		nbTour = new Text(10, 110,"Tour : "+model.getTour()+"/" + (model.NB_TOUR_PAR_DECENNIE-1));
 		pane.getChildren().add(nbTour);
 	}
 
@@ -169,7 +171,7 @@ public class ViewGame {
 
 	public void reloadDecade(){
 		pane.getChildren().remove(nbDecade);
-		nbDecade = new Text(80, 95,"Décénnie : "+model.getDecade()+"/" + model.NB_DECENNIE);
+		nbDecade = new Text(80, 110,"Décénnie : "+model.getDecade()+"/" + model.NB_DECENNIE);
 		pane.getChildren().add(nbDecade);
 	}
 
@@ -180,15 +182,21 @@ public class ViewGame {
 		pane.getChildren().add(argentJoueur);
 	}
 	//A appeler lors d'une modification de l'argent du joueur
+	public void reloadPointVictoire(){
+		pane.getChildren().remove(pointVictoireJoueur);
+		pointVictoireJoueur = new Text(10, 65, "Vous avez "+ model.getCurrentPLayer().getPointVictoire() + " points de victoire ");
+		pane.getChildren().add(pointVictoireJoueur);
+	}
+	//A appeler lors d'une modification de l'argent du joueur
 	public void reloadresourcesTech() {
 		pane.getChildren().remove(resourcesTechJoueur);
-		resourcesTechJoueur = new Text(10, 80, "Vous avez " + model.getCurrentPLayer().getResourcesTech() + " cubes de ressources technologiques. ");
+		resourcesTechJoueur = new Text(10, 95, "Vous avez " + model.getCurrentPLayer().getResourcesTech() + " cubes de ressources technologiques. ");
 		pane.getChildren().add(resourcesTechJoueur);
 	}
 	//A appeler lors d'une modification des CEP
 	public void reloadCEP(){
 		pane.getChildren().remove(CEPJoueur);
-		CEPJoueur = new Text(10,65,"Vous avez "+model.getCurrentPLayer().getCEP()+" CEP");
+		CEPJoueur = new Text(10,80,"Vous avez "+model.getCurrentPLayer().getCEP()+" CEP");
 		pane.getChildren().add(CEPJoueur);
 		pane.getChildren().remove(CEPMarche);
 		CEPMarche = new Text(model.width/2-80,model.height/2,

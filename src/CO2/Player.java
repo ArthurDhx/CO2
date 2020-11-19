@@ -18,6 +18,9 @@ public class Player {
     private int resourcesTech;
     // argent du joueur
     private int argent;
+    // Point de victoire du joueur
+    private int pointVictoire;
+
     /*
     * true si une action a été faite
     * [0] deplacer scientifique Projet
@@ -36,6 +39,7 @@ public class Player {
         CEP = 2;
         resourcesTech = 0;
         argent = 21;
+        pointVictoire = 0;
     }
 
     /**
@@ -261,5 +265,13 @@ public class Player {
 
     public void setActionPrincipaleDone(boolean actionPrincipaleDone) {
         this.actionPrincipaleDone = actionPrincipaleDone;
+    }
+
+    public int getPointVictoire() {
+        return pointVictoire;
+    }
+
+    public void setPointVictoire(int pointVictoire) {
+        this.pointVictoire = pointVictoire;
     }
 }
