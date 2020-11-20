@@ -192,7 +192,7 @@ public class Model {
 		}
 	}
 
-	private Subject stringToSubject(String subject){
+	public Subject stringToSubject(String subject){
 		Subject subjectEnergy = new Subject();
 		if (subject.equals("Solar")) subjectEnergy.setEnergy(GreenEnergyTypes.SOLAR);
 		if (subject.equals("Fusion")) subjectEnergy.setEnergy(GreenEnergyTypes.FUSION);
