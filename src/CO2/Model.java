@@ -157,7 +157,7 @@ public class Model {
 	 */
 	public void initSommetTile() throws IOException {
 		ArrayList<SommetTile> lstAllSommet = new ArrayList<SommetTile>();
-		ArrayList<GreenEnergyTypes> lstSubject = new ArrayList<GreenEnergyTypes>();
+		ArrayList<Subject> subjects= new ArrayList<Subject>();
 
 		File fichier = new File("src/CO2/sommetTile.txt");
 		BufferedReader bufferedReader = new BufferedReader(new FileReader(fichier));
@@ -171,21 +171,11 @@ public class Model {
 			String subject3 = st.split(" ")[3];
 			String subject4 = st.split(" ")[4];
 
-			// liste de sujets avec comme sujet Soleil et Fusion
-			ArrayList<Subject> subjects= new ArrayList<Subject>();
-
-
 			subjects.add(stringToSubject(subject1));
 			subjects.add(stringToSubject(subject2));
 			if(!subject3.equals("none")) subjects.add(stringToSubject(subject3));
-			if(!subject4.equals("none")) subjects.add(stringToSubject(subject4));/*
-			lstSubject.add(GreenEnergyTypes.SOLAR);
-			lstSubject.add(GreenEnergyTypes.FUSION);
-			if(!subject3.equals("none")) lstSubject.add(GreenEnergyTypes.BIOMASS);
-			if(!subject4.equals("none")) lstSubject.add(GreenEnergyTypes.RECYCLING);*/
-			for (int i = 0; i < subjects.size(); i++) {
-				//System.out.println(location + " " +subjects.get(i)+"");
-			}
+			if(!subject4.equals("none")) subjects.add(stringToSubject(subject4));
+
 			lstAllSommet.add(new SommetTile(location,this.continents[continentNb], subjects.size(), subjects,new Image(getClass().getResourceAsStream("images/Sommets/"+location+".png"))));
 			subjects.clear();
 			if (continentNb < 5){
@@ -193,7 +183,6 @@ public class Model {
 			} else {
 				continentNb = 0;
 			}
-
 		}
 		bufferedReader.close();
 		this.allSommetTile = lstAllSommet;
