@@ -3,6 +3,7 @@ package CO2;
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class SommetTile {
@@ -12,14 +13,17 @@ public class SommetTile {
     // Liste des sujets d'un sommet
     private ArrayList<Subject> subjects;
     private Image imageSommetTile;
+    private Continent continent;
 
     public SommetTile(){}
 
-    public SommetTile(String location, int nbSubjects, ArrayList<Subject> subjects, Image imageSommetTile){
+    public SommetTile(String location, Continent continent, int nbSubjects, List<Subject> subjects, Image imageSommetTile){
         this.location = location;
         this.nbSubjects = nbSubjects;
         this.imageSommetTile = imageSommetTile;
-        this.subjects = subjects;
+        this.subjects = new ArrayList<Subject>();
+        this.subjects.addAll(subjects);
+        this.continent = continent;
     }
 
     public String getLocation() {
@@ -30,6 +34,9 @@ public class SommetTile {
         return nbSubjects;
     }
 
+    public Continent getContinent() {
+        return continent;
+    }
 
     /**
      * @param energyTypes Une energie verte
@@ -83,6 +90,10 @@ public class SommetTile {
         getSubjectInSommet(type).setScientifique(scientifique);
     }
 
+    public void setContinent(Continent continent) {
+        this.continent = continent;
+    }
+
     /**
      * @return booléen
      * vérifie si le sommet est remplie de scientifique / fini
@@ -94,6 +105,15 @@ public class SommetTile {
             }
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder s = new StringBuilder();
+        for (int i = 0; i < subjects.size(); i++) {
+            s.append(subjects.get(i)).append(" ");
+        }
+        return "Sommet de "+location + " : " + s;
     }
 
     public void print() {

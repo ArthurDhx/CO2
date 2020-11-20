@@ -22,12 +22,12 @@ public class Player {
     private int pointVictoire;
 
     /*
-    * true si une action a été faite
-    * [0] deplacer scientifique Projet
-    * [1] deplacer scientifique Sommet
-    * [2] visite au marche
-    * [3] jouer une carte
-    */
+     * true si une action a été faite
+     * [0] deplacer scientifique Projet
+     * [1] deplacer scientifique Sommet
+     * [2] visite au marche
+     * [3] jouer une carte
+     */
     private boolean[] actionGratuiteDone ;
     private boolean actionPrincipaleDone ;
 
@@ -199,7 +199,7 @@ public class Player {
 
     /**
      * A commenter
-     * @return 
+     * @return
      */
     public Scientifique getCurrentScientifique(){
         return scientifiques.get(0);// a terme il y aura plus de scientifique

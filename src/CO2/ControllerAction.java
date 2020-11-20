@@ -42,6 +42,7 @@ public class ControllerAction implements EventHandler<ActionEvent>{
             model.giveRewardsSommet();
             model.getCurrentPLayer().setActionPrincipaleDone(false);
             model.getCurrentPLayer().setDeplacerScientifiqueDone(false);
+            model.getCurrentPLayer().setDeplacerScientifiqueSommetDone(false);
             model.getCurrentPLayer().setMarcheCEPDone(false);
             viewGame.hboxAction.resetHbox();
             // actualisation du nombre de tour et de décénnie

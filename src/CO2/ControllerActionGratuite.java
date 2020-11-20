@@ -29,23 +29,37 @@ public class ControllerActionGratuite implements EventHandler<ActionEvent>{
             Optional<Subvention> result = viewGame.hboxAction.dialogDeplacerScientifiqueProjet.showAndWait();
             result.ifPresent(projetChoisi -> {
                 // Si un projet a ete choisi
-                if(model.moveScientificOnProject(projetChoisi.getContinent(), projetChoisi))
-                    viewGame.addScientifiqueToProject(projetChoisi.getIndex()+1, viewGame.imageViewScientifique, projetChoisi.getContinent());
+                if(model.moveScientificOnProject(projetChoisi.getContinent(), projetChoisi)) {
+                    viewGame.addScientifiqueToProject(projetChoisi.getIndex() + 1, viewGame.imageViewScientifique, projetChoisi.getContinent());
+                    model.getCurrentPLayer().getCurrentScientifique().setSubvention(projetChoisi);
+                    if(model.getCurrentPLayer().getCurrentScientifique().getSubvention().getTilesSolarProject() != null) {
+                        // set la valeur solaire si le scientifique joué est sur un projet solaire
+                        model.getCurrentPLayer().getCurrentScientifique().setSubject(new Subject(GreenEnergyTypes.SOLAR));
+                    }
+                }
                 model.getCurrentPLayer().setDeplacerScientifiqueDone(true);
                 return;
             });
             // Sinon reset la hbox
             viewGame.hboxAction.resetHbox();
-        } else if (source == viewGame.hboxAction.btnDeplacerScientifiqToSommet) {
-            if(model.moveScientificOnSommet(model.getCurrentPLayer().getCurrentScientifique().getSubvention())){
-                viewGame.addScientifiqueToSommet(viewGame.imageViewScientifique, model.getCurrentPLayer().getCurrentScientifique());
-                model.getCurrentPLayer().setDeplacerScientifiqueSommetDone(true);
-            } else {
-                viewGame.sommetInfo();
-            }
+        }else if (source == viewGame.hboxAction.btnDeplacerScientifiqToSommet) {
+            // Affiche le ChoiceDialog qui permet de deplacer un scientifque
+            viewGame.hboxAction.displayDeplacerScientifiqueSommetChoiceDialog() ;
+            if(viewGame.hboxAction.dialogDeplacerScientifiqueSommet == null) return;
+            Optional<SommetTile> result = viewGame.hboxAction.dialogDeplacerScientifiqueSommet.showAndWait();
+            result.ifPresent(sommetChoisi -> {
+                if(model.moveScientificOnSommet(model.getCurrentPLayer().getCurrentScientifique().getSubvention(), sommetChoisi)){
+                    viewGame.addScientifiqueToSommet(viewGame.imageViewScientifique, model.getCurrentPLayer().getCurrentScientifique(), sommetChoisi);
+                    model.getCurrentPLayer().getCurrentScientifique().setSommetTile(sommetChoisi);
+                    model.getCurrentPLayer().setDeplacerScientifiqueSommetDone(true);
+                } else {
+                    viewGame.sommetInfo();
+                }
+                viewGame.hboxAction.resetHbox();
+            });
+            // Sinon reset la hbox
             viewGame.hboxAction.resetHbox();
-        }
-        else if (source == viewGame.hboxAction.btnMarche) {
+        } else if (source == viewGame.hboxAction.btnMarche) {
             // Affiche le ChoiceDialog qui permet d'acheter ou de vendre des CEPs
             Player curPlayer = model.getCurrentPLayer();
             viewGame.hboxAction.displayMarcheCEP();

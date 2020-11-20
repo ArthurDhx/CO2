@@ -42,7 +42,14 @@ public class Scientifique {
     }
 
     public String toString(){
-        return this.subvention.toString();
+        if(this.subvention != null){
+            return this.subvention.toString();
+        } else if (this.sommetTile != null){
+            return this.sommetTile.toString();
+        } else {
+            return this.continent.toString();
+        }
+
     }
 
     public Subject getSubject() {

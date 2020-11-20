@@ -15,7 +15,7 @@ enum GreenEnergyTypes {SOLAR, BIOMASS, RECYCLING, FUSION, REFORESTATION}
 
 public class Model {
 
-    final static int STATE_INIT = 1; // Title
+	final static int STATE_INIT = 1; // Title
 	final static int STATE_PLAY = 2; // Game
 	final int NB_TOUR_PAR_DECENNIE = 7; // 6 pour jeu solo + 1 pour pouvoir changer décénnie
 	final int NB_DECENNIE = 2010; // 2010 pour jeu solo, 2020 pour jeu multi
@@ -66,10 +66,10 @@ public class Model {
 		nbDecade = 1;
 		decade = 1970;
 		players = new Player[nbJoueur];
-    	curPlayerId = 0;
-    	//On initialise le prix des CEPs à 3
-    	currentPriceCEP = 3;
-    	//On place 2 CEP dans le marché
+		curPlayerId = 0;
+		//On initialise le prix des CEPs à 3
+		currentPriceCEP = 3;
+		//On place 2 CEP dans le marché
 		nbCEPdispo = 2;
 	}
 
@@ -77,7 +77,7 @@ public class Model {
 	 * Initialisation des attributs
 	 */
 	public void init() throws IOException {
-    	// Initialisation du tableau contenant les 6 tuiles de projet solaire
+		// Initialisation du tableau contenant les 6 tuiles de projet solaire
 		//TODO : Rabaisser a 6 une fois toutes les tuiles projet mis en place car sinon il n'y a pas assez de tuiles pour la demo
 		tilesSolarProjects = new ArrayList<TilesSolarProject>();
 		for(int i = 0; i< 7; i++){
@@ -88,10 +88,10 @@ public class Model {
 		initTour();
 		//initialisation des décénnies
 		initDecade();
-		// Initialisation des sommets
-		initSommetTile();
 		// Initialisation des continents
 		initContinents();
+		// Initialisation des sommets
+		initSommetTile();
 		// Initialisation les barres d'expertise
 		initExpertise();
 	}
@@ -147,8 +147,8 @@ public class Model {
 			AgendaTile agendaTile = new AgendaTile("Reforesting", "Solar", "Fusion", new Image(getClass().getResourceAsStream("images/Agendas/TileAgenda_Reforestation_Solar_Fusion.png")));
 			continents[i].setAgendaTile(agendaTile);
 
-			SommetTile sommetTile = allSommetTile.get(i);
-			continents[i].setSommetTile(sommetTile);
+			/*SommetTile sommetTile = allSommetTile.get(i);
+			continents[i].setSommetTile(sommetTile);*/
 		}
 	}
 
@@ -163,7 +163,7 @@ public class Model {
 		BufferedReader bufferedReader = new BufferedReader(new FileReader(fichier));
 		String st;
 
-
+		int continentNb = 0;
 		while((st = bufferedReader.readLine()) != null) {
 			String location = st.split(" ")[0];
 			String subject1 = st.split(" ")[1];
@@ -172,25 +172,52 @@ public class Model {
 			String subject4 = st.split(" ")[4];
 
 			// liste de sujets avec comme sujet Soleil et Fusion
-			ArrayList<Subject> subjects= new ArrayList<Subject>(Arrays.asList(new Subject(GreenEnergyTypes.SOLAR),new Subject(GreenEnergyTypes.FUSION)));
+			ArrayList<Subject> subjects= new ArrayList<Subject>();
 
+
+			subjects.add(stringToSubject(subject1));
+			subjects.add(stringToSubject(subject2));
+			if(!subject3.equals("none")) subjects.add(stringToSubject(subject3));
+			if(!subject4.equals("none")) subjects.add(stringToSubject(subject4));/*
 			lstSubject.add(GreenEnergyTypes.SOLAR);
 			lstSubject.add(GreenEnergyTypes.FUSION);
 			if(!subject3.equals("none")) lstSubject.add(GreenEnergyTypes.BIOMASS);
-			if(!subject4.equals("none")) lstSubject.add(GreenEnergyTypes.RECYCLING);
+			if(!subject4.equals("none")) lstSubject.add(GreenEnergyTypes.RECYCLING);*/
+			for (int i = 0; i < subjects.size(); i++) {
+				//System.out.println(location + " " +subjects.get(i)+"");
+			}
+			lstAllSommet.add(new SommetTile(location,this.continents[continentNb], subjects.size(), subjects,new Image(getClass().getResourceAsStream("images/Sommets/"+location+".png"))));
+			subjects.clear();
+			if (continentNb < 5){
+				continentNb++;
+			} else {
+				continentNb = 0;
+			}
 
-			lstAllSommet.add(new SommetTile(location, lstSubject.size(), subjects,new Image(getClass().getResourceAsStream("images/Sommets/"+location+".png"))));
-			lstSubject.clear();
 		}
 		bufferedReader.close();
 		this.allSommetTile = lstAllSommet;
+		for(int i=0; i<6 ;i++){
+			SommetTile sommetTile = allSommetTile.get(i);
+			continents[i].setSommetTile(sommetTile);
+		}
+	}
+
+	private Subject stringToSubject(String subject){
+		Subject subjectEnergy = new Subject();
+		if (subject.equals("Solar")) subjectEnergy.setEnergy(GreenEnergyTypes.SOLAR);
+		if (subject.equals("Fusion")) subjectEnergy.setEnergy(GreenEnergyTypes.FUSION);
+		if (subject.equals("Reforestation")) subjectEnergy.setEnergy(GreenEnergyTypes.REFORESTATION);
+		if (subject.equals("Biomass")) subjectEnergy.setEnergy(GreenEnergyTypes.BIOMASS);
+		if (subject.equals("Recycling")) subjectEnergy.setEnergy(GreenEnergyTypes.RECYCLING);
+		return subjectEnergy;
 	}
 
 	/**
 	 * @return le nombre de tuiles "Projet Solaire" restantes dans la pile
 	 */
 	public int getNbSolarProject(){
-    	return tilesSolarProjects.size();
+		return tilesSolarProjects.size();
 	}
 
 	/**
@@ -210,7 +237,7 @@ public class Model {
 		// si l'energie solaire ne peux pas etre placee sur le continent -> action impossible
 		if(!continent.getAgendaTile().isPossiblePlacement("Solar")) return false;
 
-    	// permet d'ajouter la tuile sur la case subvention
+		// permet d'ajouter la tuile sur la case subvention
 		if(tilesSolarProjects.get(0).addOnSubvention() && tilesSolarProjects.get(0).subPossible){
 			continent.getSubventions().get(indexSub).addTilesSolarProject(tilesSolarProjects.get(0));
 			tilesSolarProjects.get(0).subPossible = false;
@@ -219,7 +246,7 @@ public class Model {
 		return false;
 	}
 
-    /**
+	/**
 	 * permet de savoir si le joueur peut déplacer un scientifique, et met à jour la "localisation" du scientifique
 	 * @return true si il peut, sinon false
 	 */
@@ -240,27 +267,19 @@ public class Model {
 	 * permet de savoir si le joueur peut déplacer un scientifique d'un projet à un sommet
 	 * @return true si il peut, sinon false
 	 */
-	public boolean moveScientificOnSommet(Subvention subvention){
-		List<Scientifique> scientifiques = this.getCurrentPLayer().getScientifiques();
-		Scientifique scientifique = new Scientifique();
-
-		for (Scientifique sc : scientifiques) {
-			if (sc.getSubvention()!= null && sc.getSubvention().equals(subvention)) scientifique = sc;
-		}
-		SommetTile sommetTile = scientifique.getContinent().getSommetTile();
-
-		// A terme vérifié si le type du projet = nécessite  héritage tuile => solaire
-		if (sommetTile.haveEnergy(GreenEnergyTypes.SOLAR)){
-			for (Scientifique sc : scientifiques) {
-				if (sc.getSubvention().equals(subvention)) {
-					sommetTile.addScientifiqueToEnergy(sc,GreenEnergyTypes.SOLAR);
-				}
+	public boolean moveScientificOnSommet(Subvention subvention, SommetTile sommetTile){
+		Scientifique scientifique = this.getCurrentPLayer().getCurrentScientifique();
+		if (scientifique.getContinent() == null){
+			return false;
+		} else {
+			// À faire pour toutes les énergies
+			// vérifie si le sommet ainsi que la subvention on tous deux l'énergie solaire.
+			if (sommetTile.haveEnergy(GreenEnergyTypes.SOLAR) && subvention.getTilesSolarProject() != null){
 				return true;
 			}
+			return false;
 		}
-		return false;
 	}
-
 
 	/**
 	 * Permet de savoir si un joueur peut mettre en place un projet
@@ -309,7 +328,7 @@ public class Model {
 	}
 
 	public boolean tilesSolarProjectOnWhichContinent(){
-    	// à développer pour savoir quel continent contient les tuiles de projet solaire
+		// à développer pour savoir quel continent contient les tuiles de projet solaire
 		return continents[0].isContainsTilesSolarProject();
 	}
 	public Player getCurrentPLayer() { return players[curPlayerId]; }

@@ -6,6 +6,8 @@ public class Subject {
     // le sujet à un type d'énergie
     private GreenEnergyTypes energy;
 
+    public Subject(){}
+
     public Subject(GreenEnergyTypes energy) {
         this.energy = energy;
     }
@@ -25,5 +27,10 @@ public class Subject {
 
     public void setEnergy(GreenEnergyTypes energy) {
         this.energy = energy;
+    }
+
+    @Override
+    public String toString() {
+        return energy.name();
     }
 }

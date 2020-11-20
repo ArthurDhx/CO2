@@ -509,8 +509,8 @@ public class ViewGame {
 		}
 	}
 
-	public void addScientifiqueToSommet(ImageView imageViewScientifique, Scientifique scientifique){
-		Continent continent = scientifique.getContinent();
+	public void addScientifiqueToSommet(ImageView imageViewScientifique, Scientifique scientifique, SommetTile sommetTile){
+		Continent continent = sommetTile.getContinent();
 		switch(continent.getName()) {
 			case "Europe" :
 				imageViewScientifique.setX(400-50);
@@ -675,7 +675,7 @@ public class ViewGame {
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
 		alert.setTitle("Information sur le sommet");
 		alert.setHeaderText(null);
-		alert.setContentText("Il n'y a pas la votre source d'énergie dans le sommet");
+		alert.setContentText("Il n'y a pas votre source d'énergie dans ce sommet");
 		alert.showAndWait();
 	}
 

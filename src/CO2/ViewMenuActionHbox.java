@@ -16,6 +16,7 @@ public class ViewMenuActionHbox extends HBox {
     ChoiceDialog<Continent> dialogProposerProjet;
     ChoiceDialog<Subvention> dialogSubvention;
     ChoiceDialog<Subvention> dialogDeplacerScientifiqueProjet;
+    ChoiceDialog<SommetTile> dialogDeplacerScientifiqueSommet;
     ChoiceDialog<Scientifique> dialogChoisirScientifique;
     ChoiceDialog<Subvention> dialogMettreEnPlaceProjet;
     ChoiceDialog<String> dialogAcheterVendreCEP;
@@ -141,7 +142,9 @@ public class ViewMenuActionHbox extends HBox {
         this.getChildren().removeAll(this.getChildren());
         // Si l'action n'a pas déjà été faite affiche le bouton liée a l'action
         if (!actionFaite[0]) this.getChildren().add(btnDeplacerScientifiqToProject);
-        if (!actionFaite[1]) this.getChildren().add(btnDeplacerScientifiqToSommet);
+        if (model.getCurrentPLayer().getCurrentScientifique().getSubvention() != null){
+            if (!actionFaite[1]) this.getChildren().add(btnDeplacerScientifiqToSommet);
+        }
         if (!actionFaite[2]) this.getChildren().add(btnMarche);
         if (!actionFaite[3]) this.getChildren().add(btnJouerCarte);
 
@@ -173,6 +176,28 @@ public class ViewMenuActionHbox extends HBox {
         dialogDeplacerScientifiqueProjet.setTitle("Déplacer un scientifique");
         dialogDeplacerScientifiqueProjet.setHeaderText("Veuiller choisir un projet");
         dialogDeplacerScientifiqueProjet.setContentText("Projet:");
+    }
+
+    /**
+     * Affiche le ChoiceDialog qui permet de déplacer un scientifique sur un sommet
+     */
+    public void displayDeplacerScientifiqueSommetChoiceDialog(){
+        //On récupère les sommets
+        Continent[] continent = model.getContinents();
+        ArrayList<SommetTile> sommetTiles = new ArrayList<>();
+        for(int i = 0; i< continent.length; i++){
+            sommetTiles.add(continent[i].getSommetTile());
+        }
+        System.out.println(sommetTiles);
+        //Si aucun sommet n'est mis en place, on ne fait rien
+
+        dialogDeplacerScientifiqueSommet = new ChoiceDialog<SommetTile>(
+                sommetTiles.get(0), // Choix par défaut
+                sommetTiles
+        );
+        dialogDeplacerScientifiqueSommet.setTitle("Déplacer un scientifique");
+        dialogDeplacerScientifiqueSommet.setHeaderText("Veuiller choisir un sommet");
+        dialogDeplacerScientifiqueSommet.setContentText("Sommets :");
     }
 
     /**
