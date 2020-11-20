@@ -73,4 +73,18 @@ public class ModelUnitTest {
         Assert.assertEquals(1,p.getCEP());
         Assert.assertEquals(3,p.getResourcesTech());
     }
+
+    @Test
+    public void testStringToSubject(){
+        Subject subject1 = new Subject(GreenEnergyTypes.SOLAR);
+        Subject subject2 = new Subject(GreenEnergyTypes.RECYCLING);
+        Subject subject3 = new Subject(GreenEnergyTypes.REFORESTATION);
+        Subject subject4 = new Subject(GreenEnergyTypes.FUSION);
+        Subject subject5 = new Subject(GreenEnergyTypes.BIOMASS);
+        Assert.assertEquals(subject1.getEnergy(),model.stringToSubject("Solar").getEnergy());
+        Assert.assertEquals(subject2.getEnergy(),model.stringToSubject("Recycling").getEnergy());
+        Assert.assertEquals(subject3.getEnergy(),model.stringToSubject("Reforestation").getEnergy());
+        Assert.assertEquals(subject4.getEnergy(),model.stringToSubject("Fusion").getEnergy());
+        Assert.assertEquals(subject5.getEnergy(),model.stringToSubject("Biomass").getEnergy());
+    }
 }
