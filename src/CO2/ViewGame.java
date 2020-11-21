@@ -79,7 +79,7 @@ public class ViewGame {
 		imageViewScientifique = new ImageView(imgScientifique);
 		imageViewScientifique.setX(30);
 		imageViewScientifique.setY(180);
-		imageViewScientifique.setFitWidth(50);
+		imageViewScientifique.setFitWidth(40);
 		imageViewScientifique.setPreserveRatio(true);
 		pane.getChildren().add(imageViewScientifique);
 
@@ -202,7 +202,7 @@ public class ViewGame {
 		CEPJoueur = new Text(10,80,"Vous avez "+model.getCurrentPLayer().getCEP()+" CEP");
 		pane.getChildren().add(CEPJoueur);
 		pane.getChildren().remove(CEPMarche);
-		CEPMarche = new Text(model.width/2-80,model.height/2,
+		CEPMarche = new Text(model.width/2-140,model.height/2,
 				"Il y a "+model.nbCEPdispo+" CEP dans le marché\n" +
 						"Le prix actuel est de "+model.currentPriceCEP+" €"
 		);
@@ -326,31 +326,24 @@ public class ViewGame {
 	 * Initialisation des centrales
 	 */
 	public void initCentral(int val, int k){
+		// boucle sur les continents
 		for(int i=0;i<model.getContinents().length;i++) {
+			// boucle sur le nombre de CEP pen fonction du continent
 			for(int j=0;j<model.getContinents()[i].getNbCep();j++) {
-				if(i==0) {
-					model.getContinents()[i].getTabRectangleCentral()[j].setX(k+val-250);
-					model.getContinents()[i].getTabRectangleCentral()[j].setY(val+80);
-				}
+				// affichage des cases de centrales
+				if(i==0 || i==2) model.getContinents()[i].getTabRectangleCentral()[j].setY(val+80);
+				if(i==3 || i==5) model.getContinents()[i].getTabRectangleCentral()[j].setY(val+380);
+				if(i==0) model.getContinents()[i].getTabRectangleCentral()[j].setX(k+val-250);
+				if(i==2) model.getContinents()[i].getTabRectangleCentral()[j].setX(k+val-180);
+				if(i==3) model.getContinents()[i].getTabRectangleCentral()[j].setX(k+val-580);
+				if(i==5) model.getContinents()[i].getTabRectangleCentral()[j].setX(k+val-2220);
 				if(i==1) {
 					model.getContinents()[i].getTabRectangleCentral()[j].setX(k+val-215);
 					model.getContinents()[i].getTabRectangleCentral()[j].setY(val-40);
 				}
-				if(i==2) {
-					model.getContinents()[i].getTabRectangleCentral()[j].setX(k+val-180);
-					model.getContinents()[i].getTabRectangleCentral()[j].setY(val+80);
-				}
-				if(i==3) {
-					model.getContinents()[i].getTabRectangleCentral()[j].setX(k+val-580);
-					model.getContinents()[i].getTabRectangleCentral()[j].setY(val+380);
-				}
 				if(i==4) {
 					model.getContinents()[i].getTabRectangleCentral()[j].setX(k+val-1340);
 					model.getContinents()[i].getTabRectangleCentral()[j].setY(val+540);
-				}
-				if(i==5) {
-					model.getContinents()[i].getTabRectangleCentral()[j].setX(k+val-2220);
-					model.getContinents()[i].getTabRectangleCentral()[j].setY(val+380);
 				}
 				// ajout au pane
 				pane.getChildren().add(model.getContinents()[i].getTabRectangleCentral()[j]);
@@ -371,13 +364,13 @@ public class ViewGame {
 				switch (subventionChoice) {
 					// posiitionne les tuiles de projet à l'emplacement correspondant
 					case 1:
-						imageViewTilesSolarProject.setX(350);
+						imageViewTilesSolarProject.setX(200);
 						break;
 					case 2:
-						imageViewTilesSolarProject.setX(450);
+						imageViewTilesSolarProject.setX(280);
 						break;
 					case 3:
-						imageViewTilesSolarProject.setX(550);
+						imageViewTilesSolarProject.setX(360);
 						break;
 				}
 				imageViewTilesSolarProject.setY(250);
@@ -387,16 +380,16 @@ public class ViewGame {
 			case "Afrique" :
 				switch (subventionChoice) {
 					case 1:
-						imageViewTilesSolarProject.setX(650);
+						imageViewTilesSolarProject.setX(600);
 						break;
 					case 2:
-						imageViewTilesSolarProject.setX(750);
+						imageViewTilesSolarProject.setX(680);
 						break;
 					case 3:
-						imageViewTilesSolarProject.setX(850);
+						imageViewTilesSolarProject.setX(760);
 						break;
 				}
-				imageViewTilesSolarProject.setY(100);
+				imageViewTilesSolarProject.setY(130);
 				imageViewTilesSolarProject.toFront();
 				break;
 			case "Amérique du Sud" :
@@ -405,10 +398,10 @@ public class ViewGame {
 						imageViewTilesSolarProject.setX(950);
 						break;
 					case 2:
-						imageViewTilesSolarProject.setX(1050);
+						imageViewTilesSolarProject.setX(1030);
 						break;
 					case 3:
-						imageViewTilesSolarProject.setX(1150);
+						imageViewTilesSolarProject.setX(1110);
 						break;
 				}
 				imageViewTilesSolarProject.setY(250);
@@ -420,43 +413,43 @@ public class ViewGame {
 						imageViewTilesSolarProject.setX(950);
 						break;
 					case 2:
-						imageViewTilesSolarProject.setX(1050);
+						imageViewTilesSolarProject.setX(1030);
 						break;
 					case 3:
-						imageViewTilesSolarProject.setX(1150);
+						imageViewTilesSolarProject.setX(1110);
 						break;
 				}
-				imageViewTilesSolarProject.setY(600);
+				imageViewTilesSolarProject.setY(550);
 				imageViewTilesSolarProject.toFront();
 				break;
 			case "Océanie" :
 				switch (subventionChoice) {
 					case 1:
-						imageViewTilesSolarProject.setX(650);
+						imageViewTilesSolarProject.setX(600);
 						break;
 					case 2:
-						imageViewTilesSolarProject.setX(750);
+						imageViewTilesSolarProject.setX(680);
 						break;
 					case 3:
-						imageViewTilesSolarProject.setX(850);
+						imageViewTilesSolarProject.setX(760);
 						break;
 				}
-				imageViewTilesSolarProject.setY(750);
+				imageViewTilesSolarProject.setY(710);
 				imageViewTilesSolarProject.toFront();
 				break;
 			case "Asie" :
 				switch (subventionChoice) {
 					case 1:
-						imageViewTilesSolarProject.setX(350);
+						imageViewTilesSolarProject.setX(200);
 						break;
 					case 2:
-						imageViewTilesSolarProject.setX(450);
+						imageViewTilesSolarProject.setX(280);
 						break;
 					case 3:
-						imageViewTilesSolarProject.setX(550);
+						imageViewTilesSolarProject.setX(360);
 						break;
 				}
-				imageViewTilesSolarProject.setY(600);
+				imageViewTilesSolarProject.setY(550);
 				imageViewTilesSolarProject.toFront();
 				break;
 		}
@@ -467,13 +460,13 @@ public class ViewGame {
 			case "Europe" :
 				switch (projectChoice) {
 					case 1:
-						imageViewScientifique.setX(350);
+						imageViewScientifique.setX(200);
 						break;
 					case 2:
-						imageViewScientifique.setX(450);
+						imageViewScientifique.setX(280);
 						break;
 					case 3:
-						imageViewScientifique.setX(550);
+						imageViewScientifique.setX(360);
 						break;
 				}
 				imageViewScientifique.setY(250);
@@ -485,13 +478,13 @@ public class ViewGame {
 						imageViewScientifique.setX(650);
 						break;
 					case 2:
-						imageViewScientifique.setX(750);
+						imageViewScientifique.setX(680);
 						break;
 					case 3:
-						imageViewScientifique.setX(850);
+						imageViewScientifique.setX(760);
 						break;
 				}
-				imageViewScientifique.setY(100);
+				imageViewScientifique.setY(130);
 				imageViewScientifique.toFront();
 				break;
 			case "Amérique du Sud" :
@@ -500,10 +493,10 @@ public class ViewGame {
 						imageViewScientifique.setX(950);
 						break;
 					case 2:
-						imageViewScientifique.setX(1050);
+						imageViewScientifique.setX(1030);
 						break;
 					case 3:
-						imageViewScientifique.setX(1150);
+						imageViewScientifique.setX(1110);
 						break;
 				}
 				imageViewScientifique.setY(250);
@@ -515,43 +508,43 @@ public class ViewGame {
 						imageViewScientifique.setX(950);
 						break;
 					case 2:
-						imageViewScientifique.setX(1050);
+						imageViewScientifique.setX(1030);
 						break;
 					case 3:
-						imageViewScientifique.setX(1150);
+						imageViewScientifique.setX(1110);
 						break;
 				}
-				imageViewScientifique.setY(600);
+				imageViewScientifique.setY(550);
 				imageViewScientifique.toFront();
 				break;
 			case "Océanie" :
 				switch (projectChoice) {
 					case 1:
-						imageViewScientifique.setX(650);
+						imageViewScientifique.setX(600);
 						break;
 					case 2:
-						imageViewScientifique.setX(750);
+						imageViewScientifique.setX(680);
 						break;
 					case 3:
-						imageViewScientifique.setX(850);
+						imageViewScientifique.setX(760);
 						break;
 				}
-				imageViewScientifique.setY(750);
+				imageViewScientifique.setY(710);
 				imageViewScientifique.toFront();
 				break;
 			case "Asie" :
 				switch (projectChoice) {
 					case 1:
-						imageViewScientifique.setX(350);
+						imageViewScientifique.setX(200);
 						break;
 					case 2:
-						imageViewScientifique.setX(450);
+						imageViewScientifique.setX(280);
 						break;
 					case 3:
-						imageViewScientifique.setX(550);
+						imageViewScientifique.setX(360);
 						break;
 				}
-				imageViewScientifique.setY(600);
+				imageViewScientifique.setY(550);
 				imageViewScientifique.toFront();
 				break;
 		}
@@ -561,33 +554,33 @@ public class ViewGame {
 		Continent continent = sommetTile.getContinent();
 		switch(continent.getName()) {
 			case "Europe" :
-				imageViewScientifique.setX(400-50);
-				imageViewScientifique.setY(200-20);
+				imageViewScientifique.setX(200);
+				imageViewScientifique.setY(200-10);
 				imageViewScientifique.toFront();
 				break;
 			case "Afrique" :
-				imageViewScientifique.setX(700-50);
-				imageViewScientifique.setY(70+115);
+				imageViewScientifique.setX(600);
+				imageViewScientifique.setY(70);
 				imageViewScientifique.toFront();
 				break;
 			case "Amérique du Sud" :
-				imageViewScientifique.setX(1000-50);
-				imageViewScientifique.setY(200-20);
+				imageViewScientifique.setX(950);
+				imageViewScientifique.setY(200-10);
 				imageViewScientifique.toFront();
 				break;
 			case "Amérique du Nord" :
-				imageViewScientifique.setX(1000-50);
-				imageViewScientifique.setY(550-20);
+				imageViewScientifique.setX(950);
+				imageViewScientifique.setY(550-60);
 				imageViewScientifique.toFront();
 				break;
 			case "Océanie" :
-				imageViewScientifique.setX(700-50);
-				imageViewScientifique.setY(700-20);
+				imageViewScientifique.setX(600);
+				imageViewScientifique.setY(700-50);
 				imageViewScientifique.toFront();
 				break;
 			case "Asie" :
-				imageViewScientifique.setX(400-50);
-				imageViewScientifique.setY(550-20);
+				imageViewScientifique.setX(200);
+				imageViewScientifique.setY(550-60);
 				imageViewScientifique.toFront();
 				break;
 		}
@@ -605,13 +598,13 @@ public class ViewGame {
 			case "Europe" :
 				switch (projectChoice) {
 					case 1:
-						imageViewTilesSolarProjectBack.setX(350);
+						imageViewTilesSolarProjectBack.setX(200);
 						break;
 					case 2:
-						imageViewTilesSolarProjectBack.setX(450);
+						imageViewTilesSolarProjectBack.setX(280);
 						break;
 					case 3:
-						imageViewTilesSolarProjectBack.setX(550);
+						imageViewTilesSolarProjectBack.setX(360);
 						break;
 				}
 				imageViewTilesSolarProjectBack.setY(250);
@@ -623,13 +616,13 @@ public class ViewGame {
 						imageViewTilesSolarProjectBack.setX(650);
 						break;
 					case 2:
-						imageViewTilesSolarProjectBack.setX(750);
+						imageViewTilesSolarProjectBack.setX(680);
 						break;
 					case 3:
-						imageViewTilesSolarProjectBack.setX(850);
+						imageViewTilesSolarProjectBack.setX(760);
 						break;
 				}
-				imageViewTilesSolarProjectBack.setY(100);
+				imageViewTilesSolarProjectBack.setY(130);
 				imageViewTilesSolarProjectBack.toFront();
 				break;
 			case "Amérique du Sud" :
@@ -638,10 +631,10 @@ public class ViewGame {
 						imageViewTilesSolarProjectBack.setX(950);
 						break;
 					case 2:
-						imageViewTilesSolarProjectBack.setX(1050);
+						imageViewTilesSolarProjectBack.setX(1030);
 						break;
 					case 3:
-						imageViewTilesSolarProjectBack.setX(1150);
+						imageViewTilesSolarProjectBack.setX(1110);
 						break;
 				}
 				imageViewTilesSolarProjectBack.setY(250);
@@ -653,43 +646,43 @@ public class ViewGame {
 						imageViewTilesSolarProjectBack.setX(950);
 						break;
 					case 2:
-						imageViewTilesSolarProjectBack.setX(1050);
+						imageViewTilesSolarProjectBack.setX(1030);
 						break;
 					case 3:
-						imageViewTilesSolarProjectBack.setX(1150);
+						imageViewTilesSolarProjectBack.setX(1110);
 						break;
 				}
-				imageViewTilesSolarProjectBack.setY(600);
+				imageViewTilesSolarProjectBack.setY(550);
 				imageViewTilesSolarProjectBack.toFront();
 				break;
 			case "Océanie" :
 				switch (projectChoice) {
 					case 1:
-						imageViewTilesSolarProjectBack.setX(650);
+						imageViewTilesSolarProjectBack.setX(600);
 						break;
 					case 2:
-						imageViewTilesSolarProjectBack.setX(750);
+						imageViewTilesSolarProjectBack.setX(680);
 						break;
 					case 3:
-						imageViewTilesSolarProjectBack.setX(850);
+						imageViewTilesSolarProjectBack.setX(760);
 						break;
 				}
-				imageViewTilesSolarProjectBack.setY(750);
+				imageViewTilesSolarProjectBack.setY(710);
 				imageViewTilesSolarProjectBack.toFront();
 				break;
 			case "Asie" :
 				switch (projectChoice) {
 					case 1:
-						imageViewTilesSolarProjectBack.setX(350);
+						imageViewTilesSolarProjectBack.setX(200);
 						break;
 					case 2:
-						imageViewTilesSolarProjectBack.setX(450);
+						imageViewTilesSolarProjectBack.setX(280);
 						break;
 					case 3:
-						imageViewTilesSolarProjectBack.setX(550);
+						imageViewTilesSolarProjectBack.setX(360);
 						break;
 				}
-				imageViewTilesSolarProjectBack.setY(600);
+				imageViewTilesSolarProjectBack.setY(550);
 				imageViewTilesSolarProjectBack.toFront();
 				break;
 		}
