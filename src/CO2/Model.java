@@ -80,13 +80,13 @@ public class Model {
 		// Initialisation du tableau contenant les 6 tuiles de projet solaire
 		//TODO : Rabaisser a 6 une fois toutes les tuiles projet mis en place car sinon il n'y a pas assez de tuiles pour la demo
 		tilesSolarProjects = new ArrayList<TilesSolarProject>();
-		for(int i = 0; i< 7; i++){
+		for(int i = 0; i< 30; i++){// 30 pour l'instant (représente tous les projet)
 			tilesSolarProjects.add(new TilesSolarProject());
 		}
 		// Initialisation des joueurs
 		initPlayers();
 		initTour();
-		//initialisation des décénnies
+		// Initialisation des décénnies
 		initDecade();
 		// Initialisation des continents
 		initContinents();
@@ -140,9 +140,13 @@ public class Model {
 	private void initContinents(){
 		continents = new Continent[6];
 		ArrayList<String> nomContinents = new ArrayList<>(Arrays.asList("Europe", "Afrique", "Amérique du Sud", "Amérique du Nord", "Océanie", "Asie"));
+		int nbCep = 0;
 		for(int i=0; i<6 ;i++){
-			continents[i] = new Continent(nomContinents.get(i), 3, new Image(getClass().getResourceAsStream("images/Continents/" + nomContinents.get(i) +".jpg")));
-
+			// Initialisation du nombre de CEP en fonction du continent
+			if(nomContinents.get(i).equals("Europe")) nbCep = 5;if(nomContinents.get(i).equals("Afrique")) nbCep = 3;
+			if(nomContinents.get(i).equals("Amérique du Sud")) nbCep = 4;if(nomContinents.get(i).equals("Amérique du Nord")) nbCep = 5;
+			if(nomContinents.get(i).equals("Océanie")) nbCep = 4;if(nomContinents.get(i).equals("Asie")) nbCep = 6;
+			continents[i] = new Continent(nomContinents.get(i), nbCep, new Image(getClass().getResourceAsStream("images/Continents/" + nomContinents.get(i) +".jpg")));
 			// TODO dans un prochain sprint, generer les agendaTiles et en prendre une aleatoire par continent
 			AgendaTile agendaTile = new AgendaTile("Reforesting", "Solar", "Fusion", new Image(getClass().getResourceAsStream("images/Agendas/TileAgenda_Reforestation_Solar_Fusion.png")));
 			continents[i].setAgendaTile(agendaTile);

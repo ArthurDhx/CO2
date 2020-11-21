@@ -27,7 +27,7 @@ public class Subvention {
         this.index = index;
         setType(index);
         this.continent = continent;
-        tabRectangleSubvention[index] = new Rectangle(75, 75, Color.WHITE);
+        tabRectangleSubvention[index] = new Rectangle(65, 65, Color.WHITE);
         tabRectangleSubvention[index].setStroke(Color.BLACK);
     }
 

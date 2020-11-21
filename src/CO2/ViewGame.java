@@ -66,13 +66,13 @@ public class ViewGame {
 		imageViewTilesSolarProject.setX(1460);
 		imageViewTilesSolarProject.setY(50);
 		imageViewTilesSolarProject.setPreserveRatio(true);
-		ImageView imageViewTilesSolarProjectInDeck = new ImageView(imgTilesSolarProject);
+		/*ImageView imageViewTilesSolarProjectInDeck = new ImageView(imgTilesSolarProject);
 		imageViewTilesSolarProjectInDeck.setPreserveRatio(true);
 		imageViewTilesSolarProjectInDeck.setFitWidth(75);
 		imageViewTilesSolarProjectInDeck.setX(1460);
-		imageViewTilesSolarProjectInDeck.setY(50);
-		pane.getChildren().add(imageViewTilesSolarProject);
-		pane.getChildren().add(imageViewTilesSolarProjectInDeck);
+		imageViewTilesSolarProjectInDeck.setY(50);*/
+		// pane.getChildren().add(imageViewTilesSolarProject); // ne plus afficher le nb de tuiles de projets solaire et images
+		//pane.getChildren().add(imageViewTilesSolarProjectInDeck);
 
 		//On récupère l'image d'un scientifique et on l'ajoute à l'écran
 		Image imgScientifique = new Image(getClass().getResourceAsStream("images/scientifique.png"));
@@ -85,7 +85,7 @@ public class ViewGame {
 
 		// On indique combien il y'a de tuile dans le paquet
 		nbTilesSolarProject = new Text(1430, 150,"Il y a "+model.getNbSolarProject()+" projets solaires");
-		pane.getChildren().add(nbTilesSolarProject);
+		//pane.getChildren().add(nbTilesSolarProject); / ne plus afficher le nb de tuiles de projets solaire et images
 
 		reloadTour();
 		reloadDecade();
@@ -97,8 +97,9 @@ public class ViewGame {
 		initContinent();
 		initExpertise(50, 5);
 		initSubvention(250, 100);
+		initCentral(250, 100);
 
-		hboxAction = new ViewMenuActionHbox(model) ;
+		hboxAction = new ViewMenuActionHbox(model);
 		hboxAction.init();
 		pane.getChildren().add(hboxAction);
     }
@@ -109,8 +110,8 @@ public class ViewGame {
 	 * a partir de (1300, 800)
 	 */
 	private void initExpertise(int rectWidth, int space) {
-		int x = 1300;
-		int y = 800;
+		int x = 1320;
+		int y = 840;
 		// nb pixels entre la gauche de la piste courrante
 		// et la gauche de la piste la plus a gauche
 		int offset = 0;
@@ -149,6 +150,7 @@ public class ViewGame {
 		reloadPlayerExpertise(model.getCurrentPLayer());
 	}
 
+	//A appeler lors d'une modification du tour
 	public void reloadTour(){
 		pane.getChildren().remove(nbTour);
 		nbTour = new Text(10, 110,"Tour : "+model.getTour()+"/" + (model.NB_TOUR_PAR_DECENNIE-1));
@@ -169,6 +171,7 @@ public class ViewGame {
 		pane.getChildren().addAll(player1ExpertiseIndicator);
 	}
 
+	//A appeler lors d'une modification de la décénnie
 	public void reloadDecade(){
 		pane.getChildren().remove(nbDecade);
 		nbDecade = new Text(80, 110,"Décénnie : "+model.getDecade()+"/" + model.NB_DECENNIE);
@@ -214,8 +217,8 @@ public class ViewGame {
 	 */
 	private Circle placePlayerExpertise(int expertise, int expertiseId) {
 		// cf valeurs de initExpertise();
-		int xPistes = 1300;
-		int yPistes = 800;
+		int xPistes = 1320;
+		int yPistes = 840;
 		int rectWidth = 50;
 		int space = 5;
 
@@ -243,38 +246,44 @@ public class ViewGame {
 			imageViewAgendaTiles[i] = new ImageView(model.getContinents()[i].getAgendaTile().getImageAgendaTile());
 			imageViewSommetTiles[i] = new ImageView(model.getContinents()[i].getSommetTile().getImageSommetTile());
 			// Position des continents
-			if(i==0 || i==5) imageViewContinents[i].setX(400);
+			if(i==0 || i==5) imageViewContinents[i].setX(200);
 			if(i==0 || i==2) imageViewContinents[i].setY(200);
 			if(i==3 || i==5) imageViewContinents[i].setY(550);
-			if(i==1 || i==4) imageViewContinents[i].setX(700);
-			if(i==2 || i==3) imageViewContinents[i].setX(1000);
+			if(i==1 || i==4) imageViewContinents[i].setX(600);
+			if(i==2 || i==3) imageViewContinents[i].setX(950);
 			// Position des Agendas
-			if(i==0 || i==5) imageViewAgendaTiles[i].setX(400+50);
-			if(i==0 || i==2) imageViewAgendaTiles[i].setY(200-100);
-			if(i==3 || i==5) imageViewAgendaTiles[i].setY(550-100);
-			if(i==1 || i==4) imageViewAgendaTiles[i].setX(700+50);
-			if(i==2 || i==3) imageViewAgendaTiles[i].setX(1000+50);
+			if(i==0 || i==5) imageViewAgendaTiles[i].setX(200+85);
+			if(i==0 || i==2) imageViewAgendaTiles[i].setY(200-60);
+			if(i==3 || i==5) imageViewAgendaTiles[i].setY(550-110);
+			if(i==1 || i==4) imageViewAgendaTiles[i].setX(600+85);
+			if(i==2 || i==3) imageViewAgendaTiles[i].setX(950+85);
 			// Position des sommets
-			if(i==0 || i==5) imageViewSommetTiles[i].setX(400-50);
-			if(i==0 || i==2) imageViewSommetTiles[i].setY(200-20);
-			if(i==3 || i==5) imageViewSommetTiles[i].setY(550-20);
-			if(i==1 || i==4) imageViewSommetTiles[i].setX(700-50);
-			if(i==2 || i==3) imageViewSommetTiles[i].setX(1000-50);
+			if(i==0 || i==5) imageViewSommetTiles[i].setX(200);
+			if(i==0 || i==2) imageViewSommetTiles[i].setY(200-10);
+			if(i==3 || i==5) imageViewSommetTiles[i].setY(550-60);
+			if(i==1 || i==4) imageViewSommetTiles[i].setX(600);
+			if(i==2 || i==3) imageViewSommetTiles[i].setX(950);
 
 			// Redimention
-			imageViewAgendaTiles[i].setFitWidth(75);
+			if(i!=2) imageViewContinents[i].setFitWidth(220);
+			imageViewContinents[i].setPreserveRatio(true);
+			imageViewAgendaTiles[i].setFitWidth(60);
 			imageViewAgendaTiles[i].setPreserveRatio(true);
-			imageViewSommetTiles[i].setFitWidth(75);
+			imageViewSommetTiles[i].setFitWidth(60);
 			imageViewSommetTiles[i].setPreserveRatio(true);
 		}
+		// Redimension de l'Afrique car image trop grande
+		imageViewContinents[2].setFitWidth(170);
+		imageViewContinents[2].setPreserveRatio(true);
+
 		imageViewContinents[4].setY(700);
 		imageViewContinents[1].setY(70);
 
-		imageViewAgendaTiles[4].setY(700-125);
-		imageViewAgendaTiles[1].setY(70+125);
+		imageViewAgendaTiles[4].setY(700-100);
+		imageViewAgendaTiles[1].setY(70-50);
 
-		imageViewSommetTiles[4].setY(700-20);
-		imageViewSommetTiles[1].setY(70+115);
+		imageViewSommetTiles[4].setY(700-50);
+		imageViewSommetTiles[1].setY(70);
 
 		// Ajout au pane
 		for(int i = 0; i < 6; i++) {
@@ -295,20 +304,59 @@ public class ViewGame {
 				// initialisation du texte
 				subventionName[j] = new Text(model.getContinents()[j].getSubventions().get(i).getType().toString());
 				// style du texte
-				subventionName[j].setStyle("-fx-font: 9 arial;");
+				subventionName[j].setStyle("-fx-font: 8 arial;");
 				// position du texte (les 3 noms de subvention) pour chaque continent
-				if(j==0 || j==5) {model.getContinents()[j].getTabRectangleSubvention()[i].setX(k+val);subventionName[j].setX(k+val+5);}
-				if(j==0 || j==2) {model.getContinents()[j].getTabRectangleSubvention()[i].setY(val);subventionName[j].setY(val+40);}
-				if(j==1 || j==4) {model.getContinents()[j].getTabRectangleSubvention()[i].setX(k+val+300);subventionName[j].setX(k+val+305);}
+				if(j==0 || j==5) {model.getContinents()[j].getTabRectangleSubvention()[i].setX(k+val-150);subventionName[j].setX(k+val-145);}
+				if(j==0 || j==2) {model.getContinents()[j].getTabRectangleSubvention()[i].setY(val);subventionName[j].setY(val+35);}
+				if(j==1 || j==4) {model.getContinents()[j].getTabRectangleSubvention()[i].setX(k+val+250);subventionName[j].setX(k+val+255);}
 				if(j==2 || j==3) {model.getContinents()[j].getTabRectangleSubvention()[i].setX(k+val+600);subventionName[j].setX(k+val+605);}
-				if(j==3 || j==5) {model.getContinents()[j].getTabRectangleSubvention()[i].setY(val+350);subventionName[j].setY(val+390);}
-				if(j==1) {model.getContinents()[j].getTabRectangleSubvention()[i].setY(val-150);subventionName[1].setY(val-110);}
-				if(j==4) {model.getContinents()[4].getTabRectangleSubvention()[i].setY(val+500);subventionName[4].setY(val+540);}
+				if(j==3 || j==5) {model.getContinents()[j].getTabRectangleSubvention()[i].setY(val+300);subventionName[j].setY(val+335);}
+				if(j==1) {model.getContinents()[j].getTabRectangleSubvention()[i].setY(val-120);subventionName[1].setY(val-85);}
+				if(j==4) {model.getContinents()[4].getTabRectangleSubvention()[i].setY(val+460);subventionName[4].setY(val+495);}
+
 				// ajout au pane
 				pane.getChildren().add(model.getContinents()[j].getTabRectangleSubvention()[i]);
 				pane.getChildren().add(subventionName[j]);
 			}
-			k = k + 100;
+			k = k + 80;
+		}
+	}
+
+	/**
+	 * Initialisation des centrales
+	 */
+	public void initCentral(int val, int k){
+		for(int i=0;i<model.getContinents().length;i++) {
+			for(int j=0;j<model.getContinents()[i].getNbCep();j++) {
+				if(i==0) {
+					model.getContinents()[i].getTabRectangleCentral()[j].setX(k+val-250);
+					model.getContinents()[i].getTabRectangleCentral()[j].setY(val+80);
+				}
+				if(i==1) {
+					model.getContinents()[i].getTabRectangleCentral()[j].setX(k+val-215);
+					model.getContinents()[i].getTabRectangleCentral()[j].setY(val-40);
+				}
+				if(i==2) {
+					model.getContinents()[i].getTabRectangleCentral()[j].setX(k+val-180);
+					model.getContinents()[i].getTabRectangleCentral()[j].setY(val+80);
+				}
+				if(i==3) {
+					model.getContinents()[i].getTabRectangleCentral()[j].setX(k+val-580);
+					model.getContinents()[i].getTabRectangleCentral()[j].setY(val+380);
+				}
+				if(i==4) {
+					model.getContinents()[i].getTabRectangleCentral()[j].setX(k+val-1340);
+					model.getContinents()[i].getTabRectangleCentral()[j].setY(val+540);
+				}
+				if(i==5) {
+					model.getContinents()[i].getTabRectangleCentral()[j].setX(k+val-2220);
+					model.getContinents()[i].getTabRectangleCentral()[j].setY(val+380);
+				}
+				// ajout au pane
+				pane.getChildren().add(model.getContinents()[i].getTabRectangleCentral()[j]);
+				k = k + 90;
+			}
+
 		}
 	}
 
@@ -656,7 +704,7 @@ public class ViewGame {
 	public ImageView createTileProject() {
 		ImageView imageView = new ImageView(imgTilesSolarProject);
 		imageView.setPreserveRatio(true);
-		imageView.setFitWidth(75);
+		imageView.setFitWidth(65);
 		//TODO : Switch pour tooltip une fois toute les tuiles implementés
 		Tooltip.install(imageView, new Tooltip("Mettre en place : + 3 Ressources technologiques"));
 		pane.getChildren().add(imageView);
@@ -685,7 +733,7 @@ public class ViewGame {
 	public void isEndGame() throws IOException {
 		// si le nombre de décénnie max est atteinte => renvoie true par model.EndGame
 		if(model.endGame()){
-			// message d'alerte
+			// message d'alerte (confirmation)
 			Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 			alert.setHeaderText(null);
 			alert.setTitle("Partie terminé !");
@@ -694,8 +742,11 @@ public class ViewGame {
 			alert.getButtonTypes().setAll(btnRestart);
 			Optional<ButtonType> result = alert.showAndWait();
 			if (result.get() == btnRestart) {
+				// récupération de la fenetre du jeu
 				Stage stage = (Stage) scene.getWindow();
+				// fermeture de la fenetre du jeu actuel
 				stage.close();
+				// création de la nouvelle partie
 				Main main = new Main();
 				main.start(new Stage());
 			}

@@ -11,28 +11,35 @@ import java.util.Arrays;
 public class Continent {
 
     private final String name;
-    private final ArrayList<Subvention> subventions = new ArrayList<>(3);
-    private final Rectangle[] tabRectangleSubvention = new Rectangle[3];
+    private final ArrayList<Subvention> subventions;
+    private final Rectangle[] tabRectangleSubvention;
     private int nbCep;
+    private final ArrayList<Central> centrales;
+    private final Rectangle[] tabRectangleCentral;
     private final Image imgContinent;
     // tuile agenda régionale
     private AgendaTile agendaTile;
     // Tuile sommet
     private SommetTile sommetTile;
 
+
     public Continent(String name, int nbCep, Image imgContinent) {
-        /* initalisation des 3 cases permettant de recevoir des subventions
-            subventions [0] = argent
-            subventions [1] = ressources
-            subventions [2] = recherche
-        */
-        for(int i = 0;i<3;i++) {
-                subventions.add(new Subvention(i,this,tabRectangleSubvention));
-        }
         this.name = name;
         this.nbCep = nbCep;
         this.imgContinent = imgContinent;
+        this.subventions = new ArrayList<>(3);
+        this.centrales = new ArrayList<>();
+        this.tabRectangleCentral = new Rectangle[nbCep];
+        this.tabRectangleSubvention = new Rectangle[3];
+        for(int i = 0;i<3;i++) {
+                subventions.add(new Subvention(i,this,tabRectangleSubvention));
+        }
+        for(int i = 0;i<nbCep;i++) {
+            centrales.add(new Central(i,this,tabRectangleCentral));
+        }
     }
+
+    public int getNbCep() { return nbCep; }
 
     public ArrayList<Subvention> getSubventions() { return subventions; }
 
@@ -45,6 +52,8 @@ public class Continent {
     }
 
     public Rectangle[] getTabRectangleSubvention() { return tabRectangleSubvention; }
+
+    public Rectangle[] getTabRectangleCentral() { return tabRectangleCentral; }
 
     public Image getImgContinent() {return imgContinent;}
 
@@ -69,7 +78,7 @@ public class Continent {
 
     public void print() {
         System.out.println("Continent{" +
-                "name='" + name + '\'' +
+                "name=" + name + ", nbCep=" + nbCep +
                 ", subventions=" + subventions.get(0).getTilesSolarProject() + '}');
     }
 
@@ -88,4 +97,5 @@ public class Continent {
     public void setSommetTile(SommetTile sommetTile) {
         this.sommetTile = sommetTile;
     }
+
 }
