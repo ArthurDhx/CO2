@@ -44,6 +44,46 @@ public class ViewGame {
 
 	Scene scene;
 
+	// CONSTANTES
+
+	// coordonnée du texte en x
+	private final int TEXT_X = 10;
+
+	// largeur des images agendas et sommets
+	private final int AGENDA_SOMMET_WIDTH = 60;
+	// valeur d'ajout sur des coordonnées d'agenda
+	private final int AJOUT_AGENDA = 85;
+
+	// coordonnées des continents
+	private final int CONTINENT_05_X_02_Y = 200;
+	private final int CONTINENT_35_Y = 550;
+	private final int CONTINENT_14_X = 600;
+	private final int CONTINENT_23_X = 950;
+	private final int CONTINENT_1_Y = 70;
+	private final int CONTINENT_4_Y = 700;
+
+	private final int CONTINENT_02_Y = CONTINENT_05_X_02_Y+50;
+	private final int CONTINENT_1_Y_SUB = 130;
+	private final int CONTINENT_4_Y_SUB = CONTINENT_4_Y+10;
+
+	// coordonnées des sommets
+	private final int SOMMET_02_Y = CONTINENT_05_X_02_Y-10;
+	private final int SOMMET_35_Y = CONTINENT_35_Y-60;
+
+	// coordonnées des subventions 2 et 3 (Ressources et recherches)
+	private final int SUB_2 = 80;
+	private final int SUB_3 = SUB_2*2;
+
+	// coordonnées des continents des subeventions 2 et 3
+	private final int CONTINENT_23_X_SUB_2 = CONTINENT_23_X+SUB_2;
+	private final int CONTINENT_23_X_SUB_3 = CONTINENT_23_X+SUB_3;
+
+	private final int CONTINENT_05_X_02_Y_SUB_2 = CONTINENT_05_X_02_Y+SUB_2;
+	private final int CONTINENT_05_X_02_Y_SUB_3 = CONTINENT_05_X_02_Y+SUB_3;
+
+	private final int CONTINENT_14_X_SUB_2 = CONTINENT_14_X+SUB_2;
+	private final int CONTINENT_14_X_SUB_3 = CONTINENT_14_X+SUB_3;
+
 	public ViewGame(Scene scene, Model model, Pane pane) throws IOException {
 		this.model = model;
 		this.pane = pane;
@@ -181,25 +221,25 @@ public class ViewGame {
 	//A appeler lors d'une modification de l'argent du joueur
 	public void reloadArgent(){
 		pane.getChildren().remove(argentJoueur);
-		argentJoueur = new Text(10, 50, "Vous avez "+ model.getCurrentPLayer().getArgent() + " € ");
+		argentJoueur = new Text(TEXT_X, 50, "Vous avez "+ model.getCurrentPLayer().getArgent() + " € ");
 		pane.getChildren().add(argentJoueur);
 	}
 	//A appeler lors d'une modification de l'argent du joueur
 	public void reloadPointVictoire(){
 		pane.getChildren().remove(pointVictoireJoueur);
-		pointVictoireJoueur = new Text(10, 65, "Vous avez "+ model.getCurrentPLayer().getPointVictoire() + " points de victoire ");
+		pointVictoireJoueur = new Text(TEXT_X, 65, "Vous avez "+ model.getCurrentPLayer().getPointVictoire() + " points de victoire ");
 		pane.getChildren().add(pointVictoireJoueur);
 	}
 	//A appeler lors d'une modification de l'argent du joueur
 	public void reloadresourcesTech() {
 		pane.getChildren().remove(resourcesTechJoueur);
-		resourcesTechJoueur = new Text(10, 95, "Vous avez " + model.getCurrentPLayer().getResourcesTech() + " cubes de ressources technologiques. ");
+		resourcesTechJoueur = new Text(TEXT_X, 95, "Vous avez " + model.getCurrentPLayer().getResourcesTech() + " cubes de ressources technologiques. ");
 		pane.getChildren().add(resourcesTechJoueur);
 	}
 	//A appeler lors d'une modification des CEP
 	public void reloadCEP(){
 		pane.getChildren().remove(CEPJoueur);
-		CEPJoueur = new Text(10,80,"Vous avez "+model.getCurrentPLayer().getCEP()+" CEP");
+		CEPJoueur = new Text(TEXT_X,80,"Vous avez "+model.getCurrentPLayer().getCEP()+" CEP");
 		pane.getChildren().add(CEPJoueur);
 		pane.getChildren().remove(CEPMarche);
 		CEPMarche = new Text(model.width/2-140,model.height/2,
@@ -246,44 +286,44 @@ public class ViewGame {
 			imageViewAgendaTiles[i] = new ImageView(model.getContinents()[i].getAgendaTile().getImageAgendaTile());
 			imageViewSommetTiles[i] = new ImageView(model.getContinents()[i].getSommetTile().getImageSommetTile());
 			// Position des continents
-			if(i==0 || i==5) imageViewContinents[i].setX(200);
-			if(i==0 || i==2) imageViewContinents[i].setY(200);
-			if(i==3 || i==5) imageViewContinents[i].setY(550);
-			if(i==1 || i==4) imageViewContinents[i].setX(600);
-			if(i==2 || i==3) imageViewContinents[i].setX(950);
+			if(i==0 || i==5) imageViewContinents[i].setX(CONTINENT_05_X_02_Y);
+			if(i==0 || i==2) imageViewContinents[i].setY(CONTINENT_05_X_02_Y);
+			if(i==3 || i==5) imageViewContinents[i].setY(CONTINENT_35_Y);
+			if(i==1 || i==4) imageViewContinents[i].setX(CONTINENT_14_X);
+			if(i==2 || i==3) imageViewContinents[i].setX(CONTINENT_23_X);
 			// Position des Agendas
-			if(i==0 || i==5) imageViewAgendaTiles[i].setX(200+85);
-			if(i==0 || i==2) imageViewAgendaTiles[i].setY(200-60);
-			if(i==3 || i==5) imageViewAgendaTiles[i].setY(550-110);
-			if(i==1 || i==4) imageViewAgendaTiles[i].setX(600+85);
-			if(i==2 || i==3) imageViewAgendaTiles[i].setX(950+85);
+			if(i==0 || i==5) imageViewAgendaTiles[i].setX(CONTINENT_05_X_02_Y+AJOUT_AGENDA);
+			if(i==0 || i==2) imageViewAgendaTiles[i].setY(CONTINENT_05_X_02_Y-60);
+			if(i==3 || i==5) imageViewAgendaTiles[i].setY(CONTINENT_35_Y-110);
+			if(i==1 || i==4) imageViewAgendaTiles[i].setX(CONTINENT_14_X+AJOUT_AGENDA);
+			if(i==2 || i==3) imageViewAgendaTiles[i].setX(CONTINENT_23_X+AJOUT_AGENDA);
 			// Position des sommets
-			if(i==0 || i==5) imageViewSommetTiles[i].setX(200);
-			if(i==0 || i==2) imageViewSommetTiles[i].setY(200-10);
-			if(i==3 || i==5) imageViewSommetTiles[i].setY(550-60);
-			if(i==1 || i==4) imageViewSommetTiles[i].setX(600);
-			if(i==2 || i==3) imageViewSommetTiles[i].setX(950);
+			if(i==0 || i==5) imageViewSommetTiles[i].setX(CONTINENT_05_X_02_Y);
+			if(i==0 || i==2) imageViewSommetTiles[i].setY(SOMMET_02_Y);
+			if(i==3 || i==5) imageViewSommetTiles[i].setY(SOMMET_35_Y);
+			if(i==1 || i==4) imageViewSommetTiles[i].setX(CONTINENT_14_X);
+			if(i==2 || i==3) imageViewSommetTiles[i].setX(CONTINENT_23_X);
 
 			// Redimention
-			if(i!=2) imageViewContinents[i].setFitWidth(220);
+			if(i!=2) imageViewContinents[i].setFitWidth(CONTINENT_05_X_02_Y+20);
 			imageViewContinents[i].setPreserveRatio(true);
-			imageViewAgendaTiles[i].setFitWidth(60);
+			imageViewAgendaTiles[i].setFitWidth(AGENDA_SOMMET_WIDTH);
 			imageViewAgendaTiles[i].setPreserveRatio(true);
-			imageViewSommetTiles[i].setFitWidth(60);
+			imageViewSommetTiles[i].setFitWidth(AGENDA_SOMMET_WIDTH);
 			imageViewSommetTiles[i].setPreserveRatio(true);
 		}
 		// Redimension de l'Afrique car image trop grande
 		imageViewContinents[2].setFitWidth(170);
 		imageViewContinents[2].setPreserveRatio(true);
 
-		imageViewContinents[4].setY(700);
-		imageViewContinents[1].setY(70);
+		imageViewContinents[4].setY(CONTINENT_4_Y);
+		imageViewContinents[1].setY(CONTINENT_1_Y);
 
-		imageViewAgendaTiles[4].setY(700-100);
-		imageViewAgendaTiles[1].setY(70-50);
+		imageViewAgendaTiles[4].setY(CONTINENT_4_Y-100);
+		imageViewAgendaTiles[1].setY(CONTINENT_1_Y-50);
 
-		imageViewSommetTiles[4].setY(700-50);
-		imageViewSommetTiles[1].setY(70);
+		imageViewSommetTiles[4].setY(CONTINENT_4_Y-50);
+		imageViewSommetTiles[1].setY(CONTINENT_1_Y);
 
 		// Ajout au pane
 		for(int i = 0; i < 6; i++) {
@@ -364,92 +404,92 @@ public class ViewGame {
 				switch (subventionChoice) {
 					// posiitionne les tuiles de projet à l'emplacement correspondant
 					case 1:
-						imageViewTilesSolarProject.setX(200);
+						imageViewTilesSolarProject.setX(CONTINENT_05_X_02_Y);
 						break;
 					case 2:
-						imageViewTilesSolarProject.setX(280);
+						imageViewTilesSolarProject.setX(CONTINENT_05_X_02_Y_SUB_2);
 						break;
 					case 3:
-						imageViewTilesSolarProject.setX(360);
+						imageViewTilesSolarProject.setX(CONTINENT_05_X_02_Y_SUB_3);
 						break;
 				}
-				imageViewTilesSolarProject.setY(250);
+				imageViewTilesSolarProject.setY(CONTINENT_02_Y);
 				// mettre l'image en premier plan
 				imageViewTilesSolarProject.toFront();
 				break;
 			case "Afrique" :
 				switch (subventionChoice) {
 					case 1:
-						imageViewTilesSolarProject.setX(600);
+						imageViewTilesSolarProject.setX(CONTINENT_14_X);
 						break;
 					case 2:
-						imageViewTilesSolarProject.setX(680);
+						imageViewTilesSolarProject.setX(CONTINENT_14_X_SUB_2);
 						break;
 					case 3:
-						imageViewTilesSolarProject.setX(760);
+						imageViewTilesSolarProject.setX(CONTINENT_14_X_SUB_3);
 						break;
 				}
-				imageViewTilesSolarProject.setY(130);
+				imageViewTilesSolarProject.setY(CONTINENT_1_Y_SUB);
 				imageViewTilesSolarProject.toFront();
 				break;
 			case "Amérique du Sud" :
 				switch (subventionChoice) {
 					case 1:
-						imageViewTilesSolarProject.setX(950);
+						imageViewTilesSolarProject.setX(CONTINENT_23_X);
 						break;
 					case 2:
-						imageViewTilesSolarProject.setX(1030);
+						imageViewTilesSolarProject.setX(CONTINENT_23_X_SUB_2);
 						break;
 					case 3:
-						imageViewTilesSolarProject.setX(1110);
+						imageViewTilesSolarProject.setX(CONTINENT_23_X_SUB_3);
 						break;
 				}
-				imageViewTilesSolarProject.setY(250);
+				imageViewTilesSolarProject.setY(CONTINENT_02_Y);
 				imageViewTilesSolarProject.toFront();
 				break;
 			case "Amérique du Nord" :
 				switch (subventionChoice) {
 					case 1:
-						imageViewTilesSolarProject.setX(950);
+						imageViewTilesSolarProject.setX(CONTINENT_23_X);
 						break;
 					case 2:
-						imageViewTilesSolarProject.setX(1030);
+						imageViewTilesSolarProject.setX(CONTINENT_23_X_SUB_2);
 						break;
 					case 3:
-						imageViewTilesSolarProject.setX(1110);
+						imageViewTilesSolarProject.setX(CONTINENT_23_X_SUB_3);
 						break;
 				}
-				imageViewTilesSolarProject.setY(550);
+				imageViewTilesSolarProject.setY(CONTINENT_35_Y);
 				imageViewTilesSolarProject.toFront();
 				break;
 			case "Océanie" :
 				switch (subventionChoice) {
 					case 1:
-						imageViewTilesSolarProject.setX(600);
+						imageViewTilesSolarProject.setX(CONTINENT_14_X);
 						break;
 					case 2:
-						imageViewTilesSolarProject.setX(680);
+						imageViewTilesSolarProject.setX(CONTINENT_14_X_SUB_2);
 						break;
 					case 3:
-						imageViewTilesSolarProject.setX(760);
+						imageViewTilesSolarProject.setX(CONTINENT_14_X_SUB_3);
 						break;
 				}
-				imageViewTilesSolarProject.setY(710);
+				imageViewTilesSolarProject.setY(CONTINENT_4_Y_SUB);
 				imageViewTilesSolarProject.toFront();
 				break;
 			case "Asie" :
 				switch (subventionChoice) {
 					case 1:
-						imageViewTilesSolarProject.setX(200);
+						imageViewTilesSolarProject.setX(CONTINENT_05_X_02_Y);
 						break;
 					case 2:
-						imageViewTilesSolarProject.setX(280);
+						imageViewTilesSolarProject.setX(CONTINENT_05_X_02_Y_SUB_2);
 						break;
 					case 3:
-						imageViewTilesSolarProject.setX(360);
+						imageViewTilesSolarProject.setX(CONTINENT_05_X_02_Y_SUB_3);
 						break;
 				}
-				imageViewTilesSolarProject.setY(550);
+				imageViewTilesSolarProject.setY(CONTINENT_35_Y);
 				imageViewTilesSolarProject.toFront();
 				break;
 		}
@@ -460,91 +500,91 @@ public class ViewGame {
 			case "Europe" :
 				switch (projectChoice) {
 					case 1:
-						imageViewScientifique.setX(200);
+						imageViewScientifique.setX(CONTINENT_05_X_02_Y);
 						break;
 					case 2:
-						imageViewScientifique.setX(280);
+						imageViewScientifique.setX(CONTINENT_05_X_02_Y_SUB_2);
 						break;
 					case 3:
-						imageViewScientifique.setX(360);
+						imageViewScientifique.setX(CONTINENT_05_X_02_Y_SUB_3);
 						break;
 				}
-				imageViewScientifique.setY(250);
+				imageViewScientifique.setY(CONTINENT_02_Y);
 				imageViewScientifique.toFront();
 				break;
 			case "Afrique" :
 				switch (projectChoice) {
 					case 1:
-						imageViewScientifique.setX(650);
+						imageViewScientifique.setX(CONTINENT_14_X);
 						break;
 					case 2:
-						imageViewScientifique.setX(680);
+						imageViewScientifique.setX(CONTINENT_14_X_SUB_2);
 						break;
 					case 3:
-						imageViewScientifique.setX(760);
+						imageViewScientifique.setX(CONTINENT_14_X_SUB_3);
 						break;
 				}
-				imageViewScientifique.setY(130);
+				imageViewScientifique.setY(CONTINENT_1_Y_SUB);
 				imageViewScientifique.toFront();
 				break;
 			case "Amérique du Sud" :
 				switch (projectChoice) {
 					case 1:
-						imageViewScientifique.setX(950);
+						imageViewScientifique.setX(CONTINENT_23_X);
 						break;
 					case 2:
-						imageViewScientifique.setX(1030);
+						imageViewScientifique.setX(CONTINENT_23_X_SUB_2);
 						break;
 					case 3:
-						imageViewScientifique.setX(1110);
+						imageViewScientifique.setX(CONTINENT_23_X_SUB_3);
 						break;
 				}
-				imageViewScientifique.setY(250);
+				imageViewScientifique.setY(CONTINENT_02_Y);
 				imageViewScientifique.toFront();
 				break;
 			case "Amérique du Nord" :
 				switch (projectChoice) {
 					case 1:
-						imageViewScientifique.setX(950);
+						imageViewScientifique.setX(CONTINENT_23_X);
 						break;
 					case 2:
-						imageViewScientifique.setX(1030);
+						imageViewScientifique.setX(CONTINENT_23_X_SUB_2);
 						break;
 					case 3:
-						imageViewScientifique.setX(1110);
+						imageViewScientifique.setX(CONTINENT_23_X_SUB_3);
 						break;
 				}
-				imageViewScientifique.setY(550);
+				imageViewScientifique.setY(CONTINENT_35_Y);
 				imageViewScientifique.toFront();
 				break;
 			case "Océanie" :
 				switch (projectChoice) {
 					case 1:
-						imageViewScientifique.setX(600);
+						imageViewScientifique.setX(CONTINENT_14_X);
 						break;
 					case 2:
-						imageViewScientifique.setX(680);
+						imageViewScientifique.setX(CONTINENT_14_X_SUB_2);
 						break;
 					case 3:
-						imageViewScientifique.setX(760);
+						imageViewScientifique.setX(CONTINENT_14_X_SUB_3);
 						break;
 				}
-				imageViewScientifique.setY(710);
+				imageViewScientifique.setY(CONTINENT_4_Y_SUB);
 				imageViewScientifique.toFront();
 				break;
 			case "Asie" :
 				switch (projectChoice) {
 					case 1:
-						imageViewScientifique.setX(200);
+						imageViewScientifique.setX(CONTINENT_05_X_02_Y);
 						break;
 					case 2:
-						imageViewScientifique.setX(280);
+						imageViewScientifique.setX( CONTINENT_05_X_02_Y_SUB_2);
 						break;
 					case 3:
-						imageViewScientifique.setX(360);
+						imageViewScientifique.setX( CONTINENT_05_X_02_Y_SUB_3);
 						break;
 				}
-				imageViewScientifique.setY(550);
+				imageViewScientifique.setY(CONTINENT_35_Y);
 				imageViewScientifique.toFront();
 				break;
 		}
@@ -554,33 +594,33 @@ public class ViewGame {
 		Continent continent = sommetTile.getContinent();
 		switch(continent.getName()) {
 			case "Europe" :
-				imageViewScientifique.setX(200);
-				imageViewScientifique.setY(200-10);
+				imageViewScientifique.setX(CONTINENT_05_X_02_Y);
+				imageViewScientifique.setY(SOMMET_02_Y);
 				imageViewScientifique.toFront();
 				break;
 			case "Afrique" :
-				imageViewScientifique.setX(600);
-				imageViewScientifique.setY(70);
+				imageViewScientifique.setX(CONTINENT_14_X);
+				imageViewScientifique.setY(CONTINENT_1_Y);
 				imageViewScientifique.toFront();
 				break;
 			case "Amérique du Sud" :
-				imageViewScientifique.setX(950);
-				imageViewScientifique.setY(200-10);
+				imageViewScientifique.setX(CONTINENT_23_X);
+				imageViewScientifique.setY(SOMMET_02_Y);
 				imageViewScientifique.toFront();
 				break;
 			case "Amérique du Nord" :
-				imageViewScientifique.setX(950);
-				imageViewScientifique.setY(550-60);
+				imageViewScientifique.setX(CONTINENT_23_X);
+				imageViewScientifique.setY(SOMMET_35_Y);
 				imageViewScientifique.toFront();
 				break;
 			case "Océanie" :
-				imageViewScientifique.setX(600);
-				imageViewScientifique.setY(700-50);
+				imageViewScientifique.setX(CONTINENT_14_X);
+				imageViewScientifique.setY(CONTINENT_4_Y-50);
 				imageViewScientifique.toFront();
 				break;
 			case "Asie" :
-				imageViewScientifique.setX(200);
-				imageViewScientifique.setY(550-60);
+				imageViewScientifique.setX(CONTINENT_05_X_02_Y);
+				imageViewScientifique.setY(SOMMET_35_Y);
 				imageViewScientifique.toFront();
 				break;
 		}
@@ -598,91 +638,91 @@ public class ViewGame {
 			case "Europe" :
 				switch (projectChoice) {
 					case 1:
-						imageViewTilesSolarProjectBack.setX(200);
+						imageViewTilesSolarProjectBack.setX(CONTINENT_05_X_02_Y);
 						break;
 					case 2:
-						imageViewTilesSolarProjectBack.setX(280);
+						imageViewTilesSolarProjectBack.setX(CONTINENT_05_X_02_Y_SUB_2);
 						break;
 					case 3:
-						imageViewTilesSolarProjectBack.setX(360);
+						imageViewTilesSolarProjectBack.setX(CONTINENT_05_X_02_Y_SUB_3);
 						break;
 				}
-				imageViewTilesSolarProjectBack.setY(250);
+				imageViewTilesSolarProjectBack.setY(CONTINENT_02_Y);
 				imageViewTilesSolarProjectBack.toFront();
 				break;
 			case "Afrique" :
 				switch (projectChoice) {
 					case 1:
-						imageViewTilesSolarProjectBack.setX(650);
+						imageViewTilesSolarProjectBack.setX(CONTINENT_14_X);
 						break;
 					case 2:
-						imageViewTilesSolarProjectBack.setX(680);
+						imageViewTilesSolarProjectBack.setX(CONTINENT_14_X_SUB_2);
 						break;
 					case 3:
-						imageViewTilesSolarProjectBack.setX(760);
+						imageViewTilesSolarProjectBack.setX(CONTINENT_14_X_SUB_3);
 						break;
 				}
-				imageViewTilesSolarProjectBack.setY(130);
+				imageViewTilesSolarProjectBack.setY(CONTINENT_1_Y_SUB);
 				imageViewTilesSolarProjectBack.toFront();
 				break;
 			case "Amérique du Sud" :
 				switch (projectChoice) {
 					case 1:
-						imageViewTilesSolarProjectBack.setX(950);
+						imageViewTilesSolarProjectBack.setX(CONTINENT_23_X);
 						break;
 					case 2:
-						imageViewTilesSolarProjectBack.setX(1030);
+						imageViewTilesSolarProjectBack.setX(CONTINENT_23_X_SUB_2);
 						break;
 					case 3:
-						imageViewTilesSolarProjectBack.setX(1110);
+						imageViewTilesSolarProjectBack.setX(CONTINENT_23_X_SUB_3);
 						break;
 				}
-				imageViewTilesSolarProjectBack.setY(250);
+				imageViewTilesSolarProjectBack.setY(CONTINENT_02_Y);
 				imageViewTilesSolarProjectBack.toFront();
 				break;
 			case "Amérique du Nord" :
 				switch (projectChoice) {
 					case 1:
-						imageViewTilesSolarProjectBack.setX(950);
+						imageViewTilesSolarProjectBack.setX(CONTINENT_23_X);
 						break;
 					case 2:
-						imageViewTilesSolarProjectBack.setX(1030);
+						imageViewTilesSolarProjectBack.setX(CONTINENT_23_X_SUB_2);
 						break;
 					case 3:
-						imageViewTilesSolarProjectBack.setX(1110);
+						imageViewTilesSolarProjectBack.setX(CONTINENT_23_X_SUB_3);
 						break;
 				}
-				imageViewTilesSolarProjectBack.setY(550);
+				imageViewTilesSolarProjectBack.setY(CONTINENT_35_Y);
 				imageViewTilesSolarProjectBack.toFront();
 				break;
 			case "Océanie" :
 				switch (projectChoice) {
 					case 1:
-						imageViewTilesSolarProjectBack.setX(600);
+						imageViewTilesSolarProjectBack.setX(CONTINENT_14_X);
 						break;
 					case 2:
-						imageViewTilesSolarProjectBack.setX(680);
+						imageViewTilesSolarProjectBack.setX(CONTINENT_14_X_SUB_2);
 						break;
 					case 3:
-						imageViewTilesSolarProjectBack.setX(760);
+						imageViewTilesSolarProjectBack.setX(CONTINENT_14_X_SUB_3);
 						break;
 				}
-				imageViewTilesSolarProjectBack.setY(710);
+				imageViewTilesSolarProjectBack.setY(CONTINENT_4_Y_SUB);
 				imageViewTilesSolarProjectBack.toFront();
 				break;
 			case "Asie" :
 				switch (projectChoice) {
 					case 1:
-						imageViewTilesSolarProjectBack.setX(200);
+						imageViewTilesSolarProjectBack.setX(CONTINENT_05_X_02_Y);
 						break;
 					case 2:
-						imageViewTilesSolarProjectBack.setX(280);
+						imageViewTilesSolarProjectBack.setX(CONTINENT_05_X_02_Y_SUB_2);
 						break;
 					case 3:
-						imageViewTilesSolarProjectBack.setX(360);
+						imageViewTilesSolarProjectBack.setX(CONTINENT_05_X_02_Y_SUB_3);
 						break;
 				}
-				imageViewTilesSolarProjectBack.setY(550);
+				imageViewTilesSolarProjectBack.setY(CONTINENT_35_Y);
 				imageViewTilesSolarProjectBack.toFront();
 				break;
 		}
