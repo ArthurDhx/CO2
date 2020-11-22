@@ -51,6 +51,7 @@ public class ControllerActionGratuite implements EventHandler<ActionEvent>{
                 if(model.moveScientificOnSommet(model.getCurrentPLayer().getCurrentScientifique().getSubvention(), sommetChoisi)){
                     viewGame.addScientifiqueToSommet(viewGame.imageViewScientifiqueN1, model.getCurrentPLayer().getCurrentScientifique(), sommetChoisi);
                     model.getCurrentPLayer().getCurrentScientifique().setSommetTile(sommetChoisi);
+                    model.getCurrentPLayer().getCurrentScientifique().setSubvention(null);
                     model.getCurrentPLayer().setDeplacerScientifiqueSommetDone(true);
                 } else {
                     viewGame.sommetInfo();
