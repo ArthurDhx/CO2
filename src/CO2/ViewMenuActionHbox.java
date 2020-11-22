@@ -2,6 +2,7 @@ package CO2;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.layout.HBox;
@@ -30,13 +31,16 @@ public class ViewMenuActionHbox extends HBox {
     // Les boutons associe aux actions gratuites
     Button btnActionGratuite;
     Button btnMarche;
+    Button btnDeplacerScientifique;
     Button btnDeplacerScientifiqToProject;
     Button btnDeplacerScientifiqToSommet;
+    Button btnDeplacerScientifiqToReserve;
     Button btnJouerCarte;
 
     // Button present dans le menu
     Button btnFinTour;
     Button btnCancelAction;
+    Button btnCancelActionScientifique;
 
     public ViewMenuActionHbox(Model model) {
         super(10);
@@ -53,23 +57,44 @@ public class ViewMenuActionHbox extends HBox {
         btnMettreProjet = new Button("Mettre en place un projet");
 
         btnActionGratuite = new Button("Action Gratuite");
-        btnDeplacerScientifiqToProject = new Button("Déplacer un scientifque sur un projet");
-        btnDeplacerScientifiqToSommet = new Button("Déplacer un scientifque sur un sommet");
+        btnDeplacerScientifique = new Button("Déplacer un scientifique");
+        btnDeplacerScientifiqToProject = new Button("Déplacer le scientifque sur un projet");
+        btnDeplacerScientifiqToSommet = new Button("Déplacer le scientifque sur un sommet");
+        btnDeplacerScientifiqToReserve = new Button("Déplacer le scientifque dans la réserve");
         btnMarche = new Button("Marché au CEP");
         btnJouerCarte = new Button("Jouer une carte");
         btnFinTour = new Button("Fin du tour");
 
         btnCancelAction = new Button("Annuler");
+        btnCancelActionScientifique = new Button("Annuler");
         this.getChildren().addAll(btnActionPrincipale, btnActionGratuite,btnFinTour);
 
         btnFinTour = new Button("Fin du tour");
     }
 
     /**
-     * Affiche le menu des actions principale a l'ecran
+     * Affiche le menu des actions du scientifique
+     */
+    public void displayActionScientifique() {
+        this.getChildren().removeAll(this.getChildren());
+        //if (!actionFaite[0]) this.getChildren().add(btnDeplacerScientifiqToProject);
+        Scientifique scientifique = model.getCurrentPLayer().getCurrentScientifique();
+        if (scientifique.getSubvention() == null && scientifique.getSommetTile() == null ){
+            // le  scientifique est dans la reserve, il peut aller que sur un projet
+            this.getChildren().add(btnDeplacerScientifiqToProject);
+        }
+        if (scientifique.getSubvention() != null && scientifique.getSommetTile() == null ){
+            // le  scientifique est sur un projet , il peut aller que sur un sommet, aller sur un autre projet et revenir à la réserve
+            this.getChildren().addAll(btnDeplacerScientifiqToProject,btnDeplacerScientifiqToSommet,btnDeplacerScientifiqToReserve);
+        }
+        // Si le scientifique est sur un sommet alors il ne peut plus rien faire avant la fin du sommet = controllé dans displayActionGratuite();
+        this.getChildren().addAll(btnCancelActionScientifique);
+    }
+
+    /**
+     * Affiche le menu des actions principale
      */
     public void displayActionPrincipale() {
-        // Enleve tout les elements present dans le menu de la fénetre
         this.getChildren().removeAll(this.getChildren());
         this.getChildren().addAll(btnProposerProjet,btnMettreProjet,btnConstruire,btnCancelAction);
     }
@@ -141,12 +166,12 @@ public class ViewMenuActionHbox extends HBox {
         boolean[] actionFaite = model.getCurrentPLayer().getActionGratuiteDone();
         this.getChildren().removeAll(this.getChildren());
         // Si l'action n'a pas déjà été faite affiche le bouton liée a l'action
-        if (!actionFaite[0]) this.getChildren().add(btnDeplacerScientifiqToProject);
-        if (model.getCurrentPLayer().getCurrentScientifique().getSubvention() != null){
-            if (!actionFaite[1]) this.getChildren().add(btnDeplacerScientifiqToSommet);
+        if(model.getCurrentPLayer().getCurrentScientifique().getSommetTile() == null){
+            // Si le scientifique n'est  pas sur un sommet alors il peut se déplacer
+            if (!actionFaite[0]) this.getChildren().add(btnDeplacerScientifique);
         }
-        if (!actionFaite[2]) this.getChildren().add(btnMarche);
-        if (!actionFaite[3]) this.getChildren().add(btnJouerCarte);
+        if (!actionFaite[1]) this.getChildren().add(btnMarche);
+        if (!actionFaite[2]) this.getChildren().add(btnJouerCarte);
 
         this.getChildren().add(btnCancelAction);
     }
@@ -258,8 +283,11 @@ public class ViewMenuActionHbox extends HBox {
      * @param handler Le controlleur a associé
      */
     public void setButtonActionGratuiteControler(EventHandler<ActionEvent> handler) {
+        btnDeplacerScientifique.setOnAction(handler);
         btnDeplacerScientifiqToProject.setOnAction(handler);
         btnDeplacerScientifiqToSommet.setOnAction(handler);
+        btnDeplacerScientifiqToReserve.setOnAction(handler);
+        btnCancelActionScientifique.setOnAction(handler);
         btnMarche.setOnAction(handler);
         btnJouerCarte.setOnAction(handler);
     }

@@ -116,12 +116,10 @@ public class ViewGame {
 
 		//On récupère l'image d'un scientifique et on l'ajoute à l'écran
 		// img scientifique n°1
-		Image imgScientifique1 = model.getCurrentPLayer().getCurrentScientifique().getImgScientifique();
-		imageViewScientifiqueN1 = new ImageView(imgScientifique1);
-		imageViewScientifiqueN1.setX(30);
-		imageViewScientifiqueN1.setY(180);
+		imageViewScientifiqueN1 = model.getCurrentPLayer().getCurrentScientifique().getImgScientifique();
 		imageViewScientifiqueN1.setFitWidth(40);
 		imageViewScientifiqueN1.setPreserveRatio(true);
+		deplacerScientifiqueReserve(imageViewScientifiqueN1);
 		pane.getChildren().add(imageViewScientifiqueN1);
 
 		// On indique combien il y'a de tuile dans le paquet
@@ -627,6 +625,11 @@ public class ViewGame {
 		}
 		// le scientifique quitte le continent lorsqu'il va sur un sommet
 		scientifique.setContinent(null);
+	}
+
+	public void deplacerScientifiqueReserve(ImageView imageViewScientifique){
+		imageViewScientifique.setX(30);
+		imageViewScientifique.setY(180);
 	}
 
 	public void mettreEnPlaceProjet(int projectChoice, ImageView imageViewTilesSolarProjectBack, Continent continent){

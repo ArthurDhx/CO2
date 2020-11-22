@@ -26,14 +26,10 @@ public class ControllerAction implements EventHandler<ActionEvent>{
         } else if (source == viewGame.hboxAction.btnCancelAction) {
             viewGame.hboxAction.resetHbox();
         }else if (source == viewGame.hboxAction.btnFinTour) { // appuyer sur bouton fin de tour
-            viewGame.hboxAction.displayFinTourScientifiqueChoiceDialog() ;
-            if(viewGame.hboxAction.dialogChoisirScientifique != null){
-                Optional<Scientifique> result = viewGame.hboxAction.dialogChoisirScientifique.showAndWait();
-                result.ifPresent(scientifiqueChoisi -> {
-                    model.getCurrentPLayer().addExpertise(GreenEnergyTypes.SOLAR, 1);
-                    // TODO bougez graphiquement l'expertise (reload)
-                    return;
-                });
+            // si le scientifique n'est pas retourné dans la réserve
+            // l'expertise lors du retour d'un scientifique à la réserve est géré par le ControllerActionGratuite
+            if (model.getCurrentPLayer().getCurrentScientifique().getContinent() != null){
+                choisirScientifiqueExpertise();
             }
             // vérification du nombre de tour et décénnie
             model.TourSuivant();
@@ -42,7 +38,6 @@ public class ControllerAction implements EventHandler<ActionEvent>{
             model.giveRewardsSommet();
             model.getCurrentPLayer().setActionPrincipaleDone(false);
             model.getCurrentPLayer().setDeplacerScientifiqueDone(false);
-            model.getCurrentPLayer().setDeplacerScientifiqueSommetDone(false);
             model.getCurrentPLayer().setMarcheCEPDone(false);
             viewGame.hboxAction.resetHbox();
             // actualisation du nombre de tour et de décénnie
@@ -60,5 +55,17 @@ public class ControllerAction implements EventHandler<ActionEvent>{
             }
         }
         viewGame.reloadArgent();
+    }
+
+    public void choisirScientifiqueExpertise() {
+        viewGame.hboxAction.displayFinTourScientifiqueChoiceDialog() ;
+        if(viewGame.hboxAction.dialogChoisirScientifique != null){
+            Optional<Scientifique> result = viewGame.hboxAction.dialogChoisirScientifique.showAndWait();
+            result.ifPresent(scientifiqueChoisi -> {
+                model.getCurrentPLayer().addExpertise(GreenEnergyTypes.SOLAR, 1);
+                // TODO bougez graphiquement l'expertise (reload)
+                return;
+            });
+        }
     }
 }

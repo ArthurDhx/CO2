@@ -18,7 +18,7 @@ public class Subvention {
     private int index ;
     // L'index ou est placer la subvention sur le continent
     private Continent continent;
-
+    private boolean staffed;
 
     //Le continent où se situe la subvention
     private typesSubvention type;
@@ -29,6 +29,7 @@ public class Subvention {
         this.continent = continent;
         tabRectangleSubvention[index] = new Rectangle(65, 65, Color.WHITE);
         tabRectangleSubvention[index].setStroke(Color.BLACK);
+        this.staffed = false;
     }
 
     private void setType(int index){
@@ -92,5 +93,13 @@ public class Subvention {
             case RECHERCHE:
                 break;
         }
+    }
+
+    public boolean isStaffed() {
+        return staffed;
+    }
+
+    public void setStaffed(boolean staffed) {
+        this.staffed = staffed;
     }
 }

@@ -181,13 +181,6 @@ public class Player {
         this.actionGratuiteDone[0] = done ;
     }
 
-    /**
-     * A commenter
-     * @param done
-     */
-    public void setDeplacerScientifiqueSommetDone(boolean done){
-        this.actionGratuiteDone[1] = done ;
-    }
 
     /**
      * A commenter

@@ -244,14 +244,12 @@ public class Model {
 	 * @return true si il peut, sinon false
 	 */
 	public boolean moveScientificOnProject(Continent continent, Subvention subvention){
-		// à compléter
-		List<Scientifique> scientifiques = this.getCurrentPLayer().getScientifiques();
-		for (Scientifique sc: scientifiques){
-			if(sc.getContinent() == null){
-				sc.setContinent(continent);
-				sc.setSubvention(subvention);
-				return true;
-			}
+		Scientifique sc= this.getCurrentPLayer().getCurrentScientifique();
+		// si la subvention n'est pas occupé
+		if(!subvention.isStaffed()){
+			sc.setContinent(continent);
+			sc.setSubvention(subvention);
+			return true;
 		}
 		return false;
 	}

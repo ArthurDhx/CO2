@@ -1,9 +1,10 @@
 package CO2;
 
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class Scientifique {
-    final private Image imgScientifique = new Image(getClass().getResourceAsStream("images/scientifique.png"));
+    final private ImageView imgScientifique = new ImageView(new Image(getClass().getResourceAsStream("images/scientifique.png")));
 
     // Un scientifique est assigné à un continent et à une case subvention où un projet et mis en place
 
@@ -63,7 +64,14 @@ public class Scientifique {
         this.subject = subject;
     }
 
-    public Image getImgScientifique() {
+    public ImageView getImgScientifique() {
         return imgScientifique;
+    }
+
+    public void moveToReserve(){
+        this.continent = null;
+        this.subvention = null;
+        this.sommetTile = null;
+        this.subject = null;
     }
 }
