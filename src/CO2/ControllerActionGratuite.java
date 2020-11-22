@@ -30,7 +30,7 @@ public class ControllerActionGratuite implements EventHandler<ActionEvent>{
             result.ifPresent(projetChoisi -> {
                 // Si un projet a ete choisi
                 if(model.moveScientificOnProject(projetChoisi.getContinent(), projetChoisi)) {
-                    viewGame.addScientifiqueToProject(projetChoisi.getIndex() + 1, viewGame.imageViewScientifique, projetChoisi.getContinent());
+                    viewGame.addScientifiqueToProject(projetChoisi.getIndex() + 1, viewGame.imageViewScientifiqueN1, projetChoisi.getContinent());
                     model.getCurrentPLayer().getCurrentScientifique().setSubvention(projetChoisi);
                     if(model.getCurrentPLayer().getCurrentScientifique().getSubvention().getTilesSolarProject() != null) {
                         // set la valeur solaire si le scientifique joué est sur un projet solaire
@@ -49,7 +49,7 @@ public class ControllerActionGratuite implements EventHandler<ActionEvent>{
             Optional<SommetTile> result = viewGame.hboxAction.dialogDeplacerScientifiqueSommet.showAndWait();
             result.ifPresent(sommetChoisi -> {
                 if(model.moveScientificOnSommet(model.getCurrentPLayer().getCurrentScientifique().getSubvention(), sommetChoisi)){
-                    viewGame.addScientifiqueToSommet(viewGame.imageViewScientifique, model.getCurrentPLayer().getCurrentScientifique(), sommetChoisi);
+                    viewGame.addScientifiqueToSommet(viewGame.imageViewScientifiqueN1, model.getCurrentPLayer().getCurrentScientifique(), sommetChoisi);
                     model.getCurrentPLayer().getCurrentScientifique().setSommetTile(sommetChoisi);
                     model.getCurrentPLayer().setDeplacerScientifiqueSommetDone(true);
                 } else {

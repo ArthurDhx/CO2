@@ -36,7 +36,7 @@ public class ViewGame {
 
 	ImageView imageViewTilesSolarProject;
 	ImageView imageViewTilesSolarProjectBack;
-	ImageView imageViewScientifique;
+	ImageView imageViewScientifiqueN1;
 
 	ViewMenuActionHbox hboxAction;
 	private Object AlertType;
@@ -115,13 +115,14 @@ public class ViewGame {
 		//pane.getChildren().add(imageViewTilesSolarProjectInDeck);
 
 		//On récupère l'image d'un scientifique et on l'ajoute à l'écran
-		Image imgScientifique = new Image(getClass().getResourceAsStream("images/scientifique.png"));
-		imageViewScientifique = new ImageView(imgScientifique);
-		imageViewScientifique.setX(30);
-		imageViewScientifique.setY(180);
-		imageViewScientifique.setFitWidth(40);
-		imageViewScientifique.setPreserveRatio(true);
-		pane.getChildren().add(imageViewScientifique);
+		// img scientifique n°1
+		Image imgScientifique1 = model.getCurrentPLayer().getCurrentScientifique().getImgScientifique();
+		imageViewScientifiqueN1 = new ImageView(imgScientifique1);
+		imageViewScientifiqueN1.setX(30);
+		imageViewScientifiqueN1.setY(180);
+		imageViewScientifiqueN1.setFitWidth(40);
+		imageViewScientifiqueN1.setPreserveRatio(true);
+		pane.getChildren().add(imageViewScientifiqueN1);
 
 		// On indique combien il y'a de tuile dans le paquet
 		nbTilesSolarProject = new Text(1430, 150,"Il y a "+model.getNbSolarProject()+" projets solaires");
@@ -727,7 +728,7 @@ public class ViewGame {
 				break;
 		}
 		pane.getChildren().add(imageViewTilesSolarProjectBack);
-		this.imageViewScientifique.toFront();
+		this.imageViewScientifiqueN1.toFront();
 	}
 
 	/**

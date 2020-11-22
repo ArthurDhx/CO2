@@ -1,9 +1,12 @@
 package CO2;
 
+import javafx.scene.image.Image;
+
 public class Scientifique {
-    /*
-    Un scientifique est assigné à un continent et à une case subvention où un projet et mis en place
-     */
+    final private Image imgScientifique = new Image(getClass().getResourceAsStream("images/scientifique.png"));
+
+    // Un scientifique est assigné à un continent et à une case subvention où un projet et mis en place
+
     private Continent continent; // Si null, alors il est dans la base du joueur
     private Subvention subvention;
     private SommetTile sommetTile;
@@ -58,5 +61,9 @@ public class Scientifique {
 
     public void setSubject(Subject subject) {
         this.subject = subject;
+    }
+
+    public Image getImgScientifique() {
+        return imgScientifique;
     }
 }
