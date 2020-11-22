@@ -186,7 +186,8 @@ public class ViewMenuActionHbox extends HBox {
         Continent[] continent = model.getContinents();
         ArrayList<SommetTile> sommetTiles = new ArrayList<>();
         for(int i = 0; i< continent.length; i++){
-            sommetTiles.add(continent[i].getSommetTile());
+            GreenEnergyTypes energy =  model.getCurrentPLayer().getCurrentScientifique().getSubject().getEnergy();
+            if(continent[i].getSommetTile().haveEnergy(energy)) sommetTiles.add(continent[i].getSommetTile());
         }
         System.out.println(sommetTiles);
         //Si aucun sommet n'est mis en place, on ne fait rien
