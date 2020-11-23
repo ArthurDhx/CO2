@@ -32,4 +32,9 @@ enum typesCentral {
     public int getExpertise() {
         return expertise;
     }
+
+    @Override
+    public String toString() {
+        return "Points de Victoire : " + ptsVictoire + ", Cout : " + cout + ", Expertise nécessaire :" + expertise ;
+    }
 }

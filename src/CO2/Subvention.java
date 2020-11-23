@@ -66,6 +66,8 @@ public class Subvention {
 
     @Override
     public String toString() {
+        if (tilesSolarProject != null && tilesSolarProject.isMisEnPlace())
+            return this.continent.getName() +": " + typesCentral.SOLAIRE.toString(); // TODO : Switch avec les autres quand implementer
         return this.continent.getName() +": "+ this.type ;
     }
 

@@ -20,6 +20,7 @@ public class ViewMenuActionHbox extends HBox {
     ChoiceDialog<SommetTile> dialogDeplacerScientifiqueSommet;
     ChoiceDialog<Scientifique> dialogChoisirScientifique;
     ChoiceDialog<Subvention> dialogMettreEnPlaceProjet;
+    ChoiceDialog<Subvention> dialogConstruireCentrale;
     ChoiceDialog<String> dialogAcheterVendreCEP;
 
     // Les boutons associe aux actions principales
@@ -156,6 +157,33 @@ public class ViewMenuActionHbox extends HBox {
         dialogMettreEnPlaceProjet.setTitle("Mettre en place un projet");
         dialogMettreEnPlaceProjet.setHeaderText("Veuillez choisir un projet");
         dialogMettreEnPlaceProjet.setContentText("Projet :");
+    }
+
+    /**
+     * Affiche le menu permettant de choisir un projet à mettre en place
+     */
+    public void displayConstruireCentraleChoiceDialog(){
+        //On récupère les projets
+        Continent[] continent = model.getContinents();
+        ArrayList<Subvention> subventions = new ArrayList<>();
+        for(int i = 0; i<continent.length; i++){
+            ArrayList<Subvention> subventionsInContinent = continent[i].getSubventions();
+            for(int j = 0; j<subventionsInContinent.size(); j++){
+                if(subventionsInContinent.get(j).getTilesSolarProject() != null && subventionsInContinent.get(j).getTilesSolarProject().isMisEnPlace() ){
+                    subventions.add(subventionsInContinent.get(j));
+                }
+            }
+        }
+        System.out.println(subventions);
+        //Si aucun projet n'est mis en place, on ne fait rien
+        if(subventions.isEmpty()) return;
+        dialogConstruireCentrale = new ChoiceDialog<Subvention>(
+                subventions.get(0), // Choix par défaut
+                subventions
+        );
+        dialogConstruireCentrale.setTitle("Construire une centrale");
+        dialogConstruireCentrale.setHeaderText("Veuillez choisir un projet déjà mis en place");
+        dialogConstruireCentrale.setContentText("Projet :");
     }
 
     /**

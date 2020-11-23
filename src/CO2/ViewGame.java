@@ -789,4 +789,12 @@ public class ViewGame {
 			}
 		}
 	}
+
+	//TODO : A faire
+	public void addCentrale(int i, ImageView tileProject, Continent continent) {
+	}
+
+	public ImageView createCentrale() {
+		return null ;
+	}
 }

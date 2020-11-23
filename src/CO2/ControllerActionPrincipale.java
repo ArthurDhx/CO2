@@ -80,6 +80,15 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
             viewGame.hboxAction.resetHbox();
 
         } else if (source == viewGame.hboxAction.btnConstruire) {
+            viewGame.hboxAction.displayConstruireCentraleChoiceDialog();
+            Optional<Subvention> result = viewGame.hboxAction.dialogConstruireCentrale.showAndWait();
+            if(viewGame.hboxAction.dialogConstruireCentrale == null) return;
+            result.ifPresent(projetMisEnPlaceChoisi -> {
+                // METRE A JOUR LE MODELE CEUX QUI VONT RAJOUTER LE COUT JE VOUS VOIS
+                // if ( VERIFIE SI POSSIBLE ET PAYE )
+                viewGame.addCentrale(projetMisEnPlaceChoisi.getIndex()+1, viewGame.createCentrale(), projetMisEnPlaceChoisi.getContinent());
+                return;
+            });
         }
     }
 }
