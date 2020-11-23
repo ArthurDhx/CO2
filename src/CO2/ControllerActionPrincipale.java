@@ -86,7 +86,7 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
             result.ifPresent(projetMisEnPlaceChoisi -> {
                 // METRE A JOUR LE MODELE CEUX QUI VONT RAJOUTER LE COUT JE VOUS VOIS
                 // if ( VERIFIE SI POSSIBLE ET PAYE )
-                viewGame.addCentrale(projetMisEnPlaceChoisi.getIndex()+1, viewGame.createCentrale(), projetMisEnPlaceChoisi.getContinent());
+                viewGame.addCentrale( viewGame.createCentrale(), projetMisEnPlaceChoisi.getContinent());
                 return;
             });
         }
