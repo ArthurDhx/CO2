@@ -10,6 +10,7 @@ public class TilesSolarProject {
 
     public TilesSolarProject(){
         this.subPossible = true;
+        this.misEnPlace = false;
     }
 
     public boolean addOnSubvention(){
