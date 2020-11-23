@@ -141,7 +141,7 @@ public class ViewMenuActionHbox extends HBox {
         for(int i = 0; i<continent.length; i++){
             ArrayList<Subvention> subventionsInContinent = continent[i].getSubventions();
             for(int j = 0; j<subventionsInContinent.size(); j++){
-                if(!subventionsInContinent.get(j).isEmpty()){
+                if((!subventionsInContinent.get(j).isEmpty()) && (!subventionsInContinent.get(j).getTilesSolarProject().isMisEnPlace())){
                     subventions.add(subventionsInContinent.get(j));
                 }
             }

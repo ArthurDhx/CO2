@@ -6,6 +6,7 @@ package CO2;
  */
 public class TilesSolarProject {
     boolean subPossible;
+    boolean misEnPlace;
 
     public TilesSolarProject(){
         this.subPossible = true;
@@ -14,6 +15,22 @@ public class TilesSolarProject {
     public boolean addOnSubvention(){
         // a développer pour choisir d'ajouter la tuile ou non
         return true;
+    }
+
+    public boolean isSubPossible() {
+        return subPossible;
+    }
+
+    public void setSubPossible(boolean subPossible) {
+        this.subPossible = subPossible;
+    }
+
+    public boolean isMisEnPlace() {
+        return misEnPlace;
+    }
+
+    public void setMisEnPlace(boolean misEnPlace) {
+        this.misEnPlace = misEnPlace;
     }
 
     @Override
