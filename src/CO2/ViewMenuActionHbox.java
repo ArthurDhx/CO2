@@ -305,5 +305,4 @@ public class ViewMenuActionHbox extends HBox {
         dialogAcheterVendreCEP.setHeaderText("Voulez-vous acheter ou vendre 1 CEP ?");
         dialogAcheterVendreCEP.setContentText("Choix: ");
     }
-
 }

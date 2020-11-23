@@ -6,6 +6,7 @@ package CO2;
  */
 public class TilesSolarProject {
     boolean subPossible;
+
     public TilesSolarProject(){
         this.subPossible = true;
     }

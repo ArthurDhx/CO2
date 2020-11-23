@@ -81,7 +81,6 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
             viewGame.hboxAction.resetHbox();
 
         } else if (source == viewGame.hboxAction.btnConstruire) {
-            // A implementer
         }
     }
 }
