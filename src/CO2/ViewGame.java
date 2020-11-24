@@ -803,7 +803,6 @@ public class ViewGame {
 		ArrayList<Central> centrales = continent.getCentrales();
 		central.setX(continent.getTabRectangleCentral()[index].getX());
 		central.setY(continent.getTabRectangleCentral()[index].getY());
-
 	}
 
 	/**
