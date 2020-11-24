@@ -424,7 +424,9 @@ public class Model {
 				// Alors on l'occupe
 				curPlayer.setActionPrincipaleDone(true);
 				centrales.get(i).setOccupe(true);
-				return centrales.get(i).getIndex() ;
+				// Affecation type
+				centrales.get(i).setType(projetMisEnPlaceChoisi.getTilesSolarProject().getTypeToCentral());
+				return centrales.get(i).getIndex();
 			}
 		}
 		return -1 ;

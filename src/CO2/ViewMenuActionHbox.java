@@ -111,7 +111,7 @@ public class ViewMenuActionHbox extends HBox {
                 continent[0], // Choix par défaut
                 continent
         );
-        dialogProposerProjet.setTitle("Mettre en place un projet");
+        dialogProposerProjet.setTitle("Proposer un projet");
         dialogProposerProjet.setHeaderText("Veuillez choisir un continent");
         dialogProposerProjet.setContentText("Continent:");
     }
