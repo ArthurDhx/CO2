@@ -2,6 +2,7 @@ package CO2;
 
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -407,4 +408,25 @@ public class Model {
 
 		}
 	}
+
+	/**
+	 * @param projetMisEnPlaceChoisi La case de subvention ou le projet choisis se situe
+	 * @return -1 Si la centrale n'est pas créable
+	 * 			l'index ou la centrale a été posé si cela est possible
+	 */
+    public int putCentral(Subvention projetMisEnPlaceChoisi) {
+    	//TODO : Suis qui enleve le projet ne pas oublier de le faire aussi dans le modele
+		// Les conditions pour payer ect
+		ArrayList<Central> centrales = projetMisEnPlaceChoisi.getContinent().getCentrales();
+		for (int i = 0; i < centrales.size(); i++) {
+			// Si un espace est libre
+			if (!centrales.get(i).isOccupe()) {
+				// Alors on l'occupe
+				curPlayer.setActionPrincipaleDone(true);
+				centrales.get(i).setOccupe(true);
+				return centrales.get(i).getIndex() ;
+			}
+		}
+		return -1 ;
+    }
 }

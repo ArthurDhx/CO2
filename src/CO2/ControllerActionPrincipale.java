@@ -40,7 +40,6 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
                     // meme principe que au dessus
                     if(model.addTilesSolarProjectToSubventionCase(continentChoisi,subvention.getIndex())){
                         // Si la tuile peut etre ajouter
-                        // TODO : [Yassine] a vérifier apres refactoring tab vers liste
                         // Affiche la tuile a l'ecran
                         viewGame.addTuilesToSubvention(subvention.getIndex()+1, viewGame.createTileProject(), continentChoisi);
                         // Mets a jour le model
@@ -86,7 +85,13 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
             result.ifPresent(projetMisEnPlaceChoisi -> {
                 // METRE A JOUR LE MODELE CEUX QUI VONT RAJOUTER LE COUT JE VOUS VOIS
                 // if ( VERIFIE SI POSSIBLE ET PAYE )
-                viewGame.addCentrale( viewGame.createCentrale(), projetMisEnPlaceChoisi.getContinent());
+                int index = model.putCentral(projetMisEnPlaceChoisi);
+                if( index != -1) {
+                    viewGame.addCentrale( viewGame.createCentrale(), projetMisEnPlaceChoisi.getContinent(), index);
+                } else {
+                    viewGame.displayAlertWithoutHeaderText("Erreur", "Impossible de placer la centrale");
+                }
+                viewGame.hboxAction.resetHbox();
                 return;
             });
         }

@@ -67,6 +67,10 @@ public class Continent {
         return false;
     }
 
+    public ArrayList<Central> getCentrales() {
+        return centrales;
+    }
+
     public String getName() {
         return name;
     }

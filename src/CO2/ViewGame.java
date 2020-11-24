@@ -34,6 +34,7 @@ public class ViewGame {
 
 	List<Circle> player1ExpertiseIndicator;
 
+	Image imgCentralSolar;
 	ImageView imageViewTilesSolarProject;
 	ImageView imageViewTilesSolarProjectBack;
 	ImageView imageViewScientifiqueN1;
@@ -100,6 +101,7 @@ public class ViewGame {
     	// On récupère l'image de la tuile et on l'ajoute à l'écran
 		// Image imgTilesSolarProject = new Image("CO2/images/TilesSolarProject.jpg");
 		imgTilesSolarProject = new Image(getClass().getResourceAsStream("images/Projets/TilesSolarProjectRecto.png"));
+		imgCentralSolar = new Image(getClass().getResourceAsStream("images/Centrales/Solar.png"));
 		imageViewTilesSolarProject = new ImageView(imgTilesSolarProject);
 		imageViewTilesSolarProject.setPreserveRatio(true);
 		imageViewTilesSolarProject.setFitWidth(75);
@@ -790,12 +792,29 @@ public class ViewGame {
 		}
 	}
 
-	//TODO : A faire
-	public void addCentrale(ImageView tileProject, Continent continent) {
+
+	/**
+	 * Place la centrale sur le continent a la bonne position
+	 * @param central L'image de la centrale
+	 * @param continent Le continent ou deposer la centrale
+	 * @param index l'index pour la position de la centrale sur le continent
+	 */
+	public void addCentrale(ImageView central, Continent continent,int index) {
+		ArrayList<Central> centrales = continent.getCentrales();
+		central.setX(continent.getTabRectangleCentral()[index].getX());
+		central.setY(continent.getTabRectangleCentral()[index].getY());
 
 	}
 
+	/**
+	 * Creer une image de la centrale avec la bonne taille
+	 * @return L'image de la centrale
+	 */
 	public ImageView createCentrale() {
-		return null ;
+		ImageView imageView = new ImageView(imgCentralSolar);
+		imageView.setPreserveRatio(true);
+		imageView.setFitWidth(75);
+		pane.getChildren().add(imageView);
+		return imageView ;
 	}
 }
