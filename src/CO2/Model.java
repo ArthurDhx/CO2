@@ -47,7 +47,7 @@ public class Model {
 		return allSommetTile;
 	}
 
-	// Liste des expertises
+	// Liste des pistes d'expertises
 	List<Expertise> expertises;
 
 	// tableau contenant les joueurs
@@ -431,4 +431,12 @@ public class Model {
 		}
 		return -1 ;
     }
+
+	public List<Expertise> getExpertises() {
+		return expertises;
+	}
+
+	public void setExpertises(List<Expertise> expertises) {
+		this.expertises = expertises;
+	}
 }

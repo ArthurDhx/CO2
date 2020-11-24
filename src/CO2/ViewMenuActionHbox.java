@@ -22,6 +22,7 @@ public class ViewMenuActionHbox extends HBox {
     ChoiceDialog<Subvention> dialogMettreEnPlaceProjet;
     ChoiceDialog<Subvention> dialogConstruireCentrale;
     ChoiceDialog<String> dialogAcheterVendreCEP;
+    ChoiceDialog<String> dialogChoisirRevenu;
 
     // Les boutons associe aux actions principales
     Button btnActionPrincipale;
@@ -332,5 +333,25 @@ public class ViewMenuActionHbox extends HBox {
         dialogAcheterVendreCEP.setTitle("Marché au CEP");
         dialogAcheterVendreCEP.setHeaderText("Voulez-vous acheter ou vendre 1 CEP ?");
         dialogAcheterVendreCEP.setContentText("Choix: ");
+    }
+
+    public void dialogChoisirRevenu(GreenEnergyTypes energyType, int revenu) {
+        // listes des possibilites de revenu
+        List<String> repartitions = new ArrayList<>();
+        if (revenu>1) {
+            for (int i = 0; i < revenu+1; i++)
+                repartitions.add((revenu - i) + " points de victoire - " + i + " argent");
+        } else {
+            repartitions.add("1 points de victoire - 0 argent");
+            repartitions.add("0 points de victoire - 1 argent");
+        }
+
+        dialogChoisirRevenu = new ChoiceDialog<>(
+                repartitions.get(0), repartitions
+        );
+
+        dialogChoisirRevenu.setTitle("Répartition du revenu pour l'expertise " + energyType);
+        dialogChoisirRevenu.setHeaderText("Choisissez comment repartir vos " + revenu + " points de revenu");
+        dialogChoisirRevenu.setContentText("Repartition: ");
     }
 }
