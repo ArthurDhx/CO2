@@ -638,7 +638,7 @@ public class ViewGame {
 		Image imgTilesSolarProjectBack = new Image(getClass().getResourceAsStream("images/Projets/TilesSolarProjectVerso.png"));
 		imageViewTilesSolarProjectBack = new ImageView(imgTilesSolarProjectBack);
 		imageViewTilesSolarProjectBack.setPreserveRatio(true);
-		imageViewTilesSolarProjectBack.setFitWidth(75);
+		imageViewTilesSolarProjectBack.setFitWidth(65);
 		imageViewTilesSolarProjectBack.setPreserveRatio(true);
 		switch(continent.getName()) {
 			case "Europe" :
