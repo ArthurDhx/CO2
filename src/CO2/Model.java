@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 enum GreenEnergyTypes {SOLAR, BIOMASS, RECYCLING, FUSION, REFORESTATION}
 
@@ -324,32 +326,6 @@ public class Model {
 		// à développer pour savoir quel continent contient les tuiles de projet solaire
 		return continents[0].isContainsTilesSolarProject();
 	}
-	public Player getCurrentPLayer() { return players[curPlayerId]; }
-
-	public Continent[] getContinents() { return continents; }
-
-	public int getTour() {
-		return tour;
-	}
-
-	public void setTour(int tour) {
-		this.tour = tour;
-	}
-
-	public void setNbJoueur(int nbJoueur) { this.nbJoueur = nbJoueur; }
-
-	public int getNbJoueur() { return players.length; }
-
-	public int getNbDecade() { return nbDecade; }
-
-	public void setNbDecade(int nbDecade) { this.nbDecade = nbDecade; }
-
-	public int getDecade() { return decade; }
-
-	public void setDecade(int decade) { this.decade = decade; }
-
-	public void startGame() { state = STATE_PLAY; }
-
 	public void achatCEP(){
 		this.nbCEPdispo -= 1;
 		if(nbCEPdispo == 0){
@@ -432,6 +408,26 @@ public class Model {
 		return -1 ;
     }
 
+	/**
+	 * Extrait les valeurs de la chaine de characteres choisi par le joueur
+	 * et les passes a une methode du joueur qui les ajoute a ces proprietes
+	 * @param p le joueur concerne
+	 * @param repartition la reponse choisie par le joueur
+	 */
+	public void giveRevenu(Player p, String repartition) {
+		int nombres[] = new int[2];
+		// extraire les chiffres de la chaine de characteres
+		Pattern pattern = Pattern.compile("\\d+");
+		Matcher matcher = pattern.matcher(repartition);
+		for (int i = 0; i<nombres.length; i++) {
+			matcher.find();
+			System.out.println(matcher.group());
+			nombres[i] = Integer.parseInt(matcher.group());
+		}
+		// donne les valeurs trouvees au joueur
+		p.giveRevenu(nombres);
+	}
+
 	public List<Expertise> getExpertises() {
 		return expertises;
 	}
@@ -439,4 +435,30 @@ public class Model {
 	public void setExpertises(List<Expertise> expertises) {
 		this.expertises = expertises;
 	}
+
+	public Player getCurrentPLayer() { return players[curPlayerId]; }
+
+	public Continent[] getContinents() { return continents; }
+
+	public int getTour() {
+		return tour;
+	}
+
+	public void setTour(int tour) {
+		this.tour = tour;
+	}
+
+	public void setNbJoueur(int nbJoueur) { this.nbJoueur = nbJoueur; }
+
+	public int getNbJoueur() { return players.length; }
+
+	public int getNbDecade() { return nbDecade; }
+
+	public void setNbDecade(int nbDecade) { this.nbDecade = nbDecade; }
+
+	public int getDecade() { return decade; }
+
+	public void setDecade(int decade) { this.decade = decade; }
+
+	public void startGame() { state = STATE_PLAY; }
 }

@@ -87,4 +87,12 @@ public class ModelUnitTest {
         Assert.assertEquals(subject4.getEnergy(),model.stringToSubject("Fusion").getEnergy());
         Assert.assertEquals(subject5.getEnergy(),model.stringToSubject("Biomass").getEnergy());
     }
+
+    @Test
+    public void testAjoutRevenu() {
+        Player p = model.getCurrentPLayer();
+        model.giveRevenu(p, "5 pts victoire - 5 argent");
+        Assert.assertEquals(5 , p.getPointVictoire());
+        Assert.assertEquals(26 , p.getArgent());
+    }
 }

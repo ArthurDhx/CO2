@@ -109,4 +109,13 @@ public class PlayerUnitTest {
         Assert.assertFalse(ret);
         Assert.assertEquals(5, p.getResourcesTech());
     }
+
+    @Test
+    public void testAjoutRevenu() {
+        Assert.assertEquals(0 , p.getPointVictoire());
+        Assert.assertEquals(21 , p.getArgent());
+        p.giveRevenu(new int[]{5, 5});
+        Assert.assertEquals(5 , p.getPointVictoire());
+        Assert.assertEquals(26 , p.getArgent());
+    }
 }

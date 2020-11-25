@@ -80,8 +80,8 @@ public class ControllerAction implements EventHandler<ActionEvent>{
                 if (viewGame.hboxAction.dialogChoisirRevenu != null) {
                     Optional<String> result = viewGame.hboxAction.dialogChoisirRevenu.showAndWait();
                     result.ifPresent(repartition -> {
-                        System.out.println(repartition);
-                        // TODO donner revenu choisi
+                        // donne le revenu au joueur dans le model
+                        model.giveRevenu(p, repartition);
                         viewGame.reloadArgent();
                         viewGame.reloadPointVictoire();
                         return;

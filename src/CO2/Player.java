@@ -208,6 +208,15 @@ public class Player {
      */
     public void removeCEP(){ CEP -= 1; }
 
+    /**
+     * Ajoute le revenu au points de victoire et a l'argent du joueur
+     * @param nombres [ptVictoire, argent]
+     */
+    public void giveRevenu(int[] nombres) {
+        pointVictoire+=nombres[0];
+        argent+=nombres[1];
+    }
+
     public int getNBACTIONGRATUITE() {
         return NBACTIONGRATUITE;
     }
