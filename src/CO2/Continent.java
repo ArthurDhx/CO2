@@ -21,9 +21,10 @@ public class Continent {
     private AgendaTile agendaTile;
     // Tuile sommet
     private SommetTile sommetTile;
+    int index;
 
 
-    public Continent(String name, int nbCep, Image imgContinent) {
+    public Continent(String name, int nbCep, Image imgContinent, int index) {
         this.name = name;
         this.nbCep = nbCep;
         this.imgContinent = imgContinent;
@@ -37,6 +38,7 @@ public class Continent {
         for(int i = 0;i<nbCep;i++) {
             centrales.add(new Central(i,this,tabRectangleCentral));
         }
+        this.index = index;
     }
 
     public int getNbCep() { return nbCep; }
@@ -102,4 +104,8 @@ public class Continent {
         this.sommetTile = sommetTile;
     }
 
+    public int getIndex() {
+        return index;
+    }
 }
+

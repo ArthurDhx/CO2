@@ -85,9 +85,13 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
             result.ifPresent(projetMisEnPlaceChoisi -> {
                 // METRE A JOUR LE MODELE CEUX QUI VONT RAJOUTER LE COUT JE VOUS VOIS
                 // if ( VERIFIE SI POSSIBLE ET PAYE )
+
                 int index = model.putCentral(projetMisEnPlaceChoisi);
                 if( index != -1) {
                     viewGame.addCentrale( viewGame.createCentrale(), projetMisEnPlaceChoisi.getContinent(), index);
+                    viewGame.resetSubvention(250,100, projetMisEnPlaceChoisi.getContinent().getIndex(),projetMisEnPlaceChoisi.getIndex());
+                    projetMisEnPlaceChoisi.getTilesSolarProject().setMisEnPlace(false);
+                    projetMisEnPlaceChoisi.setEmpty(true);
                 } else {
                     viewGame.displayAlertWithoutHeaderText("Erreur", "Impossible de placer la centrale");
                 }

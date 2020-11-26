@@ -364,6 +364,31 @@ public class ViewGame {
 	}
 
 	/**
+	 * Reset d'une subvention
+	 */
+	public void resetSubvention(int val, int k, int idContinent, int idSubvention){
+		int j = idContinent;
+		int i = idSubvention;
+
+		Text[] subventionName = new Text[6];
+
+		subventionName[j] = new Text(model.getContinents()[j].getSubventions().get(i).getType().toString());
+		subventionName[j].setStyle("-fx-font: 8 arial;");
+
+		if(j==0 || j==5) {model.getContinents()[j].getTabRectangleSubvention()[i].setX(k+val-150);subventionName[j].setX(k+val-145);}
+		if(j==0 || j==2) {model.getContinents()[j].getTabRectangleSubvention()[i].setY(val);subventionName[j].setY(val+35);}
+		if(j==1 || j==4) {model.getContinents()[j].getTabRectangleSubvention()[i].setX(k+val+250);subventionName[j].setX(k+val+255);}
+		if(j==2 || j==3) {model.getContinents()[j].getTabRectangleSubvention()[i].setX(k+val+600);subventionName[j].setX(k+val+605);}
+		if(j==3 || j==5) {model.getContinents()[j].getTabRectangleSubvention()[i].setY(val+300);subventionName[j].setY(val+335);}
+		if(j==1) {model.getContinents()[j].getTabRectangleSubvention()[i].setY(val-120);subventionName[1].setY(val-85);}
+		if(j==4) {model.getContinents()[4].getTabRectangleSubvention()[i].setY(val+460);subventionName[4].setY(val+495);}
+
+		pane.getChildren().remove(model.getContinents()[j].getTabRectangleSubvention()[i]);
+		pane.getChildren().add(model.getContinents()[j].getTabRectangleSubvention()[i]);
+		pane.getChildren().add(subventionName[j]);
+	}
+
+	/**
 	 * Initialisation des centrales
 	 */
 	public void initCentral(int val, int k){

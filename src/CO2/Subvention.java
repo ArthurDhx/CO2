@@ -104,4 +104,8 @@ public class Subvention {
     public void setStaffed(boolean staffed) {
         this.staffed = staffed;
     }
+
+    public void setEmpty(boolean empty) {
+        this.empty = empty;
+    }
 }
