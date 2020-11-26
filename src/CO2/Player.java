@@ -55,11 +55,11 @@ public class Player {
      */
     private void initExpertise() {
         expertise = new HashMap<>();
-        expertise.put(GreenEnergyTypes.SOLAR, 1);
-        expertise.put(GreenEnergyTypes.BIOMASS, 2);
-        expertise.put(GreenEnergyTypes.RECYCLING, 3);
-        expertise.put(GreenEnergyTypes.FUSION, 4);
-        expertise.put(GreenEnergyTypes.REFORESTATION, 5);
+        expertise.put(GreenEnergyTypes.SOLAR, 0);
+        expertise.put(GreenEnergyTypes.BIOMASS, 0);
+        expertise.put(GreenEnergyTypes.RECYCLING, 0);
+        expertise.put(GreenEnergyTypes.FUSION, 0);
+        expertise.put(GreenEnergyTypes.REFORESTATION, 0);
     }
 
     /**

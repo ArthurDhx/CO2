@@ -265,7 +265,7 @@ public class ViewGame {
 
 		int radius = 15;
 		int x = xPistes + expertiseId*(rectWidth+space) + rectWidth/2;
-		int y = yPistes - (expertise)*(rectWidth+space) + rectWidth/2;
+		int y = yPistes - (expertise-1)*(rectWidth+space) + rectWidth/2;
 		Circle circle = new Circle(x, y, radius, Color.INDIANRED);
 
 		return circle;

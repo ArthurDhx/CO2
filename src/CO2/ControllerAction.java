@@ -71,7 +71,7 @@ public class ControllerAction implements EventHandler<ActionEvent>{
             // niveau d'expertise du joueur dans ce type d'expertise
             int playerExp = p.getExpertise(type);
             // nombre de revenu correspondant
-            int revenu = exp.getPiste().get(playerExp).getNumero();
+            int revenu = exp.getPiste().get(playerExp-1).getNumero();
 
             // si il y a un revenu a distribuer
             if (revenu>0) {
