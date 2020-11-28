@@ -38,6 +38,9 @@ public class Model {
 	//nombre de CEP disponible au marché
 	int nbCEPdispo;
 
+	// Valeur du CO2 actuelle
+	private int co2;
+
 	//Tableau contenant les 6 tuiles de projet solaire
 	//TilesSolarProject[] tilesSolarProjects;
 	ArrayList<TilesSolarProject> tilesSolarProjects;
@@ -53,7 +56,7 @@ public class Model {
 	List<Expertise> expertises;
 
 	// tableau contenant les joueurs
-	private Player[] players;
+	private final Player[] players;
 	// joueur courant
 	int curPlayerId;
 	Player curPlayer;
@@ -268,10 +271,7 @@ public class Model {
 		} else {
 			// À faire pour toutes les énergies
 			// vérifie si le sommet ainsi que la subvention on tous deux l'énergie solaire.
-			if (sommetTile.haveEnergy(GreenEnergyTypes.SOLAR) && subvention.getTilesSolarProject() != null){
-				return true;
-			}
-			return false;
+			return sommetTile.haveEnergy(GreenEnergyTypes.SOLAR) && subvention.getTilesSolarProject() != null;
 		}
 	}
 
@@ -415,7 +415,7 @@ public class Model {
 	 * @param repartition la reponse choisie par le joueur
 	 */
 	public void giveRevenu(Player p, String repartition) {
-		int nombres[] = new int[2];
+		int[] nombres = new int[2];
 		// extraire les chiffres de la chaine de characteres
 		Pattern pattern = Pattern.compile("\\d+");
 		Matcher matcher = pattern.matcher(repartition);
@@ -461,4 +461,34 @@ public class Model {
 	public void setDecade(int decade) { this.decade = decade; }
 
 	public void startGame() { state = STATE_PLAY; }
+
+	/**
+	 * Permet de placer uen centrale fossile sur le modele est de mettre a jour son niveau de co2
+	 * @param continent Le continent ou placé la centrale
+	 * @param type Le type de la centrale
+	 *             0 = centrale a charbon
+	 *             1 = centrale a petrole
+	 *             2 = centrale a gaz
+	 */
+	public void putFossileCentral(Continent continent, int type) {
+		Central central = continent.getCentrales().get(0) ;
+		central.setOccupe(true);
+		typesCentral typesCentral ;
+		switch (type){
+			case 0 :
+				central.setType(CO2.typesCentral.CHARBON);
+				break;
+			case 1 :
+				central.setType(CO2.typesCentral.PETROLE);
+				break;
+			case 2 :
+				central.setType(CO2.typesCentral.GAZNATUREL);
+				break;
+		}
+		this.co2 += central.getType().getCo2();
+	}
+
+	public int getCo2() {
+		return this.co2 ;
+	}
 }

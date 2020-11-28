@@ -37,4 +37,7 @@ public class Central {
 
     public Continent getContinent() { return continent; }
 
+    public typesCentral getType() {
+        return type;
+    }
 }

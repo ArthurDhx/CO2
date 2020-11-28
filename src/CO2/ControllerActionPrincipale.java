@@ -85,7 +85,6 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
             result.ifPresent(projetMisEnPlaceChoisi -> {
                 // METRE A JOUR LE MODELE CEUX QUI VONT RAJOUTER LE COUT JE VOUS VOIS
                 // if ( VERIFIE SI POSSIBLE ET PAYE )
-
                 int index = model.putCentral(projetMisEnPlaceChoisi);
                 if( index != -1) {
                     viewGame.addCentrale( viewGame.createCentrale(), projetMisEnPlaceChoisi.getContinent(), index);

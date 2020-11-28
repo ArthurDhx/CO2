@@ -29,12 +29,17 @@ public class ViewGame {
 	Text argentJoueur;
 	Text pointVictoireJoueur;
 	Text resourcesTechJoueur;
+	Text co2 ;
 	Text CEPJoueur;
 	Text CEPMarche;
 
 	List<Circle> player1ExpertiseIndicator;
 
 	Image imgCentralSolar;
+	Image imgCentralCharbon;
+	Image imgCentralPetrole;
+	Image imgCentralGaz;
+
 	ImageView imageViewTilesSolarProject;
 	ImageView imageViewTilesSolarProjectBack;
 	ImageView imageViewScientifiqueN1;
@@ -102,6 +107,10 @@ public class ViewGame {
 		// Image imgTilesSolarProject = new Image("CO2/images/TilesSolarProject.jpg");
 		imgTilesSolarProject = new Image(getClass().getResourceAsStream("images/Projets/TilesSolarProjectRecto.png"));
 		imgCentralSolar = new Image(getClass().getResourceAsStream("images/Centrales/Solar.png"));
+		imgCentralCharbon = new Image(getClass().getResourceAsStream("images/Centrales/Charbon.png"));
+		imgCentralPetrole = new Image(getClass().getResourceAsStream("images/Centrales/Petrole.png"));
+		imgCentralGaz = new Image(getClass().getResourceAsStream("images/Centrales/Gaz.png"));
+
 		imageViewTilesSolarProject = new ImageView(imgTilesSolarProject);
 		imageViewTilesSolarProject.setPreserveRatio(true);
 		imageViewTilesSolarProject.setFitWidth(75);
@@ -134,6 +143,7 @@ public class ViewGame {
 		reloadPointVictoire();
 		reloadresourcesTech();
 		reloadCEP();
+		reloadCo2();
 
 		initContinent();
 		initExpertise(50, 5);
@@ -192,12 +202,12 @@ public class ViewGame {
 	}
 
 	//A appeler lors d'une modification du tour
+
 	public void reloadTour(){
 		pane.getChildren().remove(nbTour);
 		nbTour = new Text(10, 110,"Tour : "+model.getTour()+"/" + (model.NB_TOUR_PAR_DECENNIE-1));
 		pane.getChildren().add(nbTour);
 	}
-
 	public void reloadPlayerExpertise(Player p){
 		if (player1ExpertiseIndicator != null) pane.getChildren().removeAll(player1ExpertiseIndicator);
 		player1ExpertiseIndicator = new ArrayList<>();
@@ -213,13 +223,14 @@ public class ViewGame {
 	}
 
 	//A appeler lors d'une modification de la décénnie
+
 	public void reloadDecade(){
 		pane.getChildren().remove(nbDecade);
 		nbDecade = new Text(80, 110,"Décénnie : "+model.getDecade()+"/" + model.NB_DECENNIE);
 		pane.getChildren().add(nbDecade);
 	}
-
 	//A appeler lors d'une modification de l'argent du joueur
+
 	public void reloadArgent(){
 		pane.getChildren().remove(argentJoueur);
 		argentJoueur = new Text(TEXT_X, 50, "Vous avez "+ model.getCurrentPLayer().getArgent() + " € ");
@@ -248,6 +259,16 @@ public class ViewGame {
 						"Le prix actuel est de "+model.currentPriceCEP+" €"
 		);
 		pane.getChildren().add(CEPMarche);
+	}
+
+
+	/**
+	 * Mets a jour le texte indiquant le niveaux de CO2 grace au model
+	 */
+	public void reloadCo2() {
+		pane.getChildren().remove(co2);
+		co2 = new Text(TEXT_X, 125, "Valeur du CO2 :" + model.getCo2() + " . ");
+		pane.getChildren().add(co2);
 	}
 
 	/**
@@ -838,6 +859,33 @@ public class ViewGame {
 		ImageView imageView = new ImageView(imgCentralSolar);
 		imageView.setPreserveRatio(true);
 		imageView.setFitWidth(75);
+		pane.getChildren().add(imageView);
+		return imageView ;
+	}
+
+	/**
+	 * Creer une image de centrale fossile avec la bonne taille
+	 * @param type Le type de la centrale
+	 *             0 = centrale a charbon
+	 *             1 = centrale petrole
+	 *             2 = centrale a gaz
+	 * @return l'image de la centrale
+	 */
+	public ImageView createFossileCentrale(int type) {
+		ImageView imageView = new ImageView();
+		switch (type){
+			case 0 :
+				imageView.setImage(imgCentralCharbon);
+				break;
+			case 1 :
+				imageView.setImage(imgCentralPetrole);
+				break;
+			case 2 :
+				imageView.setImage(imgCentralGaz);
+				break;
+		}
+		imageView.setPreserveRatio(true);
+		imageView.setFitWidth(80);
 		pane.getChildren().add(imageView);
 		return imageView ;
 	}
