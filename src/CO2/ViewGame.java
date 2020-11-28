@@ -107,9 +107,9 @@ public class ViewGame {
 		// Image imgTilesSolarProject = new Image("CO2/images/TilesSolarProject.jpg");
 		imgTilesSolarProject = new Image(getClass().getResourceAsStream("images/Projets/TilesSolarProjectRecto.png"));
 		imgCentralSolar = new Image(getClass().getResourceAsStream("images/Centrales/Solar.png"));
-		imgCentralCharbon = new Image(getClass().getResourceAsStream("images/Centrales/Charbon.png"));
-		imgCentralPetrole = new Image(getClass().getResourceAsStream("images/Centrales/Petrole.png"));
-		imgCentralGaz = new Image(getClass().getResourceAsStream("images/Centrales/Gaz.png"));
+		imgCentralCharbon = new Image(getClass().getResourceAsStream("images/Centrales/Coal.png"));
+		imgCentralPetrole = new Image(getClass().getResourceAsStream("images/Centrales/Oil.png"));
+		imgCentralGaz = new Image(getClass().getResourceAsStream("images/Centrales/Gas.png"));
 
 		imageViewTilesSolarProject = new ImageView(imgTilesSolarProject);
 		imageViewTilesSolarProject.setPreserveRatio(true);
@@ -885,7 +885,7 @@ public class ViewGame {
 				break;
 		}
 		imageView.setPreserveRatio(true);
-		imageView.setFitWidth(80);
+		imageView.setFitWidth(75);
 		pane.getChildren().add(imageView);
 		return imageView ;
 	}
