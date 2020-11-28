@@ -33,6 +33,14 @@ public class ViewGame {
 	Text CEPJoueur;
 	Text CEPMarche;
 
+	//text pour afficher le nombre de CEP de chaque continent
+	Text CEPAsie;
+	Text CEPAfrique;
+	Text CEPOceanie;
+	Text CEPEurope;
+	Text CEPAmNord;
+	Text CEPAmSud;
+
 	List<Circle> player1ExpertiseIndicator;
 
 	Image imgCentralSolar;
@@ -250,15 +258,36 @@ public class ViewGame {
 	}
 	//A appeler lors d'une modification des CEP
 	public void reloadCEP(){
+		//reload CEP Joueur
 		pane.getChildren().remove(CEPJoueur);
 		CEPJoueur = new Text(TEXT_X,80,"Vous avez "+model.getCurrentPLayer().getCEP()+" CEP");
 		pane.getChildren().add(CEPJoueur);
+		//reload CEP marche
 		pane.getChildren().remove(CEPMarche);
 		CEPMarche = new Text(model.width/2-140,model.height/2,
 				"Il y a "+model.nbCEPdispo+" CEP dans le marché\n" +
 						"Le prix actuel est de "+model.currentPriceCEP+" €"
 		);
 		pane.getChildren().add(CEPMarche);
+		//reload CEP continent
+		pane.getChildren().remove(CEPAsie);
+		pane.getChildren().remove(CEPAmNord);
+		pane.getChildren().remove(CEPAmSud);
+		pane.getChildren().remove(CEPEurope);
+		pane.getChildren().remove(CEPOceanie);
+		pane.getChildren().remove(CEPAfrique);
+		CEPAsie = new Text(CONTINENT_05_X_02_Y+85, CONTINENT_35_Y-120, "L'Asie à "+model.getContinents()[5].getNbCep()+" CEP");
+		CEPAmNord = new Text(CONTINENT_4_Y+300, (model.height/2)-20, "L'Amérique du nord à "+model.getContinents()[3].getNbCep()+" CEP");
+		CEPAmSud = new Text(CONTINENT_4_Y+300, CONTINENT_05_X_02_Y-70, "L'Amérique du sud à "+model.getContinents()[2].getNbCep()+" CEP");
+		CEPEurope = new Text(CONTINENT_05_X_02_Y+70, CONTINENT_05_X_02_Y-70, "L'Europe à "+model.getContinents()[0].getNbCep()+" CEP");
+		CEPAfrique = new Text(CONTINENT_4_Y-25,19, "L'Afrique à "+model.getContinents()[1].getNbCep()+" CEP");
+		CEPOceanie = new Text(CONTINENT_4_Y-25, CONTINENT_35_Y+30, "L'Océanie à "+model.getContinents()[4].getNbCep()+" CEP");
+		pane.getChildren().add(CEPAsie);
+		pane.getChildren().add(CEPAmNord);
+		pane.getChildren().add(CEPAmSud);
+		pane.getChildren().add(CEPEurope);
+		pane.getChildren().add(CEPAfrique);
+		pane.getChildren().add(CEPOceanie);
 	}
 
 
