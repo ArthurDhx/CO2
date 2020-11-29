@@ -30,7 +30,7 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
             Optional<Continent> result = viewGame.hboxAction.dialogProposerProjet.showAndWait();
             result.ifPresent(continentChoisi -> {
                 // Si le résultat est present ( l'utilisateur n'a pas quitter le ChoiceDialog et a donc choisi
-                // un continent => continentChois )
+                // un continent => continentChoisi )
                 // choix de la subvention
                 viewGame.hboxAction.displayChoisirSubventionChoiceDialog(continentChoisi);
 
@@ -44,8 +44,83 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
                         viewGame.addTuilesToSubvention(subvention.getIndex()+1, viewGame.createTileProject(), continentChoisi);
                         // Mets a jour le model
                         model.tilesSolarProjects.remove(0);
-                        // Applique l'effet de la subvention choisie
-                        subvention.effect(model.getCurrentPLayer());
+                        // Récupération du type et application de l'effet de la subvention choisie
+                        typesSubvention type = subvention.effect(model.getCurrentPLayer());
+                        if(type == typesSubvention.RECHERCHE){ //Si il s'agit d'une subvention recheche
+                            //On affiche la boite de dialogue pour choisir l'action à réaliser
+                            viewGame.hboxAction.displayChoisirRechecheChoiceDialog();
+                            Optional<String> resultAction = viewGame.hboxAction.dialogChoisirRecherche.showAndWait();
+                            //On recupère le résultat
+                            resultAction.ifPresent(action -> {
+                                if(action == "Déplacer un scientifique"){ //S'il choisi de déplacer un scientifique
+                                    //On affiche la boite de dialogue pour savoir comment il veut déplacer un scientifique
+                                    viewGame.hboxAction.displayActionScientifiqueAfterRecherche();
+                                    Optional<String> resultDeplacerScientifique = viewGame.hboxAction.dialogActionScientifiqueAfterRecherche.showAndWait();
+                                    //On récupère le resultat
+                                    resultDeplacerScientifique.ifPresent(deplacement -> {
+                                            if(deplacement == "") return;
+                                            else if(deplacement == "Déplacer sur un projet"){
+                                                // Affiche le ChoiceDialog qui permet de deplacer un scientifque
+                                                viewGame.hboxAction.displayDeplacerScientifiqueChoiceDialog();
+                                                if (viewGame.hboxAction.dialogDeplacerScientifiqueProjet == null) return;
+                                                if (model.getCurrentPLayer().getCurrentScientifique().getSubvention() != null){
+                                                    model.getCurrentPLayer().getCurrentScientifique().getSubvention().setStaffed(false);
+                                                }
+                                                Optional<Subvention> resultProjet = viewGame.hboxAction.dialogDeplacerScientifiqueProjet.showAndWait();
+                                                resultProjet.ifPresent(projetChoisi -> {
+                                                    // Si un projet a ete choisi
+                                                    if (model.moveScientificOnProject(projetChoisi.getContinent(), projetChoisi)) {
+                                                        viewGame.addScientifiqueToProject(projetChoisi.getIndex() + 1, viewGame.imageViewScientifiqueN1, projetChoisi.getContinent());
+                                                        model.getCurrentPLayer().getCurrentScientifique().setSubvention(projetChoisi);
+                                                        projetChoisi.setStaffed(true);
+                                                        if (model.getCurrentPLayer().getCurrentScientifique().getSubvention().getTilesSolarProject() != null) {
+                                                            // set la valeur solaire si le scientifique joué est sur un projet solaire
+                                                            model.getCurrentPLayer().getCurrentScientifique().setSubject(new Subject(GreenEnergyTypes.SOLAR));
+                                                        }
+                                                    }
+                                                });
+                                            }
+                                            else if(deplacement == "Déplacer sur un sommet"){
+                                                // Affiche le ChoiceDialog qui permet de deplacer un scientifque
+                                                viewGame.hboxAction.displayDeplacerScientifiqueSommetChoiceDialog();
+                                                if (viewGame.hboxAction.dialogDeplacerScientifiqueSommet == null) return;
+                                                Optional<SommetTile> resultSommet = viewGame.hboxAction.dialogDeplacerScientifiqueSommet.showAndWait();
+                                                resultSommet.ifPresent(sommetChoisi -> {
+                                                    if (model.moveScientificOnSommet(model.getCurrentPLayer().getCurrentScientifique().getSubvention(), sommetChoisi)) {
+                                                        model.getCurrentPLayer().getCurrentScientifique().getSubvention().setStaffed(false);
+                                                        viewGame.addScientifiqueToSommet(viewGame.imageViewScientifiqueN1, model.getCurrentPLayer().getCurrentScientifique(), sommetChoisi);
+                                                        model.getCurrentPLayer().getCurrentScientifique().setSommetTile(sommetChoisi);
+                                                        model.getCurrentPLayer().getCurrentScientifique().setSubvention(null);
+                                                        model.getCurrentPLayer().setDeplacerScientifiqueDone(true);
+                                                    } else viewGame.sommetInfo();
+                                                });
+                                            }
+                                            else{
+                                                //remettre le scientifique dans la réserve et gagner 1 d’expertise dans le type d’énergie du projet
+                                                // gagner 1 d’expertise dans le type d’énergie du projet
+                                                model.getCurrentPLayer().getCurrentScientifique().getSubvention().setStaffed(false);
+                                                model.getCurrentPLayer().addExpertise(model.getCurrentPLayer().getCurrentScientifique().getSubject().getEnergy(), 1);
+                                                viewGame.displayAlertWithoutHeaderText("Gain d'expertise", "En remettant votre scientifique dans votre réserve, vous gagné 1 d’expertise dans le type d’énergie " + model.getCurrentPLayer().getCurrentScientifique().getSubject().getEnergy() + " !");
+                                                //remettre le scientifique dans la réserve
+                                                viewGame.deplacerScientifiqueReserve(model.getCurrentPLayer().getCurrentScientifique().getImgScientifique());
+                                                viewGame.hboxAction.resetHbox();
+                                                model.getCurrentPLayer().getCurrentScientifique().moveToReserve();
+                                            }
+                                    });
+
+                                }
+                                else{ //S'il il choisir d'avoir un nouveau scientifique
+                                    if(model.getCurrentPLayer().addScientifique()){ //Si le joueur à pu avoir un nouveau scientifique
+                                        //on met à jour la vue
+                                        viewGame.addScientifiqueToReserve();
+                                    }
+                                    else{ //Si le joueur à deja 4 scientifique, on affiche un message d'erreur et on quitte ici
+                                        viewGame.displayAlertWithoutHeaderText("Problème lors de l'action", "Vous avez déjà 4 scientifiques.");
+                                        return;
+                                    }
+                                }
+                            });
+                        }
                         viewGame.reloadresourcesTech();
                         // Mets a jour la vue
                         viewGame.nbTilesSolarProject.setText("Il y a "+ model.getNbSolarProject()+" projets solaires");

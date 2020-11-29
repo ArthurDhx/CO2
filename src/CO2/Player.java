@@ -174,7 +174,7 @@ public class Player {
     }
 
     /**
-     * A commenter
+     * Permet de dire que l'action "déplacer scientifique" est faite ou non pendant ce tour
      * @param done
      */
     public void setDeplacerScientifiqueDone(boolean done){
@@ -183,7 +183,7 @@ public class Player {
 
 
     /**
-     * A commenter
+     * Permet de dire que l'action "aller au marché" est faite ou non pendant ce tour
      * @param done
      */
     public void setMarcheCEPDone(boolean done){
@@ -275,5 +275,30 @@ public class Player {
 
     public void setPointVictoire(int pointVictoire) {
         this.pointVictoire = pointVictoire;
+    }
+
+    /**
+     * Permet de donner un CEP à un continent
+     * @param continent
+     * @return true ou false suivant si l'opération à réussi ou non
+     */
+    public boolean giveCEP(Continent continent){
+        if(getCEP() >= 1){ //Le joueur doit avoir au moins un CEP
+            if(continent.addCEP(1)){ //On essaye de donner un cep au continent
+                CEP -= 1; //si ça à fonctionné, on retire une CEP au joueur
+                return true; //On reevoit que la manip à fonctionné
+            }
+        }
+        return false; //Sinon on revoit que la manip n'a pas fonctionné
+    }
+
+    /**
+     * Permet d'ajouter un scientifique dans la réserve
+     * @return true ou false suivant si l'opération à réussi ou non
+     */
+    public boolean addScientifique(){
+        if(scientifiques.size() == 4) return false; //Si le joueur à deja 4 scientifiques, il ne peut pas en avoir plus
+        scientifiques.add(new Scientifique()); //Sinon on en ajoute un dans sa liste
+        return true;
     }
 }

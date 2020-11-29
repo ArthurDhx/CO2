@@ -23,6 +23,8 @@ public class ViewMenuActionHbox extends HBox {
     ChoiceDialog<Subvention> dialogConstruireCentrale;
     ChoiceDialog<String> dialogAcheterVendreCEP;
     ChoiceDialog<String> dialogChoisirRevenu;
+    ChoiceDialog<String> dialogChoisirRecherche;
+    ChoiceDialog<String> dialogActionScientifiqueAfterRecherche;
 
     // Les boutons associe aux actions principales
     Button btnActionPrincipale;
@@ -353,5 +355,47 @@ public class ViewMenuActionHbox extends HBox {
         dialogChoisirRevenu.setTitle("Répartition du revenu pour l'expertise " + energyType);
         dialogChoisirRevenu.setHeaderText("Choisissez comment repartir vos " + revenu + " points de revenu");
         dialogChoisirRevenu.setContentText("Repartition: ");
+    }
+
+    /**
+     * Après avoir mis en place un projet sur la case "recherche en collaboration"
+     * mise en place du dialogue demandant si le joueur veut déplacer un scientifique ou en ajouter un à sa réserve
+     */
+    public void displayChoisirRechecheChoiceDialog(){
+        dialogChoisirRecherche = new ChoiceDialog<>(
+          "Déplacer un scientifique",
+                "Déplacer un scientifique",
+                "Ajouter un scientifique à la réserve"
+        );
+        dialogChoisirRecherche.setTitle("Recherche en collaboration");
+        dialogChoisirRecherche.setHeaderText("Quelle action voulez-vous faire ?");
+        dialogChoisirRecherche.setContentText("Choix: ");
+    }
+
+    /**
+     * Permet de choisir comment déplacer un scientifique après avoir mis un projet sur une case recherche en collaboration
+     */
+    public void displayActionScientifiqueAfterRecherche(){
+        ArrayList<String> choices = new ArrayList<>();
+        Scientifique scientifique = model.getCurrentPLayer().getCurrentScientifique();
+        if (scientifique.getSubvention() == null && scientifique.getSommetTile() == null ){
+            // le  scientifique est dans la reserve, il peut aller que sur un projet
+            this.getChildren().add(btnDeplacerScientifiqToProject);
+            choices.add("Déplacer sur un projet");
+        }
+        if (scientifique.getSubvention() != null && scientifique.getSommetTile() == null ){
+            // le  scientifique est sur un projet , il peut aller que sur un sommet, aller sur un autre projet et revenir à la réserve
+            this.getChildren().addAll(btnDeplacerScientifiqToProject,btnDeplacerScientifiqToSommet,btnDeplacerScientifiqToReserve);
+            choices.add("Déplacer sur un projet");
+            choices.add("Déplacer sur un sommet");
+            choices.add("Déplacer dans la réserve");
+        }
+        dialogActionScientifiqueAfterRecherche = new ChoiceDialog<>(
+                "",
+                choices
+        );
+        dialogActionScientifiqueAfterRecherche.setTitle("Recherche en collaboration");
+        dialogActionScientifiqueAfterRecherche.setHeaderText("Comment déplacer un scientifique ?");
+        dialogActionScientifiqueAfterRecherche.setContentText("Choix: ");
     }
 }

@@ -46,8 +46,6 @@ public class Subvention {
         }
     }
 
-
-
     public int getIndex() {
         return index;
     }
@@ -84,17 +82,18 @@ public class Subvention {
      * Applique l'effet de la subvention en fonction de son type
      * @param currentPLayer le joueur courant
      */
-    public void effect(Player currentPLayer) {
+    public typesSubvention effect(Player currentPLayer) {
         switch (type) {
             case ARGENT:
-                break;
+                return typesSubvention.ARGENT;
             case RESSOURCE:
                 // Ajoute 2 cubes de ressources technologiques au joueur courant
                 currentPLayer.addResourcesTech(2);
-                break;
+                return typesSubvention.RESSOURCE;
             case RECHERCHE:
-                break;
+                return typesSubvention.RECHERCHE;
         }
+        return null;
     }
 
     public boolean isStaffed() {

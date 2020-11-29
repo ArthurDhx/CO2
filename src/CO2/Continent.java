@@ -107,5 +107,39 @@ public class Continent {
     public int getIndex() {
         return index;
     }
+
+    /**
+     * Permet d'ajouter un nombre i de CEP
+     * @param i
+     * @return true ou false suivant si l'opération à réussi ou non
+     */
+    public boolean addCEP(int i){
+        //Dans chaque if, on teste le continent et si il peut recevoir les CEP
+        if(getName().equals("Europe") && getNbCep()+i <= 5) {
+            nbCep += i; //Si c'est le cas, on ajoute les cep
+            return true; //On renvoit que la manip à fonctionné
+        }
+        else if(getName().equals("Afrique") && getNbCep()+i <= 3) {
+            nbCep += i;
+            return false;
+        }
+        else if(getName().equals("Amérique du Sud") && getNbCep()+i <= 4) {
+            nbCep += i;
+            return true;
+        }
+        else if(getName().equals("Amérique du Nord") && getNbCep()+i <= 5) {
+            nbCep += i;
+            return true;
+        }
+        else if(getName().equals("Océanie") && getNbCep()+i <= 4) {
+            nbCep += i;
+            return true;
+        }
+        else if(getName().equals("Asie") && getNbCep()+i <= 6) {
+            nbCep += i;
+            return true;
+        }
+        return false; //Sinon on renvoit que la manip n'a pas fonctionné
+    }
 }
 

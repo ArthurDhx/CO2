@@ -51,6 +51,7 @@ public class ViewGame {
 	ImageView imageViewTilesSolarProject;
 	ImageView imageViewTilesSolarProjectBack;
 	ImageView imageViewScientifiqueN1;
+	ImageView imageViewScientifiqueN2;
 
 	ViewMenuActionHbox hboxAction;
 	private Object AlertType;
@@ -917,5 +918,17 @@ public class ViewGame {
 		imageView.setFitWidth(75);
 		pane.getChildren().add(imageView);
 		return imageView ;
+	}
+
+	/**
+	 * Permet d'ajouter un scientifique à la réserve du joueur
+	 */
+	public void addScientifiqueToReserve(){
+		//On récupère l'image du deuxième scientifique du joueur
+		imageViewScientifiqueN2 = model.getCurrentPLayer().getScientifiques().get(1).getImgScientifique();
+		imageViewScientifiqueN2.setFitWidth(40);
+		imageViewScientifiqueN2.setPreserveRatio(true);
+		deplacerScientifiqueReserve(imageViewScientifiqueN2);
+		pane.getChildren().add(imageViewScientifiqueN2);
 	}
 }
