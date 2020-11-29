@@ -201,8 +201,8 @@ public class ViewMenuActionHbox extends HBox {
             // Si le scientifique n'est  pas sur un sommet alors il peut se déplacer
             if (!actionFaite[0]) this.getChildren().add(btnDeplacerScientifique);
         }
-        if (!actionFaite[1]) this.getChildren().add(btnMarche);
-        if (!actionFaite[2]) this.getChildren().add(btnJouerCarte);
+        if (!actionFaite[2]) this.getChildren().add(btnMarche);
+        if (!actionFaite[3]) this.getChildren().add(btnJouerCarte);
 
         this.getChildren().add(btnCancelAction);
     }
