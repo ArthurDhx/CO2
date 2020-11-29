@@ -54,6 +54,7 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
                             resultAction.ifPresent(action -> {
                                 if(action == "Déplacer un scientifique"){ //S'il choisi de déplacer un scientifique
                                     //On affiche la boite de dialogue pour savoir comment il veut déplacer un scientifique
+                                    // TODO boite de dialogue pour choisir quelle scientifique on veut bouger
                                     viewGame.hboxAction.displayActionScientifiqueAfterRecherche();
                                     Optional<String> resultDeplacerScientifique = viewGame.hboxAction.dialogActionScientifiqueAfterRecherche.showAndWait();
                                     //On récupère le resultat

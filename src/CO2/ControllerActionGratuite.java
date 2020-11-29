@@ -30,6 +30,7 @@ public class ControllerActionGratuite implements EventHandler<ActionEvent> {
             viewGame.hboxAction.displayActionGratuite();
         } else if (source == viewGame.hboxAction.btnDeplacerScientifiqToProject) {
             // Affiche le ChoiceDialog qui permet de deplacer un scientifque
+            // TODO boite de dialogue pour choisir quelle scientifique on veut bouger
             viewGame.hboxAction.displayDeplacerScientifiqueChoiceDialog();
             if (viewGame.hboxAction.dialogDeplacerScientifiqueProjet == null) return;
             if (model.getCurrentPLayer().getCurrentScientifique().getSubvention() != null){
