@@ -320,6 +320,10 @@ public class Player {
         this.pointVictoire = pointVictoire;
     }
 
+    public void addPointVictoire(int pointVictoire) {
+        this.pointVictoire += Math.abs(pointVictoire);
+    }
+
     public Color getColor() {
         return color;
     }
@@ -335,4 +339,6 @@ public class Player {
     public void setContinentsControlles(List<Continent> continentsControlles) {
         this.continentsControlles = continentsControlles;
     }
+
+
 }

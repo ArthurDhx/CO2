@@ -164,6 +164,13 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
                     viewGame.resetSubvention(250,100, projetMisEnPlaceChoisi.getContinent().getIndex(),projetMisEnPlaceChoisi.getIndex());
                     projetMisEnPlaceChoisi.getTilesSolarProject().setMisEnPlace(false);
                     projetMisEnPlaceChoisi.setEmpty(true);
+
+                    //gain : point victoire & 1 expertise dans le dommaine de la centrale
+                    model.curPlayer.addPointVictoire(projetMisEnPlaceChoisi.getTilesSolarProject().getTypeToCentral().getPtsVictoire());
+                    model.curPlayer.addExpertise(projetMisEnPlaceChoisi.getTilesSolarProject().getType(),1);
+                    viewGame.reloadPointVictoire();
+                    viewGame.reloadPlayerExpertise(model.curPlayer);
+
                     viewGame.reloadContinentControl(model.getCurrentPLayer());
                 } else {
                     viewGame.displayAlertWithoutHeaderText("Erreur", "Impossible de placer la centrale");
