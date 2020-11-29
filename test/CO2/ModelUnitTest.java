@@ -95,4 +95,13 @@ public class ModelUnitTest {
         Assert.assertEquals(5 , p.getPointVictoire());
         Assert.assertEquals(26 , p.getArgent());
     }
+
+    @Test
+    public void testControlleContinent() {
+        Player p = model.getCurrentPLayer();
+        Continent continent = model.getContinents()[2];
+        Assert.assertFalse(p.hasControl(continent));
+        model.giveControl(continent);
+        Assert.assertTrue(p.hasControl(continent));
+    }
 }

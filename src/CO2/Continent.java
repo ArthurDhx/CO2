@@ -22,6 +22,8 @@ public class Continent {
     // Tuile sommet
     private SommetTile sommetTile;
     int index;
+    // joueur qui controlle le continent
+    Player controlPlayer;
 
 
     public Continent(String name, int nbCep, Image imgContinent, int index) {
@@ -39,73 +41,7 @@ public class Continent {
             centrales.add(new Central(i,this,tabRectangleCentral));
         }
         this.index = index;
-    }
-
-    public int getNbCep() { return nbCep; }
-
-    public ArrayList<Subvention> getSubventions() { return subventions; }
-
-    public ArrayList<Subvention> getEmptySubventions() {
-        ArrayList<Subvention> freeSubvention = new ArrayList<Subvention>();
-        for (Subvention subvention : subventions) {
-            if (subvention.isEmpty()) freeSubvention.add(subvention);
-        }
-        return freeSubvention ;
-    }
-
-    public Rectangle[] getTabRectangleSubvention() { return tabRectangleSubvention; }
-
-    public Rectangle[] getTabRectangleCentral() { return tabRectangleCentral; }
-
-    public Image getImgContinent() {return imgContinent;}
-
-    public boolean isContainsTilesSolarProject(){
-        // permet de savoir si le continent contient des projets de tuiles solaires
-        if(!subventions.get(2).isEmpty()){
-            System.out.println("Tuile de projet solaire sur case subvention : " +
-                    subventions.get(2).getType() + ", dans le continent " + name);
-            return true;
-        }
-        return false;
-    }
-
-    public ArrayList<Central> getCentrales() {
-        return centrales;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public String toString() {
-        return name;
-    }
-
-    public void print() {
-        System.out.println("Continent{" +
-                "name=" + name + ", nbCep=" + nbCep +
-                ", subventions=" + subventions.get(0).getTilesSolarProject() + '}');
-    }
-
-    public AgendaTile getAgendaTile() {
-        return agendaTile;
-    }
-
-    public void setAgendaTile(AgendaTile agendaTile) {
-        this.agendaTile = agendaTile;
-    }
-
-    public SommetTile getSommetTile() {
-        return sommetTile;
-    }
-
-    public void setSommetTile(SommetTile sommetTile) {
-        this.sommetTile = sommetTile;
-    }
-
-    public int getIndex() {
-        return index;
+        this.controlPlayer = null;
     }
 
     /**
@@ -140,6 +76,81 @@ public class Continent {
             return true;
         }
         return false; //Sinon on renvoit que la manip n'a pas fonctionné
+    }
+
+    public boolean isContainsTilesSolarProject(){
+        // permet de savoir si le continent contient des projets de tuiles solaires
+        if(!subventions.get(2).isEmpty()){
+            System.out.println("Tuile de projet solaire sur case subvention : " +
+                    subventions.get(2).getType() + ", dans le continent " + name);
+            return true;
+        }
+        return false;
+    }
+
+    public ArrayList<Subvention> getEmptySubventions() {
+        ArrayList<Subvention> freeSubvention = new ArrayList<Subvention>();
+        for (Subvention subvention : subventions) {
+            if (subvention.isEmpty()) freeSubvention.add(subvention);
+        }
+        return freeSubvention ;
+    }
+
+    public void print() {
+        System.out.println("Continent{" +
+                "name=" + name + ", nbCep=" + nbCep +
+                ", subventions=" + subventions.get(0).getTilesSolarProject() + '}');
+    }
+
+    public Player getControlPlayer() {
+        return controlPlayer;
+    }
+
+    public void setControlPlayer(Player controlPlayer) {
+        this.controlPlayer = controlPlayer;
+    }
+
+    public Rectangle[] getTabRectangleSubvention() { return tabRectangleSubvention; }
+
+    public Rectangle[] getTabRectangleCentral() { return tabRectangleCentral; }
+
+    public int getNbCep() { return nbCep; }
+
+    public ArrayList<Subvention> getSubventions() { return subventions; }
+
+    public Image getImgContinent() {return imgContinent;}
+
+    public ArrayList<Central> getCentrales() {
+        return centrales;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String toString() {
+        return name;
+    }
+
+    public AgendaTile getAgendaTile() {
+        return agendaTile;
+    }
+
+    public void setAgendaTile(AgendaTile agendaTile) {
+        this.agendaTile = agendaTile;
+    }
+
+    public SommetTile getSommetTile() {
+        return sommetTile;
+    }
+
+    public void setSommetTile(SommetTile sommetTile) {
+        this.sommetTile = sommetTile;
+    }
+
+    public int getIndex() {
+        return index;
     }
 }
 

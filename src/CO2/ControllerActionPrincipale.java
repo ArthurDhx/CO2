@@ -143,10 +143,6 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
                 if(model.mettreEnPlaceProjet(projetChoisi.getContinent(), projetChoisi)) {
                     viewGame.mettreEnPlaceProjet(projetChoisi.getIndex() + 1, viewGame.imageViewTilesSolarProjectBack, projetChoisi.getContinent());
                     viewGame.reloadresourcesTech();
-                    // TEMPORAIRE DEMO SPRINT 3
-                    // TODO retirer temporaire
-                    viewGame.reloadPlayerExpertise(model.getCurrentPLayer());
-                    // FIN TEMPORAIRE
                 }
                 return;
             });
@@ -166,6 +162,7 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
                     viewGame.resetSubvention(250,100, projetMisEnPlaceChoisi.getContinent().getIndex(),projetMisEnPlaceChoisi.getIndex());
                     projetMisEnPlaceChoisi.getTilesSolarProject().setMisEnPlace(false);
                     projetMisEnPlaceChoisi.setEmpty(true);
+                    viewGame.reloadContinentControl(model.getCurrentPLayer());
                 } else {
                     viewGame.displayAlertWithoutHeaderText("Erreur", "Impossible de placer la centrale");
                 }

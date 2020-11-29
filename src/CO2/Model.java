@@ -398,8 +398,10 @@ public class Model {
 			// Si un espace est libre
 			if (!centrales.get(i).isOccupe()) {
 				// Alors on l'occupe
-				curPlayer.setActionPrincipaleDone(true);
+				getCurrentPLayer().setActionPrincipaleDone(true);
 				centrales.get(i).setOccupe(true);
+				// comme seul joueur, il prend le controlle du continent quand il met en place
+				giveControl(projetMisEnPlaceChoisi.getContinent());
 				// Affecation type
 				centrales.get(i).setType(projetMisEnPlaceChoisi.getTilesSolarProject().getTypeToCentral());
 				return centrales.get(i).getIndex();
@@ -407,6 +409,17 @@ public class Model {
 		}
 		return -1 ;
     }
+
+	/**
+	 * Donne le controlle d'un continent au joueur courrant
+	 * @param continent continent controller
+	 */
+	public void giveControl(Continent continent) {
+    	// update dans player
+		getCurrentPLayer().takeControl(continent);
+		// update dans continent
+		continent.setControlPlayer(getCurrentPLayer());
+	}
 
 	/**
 	 * Extrait les valeurs de la chaine de characteres choisi par le joueur

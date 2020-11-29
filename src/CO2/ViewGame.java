@@ -41,7 +41,11 @@ public class ViewGame {
 	Text CEPAmNord;
 	Text CEPAmSud;
 
+	// listes des cercles représentant le joueur sur le plateau
+	// sur les pistes d'expertise
 	List<Circle> player1ExpertiseIndicator;
+	// sur les continents controlles
+	List<Circle> player1ControlIndicator;
 
 	Image imgCentralSolar;
 	Image imgCentralCharbon;
@@ -210,13 +214,8 @@ public class ViewGame {
 		reloadPlayerExpertise(model.getCurrentPLayer());
 	}
 
-	//A appeler lors d'une modification du tour
 
-	public void reloadTour(){
-		pane.getChildren().remove(nbTour);
-		nbTour = new Text(10, 110,"Tour : "+model.getTour()+"/" + (model.NB_TOUR_PAR_DECENNIE-1));
-		pane.getChildren().add(nbTour);
-	}
+	//A appeler lors d'une modification d'expertise
 	public void reloadPlayerExpertise(Player p){
 		if (player1ExpertiseIndicator != null) pane.getChildren().removeAll(player1ExpertiseIndicator);
 		player1ExpertiseIndicator = new ArrayList<>();
@@ -224,39 +223,61 @@ public class ViewGame {
 		for (GreenEnergyTypes energy : GreenEnergyTypes.values()) {
 			int expertise = p.getExpertise(energy);
 			if (expertise > 0) {
-				player1ExpertiseIndicator.add(placePlayerExpertise(expertise, i));
+				player1ExpertiseIndicator.add(placePlayerExpertise(expertise, i, p.getColor()));
 				i++;
 			}
 		}
 		pane.getChildren().addAll(player1ExpertiseIndicator);
 	}
+	//A appeler lors d'une modification du controle de continent
+	public void reloadContinentControl(Player p){
+		if (player1ControlIndicator != null) pane.getChildren().removeAll(player1ControlIndicator);
+		player1ControlIndicator = new ArrayList<>();
+		Continent[] continents = model.getContinents();
+		for (int i = 0; i < continents.length; i++) {
+			// si le joueur controlle ce continent
+			if (p.getContinentsControlles().contains(continents[i]))
+				// creation de son point
+				player1ControlIndicator.add(placePlayerControl(i, p.getColor()));
+		}
+		pane.getChildren().addAll(player1ControlIndicator);
+	}
+
+	//A appeler lors d'une modification du tour
+	public void reloadTour(){
+		pane.getChildren().remove(nbTour);
+		nbTour = new Text(10, 110,"Tour : "+model.getTour()+"/" + (model.NB_TOUR_PAR_DECENNIE-1));
+		pane.getChildren().add(nbTour);
+	}
 
 	//A appeler lors d'une modification de la décénnie
-
 	public void reloadDecade(){
 		pane.getChildren().remove(nbDecade);
 		nbDecade = new Text(80, 110,"Décénnie : "+model.getDecade()+"/" + model.NB_DECENNIE);
 		pane.getChildren().add(nbDecade);
 	}
-	//A appeler lors d'une modification de l'argent du joueur
 
+	//A appeler lors d'une modification de l'argent du joueur
 	public void reloadArgent(){
 		pane.getChildren().remove(argentJoueur);
 		argentJoueur = new Text(TEXT_X, 50, "Vous avez "+ model.getCurrentPLayer().getArgent() + " € ");
 		pane.getChildren().add(argentJoueur);
 	}
+
 	//A appeler lors d'une modification de l'argent du joueur
 	public void reloadPointVictoire(){
 		pane.getChildren().remove(pointVictoireJoueur);
 		pointVictoireJoueur = new Text(TEXT_X, 65, "Vous avez "+ model.getCurrentPLayer().getPointVictoire() + " points de victoire ");
 		pane.getChildren().add(pointVictoireJoueur);
 	}
+
 	//A appeler lors d'une modification de l'argent du joueur
 	public void reloadresourcesTech() {
 		pane.getChildren().remove(resourcesTechJoueur);
 		resourcesTechJoueur = new Text(TEXT_X, 95, "Vous avez " + model.getCurrentPLayer().getResourcesTech() + " cubes de ressources technologiques. ");
 		pane.getChildren().add(resourcesTechJoueur);
 	}
+
 	//A appeler lors d'une modification des CEP
 	public void reloadCEP(){
 		//reload CEP Joueur
@@ -291,7 +312,6 @@ public class ViewGame {
 		pane.getChildren().add(CEPOceanie);
 	}
 
-
 	/**
 	 * Mets a jour le texte indiquant le niveaux de CO2 grace au model
 	 */
@@ -302,12 +322,13 @@ public class ViewGame {
 	}
 
 	/**
-	 * Creer un cercle représentant le jour sur la piste d'expertise
+	 * Creer un cercle représentant le joueur sur la piste d'expertise
 	 * @param expertise expertise du joueur joueur
 	 * @param expertiseId id du type d'energie
+	 * @param playerColor couleur du joueur
 	 * @return cercle
 	 */
-	private Circle placePlayerExpertise(int expertise, int expertiseId) {
+	private Circle placePlayerExpertise(int expertise, int expertiseId, Color playerColor) {
 		// cf valeurs de initExpertise();
 		int xPistes = 1320;
 		int yPistes = 840;
@@ -317,7 +338,30 @@ public class ViewGame {
 		int radius = 15;
 		int x = xPistes + expertiseId*(rectWidth+space) + rectWidth/2;
 		int y = yPistes - (expertise-1)*(rectWidth+space) + rectWidth/2;
-		Circle circle = new Circle(x, y, radius, Color.INDIANRED);
+		Circle circle = new Circle(x, y, radius, playerColor);
+
+		return circle;
+	}
+
+
+	/**
+	 * Creer un cercle représentant le joueur sur le continent qu'il controlle
+	 * @param continentId
+	 * @param playerColor
+	 * @return
+	 */
+	private Circle placePlayerControl(int continentId, Color playerColor) {
+		int radius = 15;
+		int x = 0;
+		int y = 0;
+
+		if(continentId==0 || continentId==5) x = CONTINENT_05_X_02_Y+AJOUT_AGENDA + 10;
+		if(continentId==0 || continentId==2) y = CONTINENT_05_X_02_Y-60;
+		if(continentId==3 || continentId==5) y = CONTINENT_35_Y-110;
+		if(continentId==1 || continentId==4) x = CONTINENT_14_X+AJOUT_AGENDA + 10;
+		if(continentId==2 || continentId==3) x = CONTINENT_23_X+AJOUT_AGENDA + 10;
+
+		Circle circle = new Circle(x, y, radius, playerColor);
 
 		return circle;
 	}

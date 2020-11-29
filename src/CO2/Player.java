@@ -1,5 +1,7 @@
 package CO2;
 
+import javafx.scene.paint.Color;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +22,10 @@ public class Player {
     private int argent;
     // Point de victoire du joueur
     private int pointVictoire;
+    // liste des continents controlles
+    private List<Continent> continentsControlles;
+    // couleur du joueur
+    private Color color;
 
     /*
      * true si une action a été faite
@@ -40,6 +46,8 @@ public class Player {
         resourcesTech = 0;
         argent = 21;
         pointVictoire = 0;
+        continentsControlles = new ArrayList<>();
+        color = Color.INDIANRED;
     }
 
     /**
@@ -120,15 +128,6 @@ public class Player {
     public void rewardSetupProject(GreenEnergyTypes type){
         CEP -= 1;
         actionPrincipaleDone = true;
-
-        // TEMPORAIRE DEMO SPRINT 3
-        // TODO retirer temporaire
-        addExpertise(GreenEnergyTypes.SOLAR,1);
-        addExpertise(GreenEnergyTypes.BIOMASS,1);
-        addExpertise(GreenEnergyTypes.RECYCLING,1);
-        addExpertise(GreenEnergyTypes.FUSION,1);
-        addExpertise(GreenEnergyTypes.REFORESTATION,1);
-        // FIN TEMPORAIRE
 
         switch (type) {
             case REFORESTATION:
@@ -217,6 +216,50 @@ public class Player {
         argent+=nombres[1];
     }
 
+    /**
+     * Permet de donner un CEP à un continent
+     * @param continent
+     * @return true ou false suivant si l'opération à réussi ou non
+     */
+    public boolean giveCEP(Continent continent){
+        if(getCEP() >= 1){ //Le joueur doit avoir au moins un CEP
+            if(continent.addCEP(1)){ //On essaye de donner un cep au continent
+                CEP -= 1; //si ça à fonctionné, on retire une CEP au joueur
+                return true; //On reevoit que la manip à fonctionné
+            }
+        }
+        return false; //Sinon on revoit que la manip n'a pas fonctionné
+    }
+
+    /**
+     * Permet d'ajouter un scientifique dans la réserve
+     * @return true ou false suivant si l'opération à réussi ou non
+     */
+    public boolean addScientifique(){
+        if(scientifiques.size() == 4) return false; //Si le joueur à deja 4 scientifiques, il ne peut pas en avoir plus
+        scientifiques.add(new Scientifique()); //Sinon on en ajoute un dans sa liste
+        return true;
+    }
+
+    /**
+     * Prend le controlle d'un continent
+     * @param continent continent a controller
+     */
+    public void takeControl(Continent continent) {
+        // si le continent n'est pas deja controller on l'ajoute
+        if (!continentsControlles.contains(continent))
+            continentsControlles.add(continent);
+    }
+
+    /**
+     * Determine si le continent est controller par le joueur
+     * @param continent continent a verifier
+     * @return true si le joueur controlle le continent
+     */
+    public boolean hasControl(Continent continent) {
+        return continentsControlles.contains(continent);
+    }
+
     public int getNBACTIONGRATUITE() {
         return NBACTIONGRATUITE;
     }
@@ -277,28 +320,19 @@ public class Player {
         this.pointVictoire = pointVictoire;
     }
 
-    /**
-     * Permet de donner un CEP à un continent
-     * @param continent
-     * @return true ou false suivant si l'opération à réussi ou non
-     */
-    public boolean giveCEP(Continent continent){
-        if(getCEP() >= 1){ //Le joueur doit avoir au moins un CEP
-            if(continent.addCEP(1)){ //On essaye de donner un cep au continent
-                CEP -= 1; //si ça à fonctionné, on retire une CEP au joueur
-                return true; //On reevoit que la manip à fonctionné
-            }
-        }
-        return false; //Sinon on revoit que la manip n'a pas fonctionné
+    public Color getColor() {
+        return color;
     }
 
-    /**
-     * Permet d'ajouter un scientifique dans la réserve
-     * @return true ou false suivant si l'opération à réussi ou non
-     */
-    public boolean addScientifique(){
-        if(scientifiques.size() == 4) return false; //Si le joueur à deja 4 scientifiques, il ne peut pas en avoir plus
-        scientifiques.add(new Scientifique()); //Sinon on en ajoute un dans sa liste
-        return true;
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public List<Continent> getContinentsControlles() {
+        return continentsControlles;
+    }
+
+    public void setContinentsControlles(List<Continent> continentsControlles) {
+        this.continentsControlles = continentsControlles;
     }
 }
