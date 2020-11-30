@@ -2,6 +2,8 @@ package CO2;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.Tooltip;
+import javafx.scene.image.ImageView;
 
 import java.util.Optional;
 
@@ -160,10 +162,13 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
                 // if ( VERIFIE SI POSSIBLE ET PAYE )
                 int index = model.putCentral(projetMisEnPlaceChoisi);
                 if( index != -1) {
-                    viewGame.addCentrale( viewGame.createCentrale(), projetMisEnPlaceChoisi.getContinent(), index);
+                    ImageView imageView = viewGame.createCentrale() ;
+                    viewGame.addCentrale(imageView , projetMisEnPlaceChoisi.getContinent(), index);
                     viewGame.resetSubvention(250,100, projetMisEnPlaceChoisi.getContinent().getIndex(),projetMisEnPlaceChoisi.getIndex());
+                    Tooltip.install(imageView, new Tooltip("Centrale Solaire, Polution :" + typesCentral.SOLAIRE.getCo2()));
                     projetMisEnPlaceChoisi.getTilesSolarProject().setMisEnPlace(false);
                     projetMisEnPlaceChoisi.setEmpty(true);
+
 
                     //gain : point victoire & 1 expertise dans le dommaine de la centrale
                     model.curPlayer.addPointVictoire(projetMisEnPlaceChoisi.getTilesSolarProject().getTypeToCentral().getPtsVictoire());

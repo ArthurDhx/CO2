@@ -950,12 +950,15 @@ public class ViewGame {
 		switch (type){
 			case 0 :
 				imageView.setImage(imgCentralCharbon);
+				Tooltip.install(imageView, new Tooltip("Centrale au Charbon, Pollution : " + typesCentral.CHARBON.getCo2()));
 				break;
 			case 1 :
 				imageView.setImage(imgCentralPetrole);
+				Tooltip.install(imageView, new Tooltip("Centrale au Petrole, Pollution : " + typesCentral.PETROLE.getCo2()));
 				break;
 			case 2 :
 				imageView.setImage(imgCentralGaz);
+				Tooltip.install(imageView, new Tooltip("Centrale a Gaz, Pollution : " + typesCentral.GAZNATUREL.getCo2()));
 				break;
 		}
 		imageView.setPreserveRatio(true);
