@@ -394,6 +394,8 @@ public class Model {
     	//TODO : Suis qui enleve le projet ne pas oublier de le faire aussi dans le modele
 		// Les conditions pour payer ect
 		ArrayList<Central> centrales = projetMisEnPlaceChoisi.getContinent().getCentrales();
+		// Si pas des scientifique sur projetMisEnplaceChoisi
+		if(projetMisEnPlaceChoisi.isStaffed()) return -2;
 		for (int i = 0; i < centrales.size(); i++) {
 			// Si un espace est libre
 			if (!centrales.get(i).isOccupe()) {

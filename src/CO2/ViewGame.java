@@ -317,7 +317,7 @@ public class ViewGame {
 	 */
 	public void reloadCo2() {
 		pane.getChildren().remove(co2);
-		co2 = new Text(TEXT_X, 125, "Valeur du CO2 :" + model.getCo2() + " . ");
+		co2 = new Text(TEXT_X, 125, "Valeur du CO2 : " + model.getCo2() + ". ");
 		pane.getChildren().add(co2);
 	}
 

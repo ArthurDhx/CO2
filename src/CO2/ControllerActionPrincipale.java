@@ -161,7 +161,7 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
                 // METRE A JOUR LE MODELE CEUX QUI VONT RAJOUTER LE COUT JE VOUS VOIS
                 // if ( VERIFIE SI POSSIBLE ET PAYE )
                 int index = model.putCentral(projetMisEnPlaceChoisi);
-                if( index != -1) {
+                if( index != -1 && index != -2) {
                     ImageView imageView = viewGame.createCentrale() ;
                     viewGame.addCentrale(imageView , projetMisEnPlaceChoisi.getContinent(), index);
                     viewGame.resetSubvention(250,100, projetMisEnPlaceChoisi.getContinent().getIndex(),projetMisEnPlaceChoisi.getIndex());
@@ -178,7 +178,8 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
 
                     viewGame.reloadContinentControl(model.getCurrentPLayer());
                 } else {
-                    viewGame.displayAlertWithoutHeaderText("Erreur", "Impossible de placer la centrale");
+                    if(index == -2) viewGame.displayAlertWithoutHeaderText("Erreur", "Impossible de placer la centrale car un scientifique se trouve sur le projet");
+                    if(index == -1) viewGame.displayAlertWithoutHeaderText("Erreur", "Impossible de placer la centrale");
                 }
                 viewGame.hboxAction.resetHbox();
                 return;
