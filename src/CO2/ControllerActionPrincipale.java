@@ -43,7 +43,7 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
                     if(model.addTilesSolarProjectToSubventionCase(continentChoisi,subvention.getIndex())){
                         // Si la tuile peut etre ajouter
                         // Affiche la tuile a l'ecran
-                        viewGame.addTuilesToSubvention(subvention.getIndex()+1, viewGame.createTileProject(), continentChoisi);
+                        viewGame.addTuilesToSubvention(subvention.getIndex(), viewGame.imgTilesSolarProject, continentChoisi);
                         // Mets a jour le model
                         model.tilesSolarProjects.remove(0);
                         // Récupération du type et application de l'effet de la subvention choisie
@@ -125,8 +125,6 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
                             });
                         }
                         viewGame.reloadresourcesTech();
-                        // Mets a jour la vue
-                        viewGame.nbTilesSolarProject.setText("Il y a "+ model.getNbSolarProject()+" projets solaires");
                         // Le joueur en cours a effectuer son action principale
                         model.getCurrentPLayer().setActionPrincipaleDone(true);
                     }
@@ -144,7 +142,7 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
             result.ifPresent(projetChoisi -> {
                 // Si un projet a ete choisi
                 if(model.mettreEnPlaceProjet(projetChoisi.getContinent(), projetChoisi)) {
-                    viewGame.mettreEnPlaceProjet(projetChoisi.getIndex() + 1, viewGame.imageViewTilesSolarProjectBack, projetChoisi.getContinent());
+                    viewGame.mettreEnPlaceProjet(projetChoisi.getIndex() , viewGame.imgTilesSolarProjectBack, projetChoisi.getContinent());
                     viewGame.reloadresourcesTech();
                     viewGame.reloadCEP();
                 }
@@ -165,13 +163,11 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
                 // if ( VERIFIE SI POSSIBLE ET PAYE )
                 int index = model.putCentral(projetMisEnPlaceChoisi);
                 if( index != -1 && index != -2) {
-                    ImageView imageView = viewGame.createCentrale() ;
-                    viewGame.addCentrale(imageView , projetMisEnPlaceChoisi.getContinent(), index);
-                    viewGame.resetSubvention(250,100, projetMisEnPlaceChoisi.getContinent().getIndex(),projetMisEnPlaceChoisi.getIndex());
-                    Tooltip.install(imageView, new Tooltip("Centrale Solaire, Polution :" + typesCentral.SOLAIRE.getCo2()));
+
+                    viewGame.addCentrale(typesCentral.SOLAIRE , projetMisEnPlaceChoisi.getContinent(), index);
+                    viewGame.resetSubvention(projetMisEnPlaceChoisi.getContinent(),projetMisEnPlaceChoisi.getIndex());
                     projetMisEnPlaceChoisi.getTilesSolarProject().setMisEnPlace(false);
                     projetMisEnPlaceChoisi.setEmpty(true);
-
 
                     //gain : point victoire & 1 expertise dans le dommaine de la centrale
                     model.curPlayer.addPointVictoire(projetMisEnPlaceChoisi.getTilesSolarProject().getTypeToCentral().getPtsVictoire());

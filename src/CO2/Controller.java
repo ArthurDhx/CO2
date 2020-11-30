@@ -53,11 +53,10 @@ public class Controller {
                 if(model.addTilesSolarProjectToSubventionCase(continent,subvention.getIndex())){
                     // Si la tuile peut etre ajouter
                     // Affiche la tuile a l'ecran
-                    viewGame.addTuilesToSubvention(subvention.getIndex()+1, viewGame.createTileProject(), continent);
+                    viewGame.addTuilesToSubvention(subvention.getIndex(), viewGame.imgTilesSolarProject, continent);
+
                     // Mets a jour le model
                     model.tilesSolarProjects.remove(0);
-                    // Mets a jour la vue
-                    viewGame.nbTilesSolarProject.setText("Il y a "+ model.getNbSolarProject()+" projets solaires");
                     // Le joueur en cours a effectuer son action principale
                 }
             });
@@ -71,13 +70,14 @@ public class Controller {
         // On recupere les continent
         Continent[] continents= model.getContinents();
         Random random = new Random();
+        typesCentral[] typesCentralsFossile = {typesCentral.CHARBON, typesCentral.PETROLE, typesCentral.GAZNATUREL};
         for (Continent continent: continents ) {
             // On tire au sort le type entre 0 et 2
             int type = random.nextInt(3) ;
             // On mets a jour le model avec le bon type sur le bon continent
-            model.putFossileCentral(continent, type);
+            model.putFossileCentral(continent, typesCentralsFossile[type]);
             // On ajoute la centrale a la vue
-            viewGame.addCentrale( viewGame.createFossileCentrale(type), continent, 0);
+            viewGame.addCentrale(continent.getCentrales().get(0).getType(), continent, 0);
         }
         // On met a jour le co2 de la vue
         viewGame.reloadCo2();

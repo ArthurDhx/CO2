@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -23,7 +24,6 @@ public class ViewGame {
 	Model model;
     Pane pane;
 
-	Text nbTilesSolarProject ;
 	Text nbTour;
 	Text nbDecade;
 	Text argentJoueur;
@@ -46,20 +46,27 @@ public class ViewGame {
 	List<Circle> player1ExpertiseIndicator;
 	// sur les continents controlles
 	List<Circle> player1ControlIndicator;
+	Image imgArgent;
+	Image imgRessource;
+	Image imgRecherche;
 
+
+	//projets
+	Image imgTilesSolarProject;
+	Image imgTilesSolarProjectBack;
+
+	//centrales
 	Image imgCentralSolar;
 	Image imgCentralCharbon;
 	Image imgCentralPetrole;
 	Image imgCentralGaz;
 
-	ImageView imageViewTilesSolarProject;
-	ImageView imageViewTilesSolarProjectBack;
 	ImageView imageViewScientifiqueN1;
 	ImageView imageViewScientifiqueN2;
 
 	ViewMenuActionHbox hboxAction;
 	private Object AlertType;
-	public Image imgTilesSolarProject;
+
 
 	Scene scene;
 
@@ -103,6 +110,7 @@ public class ViewGame {
 	private final int CONTINENT_14_X_SUB_2 = CONTINENT_14_X+SUB_2;
 	private final int CONTINENT_14_X_SUB_3 = CONTINENT_14_X+SUB_3;
 
+
 	public ViewGame(Scene scene, Model model, Pane pane) throws IOException {
 		this.model = model;
 		this.pane = pane;
@@ -111,32 +119,24 @@ public class ViewGame {
 		init();
     }
 
+
 	public void init() throws IOException {
-    	System.out.println("Le jeu commence avec " + model.getNbJoueur() + " joueur(s)");
     	// On lance l'initialisation du model qui générera toute les pièces, les joueurs et les valeurs (points,...)
     	this.model.init();
 
+    	imgArgent = new Image(getClass().getResourceAsStream("images/argent.png"));
+		imgRessource = new Image(getClass().getResourceAsStream("images/ressource.png"));
+		imgRecherche = new Image(getClass().getResourceAsStream("images/recherche.png"));
+
+
     	// On récupère l'image de la tuile et on l'ajoute à l'écran
-		// Image imgTilesSolarProject = new Image("CO2/images/TilesSolarProject.jpg");
 		imgTilesSolarProject = new Image(getClass().getResourceAsStream("images/Projets/TilesSolarProjectRecto.png"));
+		imgTilesSolarProjectBack = new Image(getClass().getResourceAsStream("images/Projets/TilesSolarProjectVerso.png"));
 		imgCentralSolar = new Image(getClass().getResourceAsStream("images/Centrales/Solar.png"));
 		imgCentralCharbon = new Image(getClass().getResourceAsStream("images/Centrales/Coal.png"));
 		imgCentralPetrole = new Image(getClass().getResourceAsStream("images/Centrales/Oil.png"));
 		imgCentralGaz = new Image(getClass().getResourceAsStream("images/Centrales/Gas.png"));
 
-		imageViewTilesSolarProject = new ImageView(imgTilesSolarProject);
-		imageViewTilesSolarProject.setPreserveRatio(true);
-		imageViewTilesSolarProject.setFitWidth(75);
-		imageViewTilesSolarProject.setX(1460);
-		imageViewTilesSolarProject.setY(50);
-		imageViewTilesSolarProject.setPreserveRatio(true);
-		/*ImageView imageViewTilesSolarProjectInDeck = new ImageView(imgTilesSolarProject);
-		imageViewTilesSolarProjectInDeck.setPreserveRatio(true);
-		imageViewTilesSolarProjectInDeck.setFitWidth(75);
-		imageViewTilesSolarProjectInDeck.setX(1460);
-		imageViewTilesSolarProjectInDeck.setY(50);*/
-		// pane.getChildren().add(imageViewTilesSolarProject); // ne plus afficher le nb de tuiles de projets solaire et images
-		//pane.getChildren().add(imageViewTilesSolarProjectInDeck);
 
 		//On récupère l'image d'un scientifique et on l'ajoute à l'écran
 		// img scientifique n°1
@@ -145,10 +145,6 @@ public class ViewGame {
 		imageViewScientifiqueN1.setPreserveRatio(true);
 		deplacerScientifiqueReserve(imageViewScientifiqueN1);
 		pane.getChildren().add(imageViewScientifiqueN1);
-
-		// On indique combien il y'a de tuile dans le paquet
-		nbTilesSolarProject = new Text(1430, 150,"Il y a "+model.getNbSolarProject()+" projets solaires");
-		//pane.getChildren().add(nbTilesSolarProject); / ne plus afficher le nb de tuiles de projets solaire et images
 
 		reloadTour();
 		reloadDecade();
@@ -433,54 +429,25 @@ public class ViewGame {
 	 * Initialisation des subventions
 	 */
 	public void initSubvention(int val, int k){
-		// tableau de texte des subvention
-		Text[] subventionName = new Text[6];
 		for(int i=0;i<3;i++) {
 			for(int j=0;j<model.getContinents().length;j++) {
-				// initialisation du texte
-				subventionName[j] = new Text(model.getContinents()[j].getSubventions().get(i).getType().toString());
-				// style du texte
-				subventionName[j].setStyle("-fx-font: 8 arial;");
-				// position du texte (les 3 noms de subvention) pour chaque continent
-				if(j==0 || j==5) {model.getContinents()[j].getTabRectangleSubvention()[i].setX(k+val-150);subventionName[j].setX(k+val-145);}
-				if(j==0 || j==2) {model.getContinents()[j].getTabRectangleSubvention()[i].setY(val);subventionName[j].setY(val+35);}
-				if(j==1 || j==4) {model.getContinents()[j].getTabRectangleSubvention()[i].setX(k+val+250);subventionName[j].setX(k+val+255);}
-				if(j==2 || j==3) {model.getContinents()[j].getTabRectangleSubvention()[i].setX(k+val+600);subventionName[j].setX(k+val+605);}
-				if(j==3 || j==5) {model.getContinents()[j].getTabRectangleSubvention()[i].setY(val+300);subventionName[j].setY(val+335);}
-				if(j==1) {model.getContinents()[j].getTabRectangleSubvention()[i].setY(val-120);subventionName[1].setY(val-85);}
-				if(j==4) {model.getContinents()[4].getTabRectangleSubvention()[i].setY(val+460);subventionName[4].setY(val+495);}
 
-				// ajout au pane
+				if(j==0 || j==5) model.getContinents()[j].getTabRectangleSubvention()[i].setX(k+val-150);
+				if(j==0 || j==2) model.getContinents()[j].getTabRectangleSubvention()[i].setY(val);
+				if(j==1 || j==4) model.getContinents()[j].getTabRectangleSubvention()[i].setX(k+val+250);
+				if(j==2 || j==3) model.getContinents()[j].getTabRectangleSubvention()[i].setX(k+val+600);
+				if(j==3 || j==5) model.getContinents()[j].getTabRectangleSubvention()[i].setY(val+300);
+				if(j==1) model.getContinents()[j].getTabRectangleSubvention()[i].setY(val-120);
+				if(j==4) model.getContinents()[4].getTabRectangleSubvention()[i].setY(val+460);
+
+				if (i == 0) model.getContinents()[j].getTabRectangleSubvention()[i].setFill(new ImagePattern(imgArgent));
+				if (i == 1) model.getContinents()[j].getTabRectangleSubvention()[i].setFill(new ImagePattern(imgRessource));
+				if (i == 2) model.getContinents()[j].getTabRectangleSubvention()[i].setFill(new ImagePattern(imgRecherche));
+
 				pane.getChildren().add(model.getContinents()[j].getTabRectangleSubvention()[i]);
-				pane.getChildren().add(subventionName[j]);
 			}
 			k = k + 80;
 		}
-	}
-
-	/**
-	 * Reset d'une subvention
-	 */
-	public void resetSubvention(int val, int k, int idContinent, int idSubvention){
-		int j = idContinent;
-		int i = idSubvention;
-
-		Text[] subventionName = new Text[6];
-
-		subventionName[j] = new Text(model.getContinents()[j].getSubventions().get(i).getType().toString());
-		subventionName[j].setStyle("-fx-font: 8 arial;");
-
-		if(j==0 || j==5) {model.getContinents()[j].getTabRectangleSubvention()[i].setX(k+val-150);subventionName[j].setX(k+val-145);}
-		if(j==0 || j==2) {model.getContinents()[j].getTabRectangleSubvention()[i].setY(val);subventionName[j].setY(val+35);}
-		if(j==1 || j==4) {model.getContinents()[j].getTabRectangleSubvention()[i].setX(k+val+250);subventionName[j].setX(k+val+255);}
-		if(j==2 || j==3) {model.getContinents()[j].getTabRectangleSubvention()[i].setX(k+val+600);subventionName[j].setX(k+val+605);}
-		if(j==3 || j==5) {model.getContinents()[j].getTabRectangleSubvention()[i].setY(val+300);subventionName[j].setY(val+335);}
-		if(j==1) {model.getContinents()[j].getTabRectangleSubvention()[i].setY(val-120);subventionName[1].setY(val-85);}
-		if(j==4) {model.getContinents()[4].getTabRectangleSubvention()[i].setY(val+460);subventionName[4].setY(val+495);}
-
-		pane.getChildren().remove(model.getContinents()[j].getTabRectangleSubvention()[i]);
-		pane.getChildren().add(model.getContinents()[j].getTabRectangleSubvention()[i]);
-		pane.getChildren().add(subventionName[j]);
 	}
 
 	/**
@@ -516,104 +483,28 @@ public class ViewGame {
 
 	/** Ajoute la tuile sur la case souhaitée correspondant à une subvention
 	 * @param subventionChoice
-	 * @param imageViewTilesSolarProject
+	 * @param imageProject
 	 */
-	public void addTuilesToSubvention(int subventionChoice, ImageView imageViewTilesSolarProject, Continent continent){
-		switch(continent.getName()) {
-			case "Europe" :
-				// suivant la subvention choisie
-				switch (subventionChoice) {
-					// posiitionne les tuiles de projet à l'emplacement correspondant
-					case 1:
-						imageViewTilesSolarProject.setX(CONTINENT_05_X_02_Y);
-						break;
-					case 2:
-						imageViewTilesSolarProject.setX(CONTINENT_05_X_02_Y_SUB_2);
-						break;
-					case 3:
-						imageViewTilesSolarProject.setX(CONTINENT_05_X_02_Y_SUB_3);
-						break;
-				}
-				imageViewTilesSolarProject.setY(CONTINENT_02_Y);
-				// mettre l'image en premier plan
-				imageViewTilesSolarProject.toFront();
-				break;
-			case "Afrique" :
-				switch (subventionChoice) {
-					case 1:
-						imageViewTilesSolarProject.setX(CONTINENT_14_X);
-						break;
-					case 2:
-						imageViewTilesSolarProject.setX(CONTINENT_14_X_SUB_2);
-						break;
-					case 3:
-						imageViewTilesSolarProject.setX(CONTINENT_14_X_SUB_3);
-						break;
-				}
-				imageViewTilesSolarProject.setY(CONTINENT_1_Y_SUB);
-				imageViewTilesSolarProject.toFront();
-				break;
-			case "Amérique du Sud" :
-				switch (subventionChoice) {
-					case 1:
-						imageViewTilesSolarProject.setX(CONTINENT_23_X);
-						break;
-					case 2:
-						imageViewTilesSolarProject.setX(CONTINENT_23_X_SUB_2);
-						break;
-					case 3:
-						imageViewTilesSolarProject.setX(CONTINENT_23_X_SUB_3);
-						break;
-				}
-				imageViewTilesSolarProject.setY(CONTINENT_02_Y);
-				imageViewTilesSolarProject.toFront();
-				break;
-			case "Amérique du Nord" :
-				switch (subventionChoice) {
-					case 1:
-						imageViewTilesSolarProject.setX(CONTINENT_23_X);
-						break;
-					case 2:
-						imageViewTilesSolarProject.setX(CONTINENT_23_X_SUB_2);
-						break;
-					case 3:
-						imageViewTilesSolarProject.setX(CONTINENT_23_X_SUB_3);
-						break;
-				}
-				imageViewTilesSolarProject.setY(CONTINENT_35_Y);
-				imageViewTilesSolarProject.toFront();
-				break;
-			case "Océanie" :
-				switch (subventionChoice) {
-					case 1:
-						imageViewTilesSolarProject.setX(CONTINENT_14_X);
-						break;
-					case 2:
-						imageViewTilesSolarProject.setX(CONTINENT_14_X_SUB_2);
-						break;
-					case 3:
-						imageViewTilesSolarProject.setX(CONTINENT_14_X_SUB_3);
-						break;
-				}
-				imageViewTilesSolarProject.setY(CONTINENT_4_Y_SUB);
-				imageViewTilesSolarProject.toFront();
-				break;
-			case "Asie" :
-				switch (subventionChoice) {
-					case 1:
-						imageViewTilesSolarProject.setX(CONTINENT_05_X_02_Y);
-						break;
-					case 2:
-						imageViewTilesSolarProject.setX(CONTINENT_05_X_02_Y_SUB_2);
-						break;
-					case 3:
-						imageViewTilesSolarProject.setX(CONTINENT_05_X_02_Y_SUB_3);
-						break;
-				}
-				imageViewTilesSolarProject.setY(CONTINENT_35_Y);
-				imageViewTilesSolarProject.toFront();
-				break;
-		}
+	public void addTuilesToSubvention(int subventionChoice, Image imageProject, Continent continent){
+		//TODO : Switch pour tooltip une fois toute les tuiles implementés
+		Tooltip.install(continent.getTabRectangleSubvention()[subventionChoice], new Tooltip("Mettre en place : + 3 Ressources technologiques"));
+		continent.getTabRectangleSubvention()[subventionChoice].setFill(new ImagePattern(imageProject));
+	}
+
+	/**
+	 * Mettre en place une subvention
+	 */
+	public void mettreEnPlaceProjet(int projectChoice, Image imageSolarProjectBack, Continent continent){
+		continent.getTabRectangleSubvention()[projectChoice].setFill(new ImagePattern(imageSolarProjectBack));
+	}
+
+	/**
+	 * Reset d'une subvention
+	 */
+	public void resetSubvention(Continent continent, int idSubvention){
+		if (idSubvention == 0) continent.getTabRectangleSubvention()[idSubvention].setFill(new ImagePattern(imgArgent));
+		if (idSubvention == 1) continent.getTabRectangleSubvention()[idSubvention].setFill(new ImagePattern(imgRessource));
+		if (idSubvention == 2) continent.getTabRectangleSubvention()[idSubvention].setFill(new ImagePattern(imgRecherche));
 	}
 
 	public void addScientifiqueToProject(int projectChoice, ImageView imageViewScientifique, Continent continent){
@@ -754,121 +645,6 @@ public class ViewGame {
 		imageViewScientifique.setY(180);
 	}
 
-	public void mettreEnPlaceProjet(int projectChoice, ImageView imageViewTilesSolarProjectBack, Continent continent){
-		Image imgTilesSolarProjectBack = new Image(getClass().getResourceAsStream("images/Projets/TilesSolarProjectVerso.png"));
-		imageViewTilesSolarProjectBack = new ImageView(imgTilesSolarProjectBack);
-		imageViewTilesSolarProjectBack.setPreserveRatio(true);
-		imageViewTilesSolarProjectBack.setFitWidth(65);
-		imageViewTilesSolarProjectBack.setPreserveRatio(true);
-		switch(continent.getName()) {
-			case "Europe" :
-				switch (projectChoice) {
-					case 1:
-						imageViewTilesSolarProjectBack.setX(CONTINENT_05_X_02_Y);
-						break;
-					case 2:
-						imageViewTilesSolarProjectBack.setX(CONTINENT_05_X_02_Y_SUB_2);
-						break;
-					case 3:
-						imageViewTilesSolarProjectBack.setX(CONTINENT_05_X_02_Y_SUB_3);
-						break;
-				}
-				imageViewTilesSolarProjectBack.setY(CONTINENT_02_Y);
-				imageViewTilesSolarProjectBack.toFront();
-				break;
-			case "Afrique" :
-				switch (projectChoice) {
-					case 1:
-						imageViewTilesSolarProjectBack.setX(CONTINENT_14_X);
-						break;
-					case 2:
-						imageViewTilesSolarProjectBack.setX(CONTINENT_14_X_SUB_2);
-						break;
-					case 3:
-						imageViewTilesSolarProjectBack.setX(CONTINENT_14_X_SUB_3);
-						break;
-				}
-				imageViewTilesSolarProjectBack.setY(CONTINENT_1_Y_SUB);
-				imageViewTilesSolarProjectBack.toFront();
-				break;
-			case "Amérique du Sud" :
-				switch (projectChoice) {
-					case 1:
-						imageViewTilesSolarProjectBack.setX(CONTINENT_23_X);
-						break;
-					case 2:
-						imageViewTilesSolarProjectBack.setX(CONTINENT_23_X_SUB_2);
-						break;
-					case 3:
-						imageViewTilesSolarProjectBack.setX(CONTINENT_23_X_SUB_3);
-						break;
-				}
-				imageViewTilesSolarProjectBack.setY(CONTINENT_02_Y);
-				imageViewTilesSolarProjectBack.toFront();
-				break;
-			case "Amérique du Nord" :
-				switch (projectChoice) {
-					case 1:
-						imageViewTilesSolarProjectBack.setX(CONTINENT_23_X);
-						break;
-					case 2:
-						imageViewTilesSolarProjectBack.setX(CONTINENT_23_X_SUB_2);
-						break;
-					case 3:
-						imageViewTilesSolarProjectBack.setX(CONTINENT_23_X_SUB_3);
-						break;
-				}
-				imageViewTilesSolarProjectBack.setY(CONTINENT_35_Y);
-				imageViewTilesSolarProjectBack.toFront();
-				break;
-			case "Océanie" :
-				switch (projectChoice) {
-					case 1:
-						imageViewTilesSolarProjectBack.setX(CONTINENT_14_X);
-						break;
-					case 2:
-						imageViewTilesSolarProjectBack.setX(CONTINENT_14_X_SUB_2);
-						break;
-					case 3:
-						imageViewTilesSolarProjectBack.setX(CONTINENT_14_X_SUB_3);
-						break;
-				}
-				imageViewTilesSolarProjectBack.setY(CONTINENT_4_Y_SUB);
-				imageViewTilesSolarProjectBack.toFront();
-				break;
-			case "Asie" :
-				switch (projectChoice) {
-					case 1:
-						imageViewTilesSolarProjectBack.setX(CONTINENT_05_X_02_Y);
-						break;
-					case 2:
-						imageViewTilesSolarProjectBack.setX(CONTINENT_05_X_02_Y_SUB_2);
-						break;
-					case 3:
-						imageViewTilesSolarProjectBack.setX(CONTINENT_05_X_02_Y_SUB_3);
-						break;
-				}
-				imageViewTilesSolarProjectBack.setY(CONTINENT_35_Y);
-				imageViewTilesSolarProjectBack.toFront();
-				break;
-		}
-		pane.getChildren().add(imageViewTilesSolarProjectBack);
-		this.imageViewScientifiqueN1.toFront();
-	}
-
-	/**
-	 * Permet de creer une tuiles project et de l'initialiser et l'ajoute au panneau
-	 * @return La tuile prête a être placé a l'ecran
-	 */
-	public ImageView createTileProject() {
-		ImageView imageView = new ImageView(imgTilesSolarProject);
-		imageView.setPreserveRatio(true);
-		imageView.setFitWidth(65);
-		//TODO : Switch pour tooltip une fois toute les tuiles implementés
-		Tooltip.install(imageView, new Tooltip("Mettre en place : + 3 Ressources technologiques"));
-		pane.getChildren().add(imageView);
-		return imageView ;
-	}
 
 	public void displayAlertWithoutHeaderText(String title, String message) {
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -915,56 +691,39 @@ public class ViewGame {
 
 	/**
 	 * Place la centrale sur le continent a la bonne position
-	 * @param central L'image de la centrale
+	 * @param type Le type de la centrale
 	 * @param continent Le continent ou deposer la centrale
 	 * @param index l'index pour la position de la centrale sur le continent
 	 */
-	public void addCentrale(ImageView central, Continent continent,int index) {
-		ArrayList<Central> centrales = continent.getCentrales();
-		central.setX(continent.getTabRectangleCentral()[index].getX());
-		central.setY(continent.getTabRectangleCentral()[index].getY());
-	}
+	public void addCentrale(typesCentral type, Continent continent,int index) {
+		Image central = imgCentralCharbon;
 
-	/**
-	 * Creer une image de la centrale avec la bonne taille
-	 * @return L'image de la centrale
-	 */
-	public ImageView createCentrale() {
-		ImageView imageView = new ImageView(imgCentralSolar);
-		imageView.setPreserveRatio(true);
-		imageView.setFitWidth(75);
-		pane.getChildren().add(imageView);
-		return imageView ;
-	}
-
-	/**
-	 * Creer une image de centrale fossile avec la bonne taille
-	 * @param type Le type de la centrale
-	 *             0 = centrale a charbon
-	 *             1 = centrale petrole
-	 *             2 = centrale a gaz
-	 * @return l'image de la centrale
-	 */
-	public ImageView createFossileCentrale(int type) {
-		ImageView imageView = new ImageView();
 		switch (type){
-			case 0 :
-				imageView.setImage(imgCentralCharbon);
-				Tooltip.install(imageView, new Tooltip("Centrale au Charbon, Pollution : " + typesCentral.CHARBON.getCo2()));
+			case CHARBON:
+				central = imgCentralCharbon;
+				Tooltip.install(continent.getTabRectangleCentral()[index], new Tooltip("Centrale au Charbon, Pollution : " + typesCentral.CHARBON.getCo2()));
 				break;
-			case 1 :
-				imageView.setImage(imgCentralPetrole);
-				Tooltip.install(imageView, new Tooltip("Centrale au Petrole, Pollution : " + typesCentral.PETROLE.getCo2()));
+			case PETROLE :
+				central = imgCentralPetrole;
+				Tooltip.install(continent.getTabRectangleCentral()[index], new Tooltip("Centrale au Petrole, Pollution : " + typesCentral.PETROLE.getCo2()));
 				break;
-			case 2 :
-				imageView.setImage(imgCentralGaz);
-				Tooltip.install(imageView, new Tooltip("Centrale a Gaz, Pollution : " + typesCentral.GAZNATUREL.getCo2()));
+			case GAZNATUREL :
+				central = imgCentralGaz;
+				Tooltip.install(continent.getTabRectangleCentral()[index], new Tooltip("Centrale a Gaz, Pollution : " + typesCentral.GAZNATUREL.getCo2()));
 				break;
+			case SOLAIRE:
+				central = imgCentralSolar;
+				Tooltip.install(continent.getTabRectangleCentral()[index], new Tooltip("Centrale Solaire, Polution :" + typesCentral.SOLAIRE.getCo2()));				break;
+				//TODO reboissement, recylage, fusionfroide, biomass
 		}
-		imageView.setPreserveRatio(true);
-		imageView.setFitWidth(75);
-		pane.getChildren().add(imageView);
-		return imageView ;
+		continent.getTabRectangleCentral()[index].setFill(new ImagePattern(central));
+	}
+
+	/**
+	 * Reset d'une centrale
+	 */
+	public void resetCentrale(Continent continent, int idCentrale){
+		continent.getTabRectangleCentral()[idCentrale].setFill(null);
 	}
 
 	/**
