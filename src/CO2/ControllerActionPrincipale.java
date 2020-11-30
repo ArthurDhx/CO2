@@ -155,8 +155,11 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
 
         } else if (source == viewGame.hboxAction.btnConstruire) {
             viewGame.hboxAction.displayConstruireCentraleChoiceDialog();
+            if(viewGame.hboxAction.dialogConstruireCentrale == null){
+                viewGame.displayAlertWithoutHeaderText("Impossible", "Il n'y a pas de projet déjà mis en place");
+                return;
+            }
             Optional<Subvention> result = viewGame.hboxAction.dialogConstruireCentrale.showAndWait();
-            if(viewGame.hboxAction.dialogConstruireCentrale == null) return;
             result.ifPresent(projetMisEnPlaceChoisi -> {
                 // METRE A JOUR LE MODELE CEUX QUI VONT RAJOUTER LE COUT JE VOUS VOIS
                 // if ( VERIFIE SI POSSIBLE ET PAYE )
