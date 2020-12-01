@@ -79,6 +79,8 @@ public class ViewGame {
 	private final int AGENDA_SOMMET_WIDTH = 60;
 	// valeur d'ajout sur des coordonnées d'agenda
 	private final int AJOUT_AGENDA = 85;
+	// largeur des continents
+	private final int CONTINENT_WIDTH = 220;
 
 	// coordonnées des continents
 
@@ -155,27 +157,10 @@ public class ViewGame {
 	private final int CONTINENT_1_Y = 70;
 	private final int CONTINENT_4_Y = 700;
 
-	private final int CONTINENT_02_Y = CONTINENT_05_X_02_Y+50;
-	private final int CONTINENT_1_Y_SUB = 130;
-	private final int CONTINENT_4_Y_SUB = CONTINENT_4_Y+10;
-
-	// coordonnées des sommets
-	private final int SOMMET_02_Y = CONTINENT_05_X_02_Y-10;
-	private final int SOMMET_35_Y = CONTINENT_35_Y-60;
-
 	// coordonnées des subventions 2 et 3 (Ressources et recherches)
 	private final int SUB_2 = 80;
 	private final int SUB_3 = SUB_2*2;
 
-	// coordonnées des continents des subeventions 2 et 3
-	private final int CONTINENT_23_X_SUB_2 = CONTINENT_23_X+SUB_2;
-	private final int CONTINENT_23_X_SUB_3 = CONTINENT_23_X+SUB_3;
-
-	private final int CONTINENT_05_X_02_Y_SUB_2 = CONTINENT_05_X_02_Y+SUB_2;
-	private final int CONTINENT_05_X_02_Y_SUB_3 = CONTINENT_05_X_02_Y+SUB_3;
-
-	private final int CONTINENT_14_X_SUB_2 = CONTINENT_14_X+SUB_2;
-	private final int CONTINENT_14_X_SUB_3 = CONTINENT_14_X+SUB_3;
 
 
 	public ViewGame(Scene scene, Model model, Pane pane) throws IOException {
@@ -213,6 +198,12 @@ public class ViewGame {
 		deplacerScientifiqueReserve(imageViewScientifiqueN1);
 		pane.getChildren().add(imageViewScientifiqueN1);
 
+
+		initContinent();
+		initExpertise(50, 5);
+		initSubvention(250, 100);
+		initCentral(250, 100);
+
 		reloadTour();
 		reloadDecade();
 		reloadArgent();
@@ -220,11 +211,6 @@ public class ViewGame {
 		reloadresourcesTech();
 		reloadCEP();
 		reloadCo2();
-
-		initContinent();
-		initExpertise(50, 5);
-		initSubvention(250, 100);
-		initCentral(250, 100);
 
 		hboxAction = new ViewMenuActionHbox(model);
 		hboxAction.init();
@@ -361,12 +347,12 @@ public class ViewGame {
 		pane.getChildren().remove(CEPEurope);
 		pane.getChildren().remove(CEPOceanie);
 		pane.getChildren().remove(CEPAfrique);
-		CEPAsie = new Text(CONTINENT_05_X_02_Y+85, CONTINENT_35_Y-120, "L'Asie à "+model.getContinents()[5].getNbCep()+" CEP");
-		CEPAmNord = new Text(CONTINENT_4_Y+300, (model.height/2)-20, "L'Amérique du nord à "+model.getContinents()[3].getNbCep()+" CEP");
-		CEPAmSud = new Text(CONTINENT_4_Y+300, CONTINENT_05_X_02_Y-70, "L'Amérique du sud à "+model.getContinents()[2].getNbCep()+" CEP");
-		CEPEurope = new Text(CONTINENT_05_X_02_Y+70, CONTINENT_05_X_02_Y-70, "L'Europe à "+model.getContinents()[0].getNbCep()+" CEP");
-		CEPAfrique = new Text(CONTINENT_4_Y-25,19, "L'Afrique à "+model.getContinents()[1].getNbCep()+" CEP");
-		CEPOceanie = new Text(CONTINENT_4_Y-25, CONTINENT_35_Y+30, "L'Océanie à "+model.getContinents()[4].getNbCep()+" CEP");
+		CEPEurope = new Text(continentX[0]+60, continentY[0]-70, "L'Europe à "+model.getContinents()[0].getNbCep()+" CEP");
+		CEPAfrique = new Text(continentX[1]+60,continentY[1]-50, "L'Afrique à "+model.getContinents()[1].getNbCep()+" CEP");
+		CEPAmSud = new Text(continentX[2]+45, continentY[2]-70, "L'Amérique du sud à "+model.getContinents()[2].getNbCep()+" CEP");
+		CEPAmNord = new Text(continentX[3]+45, continentY[3]-120, "L'Amérique du nord à "+model.getContinents()[3].getNbCep()+" CEP");
+		CEPOceanie = new Text(continentX[4]+60, continentY[4]-100, "L'Océanie à "+model.getContinents()[4].getNbCep()+" CEP");
+		CEPAsie = new Text(continentX[5]+85, continentY[5]-120, "L'Asie à "+model.getContinents()[5].getNbCep()+" CEP");
 		pane.getChildren().add(CEPAsie);
 		pane.getChildren().add(CEPAmNord);
 		pane.getChildren().add(CEPAmSud);
@@ -414,23 +400,15 @@ public class ViewGame {
 	 * @return
 	 */
 	private Circle placePlayerControl(int continentId, Color playerColor) {
-		int radius = 15;
-		int x = 0;
 		int y = 0;
-		int xOffset = 75;
-		int yOffset = 75;
 
-		if(continentId==0 || continentId==5) x = CONTINENT_05_X_02_Y+AJOUT_AGENDA + xOffset;
-		if(continentId==0 || continentId==2) y = CONTINENT_05_X_02_Y-60 + yOffset;
-		if(continentId==3 || continentId==5) y = CONTINENT_35_Y-110 + yOffset;
-		if(continentId==1 || continentId==4) x = CONTINENT_14_X+AJOUT_AGENDA + xOffset;
-		if(continentId==2 || continentId==3) x = CONTINENT_23_X+AJOUT_AGENDA + xOffset;
-		if(continentId==4) y = CONTINENT_4_Y-100 + yOffset;
-		if(continentId==1) y = CONTINENT_1_Y-50 + yOffset;
-
-		Circle circle = new Circle(x, y, radius, playerColor);
-
-		return circle;
+		switch (continentId) {
+			case 0, 2 -> y = continentY[continentId] - 50;
+			case 1 -> y = continentY[continentId] - 30;
+			case 3, 5 -> y = continentY[continentId] - 100;
+			case 4 -> y = continentY[continentId] - 80;
+		}
+		return new Circle(continentX[continentId]+75,y, 15, playerColor);
 	}
 
 	/**
@@ -459,7 +437,7 @@ public class ViewGame {
 			imageViewSommetTiles[i].setY(sommetY[i]);
 
 			// Redimention
-			if(i!=2) imageViewContinents[i].setFitWidth(220);
+			if(i!=2) imageViewContinents[i].setFitWidth(CONTINENT_WIDTH);
 			imageViewContinents[i].setPreserveRatio(true);
 			imageViewAgendaTiles[i].setFitWidth(AGENDA_SOMMET_WIDTH);
 			imageViewAgendaTiles[i].setPreserveRatio(true);
