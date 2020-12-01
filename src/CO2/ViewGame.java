@@ -100,6 +100,8 @@ public class ViewGame {
 			700, // OcéanieY
 			550  // AsieY
 	};
+
+	// agendas
 	private final int[] agendaX = {
 			continentX[0] + 85, // EuropeAgendaX
 			continentX[1] + 85, // AfriqueAgendaX
@@ -116,7 +118,7 @@ public class ViewGame {
 			continentY[4] - 90, // OcéanieAgendaY
 			continentY[5] - 100 // AsieAgendaY
 	};
-
+	// sommets
 	private final int[] sommetX = {
 			continentX[0], // EuropeSommetX
 			continentX[1], // AfriqueSommetX
@@ -134,34 +136,33 @@ public class ViewGame {
 			continentY[5] - 60  // AsieSommetY
 	};
 
-	private final int[][] subventionX = {
-			{continentX[0],continentX[0] + 80, continentX[0] + 160},
-			{continentX[1],continentX[1] + 80, continentX[1] + 160},
-			{continentX[2],continentX[2] + 80, continentX[2] + 160},
-			{continentX[3],continentX[3] + 80, continentX[3] + 160},
-			{continentX[4],continentX[4] + 80, continentX[4] + 160},
-			{continentX[5],continentX[5] + 80, continentX[5] + 160}
-	};
+	// subventions (subvention x = continent x -> voir initSubvention)
 	private final int[] subventionY = {
-			continentY[0]+50,
-			continentY[1]+60,
-			continentY[2]+50,
-			continentY[3],
-			continentY[4]+10,
-			continentY[5]
+			continentY[0]+50, // ligne de subvention de l'europe
+			continentY[1]+60, // ligne de subvention de l'afrique
+			continentY[2]+50, // ligne de subvention de l'amSud
+			continentY[3],    // ligne de subvention de l'amNord
+			continentY[4]+10, // ligne de subvention de l'océanie
+			continentY[5]     // ligne de subvention de l'asie
 	};
-	private final int CONTINENT_05_X_02_Y = 200;
-	private final int CONTINENT_35_Y = 550;
-	private final int CONTINENT_14_X = 600;
-	private final int CONTINENT_23_X = 950;
-	private final int CONTINENT_1_Y = 70;
-	private final int CONTINENT_4_Y = 700;
 
-	// coordonnées des subventions 2 et 3 (Ressources et recherches)
-	private final int SUB_2 = 80;
-	private final int SUB_3 = SUB_2*2;
-
-
+	// centrales val = 250, k = 100
+	private final int[] centraleX = {
+			continentX[0] - 100, // premiere case de centrale europe
+			continentX[1] - 15,  // premiere case de centrale afrique
+			continentX[2] - 60,  // premiere case de centrale amSud
+			continentX[3] - 100, // premiere case de centrale amNord
+			continentX[4] - 60,  // premiere case de centrale océanie
+			continentX[5] - 180  // premiere case de centrale asie
+	};
+	private final int[] centraleY = {
+			continentY[0] + 130, // ligne de centrale de l'europe
+			continentY[1] + 140, // ligne de centrale de l'afrique
+			continentY[2] + 130, // ligne de centrale de l'amSud
+			continentY[3] + 80,  // ligne de centrale de l'amNord
+			continentY[4] + 90, // ligne de centrale de l'océanie
+			continentY[5] + 80  // ligne de centrale de l'asie
+	};
 
 	public ViewGame(Scene scene, Model model, Pane pane) throws IOException {
 		this.model = model;
@@ -459,10 +460,11 @@ public class ViewGame {
 	 * Initialisation des subventions
 	 */
 	public void initSubvention(int val, int k){
+		int espace = 0;
 		for(int i=0;i<3;i++) {
 			for(int j=0;j<model.getContinents().length;j++) {
 
-				model.getContinents()[j].getTabRectangleSubvention()[i].setX(subventionX[j][i]);
+				model.getContinents()[j].getTabRectangleSubvention()[i].setX(continentX[j]+espace);
 				model.getContinents()[j].getTabRectangleSubvention()[i].setY(subventionY[j]);
 
 				switch (i) {
@@ -473,6 +475,7 @@ public class ViewGame {
 
 				pane.getChildren().add(model.getContinents()[j].getTabRectangleSubvention()[i]);
 			}
+			espace += 80;
 		}
 	}
 
@@ -483,25 +486,14 @@ public class ViewGame {
 		// boucle sur les continents
 		for(int i=0;i<model.getContinents().length;i++) {
 			// boucle sur le nombre de CEP pen fonction du continent
+			int espace = 0;
 			for(int j=0;j<model.getContinents()[i].getNbCep();j++) {
 				// affichage des cases de centrales
-				if(i==0 || i==2) model.getContinents()[i].getTabRectangleCentral()[j].setY(val+80);
-				if(i==3 || i==5) model.getContinents()[i].getTabRectangleCentral()[j].setY(val+380);
-				if(i==0) model.getContinents()[i].getTabRectangleCentral()[j].setX(k+val-250);
-				if(i==2) model.getContinents()[i].getTabRectangleCentral()[j].setX(k+val-180);
-				if(i==3) model.getContinents()[i].getTabRectangleCentral()[j].setX(k+val-580);
-				if(i==5) model.getContinents()[i].getTabRectangleCentral()[j].setX(k+val-2220);
-				if(i==1) {
-					model.getContinents()[i].getTabRectangleCentral()[j].setX(k+val-215);
-					model.getContinents()[i].getTabRectangleCentral()[j].setY(val-40);
-				}
-				if(i==4) {
-					model.getContinents()[i].getTabRectangleCentral()[j].setX(k+val-1340);
-					model.getContinents()[i].getTabRectangleCentral()[j].setY(val+540);
-				}
+				model.getContinents()[i].getTabRectangleCentral()[j].setX(centraleX[i]+espace);
+				model.getContinents()[i].getTabRectangleCentral()[j].setY(centraleY[i]);
 				// ajout au pane
 				pane.getChildren().add(model.getContinents()[i].getTabRectangleCentral()[j]);
-				k = k + 90;
+				espace += 90;
 			}
 
 		}
