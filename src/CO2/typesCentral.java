@@ -4,7 +4,7 @@ enum typesCentral {
     //TODO :  a changer une fois le reste implementer
     REBOISEMENT(10, new int[]{10, 10},10,0),
     BIOMASSE(10, new int[]{10, 10},10,0),
-    SOLAIRE(10, new int[]{8, 4},4,0),
+    SOLAIRE(10, new int[]{8, 4},2,0),
     RECYCLAGE(10, new int[]{10, 10},10,0),
     FUSIONFROIDE(10, new int[]{10, 10},10,0),
     CHARBON(10, new int[]{10, 10},10,40),
