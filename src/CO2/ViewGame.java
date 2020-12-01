@@ -514,7 +514,7 @@ public class ViewGame {
 	 */
 	public void addTuilesToSubvention(int subventionChoice, Image imageProject, Continent continent){
 		//TODO : Switch pour tooltip une fois toute les tuiles implementés
-		Tooltip.install(continent.getTabRectangleSubvention()[subventionChoice], new Tooltip("Mettre en place : + 3 Ressources technologiques"));
+		Tooltip.install(continent.getTabRectangleSubvention()[subventionChoice], new Tooltip("Mettre en place : coût : 1 cep, obtient:+ 3 Ressources technologiques"));
 		continent.getTabRectangleSubvention()[subventionChoice].setFill(new ImagePattern(imageProject));
 	}
 
@@ -523,6 +523,7 @@ public class ViewGame {
 	 */
 	public void mettreEnPlaceProjet(int projectChoice, Image imageSolarProjectBack, Continent continent){
 		continent.getTabRectangleSubvention()[projectChoice].setFill(new ImagePattern(imageSolarProjectBack));
+		Tooltip.install(continent.getTabRectangleSubvention()[projectChoice], new Tooltip(" Construire centrale : coût :8$, 4 ressources, min : 2 expertises, obtient : 1 expertise "));
 	}
 
 	/**
