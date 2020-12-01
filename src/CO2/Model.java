@@ -1,6 +1,7 @@
 package CO2;
 
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -186,7 +187,7 @@ public class Model {
 			if(!subject3.equals("none")) subjects.add(stringToSubject(subject3));
 			if(!subject4.equals("none")) subjects.add(stringToSubject(subject4));
 
-			lstAllSommet.add(new SommetTile(location,this.continents[continentNb], subjects.size(), subjects,new Image(getClass().getResourceAsStream("images/Sommets/"+location+".png"))));
+			lstAllSommet.add(new SommetTile(location,this.continents[continentNb], subjects.size(), subjects,new ImageView(new Image(getClass().getResourceAsStream("images/Sommets/"+location+".png")))));
 			subjects.clear();
 			if (continentNb < 5){
 				continentNb++;
