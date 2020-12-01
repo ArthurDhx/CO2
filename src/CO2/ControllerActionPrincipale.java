@@ -181,11 +181,23 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
                 } else {
                     if(index == -2) viewGame.displayAlertWithoutHeaderText("Erreur", "Impossible de placer la centrale car un scientifique se trouve sur le projet");
                     if(index == -1) viewGame.displayAlertWithoutHeaderText("Erreur", "Impossible de placer la centrale");
-                    if(index == -3) viewGame.displayAlertWithoutHeaderText("Erreur", "Vous n'avez pas assez de ressources : il vous manque de l'expertise, de l'argent ou des ressources technologiques");
+                    if(index == -3) {
+                        int[] missingResources = calculMissingRessources(projetMisEnPlaceChoisi, model.getCurrentPLayer());
+                        viewGame.displayAlertWithoutHeaderText("Erreur", "Vous n'avez pas assez de ressources : il vous manque de "+ missingResources[0] +" expertise, "+ missingResources[1] +"€, "+ missingResources[2] +" ressources technologiques");
+                    }
                 }
                 viewGame.hboxAction.resetHbox();
                 return;
             });
         }
+    }
+
+    private int[] calculMissingRessources(Subvention projetMisEnPlaceChoisi, Player currentPLayer) {
+        int[] tab =  new int[3];
+        tab[0] = projetMisEnPlaceChoisi.getTilesSolarProject().getTypeToCentral().getExpertise() - model.getCurrentPLayer().getExpertise(projetMisEnPlaceChoisi.getTilesSolarProject().getType());
+        tab[1] = projetMisEnPlaceChoisi.getTilesSolarProject().getTypeToCentral().getCout()[0] - model.getCurrentPLayer().getArgent();
+        tab[2] = projetMisEnPlaceChoisi.getTilesSolarProject().getTypeToCentral().getCout()[1] - model.getCurrentPLayer().getResourcesTech();
+        for (int i = 0; i< tab.length; i++) if (tab[i] < 0) tab[i] = 0;
+        return tab;
     }
 }
