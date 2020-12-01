@@ -83,6 +83,7 @@ public class ControllerActionGratuite implements EventHandler<ActionEvent> {
             model.getCurrentPLayer().setDeplacerScientifiqueDone(true);
             viewGame.hboxAction.resetHbox();
             model.getCurrentPLayer().getCurrentScientifique().moveToReserve();
+            viewGame.reloadPlayerExpertise(model.getCurrentPLayer());
 
         } else if (source == viewGame.hboxAction.btnMarche) {
             // Affiche le ChoiceDialog qui permet d'acheter ou de vendre des CEPs
