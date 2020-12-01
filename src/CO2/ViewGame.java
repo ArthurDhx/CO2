@@ -350,12 +350,16 @@ public class ViewGame {
 		int radius = 15;
 		int x = 0;
 		int y = 0;
+		int xOffset = 75;
+		int yOffset = 75;
 
-		if(continentId==0 || continentId==5) x = CONTINENT_05_X_02_Y+AJOUT_AGENDA + 10;
-		if(continentId==0 || continentId==2) y = CONTINENT_05_X_02_Y-60;
-		if(continentId==3 || continentId==5) y = CONTINENT_35_Y-110;
-		if(continentId==1 || continentId==4) x = CONTINENT_14_X+AJOUT_AGENDA + 10;
-		if(continentId==2 || continentId==3) x = CONTINENT_23_X+AJOUT_AGENDA + 10;
+		if(continentId==0 || continentId==5) x = CONTINENT_05_X_02_Y+AJOUT_AGENDA + xOffset;
+		if(continentId==0 || continentId==2) y = CONTINENT_05_X_02_Y-60 + yOffset;
+		if(continentId==3 || continentId==5) y = CONTINENT_35_Y-110 + yOffset;
+		if(continentId==1 || continentId==4) x = CONTINENT_14_X+AJOUT_AGENDA + xOffset;
+		if(continentId==2 || continentId==3) x = CONTINENT_23_X+AJOUT_AGENDA + xOffset;
+		if(continentId==4) y = CONTINENT_4_Y-100 + yOffset;
+		if(continentId==1) y = CONTINENT_1_Y-50 + yOffset;
 
 		Circle circle = new Circle(x, y, radius, playerColor);
 

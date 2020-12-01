@@ -387,15 +387,16 @@ public class Model {
 
 	/**
 	 * @param projetMisEnPlaceChoisi La case de subvention ou le projet choisis se situe
-	 * @return -1 Si la centrale n'est pas créable
-	 * 			l'index ou la centrale a été posé si cela est possible
+	 * @return - <0 Si la centrale n'est pas créable
+	 * 		   - l'index ou la centrale a été posé si cela est possible
 	 */
     public int putCentral(Subvention projetMisEnPlaceChoisi) {
     	//TODO : Suis qui enleve le projet ne pas oublier de le faire aussi dans le modele
-		// Les conditions pour payer ect
-		ArrayList<Central> centrales = projetMisEnPlaceChoisi.getContinent().getCentrales();
+		// Si le joueur n'as pas assez d'expertise, d'argent ou de ressources technologiques
+		if (!getCurrentPLayer().canConstruct(projetMisEnPlaceChoisi.getTilesSolarProject())) return -3;
 		// Si pas des scientifique sur projetMisEnplaceChoisi
 		if(projetMisEnPlaceChoisi.isStaffed()) return -2;
+		ArrayList<Central> centrales = projetMisEnPlaceChoisi.getContinent().getCentrales();
 		for (int i = 0; i < centrales.size(); i++) {
 			// Si un espace est libre
 			if (!centrales.get(i).isOccupe()) {
@@ -406,6 +407,8 @@ public class Model {
 				giveControl(projetMisEnPlaceChoisi.getContinent());
 				// Affecation type
 				centrales.get(i).setType(projetMisEnPlaceChoisi.getTilesSolarProject().getTypeToCentral());
+				// le joueur paye la centrale
+				getCurrentPLayer().payCentral(projetMisEnPlaceChoisi.getTilesSolarProject().getTypeToCentral().getCout());
 				return centrales.get(i).getIndex();
 			}
 		}

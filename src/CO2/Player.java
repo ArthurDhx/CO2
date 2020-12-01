@@ -260,6 +260,32 @@ public class Player {
         return continentsControlles.contains(continent);
     }
 
+    /**
+     * Determine si le joueur peut construire la centrale
+     * - assez d'expertise
+     * - assez d'argent
+     * - assez de ressources technologiques
+     * @param project projet a construire
+     * @return
+     */
+    public boolean canConstruct(TilesSolarProject project) {
+        typesCentral typeCentral = project.getTypeToCentral();
+        int[] cout = typeCentral.getCout();
+        if (cout[0] > argent) return false;
+        if (cout[1] > resourcesTech) return false;
+        if (typeCentral.getExpertise() > getExpertise(project.getType())) return false;
+        return true;
+    }
+
+    /**
+     * Paye la construction
+     * @param cost cout du projet a construire
+     */
+    public void payCentral(int[] cost) {
+        argent -= cost[0];
+        resourcesTech -= cost[1];
+    }
+
     public int getNBACTIONGRATUITE() {
         return NBACTIONGRATUITE;
     }
@@ -339,6 +365,4 @@ public class Player {
     public void setContinentsControlles(List<Continent> continentsControlles) {
         this.continentsControlles = continentsControlles;
     }
-
-
 }

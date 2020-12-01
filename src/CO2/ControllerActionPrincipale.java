@@ -159,10 +159,8 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
             }
             Optional<Subvention> result = viewGame.hboxAction.dialogConstruireCentrale.showAndWait();
             result.ifPresent(projetMisEnPlaceChoisi -> {
-                // METRE A JOUR LE MODELE CEUX QUI VONT RAJOUTER LE COUT JE VOUS VOIS
-                // if ( VERIFIE SI POSSIBLE ET PAYE )
                 int index = model.putCentral(projetMisEnPlaceChoisi);
-                if( index != -1 && index != -2) {
+                if( index >= 0) {
 
                     viewGame.addCentrale(typesCentral.SOLAIRE , projetMisEnPlaceChoisi.getContinent(), index);
                     viewGame.resetSubvention(projetMisEnPlaceChoisi.getContinent(),projetMisEnPlaceChoisi.getIndex());
@@ -173,12 +171,17 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
                     model.curPlayer.addPointVictoire(projetMisEnPlaceChoisi.getTilesSolarProject().getTypeToCentral().getPtsVictoire());
                     model.curPlayer.addExpertise(projetMisEnPlaceChoisi.getTilesSolarProject().getType(),1);
                     viewGame.reloadPointVictoire();
-                    viewGame.reloadPlayerExpertise(model.curPlayer);
+                    viewGame.reloadPlayerExpertise(model.getCurrentPLayer());
+
+                    // reload payement
+                    viewGame.reloadresourcesTech();
+                    viewGame.reloadArgent();
 
                     viewGame.reloadContinentControl(model.getCurrentPLayer());
                 } else {
                     if(index == -2) viewGame.displayAlertWithoutHeaderText("Erreur", "Impossible de placer la centrale car un scientifique se trouve sur le projet");
                     if(index == -1) viewGame.displayAlertWithoutHeaderText("Erreur", "Impossible de placer la centrale");
+                    if(index == -3) viewGame.displayAlertWithoutHeaderText("Erreur", "Vous n'avez pas assez de ressources : il vous manque de l'expertise, de l'argent ou des ressources technologiques");
                 }
                 viewGame.hboxAction.resetHbox();
                 return;
