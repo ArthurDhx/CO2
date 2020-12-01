@@ -81,6 +81,73 @@ public class ViewGame {
 	private final int AJOUT_AGENDA = 85;
 
 	// coordonnées des continents
+
+	private final int[] continentX = {
+			200, // EuropeX
+			600, // AfriqueX
+			950, // AmSudX
+			950, // AmNordX
+			600, // OcéanieX
+			200  // AsieX
+	};
+	private final int[] continentY = {
+			200, // EuropeY
+			70,  // AfriqueY
+			200, // AmSudY
+			550, // AmNordY
+			700, // OcéanieY
+			550  // AsieY
+	};
+	private final int[] agendaX = {
+			continentX[0] + 85, // EuropeAgendaX
+			continentX[1] + 85, // AfriqueAgendaX
+			continentX[2] + 85, // AmSudAgendaX
+			continentX[3] + 85, // AmNordAgendaX
+			continentX[4] + 85, // OcéanieAgendaX
+			continentX[5] + 85  // AsieAgendaX
+	};
+	private final int[] agendaY = {
+			continentY[0] - 50, // EuropeAgendaY
+			continentY[1] - 40, // AfriqueAgendaY
+			continentY[2] - 50, // AmSudAgendaY
+			continentY[3] - 100,// AmNordAgendaY
+			continentY[4] - 90, // OcéanieAgendaY
+			continentY[5] - 100 // AsieAgendaY
+	};
+
+	private final int[] sommetX = {
+			continentX[0], // EuropeSommetX
+			continentX[1], // AfriqueSommetX
+			continentX[2], // AmSudSommetX
+			continentX[3], // AmNordSommetX
+			continentX[4], // OcéanieSommetX
+			continentX[5]  // AsieSommetX
+	};
+	private final int[] sommetY = {
+			continentY[0] - 10, // EuropeSommetY
+			continentY[1],      // AfriqueSommetY
+			continentY[2] - 10, // AmSudSommetY
+			continentY[3] - 60, // AmNordSommetY
+			continentY[4] - 50, // OcéanieSommetY
+			continentY[5] - 60  // AsieSommetY
+	};
+
+	private final int[][] subventionX = {
+			{continentX[0],continentX[0] + 80, continentX[0] + 160},
+			{continentX[1],continentX[1] + 80, continentX[1] + 160},
+			{continentX[2],continentX[2] + 80, continentX[2] + 160},
+			{continentX[3],continentX[3] + 80, continentX[3] + 160},
+			{continentX[4],continentX[4] + 80, continentX[4] + 160},
+			{continentX[5],continentX[5] + 80, continentX[5] + 160}
+	};
+	private final int[] subventionY = {
+			continentY[0]+50,
+			continentY[1]+60,
+			continentY[2]+50,
+			continentY[3],
+			continentY[4]+10,
+			continentY[5]
+	};
 	private final int CONTINENT_05_X_02_Y = 200;
 	private final int CONTINENT_35_Y = 550;
 	private final int CONTINENT_14_X = 600;
@@ -382,44 +449,25 @@ public class ViewGame {
 			imageViewAgendaTiles[i] = new ImageView(model.getContinents()[i].getAgendaTile().getImageAgendaTile());
 			imageViewSommetTiles[i] = model.getContinents()[i].getSommetTile().getImageSommetTile();
 			// Position des continents
-			if(i==0 || i==5) imageViewContinents[i].setX(CONTINENT_05_X_02_Y);
-			if(i==0 || i==2) imageViewContinents[i].setY(CONTINENT_05_X_02_Y);
-			if(i==3 || i==5) imageViewContinents[i].setY(CONTINENT_35_Y);
-			if(i==1 || i==4) imageViewContinents[i].setX(CONTINENT_14_X);
-			if(i==2 || i==3) imageViewContinents[i].setX(CONTINENT_23_X);
+			imageViewContinents[i].setX(continentX[i]);
+			imageViewContinents[i].setY(continentY[i]);
 			// Position des Agendas
-			if(i==0 || i==5) imageViewAgendaTiles[i].setX(CONTINENT_05_X_02_Y+AJOUT_AGENDA);
-			if(i==0 || i==2) imageViewAgendaTiles[i].setY(CONTINENT_05_X_02_Y-60);
-			if(i==3 || i==5) imageViewAgendaTiles[i].setY(CONTINENT_35_Y-110);
-			if(i==1 || i==4) imageViewAgendaTiles[i].setX(CONTINENT_14_X+AJOUT_AGENDA);
-			if(i==2 || i==3) imageViewAgendaTiles[i].setX(CONTINENT_23_X+AJOUT_AGENDA);
+			imageViewAgendaTiles[i].setX(agendaX[i]);
+			imageViewAgendaTiles[i].setY(agendaY[i]);
 			// Position des sommets
-			if(i==0 || i==5) imageViewSommetTiles[i].setX(CONTINENT_05_X_02_Y);
-			if(i==0 || i==2) imageViewSommetTiles[i].setY(SOMMET_02_Y);
-			if(i==3 || i==5) imageViewSommetTiles[i].setY(SOMMET_35_Y);
-			if(i==1 || i==4) imageViewSommetTiles[i].setX(CONTINENT_14_X);
-			if(i==2 || i==3) imageViewSommetTiles[i].setX(CONTINENT_23_X);
+			imageViewSommetTiles[i].setX(sommetX[i]);
+			imageViewSommetTiles[i].setY(sommetY[i]);
 
 			// Redimention
-			if(i!=2) imageViewContinents[i].setFitWidth(CONTINENT_05_X_02_Y+20);
+			if(i!=2) imageViewContinents[i].setFitWidth(220);
 			imageViewContinents[i].setPreserveRatio(true);
 			imageViewAgendaTiles[i].setFitWidth(AGENDA_SOMMET_WIDTH);
 			imageViewAgendaTiles[i].setPreserveRatio(true);
 			imageViewSommetTiles[i].setFitWidth(AGENDA_SOMMET_WIDTH);
 			imageViewSommetTiles[i].setPreserveRatio(true);
 		}
-		// Redimension de l'Afrique car image trop grande
-		imageViewContinents[2].setFitWidth(170);
-		imageViewContinents[2].setPreserveRatio(true);
 
-		imageViewContinents[4].setY(CONTINENT_4_Y);
-		imageViewContinents[1].setY(CONTINENT_1_Y);
 
-		imageViewAgendaTiles[4].setY(CONTINENT_4_Y-100);
-		imageViewAgendaTiles[1].setY(CONTINENT_1_Y-50);
-
-		imageViewSommetTiles[4].setY(CONTINENT_4_Y-50);
-		imageViewSommetTiles[1].setY(CONTINENT_1_Y);
 
 		// Ajout au pane
 		for(int i = 0; i < 6; i++) {
@@ -436,21 +484,17 @@ public class ViewGame {
 		for(int i=0;i<3;i++) {
 			for(int j=0;j<model.getContinents().length;j++) {
 
-				if(j==0 || j==5) model.getContinents()[j].getTabRectangleSubvention()[i].setX(k+val-150);
-				if(j==0 || j==2) model.getContinents()[j].getTabRectangleSubvention()[i].setY(val);
-				if(j==1 || j==4) model.getContinents()[j].getTabRectangleSubvention()[i].setX(k+val+250);
-				if(j==2 || j==3) model.getContinents()[j].getTabRectangleSubvention()[i].setX(k+val+600);
-				if(j==3 || j==5) model.getContinents()[j].getTabRectangleSubvention()[i].setY(val+300);
-				if(j==1) model.getContinents()[j].getTabRectangleSubvention()[i].setY(val-120);
-				if(j==4) model.getContinents()[4].getTabRectangleSubvention()[i].setY(val+460);
+				model.getContinents()[j].getTabRectangleSubvention()[i].setX(subventionX[j][i]);
+				model.getContinents()[j].getTabRectangleSubvention()[i].setY(subventionY[j]);
 
-				if (i == 0) model.getContinents()[j].getTabRectangleSubvention()[i].setFill(new ImagePattern(imgArgent));
-				if (i == 1) model.getContinents()[j].getTabRectangleSubvention()[i].setFill(new ImagePattern(imgRessource));
-				if (i == 2) model.getContinents()[j].getTabRectangleSubvention()[i].setFill(new ImagePattern(imgRecherche));
+				switch (i) {
+					case 0 -> model.getContinents()[j].getTabRectangleSubvention()[i].setFill(new ImagePattern(imgArgent));
+					case 1 -> model.getContinents()[j].getTabRectangleSubvention()[i].setFill(new ImagePattern(imgRessource));
+					case 2 -> model.getContinents()[j].getTabRectangleSubvention()[i].setFill(new ImagePattern(imgRecherche));
+				}
 
 				pane.getChildren().add(model.getContinents()[j].getTabRectangleSubvention()[i]);
 			}
-			k = k + 80;
 		}
 	}
 
