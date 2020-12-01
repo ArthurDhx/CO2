@@ -202,8 +202,8 @@ public class ViewGame {
 
 		initContinent();
 		initExpertise(50, 5);
-		initSubvention(250, 100);
-		initCentral(250, 100);
+		initSubvention();
+		initCentral();
 
 		reloadTour();
 		reloadDecade();
@@ -459,7 +459,7 @@ public class ViewGame {
 	/**
 	 * Initialisation des subventions
 	 */
-	public void initSubvention(int val, int k){
+	public void initSubvention(){
 		int espace = 0;
 		for(int i=0;i<3;i++) {
 			for(int j=0;j<model.getContinents().length;j++) {
@@ -468,9 +468,18 @@ public class ViewGame {
 				model.getContinents()[j].getTabRectangleSubvention()[i].setY(subventionY[j]);
 
 				switch (i) {
-					case 0 -> model.getContinents()[j].getTabRectangleSubvention()[i].setFill(new ImagePattern(imgArgent));
-					case 1 -> model.getContinents()[j].getTabRectangleSubvention()[i].setFill(new ImagePattern(imgRessource));
-					case 2 -> model.getContinents()[j].getTabRectangleSubvention()[i].setFill(new ImagePattern(imgRecherche));
+					case 0 -> {
+						model.getContinents()[j].getTabRectangleSubvention()[i].setFill(new ImagePattern(imgArgent));
+						Tooltip.install(model.getContinents()[j].getTabRectangleSubvention()[i],new Tooltip("Proposer un projet : autant de $ que de cep du continent"));
+					}
+					case 1 -> {
+						model.getContinents()[j].getTabRectangleSubvention()[i].setFill(new ImagePattern(imgRessource));
+						Tooltip.install(model.getContinents()[j].getTabRectangleSubvention()[i],new Tooltip("Proposer un projet : donne 2 cubes de ressources"));
+					}
+					case 2 -> {
+						model.getContinents()[j].getTabRectangleSubvention()[i].setFill(new ImagePattern(imgRecherche));
+						Tooltip.install(model.getContinents()[j].getTabRectangleSubvention()[i],new Tooltip("Proposer un projet : Déplace un scientifique ou +1 scientifique"));
+					}
 				}
 
 				pane.getChildren().add(model.getContinents()[j].getTabRectangleSubvention()[i]);
@@ -482,7 +491,7 @@ public class ViewGame {
 	/**
 	 * Initialisation des centrales
 	 */
-	public void initCentral(int val, int k){
+	public void initCentral(){
 		// boucle sur les continents
 		for(int i=0;i<model.getContinents().length;i++) {
 			// boucle sur le nombre de CEP pen fonction du continent
