@@ -74,16 +74,16 @@ public class ControllerActionGratuite implements EventHandler<ActionEvent> {
             viewGame.hboxAction.resetHbox();
         } else if (source == viewGame.hboxAction.btnDeplacerScientifiqToReserve){
             //remettre le scientifique dans la réserve et gagner 1 d’expertise dans le type d’énergie du projet
-            // gagner 1 d’expertise dans le type d’énergie du projet
             model.getCurrentPLayer().getCurrentScientifique().getSubvention().setStaffed(false);
-            model.getCurrentPLayer().addExpertise(model.getCurrentPLayer().getCurrentScientifique().getSubject().getEnergy(), 1);
-            viewGame.displayAlertWithoutHeaderText("Gain d'expertise", "En remettant votre scientifique dans votre réserve, vous gagné 1 d’expertise dans le type d’énergie " + model.getCurrentPLayer().getCurrentScientifique().getSubject().getEnergy() + " !");
+            // gagner 1 d’expertise dans le type d’énergie du projet
+            //model.getCurrentPLayer().addExpertise(model.getCurrentPLayer().getCurrentScientifique().getSubject().getEnergy(), 1);
+            //viewGame.displayAlertWithoutHeaderText("Gain d'expertise", "En remettant votre scientifique dans votre réserve, vous gagné 1 d’expertise dans le type d’énergie " + model.getCurrentPLayer().getCurrentScientifique().getSubject().getEnergy() + " !");
             //remettre le scientifique dans la réserve
             viewGame.deplacerScientifiqueReserve(model.getCurrentPLayer().getCurrentScientifique().getImgScientifique());
             model.getCurrentPLayer().setDeplacerScientifiqueDone(true);
             viewGame.hboxAction.resetHbox();
             model.getCurrentPLayer().getCurrentScientifique().moveToReserve();
-            viewGame.reloadPlayerExpertise(model.getCurrentPLayer());
+            //viewGame.reloadPlayerExpertise(model.getCurrentPLayer());
 
         } else if (source == viewGame.hboxAction.btnMarche) {
             // Affiche le ChoiceDialog qui permet d'acheter ou de vendre des CEPs
