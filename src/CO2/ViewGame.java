@@ -380,7 +380,7 @@ public class ViewGame {
 			// initialisation des Image View pour chaque tableau
 			imageViewContinents[i] = new ImageView(model.getContinents()[i].getImgContinent());
 			imageViewAgendaTiles[i] = new ImageView(model.getContinents()[i].getAgendaTile().getImageAgendaTile());
-			imageViewSommetTiles[i] = new ImageView(model.getContinents()[i].getSommetTile().getImageSommetTile());
+			imageViewSommetTiles[i] = model.getContinents()[i].getSommetTile().getImageSommetTile();
 			// Position des continents
 			if(i==0 || i==5) imageViewContinents[i].setX(CONTINENT_05_X_02_Y);
 			if(i==0 || i==2) imageViewContinents[i].setY(CONTINENT_05_X_02_Y);
@@ -511,135 +511,33 @@ public class ViewGame {
 		if (idSubvention == 2) continent.getTabRectangleSubvention()[idSubvention].setFill(new ImagePattern(imgRecherche));
 	}
 
+	/** Ajouter un Scientifique sur un projet */
 	public void addScientifiqueToProject(int projectChoice, ImageView imageViewScientifique, Continent continent){
-		switch(continent.getName()) {
-			case "Europe" :
-				switch (projectChoice) {
-					case 1:
-						imageViewScientifique.setX(CONTINENT_05_X_02_Y);
-						break;
-					case 2:
-						imageViewScientifique.setX(CONTINENT_05_X_02_Y_SUB_2);
-						break;
-					case 3:
-						imageViewScientifique.setX(CONTINENT_05_X_02_Y_SUB_3);
-						break;
-				}
-				imageViewScientifique.setY(CONTINENT_02_Y);
-				imageViewScientifique.toFront();
-				break;
-			case "Afrique" :
-				switch (projectChoice) {
-					case 1:
-						imageViewScientifique.setX(CONTINENT_14_X);
-						break;
-					case 2:
-						imageViewScientifique.setX(CONTINENT_14_X_SUB_2);
-						break;
-					case 3:
-						imageViewScientifique.setX(CONTINENT_14_X_SUB_3);
-						break;
-				}
-				imageViewScientifique.setY(CONTINENT_1_Y_SUB);
-				imageViewScientifique.toFront();
-				break;
-			case "Amérique du Sud" :
-				switch (projectChoice) {
-					case 1:
-						imageViewScientifique.setX(CONTINENT_23_X);
-						break;
-					case 2:
-						imageViewScientifique.setX(CONTINENT_23_X_SUB_2);
-						break;
-					case 3:
-						imageViewScientifique.setX(CONTINENT_23_X_SUB_3);
-						break;
-				}
-				imageViewScientifique.setY(CONTINENT_02_Y);
-				imageViewScientifique.toFront();
-				break;
-			case "Amérique du Nord" :
-				switch (projectChoice) {
-					case 1:
-						imageViewScientifique.setX(CONTINENT_23_X);
-						break;
-					case 2:
-						imageViewScientifique.setX(CONTINENT_23_X_SUB_2);
-						break;
-					case 3:
-						imageViewScientifique.setX(CONTINENT_23_X_SUB_3);
-						break;
-				}
-				imageViewScientifique.setY(CONTINENT_35_Y);
-				imageViewScientifique.toFront();
-				break;
-			case "Océanie" :
-				switch (projectChoice) {
-					case 1:
-						imageViewScientifique.setX(CONTINENT_14_X);
-						break;
-					case 2:
-						imageViewScientifique.setX(CONTINENT_14_X_SUB_2);
-						break;
-					case 3:
-						imageViewScientifique.setX(CONTINENT_14_X_SUB_3);
-						break;
-				}
-				imageViewScientifique.setY(CONTINENT_4_Y_SUB);
-				imageViewScientifique.toFront();
-				break;
-			case "Asie" :
-				switch (projectChoice) {
-					case 1:
-						imageViewScientifique.setX(CONTINENT_05_X_02_Y);
-						break;
-					case 2:
-						imageViewScientifique.setX( CONTINENT_05_X_02_Y_SUB_2);
-						break;
-					case 3:
-						imageViewScientifique.setX( CONTINENT_05_X_02_Y_SUB_3);
-						break;
-				}
-				imageViewScientifique.setY(CONTINENT_35_Y);
-				imageViewScientifique.toFront();
-				break;
-		}
+		imageViewScientifique.setX(continent.getTabRectangleSubvention()[projectChoice].getX());
+		imageViewScientifique.setY(continent.getTabRectangleSubvention()[projectChoice].getY());
+		imageViewScientifique.toFront();
 	}
 
+	/** Ajouter un Scientifique sur un sommet */
 	public void addScientifiqueToSommet(ImageView imageViewScientifique, Scientifique scientifique, SommetTile sommetTile){
+		int nbSubject = sommetTile.getNbSubjects();
+		int indexSubject = sommetTile.getIndexSubject(scientifique.getSubject());
 		Continent continent = sommetTile.getContinent();
-		switch(continent.getName()) {
-			case "Europe" :
-				imageViewScientifique.setX(CONTINENT_05_X_02_Y);
-				imageViewScientifique.setY(SOMMET_02_Y);
-				imageViewScientifique.toFront();
-				break;
-			case "Afrique" :
-				imageViewScientifique.setX(CONTINENT_14_X);
-				imageViewScientifique.setY(CONTINENT_1_Y);
-				imageViewScientifique.toFront();
-				break;
-			case "Amérique du Sud" :
-				imageViewScientifique.setX(CONTINENT_23_X);
-				imageViewScientifique.setY(SOMMET_02_Y);
-				imageViewScientifique.toFront();
-				break;
-			case "Amérique du Nord" :
-				imageViewScientifique.setX(CONTINENT_23_X);
-				imageViewScientifique.setY(SOMMET_35_Y);
-				imageViewScientifique.toFront();
-				break;
-			case "Océanie" :
-				imageViewScientifique.setX(CONTINENT_14_X);
-				imageViewScientifique.setY(CONTINENT_4_Y-50);
-				imageViewScientifique.toFront();
-				break;
-			case "Asie" :
-				imageViewScientifique.setX(CONTINENT_05_X_02_Y);
-				imageViewScientifique.setY(SOMMET_35_Y);
-				imageViewScientifique.toFront();
-				break;
+		int x = 0;
+		int y = 0;
+
+		if (nbSubject == 2){
+			if (indexSubject == 0) {x = -5;y=-10;}
+			else if (indexSubject == 1){x = 25;y=-10;}
+		} else if (nbSubject == 3){
+			//TODO Coordonnées pour sommet à 3 sujets
+		} else if (nbSubject == 4){
+			//TODO Coordonnées pour sommet à 4 sujets
 		}
+		imageViewScientifique.setX(continent.getSommetTile().getImageSommetTile().getX()+x);
+		imageViewScientifique.setY(continent.getSommetTile().getImageSommetTile().getY()+y);
+		imageViewScientifique.toFront();
+
 		// le scientifique quitte le continent lorsqu'il va sur un sommet
 		scientifique.setContinent(null);
 	}

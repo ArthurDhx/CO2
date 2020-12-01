@@ -1,6 +1,7 @@
 package CO2;
 
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,12 +13,12 @@ public class SommetTile {
     private int nbSubjects;
     // Liste des sujets d'un sommet
     private ArrayList<Subject> subjects;
-    private Image imageSommetTile;
+    private ImageView imageSommetTile;
     private Continent continent;
 
     public SommetTile(){}
 
-    public SommetTile(String location, Continent continent, int nbSubjects, List<Subject> subjects, Image imageSommetTile){
+    public SommetTile(String location, Continent continent, int nbSubjects, List<Subject> subjects, ImageView imageSommetTile){
         this.location = location;
         this.nbSubjects = nbSubjects;
         this.imageSommetTile = imageSommetTile;
@@ -74,7 +75,21 @@ public class SommetTile {
         }
         return null;
     }
-    public Image getImageSommetTile() {
+
+    /**
+     * retourn l'index du sujet
+     * @param subject
+     * @return
+     */
+    public int getIndexSubject(Subject subject) {
+        for (int i = 0; i < this.subjects.size(); i++) {
+            if (this.subjects.get(i).getEnergy() == subject.getEnergy()) return i;
+
+        }
+        return -1;
+    }
+
+    public ImageView getImageSommetTile() {
         return imageSommetTile;
     }
 

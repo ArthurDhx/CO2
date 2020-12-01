@@ -1,7 +1,7 @@
 Canberra Solar Fusion none none
 Geneve Solar Biomass none none
 Johannesbourg Solar Recycling none none
-Kyoto Solar Reforestation none none
+Kyoto Reforestation Solar none none
 Londre Biomass Reforestation none none
 Marrakech Biomass Recycling none none
 Stockholm Fusion Recycling none none

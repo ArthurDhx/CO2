@@ -73,7 +73,7 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
                                                 resultProjet.ifPresent(projetChoisi -> {
                                                     // Si un projet a ete choisi
                                                     if (model.moveScientificOnProject(projetChoisi.getContinent(), projetChoisi)) {
-                                                        viewGame.addScientifiqueToProject(projetChoisi.getIndex() + 1, viewGame.imageViewScientifiqueN1, projetChoisi.getContinent());
+                                                        viewGame.addScientifiqueToProject(projetChoisi.getIndex(), model.getCurrentPLayer().getCurrentScientifique().getImgScientifique(), projetChoisi.getContinent());
                                                         model.getCurrentPLayer().getCurrentScientifique().setSubvention(projetChoisi);
                                                         projetChoisi.setStaffed(true);
                                                         if (model.getCurrentPLayer().getCurrentScientifique().getSubvention().getTilesSolarProject() != null) {
@@ -91,7 +91,7 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
                                                 resultSommet.ifPresent(sommetChoisi -> {
                                                     if (model.moveScientificOnSommet(model.getCurrentPLayer().getCurrentScientifique().getSubvention(), sommetChoisi)) {
                                                         model.getCurrentPLayer().getCurrentScientifique().getSubvention().setStaffed(false);
-                                                        viewGame.addScientifiqueToSommet(viewGame.imageViewScientifiqueN1, model.getCurrentPLayer().getCurrentScientifique(), sommetChoisi);
+                                                        viewGame.addScientifiqueToSommet(model.getCurrentPLayer().getCurrentScientifique().getImgScientifique(), model.getCurrentPLayer().getCurrentScientifique(), sommetChoisi);
                                                         model.getCurrentPLayer().getCurrentScientifique().setSommetTile(sommetChoisi);
                                                         model.getCurrentPLayer().getCurrentScientifique().setSubvention(null);
                                                         model.getCurrentPLayer().setDeplacerScientifiqueDone(true);
