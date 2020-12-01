@@ -350,8 +350,8 @@ public class ViewGame {
 		pane.getChildren().remove(CEPAfrique);
 		CEPEurope = new Text(continentX[0]+60, continentY[0]-70, "L'Europe à "+model.getContinents()[0].getNbCep()+" CEP");
 		CEPAfrique = new Text(continentX[1]+60,continentY[1]-50, "L'Afrique à "+model.getContinents()[1].getNbCep()+" CEP");
-		CEPAmSud = new Text(continentX[2]+45, continentY[2]-70, "L'Amérique du sud à "+model.getContinents()[2].getNbCep()+" CEP");
-		CEPAmNord = new Text(continentX[3]+45, continentY[3]-120, "L'Amérique du nord à "+model.getContinents()[3].getNbCep()+" CEP");
+		CEPAmSud = new Text(continentX[2]+45, continentY[2]-70, "L'Amérique du Sud à "+model.getContinents()[2].getNbCep()+" CEP");
+		CEPAmNord = new Text(continentX[3]+45, continentY[3]-120, "L'Amérique du Nord à "+model.getContinents()[3].getNbCep()+" CEP");
 		CEPOceanie = new Text(continentX[4]+60, continentY[4]-100, "L'Océanie à "+model.getContinents()[4].getNbCep()+" CEP");
 		CEPAsie = new Text(continentX[5]+85, continentY[5]-120, "L'Asie à "+model.getContinents()[5].getNbCep()+" CEP");
 		pane.getChildren().add(CEPAsie);

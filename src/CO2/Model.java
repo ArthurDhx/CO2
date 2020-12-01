@@ -355,7 +355,11 @@ public class Model {
 							// on donne le bonus du joueur en fonction du sujet étudié par le scientifique
 							giveRewardsSommetToPlayer(sPlayer.getSubject().getEnergy(), p);
 							sPlayer.setSubject(null); // le scientifique n'a plus de sujet
-							// TODO redéplacer le scientifique au joueur graphiquement
+							sPlayer.setSommetTile(null); // le scientifique n'est plus sur le sommet
+							// si multi : redonner chaque scientifique à chaque joueur
+							p.setScientifiques(sommet.getScientifiques()); // redonne les scientifiques sur le sommet au joueur
+							sommet.setContinent(null); // supression du sommet sur le continent
+							sommet.getContinent().setSommetTile(new SommetTile()); // création d'un nouveau sommet
 						}
 					}
 				}
@@ -367,7 +371,7 @@ public class Model {
 	 * @param energy Energy verte ou était le scientifique
 	 * @param p Le joueur a donnné les bonus
 	 */
-	private void giveRewardsSommetToPlayer(GreenEnergyTypes energy,Player p) {
+	private void giveRewardsSommetToPlayer(GreenEnergyTypes energy, Player p) {
 		switch (energy){
 			case SOLAR:
 				p.addExpertise(GreenEnergyTypes.SOLAR, 1);
