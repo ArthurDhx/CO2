@@ -280,11 +280,22 @@ public class Model {
 	 * Permet de savoir si un joueur peut mettre en place un projet ET LE MET EN PLACE
 	 * @return
 	 */
-	public boolean mettreEnPlaceProjet(Continent continent, Subvention subvention){
+	public boolean mettreEnPlaceProjetByPlayer(Continent continent, Subvention subvention){
 		curPlayer = getCurrentPLayer();
-		System.out.println();
 		if(curPlayer.getCEP() >= 1){
 			curPlayer.rewardSetupProject(GreenEnergyTypes.SOLAR);
+			curPlayer.removeCEP();
+			subvention.getTilesSolarProject().setMisEnPlace(true);
+			return true;
+		}
+		return false;
+	}
+
+	public boolean mettreEnPlaceProjetByContinent(Continent continent, Subvention subvention, Continent ProjectBuyContinent){
+		curPlayer = getCurrentPLayer();
+		if(ProjectBuyContinent.getNbCep() >= 1){
+			curPlayer.rewardSetupProject(GreenEnergyTypes.SOLAR);
+			ProjectBuyContinent.removeCEP();
 			subvention.getTilesSolarProject().setMisEnPlace(true);
 			return true;
 		}

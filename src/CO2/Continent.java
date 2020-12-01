@@ -102,6 +102,10 @@ public class Continent {
                 ", subventions=" + subventions.get(0).getTilesSolarProject() + '}');
     }
 
+    public void removeCEP(){
+        nbCep --;
+    }
+
     public Player getControlPlayer() {
         return controlPlayer;
     }

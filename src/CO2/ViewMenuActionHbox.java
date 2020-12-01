@@ -25,6 +25,8 @@ public class ViewMenuActionHbox extends HBox {
     ChoiceDialog<String> dialogChoisirRevenu;
     ChoiceDialog<String> dialogChoisirRecherche;
     ChoiceDialog<String> dialogActionScientifiqueAfterRecherche;
+    ChoiceDialog<String> dialogBuyCEPBy;
+    ChoiceDialog<Continent> dialogBuyCEPByContinent;
 
     // Les boutons associe aux actions principales
     Button btnActionPrincipale;
@@ -397,5 +399,36 @@ public class ViewMenuActionHbox extends HBox {
         dialogActionScientifiqueAfterRecherche.setTitle("Recherche en collaboration");
         dialogActionScientifiqueAfterRecherche.setHeaderText("Comment déplacer un scientifique ?");
         dialogActionScientifiqueAfterRecherche.setContentText("Choix: ");
+    }
+
+    /**
+     * Permet de savoir si le joueur veut payer avec ses CEP ou avec ceux d'un continent qu'il controle
+     */
+    public void displayBuyCEPBy(){
+        ArrayList<String> choices = new ArrayList<>();
+        choices.add("ma réserve");
+        if(!model.getCurrentPLayer().getContinentsControlles().isEmpty()) choices.add("la réserve d'un continent controllé");
+        dialogBuyCEPBy = new ChoiceDialog<>(
+                choices.get(0),
+                choices
+
+        );
+        dialogBuyCEPBy.setTitle("Mettre en place un projet");
+        dialogBuyCEPBy.setHeaderText("Vous devez payer 1 CEP pour mettre en place un projet.");
+        dialogBuyCEPBy.setContentText("Payer 1 CEP depuis: ");
+    }
+
+    /**
+     * Permet de savoir avec quel continent controllé il compte payer les CEP
+     */
+    public void displayBuyCEPByContinent(){
+        List<Continent> choices = model.getCurrentPLayer().getContinentsControlles();
+        dialogBuyCEPByContinent = new ChoiceDialog<>(
+                choices.get(0),
+                choices
+        );
+        dialogBuyCEPByContinent.setTitle("Mettre en place un projet");
+        dialogBuyCEPByContinent.setHeaderText("Avec les CEP de quel continent voulez vouz payer ?");
+        dialogBuyCEPByContinent.setContentText("Choix: ");
     }
 }

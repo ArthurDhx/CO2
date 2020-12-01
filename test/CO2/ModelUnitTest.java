@@ -75,7 +75,7 @@ public class ModelUnitTest {
         Continent c = model.getContinents()[0];
         Assert.assertEquals(2,p.getCEP());
         Assert.assertEquals(0,p.getResourcesTech());
-        model.mettreEnPlaceProjet(c,c.getSubventions().get(0));
+        model.mettreEnPlaceProjetByPlayer(c,c.getSubventions().get(0));
         Assert.assertEquals(1,p.getCEP());
         Assert.assertEquals(3,p.getResourcesTech());
     }

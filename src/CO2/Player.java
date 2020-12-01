@@ -121,12 +121,10 @@ public class Player {
 
     /**
      * Applique les effets de mise en place d'un projet au joueur :
-     *  - paye le CEP
      *  - donne la recompense du projet selon le type d'energie
      * @param type type energie du projet
      */
     public void rewardSetupProject(GreenEnergyTypes type){
-        CEP -= 1;
         actionPrincipaleDone = true;
 
         switch (type) {

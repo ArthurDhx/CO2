@@ -141,12 +141,31 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
             Optional<Subvention> result = viewGame.hboxAction.dialogMettreEnPlaceProjet.showAndWait();
             result.ifPresent(projetChoisi -> {
                 // Si un projet a ete choisi
-                if(model.mettreEnPlaceProjet(projetChoisi.getContinent(), projetChoisi)) {
-                    viewGame.mettreEnPlaceProjet(projetChoisi.getIndex() , viewGame.imgTilesSolarProjectBack, projetChoisi.getContinent());
-                    viewGame.reloadresourcesTech();
-                    viewGame.reloadCEP();
-                }
-                return;
+                // On demande avec quoi il veut payer (player ou continents controlés)
+                viewGame.hboxAction.displayBuyCEPBy();
+                Optional<String> resultBuyCEPBy = viewGame.hboxAction.dialogBuyCEPBy.showAndWait();
+                resultBuyCEPBy.ifPresent(BuyCEPBy -> {
+                    if(BuyCEPBy == "ma réserve"){
+                        System.out.println("Joueur paye !!!");
+                        if(model.mettreEnPlaceProjetByPlayer(projetChoisi.getContinent(), projetChoisi)) {
+                            viewGame.mettreEnPlaceProjet(projetChoisi.getIndex() , viewGame.imgTilesSolarProjectBack, projetChoisi.getContinent());
+                            viewGame.reloadresourcesTech();
+                            viewGame.reloadCEP();
+                        }
+                    }
+                    else{
+                        viewGame.hboxAction.displayBuyCEPByContinent();
+                        Optional<Continent> resultContinentBuyCEP = viewGame.hboxAction.dialogBuyCEPByContinent.showAndWait();
+                        resultContinentBuyCEP.ifPresent(BuyCEPByContinent -> {
+                            if(model.mettreEnPlaceProjetByContinent(projetChoisi.getContinent(), projetChoisi, BuyCEPByContinent)){
+                                viewGame.mettreEnPlaceProjet(projetChoisi.getIndex() , viewGame.imgTilesSolarProjectBack, projetChoisi.getContinent());
+                                viewGame.reloadresourcesTech();
+                                viewGame.reloadCEP();
+                            }
+                        });
+                    }
+                    return;
+                });
             });
             // Sinon reset la hbox
             viewGame.hboxAction.resetHbox();
