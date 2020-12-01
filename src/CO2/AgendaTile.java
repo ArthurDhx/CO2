@@ -2,17 +2,20 @@ package CO2;
 
 import javafx.scene.image.Image;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AgendaTile {
 
     // Type d'energie
-    private String[] energies;
+    private List<GreenEnergyTypes> energies;
     private Image imageAgendaTile;
 
-    public AgendaTile(String energy1, String energy2, String energy3, Image imageAgendaTile) {
-        this.energies = new String[3];
-        energies[0] = energy1;
-        energies[1] = energy2;
-        energies[2] = energy3;
+    public AgendaTile(GreenEnergyTypes energy1, GreenEnergyTypes energy2, GreenEnergyTypes energy3, Image imageAgendaTile) {
+        this.energies = new ArrayList<>();
+        energies.add(energy1);
+        energies.add(energy2);
+        energies.add(energy3);
         this.imageAgendaTile = imageAgendaTile;
     }
 
@@ -20,18 +23,16 @@ public class AgendaTile {
      * @param energy {"Solar","Biomass","Fusion","Recycling","Reforestation"}
      * @return true si energy est dans la liste des energies acceptables
      */
-    public boolean isPossiblePlacement(String energy) {
-        for (String s : energies) {
-            if (s.equals(energy)) return true;
-        }
+    public boolean isPossiblePlacement(GreenEnergyTypes energy) {
+        if (energies.contains(energy)) return true;
         return false;
     }
 
-    public String[] getEnergies() {
+    public List<GreenEnergyTypes> getEnergies() {
         return energies;
     }
 
-    public void setEnergies(String[] energies) {
+    public void setEnergies(List<GreenEnergyTypes> energies) {
         this.energies = energies;
     }
 

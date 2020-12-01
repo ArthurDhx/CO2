@@ -154,7 +154,7 @@ public class Model {
 			if(nomContinents.get(i).equals("Océanie")) nbCep = 4;if(nomContinents.get(i).equals("Asie")) nbCep = 6;
 			continents[i] = new Continent(nomContinents.get(i), nbCep, new Image(getClass().getResourceAsStream("images/Continents/" + nomContinents.get(i) +".jpg")),i);
 			// TODO dans un prochain sprint, generer les agendaTiles et en prendre une aleatoire par continent
-			AgendaTile agendaTile = new AgendaTile("Reforesting", "Solar", "Fusion", new Image(getClass().getResourceAsStream("images/Agendas/TileAgenda_Reforestation_Solar_Fusion.png")));
+			AgendaTile agendaTile = new AgendaTile(GreenEnergyTypes.REFORESTATION, GreenEnergyTypes.SOLAR, GreenEnergyTypes.FUSION, new Image(getClass().getResourceAsStream("images/Agendas/TileAgenda_Reforestation_Solar_Fusion.png")));
 			continents[i].setAgendaTile(agendaTile);
 
 			/*SommetTile sommetTile = allSommetTile.get(i);
@@ -234,7 +234,7 @@ public class Model {
 	 */
 	public boolean addTilesSolarProjectToSubventionCase(Continent continent, int indexSub){
 		// si l'energie solaire ne peux pas etre placee sur le continent -> action impossible
-		if(!continent.getAgendaTile().isPossiblePlacement("Solar")) return false;
+		if(!continent.getAgendaTile().isPossiblePlacement(GreenEnergyTypes.SOLAR)) return false;
 
 		// permet d'ajouter la tuile sur la case subvention
 		if(tilesSolarProjects.get(0).addOnSubvention() && tilesSolarProjects.get(0).subPossible){

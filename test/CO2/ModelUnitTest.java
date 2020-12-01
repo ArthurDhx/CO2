@@ -1,11 +1,14 @@
 package CO2;
 
+import com.sun.scenario.effect.impl.state.GaussianRenderState;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ModelUnitTest {
 
@@ -47,20 +50,23 @@ public class ModelUnitTest {
     @Test
     public void testInitContinentAgendaTile() {
         // test si les continents ont bien l'unique agendaTiles ["Reforesting", "Solar", "Fusion"]
-        String[] tabEnergies = {"Reforesting", "Solar", "Fusion"};
-        Assert.assertEquals(tabEnergies, model.getContinents()[0].getAgendaTile().getEnergies());
+        List<GreenEnergyTypes> listEnergies = new ArrayList<>();
+        listEnergies.add(GreenEnergyTypes.REFORESTATION);
+        listEnergies.add(GreenEnergyTypes.SOLAR);
+        listEnergies.add(GreenEnergyTypes.FUSION);
+        Assert.assertEquals(listEnergies, model.getContinents()[0].getAgendaTile().getEnergies());
     }
 
     @Test
     public void testPlacementPossibleTuileSolaireSurContinent() {
         // tout les continents on l'agendaTiles ["Reforesting", "Solar", "Fusion"] dans ce sprint
-        Assert.assertTrue(model.getContinents()[0].getAgendaTile().isPossiblePlacement("Solar"));
+        Assert.assertTrue(model.getContinents()[0].getAgendaTile().isPossiblePlacement(GreenEnergyTypes.SOLAR));
     }
 
     @Test
     public void testPlacementImpossibleTuileRecyclageSurContinent() {
         // tout les continents on l'agendaTiles ["Reforesting", "Solar", "Fusion"] dans ce sprint
-        Assert.assertFalse(model.getContinents()[0].getAgendaTile().isPossiblePlacement("Recycling"));
+        Assert.assertFalse(model.getContinents()[0].getAgendaTile().isPossiblePlacement(GreenEnergyTypes.RECYCLING));
     }
 
     @Test
