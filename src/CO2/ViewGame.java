@@ -523,7 +523,7 @@ public class ViewGame {
 	 */
 	public void mettreEnPlaceProjet(int projectChoice, Image imageSolarProjectBack, Continent continent){
 		continent.getTabRectangleSubvention()[projectChoice].setFill(new ImagePattern(imageSolarProjectBack));
-		Tooltip.install(continent.getTabRectangleSubvention()[projectChoice], new Tooltip(" Construire centrale : coût :8$, 4 ressources, min : 2 expertises, obtient : 1 expertise "));
+		Tooltip.install(continent.getTabRectangleSubvention()[projectChoice], new Tooltip(" Construire centrale : coût :8$, 4 ressources, min : 2 expertises, obtient : 1 expertise, 10 pts de victoire "));
 	}
 
 	/**
