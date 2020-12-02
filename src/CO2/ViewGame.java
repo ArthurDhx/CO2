@@ -136,7 +136,7 @@ public class ViewGame {
 			continentY[5] - 60  // AsieSommetY
 	};
 
-	// subventions (subvention x = continent x -> voir initSubvention)
+	// subventions (subvention x = continent x : voir initSubvention)
 	private final int[] subventionY = {
 			continentY[0]+50, // ligne de subvention de l'europe
 			continentY[1]+60, // ligne de subvention de l'afrique
@@ -404,11 +404,13 @@ public class ViewGame {
 		int y = 0;
 
 		switch (continentId) {
-			case 0, 2 -> y = continentY[continentId] - 50;
-			case 1 -> y = continentY[continentId] - 30;
-			case 3, 5 -> y = continentY[continentId] - 100;
-			case 4 -> y = continentY[continentId] - 80;
-		}
+			case 0 : y = continentY[continentId] - 50;
+			case 1 : y = continentY[continentId] - 30;
+            case 2 : y = continentY[continentId] - 50;
+            case 3 : y = continentY[continentId] - 100;
+			case 4 : y = continentY[continentId] - 80;
+            case 5 : y = continentY[continentId] - 100;
+        }
 		return new Circle(continentX[continentId]+75,y, 15, playerColor);
 	}
 
@@ -468,15 +470,15 @@ public class ViewGame {
 				model.getContinents()[j].getTabRectangleSubvention()[i].setY(subventionY[j]);
 
 				switch (i) {
-					case 0 -> {
+					case 0 : {
 						model.getContinents()[j].getTabRectangleSubvention()[i].setFill(new ImagePattern(imgArgent));
 						Tooltip.install(model.getContinents()[j].getTabRectangleSubvention()[i],new Tooltip("Proposer un projet : autant de $ que de cep du continent"));
 					}
-					case 1 -> {
+					case 1 : {
 						model.getContinents()[j].getTabRectangleSubvention()[i].setFill(new ImagePattern(imgRessource));
 						Tooltip.install(model.getContinents()[j].getTabRectangleSubvention()[i],new Tooltip("Proposer un projet : donne 2 cubes de ressources"));
 					}
-					case 2 -> {
+					case 2 : {
 						model.getContinents()[j].getTabRectangleSubvention()[i].setFill(new ImagePattern(imgRecherche));
 						Tooltip.install(model.getContinents()[j].getTabRectangleSubvention()[i],new Tooltip("Proposer un projet : Déplace un scientifique ou +1 scientifique"));
 					}
