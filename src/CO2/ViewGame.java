@@ -556,9 +556,14 @@ public class ViewGame {
 			if (indexSubject == 0) {x = -5;y=-10;}
 			else if (indexSubject == 1){x = 25;y=-10;}
 		} else if (nbSubject == 3){
-			//TODO Coordonnées pour sommet à 3 sujets
+			if (indexSubject == 0) {x = -8;y=-8;}
+			else if (indexSubject == 1){x = 10;y=-18;}
+			else if (indexSubject == 2){x = 28;y=-8;}
 		} else if (nbSubject == 4){
-			//TODO Coordonnées pour sommet à 4 sujets
+			if (indexSubject == 0) {x = -5;y=-20;}
+			else if (indexSubject == 1) {x = 25;y=-20;}
+			else if (indexSubject == 2) {x = -5;y=-2;}
+			else if (indexSubject == 3){x = 25;y=-2;}
 		}
 		imageViewScientifique.setX(continent.getSommetTile().getImageSommetTile().getX()+x);
 		imageViewScientifique.setY(continent.getSommetTile().getImageSommetTile().getY()+y);
