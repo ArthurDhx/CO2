@@ -111,8 +111,8 @@ public class ControllerAction implements EventHandler<ActionEvent>{
                 //affichage d'un message
                 viewGame.displayAlertWithoutHeaderText("Bien joué !", "Vous avez bien joué durant cette décennie. Aucun contient ne manque d'énergie !");
             }
-            else{
-                viewGame.displayAlertWithoutHeaderText("Problème !", "Il manque des centrales !");
+            else{ //Si il manque une/des centrale(s)s à un/des continent(s)
+                manqueCentral(continentsEnBesoin);
             }
         }
         model.endGame();
@@ -159,16 +159,49 @@ public class ControllerAction implements EventHandler<ActionEvent>{
             //On regarde si le nombre de central dans le continent est suffisant ou non
             if(nbCentralInContinent < nbCentral && nbCentralInContinent < continents[i].getCentrales().size()){
                 String title = "ATTENTION ! L'"+continents[i].getName()+" a besoin de central";
-                String message = "Il manque "+(nbCentral-nbCentralInContinent)+" centrale(s) en "+continents[i].getName();
+                String message = "Il manque "+(nbCentral-nbCentralInContinent)+" centrale en "+continents[i].getName();
                 viewGame.displayAlertWithoutHeaderText(title, message);
+                continentsEnBesoin.add(continents[i]);
             }
             else{
                 String title = "Tout va bien !";
                 String message = "Il ne manque aucunes centrales en "+continents[i].getName();
                 viewGame.displayAlertWithoutHeaderText(title, message);
-                continentsEnBesoin.add(continents[i]);
             }
         }
         return continentsEnBesoin;
+    }
+
+    /**
+     * Permet d'effectuer les actions pour les contients n'ayant pas assez de central c'est-à-dire:
+     * 1. Prenez la centrale à combustible fossile du haut de la pile et posez-la sur la case énergie libre la plus à gauche de la région.
+     * 2. Augmentez le niveau global de pollution de CO2 du nombre indiqué par la centrale à combustible fossile. (Char-bon = 40 ppm, Pétrole = 30 ppm, Gaz = 20 ppm). TODO (Yassino)
+     * 3. Si un joueur contrôle la région, il doit payer 1 CEP à labanque de sa réserve ou d’une région qu’il contrôle (pas nécessairement de la région concernée !).
+     *    S’il ne possède pas de CEP (ni dans sa réserve, ni dans une des régions qu’il contrôle):
+     *    il doit en acheter un au marché.
+     *    S’il n’a pas assez d’argent pour acheter un CEP au marché au cours de cette phase d’approvisionnement (et seulement au cours de cette phase):
+     *    il doit échanger des points de victoire (PV) pour 1 pièce chacun, jusqu’à (et seulement jusqu’à) ce qu’il ait assez d’argent pour payer le CEP ;
+     *    il recule alors son disque d’une case sur la piste de PV pour chaque pièce perçue. Les points négatifs sont autorisés.
+     * Si personne ne contrôle la région, le CEP est pris dans la pile de la région.
+     *
+     * @param continentsEnBesoin
+     */
+    public void manqueCentral(ArrayList<Continent> continentsEnBesoin){
+        //Phase 1.
+        for(Continent c: continentsEnBesoin){
+            //on cherche la première case de libre dans les centrales du continent
+            for(Central caseCentral: c.getCentrales()){
+                if(!caseCentral.isOccupe()){
+                    //Une fois trouvée, on ajoute une central à cette case
+                    //TODO aléatoire pour le type de centrale
+                    viewGame.addCentrale(typesCentral.GAZNATUREL, c, caseCentral.getIndex());
+                    //on met à jour le modèle
+                    caseCentral.setOccupe(true);
+                    caseCentral.setType(typesCentral.GAZNATUREL);
+                    //et on sort de la boucle
+                    break;
+                }
+            }
+        }
     }
 }
