@@ -5,6 +5,7 @@ import javafx.event.EventHandler;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class ControllerAction implements EventHandler<ActionEvent>{
@@ -187,8 +188,9 @@ public class ControllerAction implements EventHandler<ActionEvent>{
      * @param continentsEnBesoin
      */
     public void manqueCentral(ArrayList<Continent> continentsEnBesoin){
-        //Phase 1.
+        //pour chaque continent dans le besoin
         for(Continent c: continentsEnBesoin){
+            //Phase 1.
             //on cherche la première case de libre dans les centrales du continent
             for(Central caseCentral: c.getCentrales()){
                 if(!caseCentral.isOccupe()){
@@ -200,6 +202,15 @@ public class ControllerAction implements EventHandler<ActionEvent>{
                     caseCentral.setType(typesCentral.GAZNATUREL);
                     //et on sort de la boucle
                     break;
+                }
+            }
+            //Phase 2.
+            //On regarde si le joueur controle le continent (à changer pour généraliser à tout les joueurs si jeu en multi)
+            List<Continent> continentsControlleParJoueur = model.getCurrentPLayer().getContinentsControlles();
+            for (Continent continentController:continentsControlleParJoueur){
+                if(continentController.equals(c)){
+                    //affichage d'un message
+                    viewGame.displayAlertWithoutHeaderText("Danger !", "Vous controllez un continent en manque d'énergie ! "+c.getName()+" Vous devez payer !!");
                 }
             }
         }
