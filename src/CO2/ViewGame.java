@@ -473,14 +473,17 @@ public class ViewGame {
 					case 0 : {
 						model.getContinents()[j].getTabRectangleSubvention()[i].setFill(new ImagePattern(imgArgent));
 						Tooltip.install(model.getContinents()[j].getTabRectangleSubvention()[i],new Tooltip("Proposer un projet : autant de $ que de cep du continent"));
+						break;
 					}
 					case 1 : {
 						model.getContinents()[j].getTabRectangleSubvention()[i].setFill(new ImagePattern(imgRessource));
 						Tooltip.install(model.getContinents()[j].getTabRectangleSubvention()[i],new Tooltip("Proposer un projet : donne 2 cubes de ressources"));
+						break;
 					}
 					case 2 : {
 						model.getContinents()[j].getTabRectangleSubvention()[i].setFill(new ImagePattern(imgRecherche));
 						Tooltip.install(model.getContinents()[j].getTabRectangleSubvention()[i],new Tooltip("Proposer un projet : Déplace un scientifique ou +1 scientifique"));
+						break;
 					}
 				}
 
@@ -646,7 +649,8 @@ public class ViewGame {
 				break;
 			case SOLAIRE:
 				central = imgCentralSolar;
-				Tooltip.install(continent.getTabRectangleCentral()[index], new Tooltip("Centrale Solaire, Polution :" + typesCentral.SOLAIRE.getCo2()));				break;
+				Tooltip.install(continent.getTabRectangleCentral()[index], new Tooltip("Centrale Solaire, Polution :" + typesCentral.SOLAIRE.getCo2()));
+				break;
 				//TODO reboissement, recylage, fusionfroide, biomass
 		}
 		continent.getTabRectangleCentral()[index].setFill(new ImagePattern(central));
