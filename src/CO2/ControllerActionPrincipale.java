@@ -98,6 +98,7 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
             else{ //S'il il choisir d'avoir un nouveau scientifique
                 if(model.getCurrentPLayer().addScientifique()){ //Si le joueur à pu avoir un nouveau scientifique
                     //on met à jour la vue = déplacer le nouveau scientifique(le dernier de la liste du joueur) dans la réserve
+                    viewGame.addScientifiqueToPane(model.getCurrentPLayer().getScientifiques().size()-1);
                     viewGame.deplacerScientifiqueReserve(model.getCurrentPLayer().getLastAddScientifique().getImgScientifique(),model.getCurrentPLayer().getScientifiques().size()-1);
                 }
                 else{ //Si le joueur à deja 4 scientifique, on affiche un message d'erreur et on quitte ici
