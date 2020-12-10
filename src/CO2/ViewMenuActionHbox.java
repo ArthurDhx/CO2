@@ -3,9 +3,11 @@ package CO2;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +40,10 @@ public class ViewMenuActionHbox extends HBox {
     Button btnActionGratuite;
     Button btnMarche;
     Button btnDeplacerScientifique;
+    Button btnScientifique1;
+    Button btnScientifique2;
+    Button btnScientifique3;
+    Button btnScientifique4;
     Button btnDeplacerScientifiqToProject;
     Button btnDeplacerScientifiqToSommet;
     Button btnDeplacerScientifiqToReserve;
@@ -64,6 +70,10 @@ public class ViewMenuActionHbox extends HBox {
 
         btnActionGratuite = new Button("Action Gratuite");
         btnDeplacerScientifique = new Button("Déplacer un scientifique");
+        btnScientifique1 = new Button("Scientifique n°1");
+        btnScientifique2 = new Button("Scientifique n°2");
+        btnScientifique3 = new Button("Scientifique n°3");
+        btnScientifique4 = new Button("Scientifique n°4");
         btnDeplacerScientifiqToProject = new Button("Déplacer le scientifque sur un projet");
         btnDeplacerScientifiqToSommet = new Button("Déplacer le scientifque sur un sommet");
         btnDeplacerScientifiqToReserve = new Button("Déplacer le scientifque dans la réserve");
@@ -76,6 +86,34 @@ public class ViewMenuActionHbox extends HBox {
         this.getChildren().addAll(btnActionPrincipale, btnActionGratuite,btnFinTour);
 
         btnFinTour = new Button("Fin du tour");
+    }
+
+    /**
+     * Affiche le menu pour choisir le scientifique à utiliser
+     */
+    public void displayActionChoixScientifique() {
+        this.getChildren().removeAll(this.getChildren());
+
+        List<Scientifique> scientifiques = model.getCurrentPLayer().getScientifiques();
+        // si il y a un scientifiques et qu'il n'est pas sur un sommet ont peut le effectuer une action
+        if (scientifiques.size() == 1 && scientifiques.get(0).getSommetTile() == null)  {
+            this.getChildren().add(btnScientifique1);
+        }
+        else if (scientifiques.size() == 2) {
+            if (scientifiques.get(0).getSommetTile() == null) this.getChildren().add(btnScientifique1);
+            if (scientifiques.get(1).getSommetTile() == null) this.getChildren().add(btnScientifique2);
+        }
+        else if (scientifiques.size() == 3) {
+            if (scientifiques.get(0).getSommetTile() == null) this.getChildren().add(btnScientifique1);
+            if (scientifiques.get(1).getSommetTile() == null) this.getChildren().add(btnScientifique2);
+            if (scientifiques.get(2).getSommetTile() == null) this.getChildren().add(btnScientifique3);
+        } else if (scientifiques.size() == 4) {
+            if (scientifiques.get(0).getSommetTile() == null) this.getChildren().add(btnScientifique1);
+            if (scientifiques.get(1).getSommetTile() == null) this.getChildren().add(btnScientifique2);
+            if (scientifiques.get(2).getSommetTile() == null) this.getChildren().add(btnScientifique3);
+            if (scientifiques.get(3).getSommetTile() == null) this.getChildren().add(btnScientifique4);
+        }
+        this.getChildren().addAll(btnCancelActionScientifique);
     }
 
     /**
@@ -198,11 +236,8 @@ public class ViewMenuActionHbox extends HBox {
         // Récupere les actions faite par le joueur
         boolean[] actionFaite = model.getCurrentPLayer().getActionGratuiteDone();
         this.getChildren().removeAll(this.getChildren());
-        // Si l'action n'a pas déjà été faite affiche le bouton liée a l'action
-        if(model.getCurrentPLayer().getCurrentScientifique().getSommetTile() == null){
-            // Si le scientifique n'est  pas sur un sommet alors il peut se déplacer
-            if (!actionFaite[0]) this.getChildren().add(btnDeplacerScientifique);
-        }
+        // si l'action n'est pas faite et que tous les scientifiques ne sont pas sur un sommet alors afficher l'action
+        if (!actionFaite[0] && !model.getCurrentPLayer().isAllScientifiqueIsOnSommet()) this.getChildren().add(btnDeplacerScientifique);
         if (!actionFaite[2]) this.getChildren().add(btnMarche);
         if (!actionFaite[3]) this.getChildren().add(btnJouerCarte);
 
@@ -219,7 +254,7 @@ public class ViewMenuActionHbox extends HBox {
         for(int i = 0; i<continent.length; i++){
             ArrayList<Subvention> subventionsInContinent = continent[i].getSubventions();
             for(int j = 0; j<subventionsInContinent.size(); j++){
-                if(!subventionsInContinent.get(j).isEmpty()){
+                if(!subventionsInContinent.get(j).isEmpty() && !subventionsInContinent.get(j).isStaffed()){
                     subventions.add(subventionsInContinent.get(j));
                 }
             }
@@ -245,7 +280,10 @@ public class ViewMenuActionHbox extends HBox {
         ArrayList<SommetTile> sommetTiles = new ArrayList<>();
         for(int i = 0; i< continent.length; i++){
             GreenEnergyTypes energy =  model.getCurrentPLayer().getCurrentScientifique().getSubject().getEnergy();
-            if(continent[i].getSommetTile().haveEnergy(energy)) sommetTiles.add(continent[i].getSommetTile());
+            if(continent[i].getSommetTile().haveEnergy(energy) && !continent[i].getSommetTile().isStaffed(model.getCurrentPLayer().getCurrentScientifique().getSubject())) {
+                //si le sommet à l'énergie du scientifique et que cette énergie n'est pas occupé alors il se déplace
+                sommetTiles.add(continent[i].getSommetTile());
+            }
         }
         System.out.println(sommetTiles);
         //Si aucun sommet n'est mis en place, on ne fait rien
@@ -317,6 +355,10 @@ public class ViewMenuActionHbox extends HBox {
      */
     public void setButtonActionGratuiteControler(EventHandler<ActionEvent> handler) {
         btnDeplacerScientifique.setOnAction(handler);
+        btnScientifique1.setOnAction(handler);
+        btnScientifique2.setOnAction(handler);
+        btnScientifique3.setOnAction(handler);
+        btnScientifique4.setOnAction(handler);
         btnDeplacerScientifiqToProject.setOnAction(handler);
         btnDeplacerScientifiqToSommet.setOnAction(handler);
         btnDeplacerScientifiqToReserve.setOnAction(handler);

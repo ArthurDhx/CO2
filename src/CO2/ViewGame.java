@@ -61,9 +61,6 @@ public class ViewGame {
 	Image imgCentralPetrole;
 	Image imgCentralGaz;
 
-	ImageView imageViewScientifiqueN1;
-	ImageView imageViewScientifiqueN2;
-
 	ViewMenuActionHbox hboxAction;
 	private Object AlertType;
 
@@ -191,13 +188,10 @@ public class ViewGame {
 		imgCentralGaz = new Image(getClass().getResourceAsStream("images/Centrales/Gas.png"));
 
 
-		//On récupère l'image d'un scientifique et on l'ajoute à l'écran
-		// img scientifique n°1
-		imageViewScientifiqueN1 = model.getCurrentPLayer().getCurrentScientifique().getImgScientifique();
-		imageViewScientifiqueN1.setFitWidth(40);
-		imageViewScientifiqueN1.setPreserveRatio(true);
-		deplacerScientifiqueReserve(imageViewScientifiqueN1);
-		pane.getChildren().add(imageViewScientifiqueN1);
+		//On récupère l'image des scientifiques et on les ajoutes à l'écran
+		for (int i = 0; i < model.getCurrentPLayer().getScientifiques().size(); i++) {
+			addScientifiqueToPane(i);
+		}
 
 
 		initContinent();
@@ -525,6 +519,9 @@ public class ViewGame {
 
 	/**
 	 * Mettre en place une subvention
+	 * @param projectChoice
+	 * @param imageSolarProjectBack
+	 * @param continent
 	 */
 	public void mettreEnPlaceProjet(int projectChoice, Image imageSolarProjectBack, Continent continent){
 		continent.getTabRectangleSubvention()[projectChoice].setFill(new ImagePattern(imageSolarProjectBack));
@@ -533,6 +530,8 @@ public class ViewGame {
 
 	/**
 	 * Reset d'une subvention
+	 * @param continent
+	 * @param idSubvention
 	 */
 	public void resetSubvention(Continent continent, int idSubvention){
 		if (idSubvention == 0) continent.getTabRectangleSubvention()[idSubvention].setFill(new ImagePattern(imgArgent));
@@ -540,14 +539,36 @@ public class ViewGame {
 		if (idSubvention == 2) continent.getTabRectangleSubvention()[idSubvention].setFill(new ImagePattern(imgRecherche));
 	}
 
-	/** Ajouter un Scientifique sur un projet */
+	/**
+	 * Permet d'ajouter le scientifique passé en paramètre au panneaux
+	 * @param idScientifique
+	 */
+	public void addScientifiqueToPane(int idScientifique){
+		ImageView imageViewScientifique = model.getCurrentPLayer().getScientifiques().get(idScientifique).getImgScientifique();
+		imageViewScientifique.setFitWidth(40);
+		imageViewScientifique.setPreserveRatio(true);
+		deplacerScientifiqueReserve(imageViewScientifique,idScientifique);
+		pane.getChildren().add(imageViewScientifique);
+	}
+
+	/**
+	 * Ajouter un Scientifique sur un projet
+	 * @param projectChoice
+	 * @param imageViewScientifique
+	 * @param continent
+	 */
 	public void addScientifiqueToProject(int projectChoice, ImageView imageViewScientifique, Continent continent){
 		imageViewScientifique.setX(continent.getTabRectangleSubvention()[projectChoice].getX());
 		imageViewScientifique.setY(continent.getTabRectangleSubvention()[projectChoice].getY());
 		imageViewScientifique.toFront();
 	}
 
-	/** Ajouter un Scientifique sur un sommet */
+	/**
+	 * Ajouter un Scientifique sur un sommet
+	 * @param imageViewScientifique
+	 * @param scientifique
+	 * @param sommetTile
+	 */
 	public void addScientifiqueToSommet(ImageView imageViewScientifique, Scientifique scientifique, SommetTile sommetTile){
 		int nbSubject = sommetTile.getNbSubjects();
 		int indexSubject = sommetTile.getIndexSubject(scientifique.getSubject());
@@ -576,25 +597,39 @@ public class ViewGame {
 		scientifique.setContinent(null);
 	}
 
-	public void deplacerScientifiqueReserve(ImageView imageViewScientifique){
+	/**
+	 * Permet d'ajouter l'image du scientifique passé en paramètre à la réserve
+	 * dans son emplacement grâce à l'idScientifique qui est l'index du scientifique dans la liste
+	 * des scientifiques du joueurs
+	 * @param imageViewScientifique
+	 * @param idScientifique
+	 */
+	public void deplacerScientifiqueReserve(ImageView imageViewScientifique, int idScientifique){
+		int y= 0;
+		switch (idScientifique){
+			case 0 : y = 0;
+				break;
+			case 1 : y = 50;
+				break;
+			case 2 : y = 100;
+				break;
+			case 3 : y = 150;
+		}
+		System.out.println(idScientifique);
 		imageViewScientifique.setX(30);
-		imageViewScientifique.setY(180);
+		imageViewScientifique.setY(180+y);
 	}
 
-
+	/**
+	 * Afficher un message
+	 * @param title
+	 * @param message
+	 */
 	public void displayAlertWithoutHeaderText(String title, String message) {
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
 		alert.setHeaderText(null);
 		alert.setTitle(title);
 		alert.setContentText(message);
-		alert.showAndWait();
-	}
-
-	public void sommetInfo() {
-		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.setTitle("Information sur le sommet");
-		alert.setHeaderText(null);
-		alert.setContentText("Il n'y a pas votre source d'énergie dans ce sommet");
 		alert.showAndWait();
 	}
 
@@ -661,17 +696,5 @@ public class ViewGame {
 	 */
 	public void resetCentrale(Continent continent, int idCentrale){
 		continent.getTabRectangleCentral()[idCentrale].setFill(null);
-	}
-
-	/**
-	 * Permet d'ajouter un scientifique à la réserve du joueur
-	 */
-	public void addScientifiqueToReserve(){
-		//On récupère l'image du deuxième scientifique du joueur
-		imageViewScientifiqueN2 = model.getCurrentPLayer().getScientifiques().get(1).getImgScientifique();
-		imageViewScientifiqueN2.setFitWidth(40);
-		imageViewScientifiqueN2.setPreserveRatio(true);
-		deplacerScientifiqueReserve(imageViewScientifiqueN2);
-		pane.getChildren().add(imageViewScientifiqueN2);
 	}
 }

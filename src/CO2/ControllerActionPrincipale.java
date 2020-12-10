@@ -82,8 +82,8 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
     }
 
     /**
-     * Si un projet est propose sur une case recherche en cllaboration, choix:
-     * - déplcer scientifique
+     * Si un projet est propose sur une case recherche en collaboration, choix:
+     * - déplacer scientifique
      * - Ajouter scientifique
      */
     public void actionProposerProjetRecherche(){
@@ -97,8 +97,8 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
             }
             else{ //S'il il choisir d'avoir un nouveau scientifique
                 if(model.getCurrentPLayer().addScientifique()){ //Si le joueur à pu avoir un nouveau scientifique
-                    //on met à jour la vue
-                    viewGame.addScientifiqueToReserve();
+                    //on met à jour la vue = déplacer le nouveau scientifique(le dernier de la liste du joueur) dans la réserve
+                    viewGame.deplacerScientifiqueReserve(model.getCurrentPLayer().getLastAddScientifique().getImgScientifique(),model.getCurrentPLayer().getScientifiques().size()-1);
                 }
                 else{ //Si le joueur à deja 4 scientifique, on affiche un message d'erreur et on quitte ici
                     viewGame.displayAlertWithoutHeaderText("Problème lors de l'action", "Vous avez déjà 4 scientifiques.");
@@ -152,7 +152,7 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
                         model.getCurrentPLayer().getCurrentScientifique().setSommetTile(sommetChoisi);
                         model.getCurrentPLayer().getCurrentScientifique().setSubvention(null);
                         model.getCurrentPLayer().setDeplacerScientifiqueDone(true);
-                    } else viewGame.sommetInfo();
+                    }
                 });
             }
             else{
@@ -167,7 +167,7 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
                                 " !"
                 );
                 //remettre le scientifique dans la réserve
-                viewGame.deplacerScientifiqueReserve(model.getCurrentPLayer().getCurrentScientifique().getImgScientifique());
+                viewGame.deplacerScientifiqueReserve(model.getCurrentPLayer().getCurrentScientifique().getImgScientifique(), model.getCurrentPLayer().getCurentScientifiqueId());
                 viewGame.hboxAction.resetHbox();
                 model.getCurrentPLayer().getCurrentScientifique().moveToReserve();
             }

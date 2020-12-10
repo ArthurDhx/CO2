@@ -14,6 +14,7 @@ public class Player {
     private Map<GreenEnergyTypes, Integer> expertise;
     //le joueur à une liste de scientifique, elle peut être vide ou rempli jusqu'a 4 scientifiques maximum
     private List<Scientifique> scientifiques;
+    private int curentScientifiqueId;
     // Nombre de CEP du joueur
     private int CEP;
     // Nombre de ressources technologiques du joueur
@@ -26,6 +27,7 @@ public class Player {
     private List<Continent> continentsControlles;
     // couleur du joueur
     private Color color;
+    private boolean allScientifiqueIsOnSommet;
 
     /*
      * true si une action a été faite
@@ -48,6 +50,8 @@ public class Player {
         pointVictoire = 0;
         continentsControlles = new ArrayList<>();
         color = Color.INDIANRED;
+        curentScientifiqueId = 0;
+        allScientifiqueIsOnSommet = false;
     }
 
     /**
@@ -188,11 +192,28 @@ public class Player {
     }
 
     /**
-     * A commenter
-     * @return
+     * @return Scientifique, retourne le scientifique courant
      */
     public Scientifique getCurrentScientifique(){
-        return scientifiques.get(0);// a terme il y aura plus de scientifique
+        return scientifiques.get(curentScientifiqueId);
+    }
+
+    /**
+     * @return Scientifique, retourne le dernier scientifique ajouté
+     */
+    public Scientifique getLastAddScientifique(){
+        return scientifiques.get(scientifiques.size()-1);
+    }
+
+    /**
+     * Selectionne le scientifique courant
+     */
+    public void setCurrentScientifique(int curentScientifiqueId){
+        this.curentScientifiqueId = curentScientifiqueId;
+    }
+
+    public int getCurentScientifiqueId() {
+        return curentScientifiqueId;
     }
 
     /**
@@ -362,5 +383,18 @@ public class Player {
 
     public void setContinentsControlles(List<Continent> continentsControlles) {
         this.continentsControlles = continentsControlles;
+    }
+
+    public void setAllScientifiqueIsOnSommet(boolean allScientifiqueIsOnSommet) {
+        this.allScientifiqueIsOnSommet = allScientifiqueIsOnSommet;
+    }
+
+    public boolean isAllScientifiqueIsOnSommet() {
+        int all = 0;
+        for (Scientifique s: scientifiques) {
+            if (s.getSommetTile() != null) all++;
+        }
+        if (all == scientifiques.size()) return true;
+        else return false;
     }
 }

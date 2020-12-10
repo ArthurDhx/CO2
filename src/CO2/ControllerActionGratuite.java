@@ -24,6 +24,22 @@ public class ControllerActionGratuite implements EventHandler<ActionEvent> {
     public void handle(ActionEvent event) {
         Object source = event.getSource();
         if (source == viewGame.hboxAction.btnDeplacerScientifique) {
+            viewGame.hboxAction.displayActionChoixScientifique();
+        } else if (source == viewGame.hboxAction.btnScientifique1) {
+            viewGame.hboxAction.resetHbox();
+            viewGame.hboxAction.displayActionScientifique();
+            model.getCurrentPLayer().setCurrentScientifique(0);
+        } else if (source == viewGame.hboxAction.btnScientifique2) {
+            model.getCurrentPLayer().setCurrentScientifique(1);
+            viewGame.hboxAction.resetHbox();
+            viewGame.hboxAction.displayActionScientifique();
+        }else if (source == viewGame.hboxAction.btnScientifique3) {
+            model.getCurrentPLayer().setCurrentScientifique(2);
+            viewGame.hboxAction.resetHbox();
+            viewGame.hboxAction.displayActionScientifique();
+        }else if (source == viewGame.hboxAction.btnScientifique4) {
+            model.getCurrentPLayer().setCurrentScientifique(3);
+            viewGame.hboxAction.resetHbox();
             viewGame.hboxAction.displayActionScientifique();
         } else if (source == viewGame.hboxAction.btnCancelActionScientifique) {
             viewGame.hboxAction.resetHbox();
@@ -65,8 +81,7 @@ public class ControllerActionGratuite implements EventHandler<ActionEvent> {
                     model.getCurrentPLayer().getCurrentScientifique().setSommetTile(sommetChoisi);
                     model.getCurrentPLayer().getCurrentScientifique().setSubvention(null);
                     model.getCurrentPLayer().setDeplacerScientifiqueDone(true);
-                } else {
-                    viewGame.sommetInfo();
+                    sommetChoisi.setStaffedOnEnergy(model.getCurrentPLayer().getCurrentScientifique().getSubject());
                 }
                 viewGame.hboxAction.resetHbox();
             });
@@ -79,7 +94,7 @@ public class ControllerActionGratuite implements EventHandler<ActionEvent> {
             //model.getCurrentPLayer().addExpertise(model.getCurrentPLayer().getCurrentScientifique().getSubject().getEnergy(), 1);
             //viewGame.displayAlertWithoutHeaderText("Gain d'expertise", "En remettant votre scientifique dans votre réserve, vous gagné 1 d’expertise dans le type d’énergie " + model.getCurrentPLayer().getCurrentScientifique().getSubject().getEnergy() + " !");
             //remettre le scientifique dans la réserve
-            viewGame.deplacerScientifiqueReserve(model.getCurrentPLayer().getCurrentScientifique().getImgScientifique());
+            viewGame.deplacerScientifiqueReserve(model.getCurrentPLayer().getCurrentScientifique().getImgScientifique(),model.getCurrentPLayer().getCurentScientifiqueId() );
             model.getCurrentPLayer().setDeplacerScientifiqueDone(true);
             viewGame.hboxAction.resetHbox();
             model.getCurrentPLayer().getCurrentScientifique().moveToReserve();

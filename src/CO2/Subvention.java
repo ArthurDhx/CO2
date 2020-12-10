@@ -18,6 +18,8 @@ public class Subvention {
     private int index ;
     // L'index ou est placer la subvention sur le continent
     private Continent continent;
+    // false si il n'y a pas de scientifique
+    // true si il y a un scientifique
     private boolean staffed;
 
     //Le continent où se situe la subvention
