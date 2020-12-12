@@ -40,4 +40,12 @@ public class Central {
     public centralTypes getType() {
         return type;
     }
+
+    public boolean isFossile(){
+        if (type == centralTypes.GAZNATUREL || type == centralTypes.CHARBON || type == centralTypes.PETROLE){
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

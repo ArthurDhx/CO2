@@ -446,8 +446,8 @@ public class Model {
 		if(projetMisEnPlaceChoisi.isStaffed()) return -2;
 		ArrayList<Central> centrales = projetMisEnPlaceChoisi.getContinent().getCentrales();
 		for (int i = 0; i < centrales.size(); i++) {
-			// Si un espace est libre
-			if (!centrales.get(i).isOccupe()) {
+			// Si un espace est libre ou qu'il n'est pas libre et que c'est une centrale fossile
+			if (!centrales.get(i).isOccupe() || (centrales.get(i).isOccupe() && centrales.get(i).isFossile() && projetMisEnPlaceChoisi.getContinent().allPlantsAreOccupied())) {
 				// Alors on l'occupe
 				getCurrentPLayer().setActionPrincipaleDone(true);
 				centrales.get(i).setOccupe(true);
@@ -457,6 +457,14 @@ public class Model {
 				centrales.get(i).setType(projetMisEnPlaceChoisi.getProject().getCentralType());
 				// le joueur paye la centrale
 				getCurrentPLayer().payCentral(projetMisEnPlaceChoisi.getProject().getCentralType().getCout());
+
+				if (centrales.get(i).isOccupe() && centrales.get(i).isFossile() && projetMisEnPlaceChoisi.getContinent().allPlantsAreOccupied()) {
+					// récompenses du remplacement
+					// le joueur prends 1 CEP du marché et le place sur la la région si la limite régionale de CEP est respecté
+					projetMisEnPlaceChoisi.getContinent().addCEP(1);
+					//réduisez le niveau de CO2 globale en enlevant celui de la centrale fossile
+					this.co2 -= centrales.get(i).getType().getCo2();
+				}
 				return centrales.get(i).getIndex();
 			}
 		}

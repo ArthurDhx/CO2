@@ -154,5 +154,14 @@ public class Continent {
     public int getIndex() {
         return index;
     }
+
+    public boolean allPlantsAreOccupied(){
+        int nbcentralOccuped = 0;
+        for (Central c: centrales) {
+            if(c.isOccupe()) nbcentralOccuped++;
+        }
+        if (nbcentralOccuped == centrales.size()) return true;
+        else return false;
+    }
 }
 
