@@ -28,6 +28,8 @@ public class Player {
     // couleur du joueur
     private Color color;
     private boolean allScientifiqueIsOnSommet;
+    // liste des cartes Lobby dans la main du joueur
+    private List<LobbyCard> lobbyCards;
 
     /*
      * true si une action a été faite
@@ -42,6 +44,7 @@ public class Player {
     public Player() {
         initExpertise();
         initScientifiques();
+        initLobbyCards();
         actionPrincipaleDone = false;
         actionGratuiteDone = new boolean[NBACTIONGRATUITE];
         CEP = 2;
@@ -52,6 +55,14 @@ public class Player {
         color = Color.INDIANRED;
         curentScientifiqueId = 0;
         allScientifiqueIsOnSommet = false;
+    }
+
+    /**
+     * Initialise la liste de cartes lobby du joueur
+     */
+    private void initLobbyCards() {
+        lobbyCards = new ArrayList<>();
+        lobbyCards.add(new LobbyCard());
     }
 
     /**
@@ -305,6 +316,15 @@ public class Player {
         resourcesTech -= cost[1];
     }
 
+    /**
+     * Joue la carte choisie par le joueur
+     * @param card la carte choisie
+     */
+    public void playLobbyCard(LobbyCard card) {
+        // traitement
+        lobbyCards.remove(card);
+    }
+
     public int getNBACTIONGRATUITE() {
         return NBACTIONGRATUITE;
     }
@@ -396,5 +416,9 @@ public class Player {
         }
         if (all == scientifiques.size()) return true;
         else return false;
+    }
+
+    public List<LobbyCard> getLobbyCards() {
+        return lobbyCards;
     }
 }
