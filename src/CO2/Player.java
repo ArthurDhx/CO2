@@ -325,7 +325,7 @@ public class Player {
      * @param card la carte choisie
      */
     public void playLobbyCard(LobbyCard card) {
-        // traitement
+        card.play();
         lobbyCards.remove(card);
     }
 

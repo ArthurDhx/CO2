@@ -3,20 +3,40 @@ package CO2;
 public class LobbyCard<T> {
 
     // action de lobby majeur a faire
-    private typeLobbyAction typeLobbyAction;
+    private lobbyActionTypes lobbyActionType;
 
     // complement
     private T complement;
 
-    public LobbyCard(typeLobbyAction typeLobbyAction, T complement) {
-        this.typeLobbyAction = typeLobbyAction;
+    public LobbyCard(lobbyActionTypes lobbyActionType, T complement) {
+        this.lobbyActionType = lobbyActionType;
         this.complement = complement;
+    }
+
+    /**
+     * Appeler par le joueur quand il joue un carte
+     */
+    public void play() {
+        switch (lobbyActionType) {
+            case PROPOSER:
+                break;
+            case METTRE:
+                break;
+            case CONSTRUIRE:
+                break;
+            case SOMMET:
+                break;
+            case MARCHE_ACHAT:
+                break;
+            case MARCHE_VENTE:
+                break;
+        }
     }
 
     @Override
     public String toString() {
         return "LobbyCard{" +
-                "typeLobbyAction=" + typeLobbyAction +
+                "typeLobbyAction=" + lobbyActionType +
                 ", complement=" + complement +
                 '}';
     }

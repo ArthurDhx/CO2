@@ -4,7 +4,7 @@ enum greenEnergyTypes {SOLAR, BIOMASS, RECYCLING, FUSION, REFORESTATION}
 
 enum subventionTypes {ARGENT, RESSOURCE, RECHERCHE}
 
-enum typeLobbyAction {PROPOSER, METTRE, CONSTRUIRE, SOMMET, MARCHE_ACHAT, MARCHE_VENTE}
+enum lobbyActionTypes {PROPOSER, METTRE, CONSTRUIRE, SOMMET, MARCHE_ACHAT, MARCHE_VENTE}
 
 enum centralTypes {
     //TODO :  a changer une fois le reste implementer

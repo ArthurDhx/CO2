@@ -113,23 +113,23 @@ public class Model {
 
 		// cartes proposer un projet sur un continent
 		for (Continent c : continents)
-			lobbyCards.add(new LobbyCard<>(typeLobbyAction.PROPOSER, c));
+			lobbyCards.add(new LobbyCard<>(lobbyActionTypes.PROPOSER, c));
 
 		// cartes proposer un projet sur une subvention
 		for (subventionTypes sub : subventionTypes.values())
-			lobbyCards.add(new LobbyCard<>(typeLobbyAction.PROPOSER, sub));
+			lobbyCards.add(new LobbyCard<>(lobbyActionTypes.PROPOSER, sub));
 
 		// cartes mettre en place un type de projet
 		for (greenEnergyTypes type : greenEnergyTypes.values())
-			lobbyCards.add(new LobbyCard<>(typeLobbyAction.METTRE, type));
+			lobbyCards.add(new LobbyCard<>(lobbyActionTypes.METTRE, type));
 
 		// cartes construire une centrale
 		for (centralTypes centralType : centralTypes.values())
-			lobbyCards.add(new LobbyCard<>(typeLobbyAction.CONSTRUIRE, centralType.name()));
+			lobbyCards.add(new LobbyCard<>(lobbyActionTypes.CONSTRUIRE, centralType.name()));
 
 		// cartes sommet d'un type d'energie
 		for (greenEnergyTypes type : greenEnergyTypes.values())
-			lobbyCards.add(new LobbyCard<>(typeLobbyAction.SOMMET, type));
+			lobbyCards.add(new LobbyCard<>(lobbyActionTypes.SOMMET, type));
 
 		// donner 5 cartes parmi ces cartes au joueur
 		getCurrentPLayer().giveLobbyCards(lobbyCards, 5);
