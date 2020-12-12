@@ -1,11 +1,11 @@
 package CO2;
 
-public class ProjectTile {
+public class Project {
     private boolean subventionPossible;
     private boolean misEnPlace;
     private greenEnergyTypes energyType;
 
-    public ProjectTile(greenEnergyTypes energyType){
+    public Project(greenEnergyTypes energyType){
         this.subventionPossible = true;
         this.misEnPlace = false;
         this.energyType = energyType;

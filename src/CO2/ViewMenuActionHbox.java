@@ -182,7 +182,7 @@ public class ViewMenuActionHbox extends HBox {
         for(int i = 0; i<continent.length; i++){
             ArrayList<Subvention> subventionsInContinent = continent[i].getSubventions();
             for(int j = 0; j<subventionsInContinent.size(); j++){
-                if((!subventionsInContinent.get(j).isEmpty()) && (!subventionsInContinent.get(j).getTilesSolarProject().isMisEnPlace())){
+                if((!subventionsInContinent.get(j).isEmpty()) && (!subventionsInContinent.get(j).getProject().isMisEnPlace())){
                     subventions.add(subventionsInContinent.get(j));
                 }
             }
@@ -209,7 +209,7 @@ public class ViewMenuActionHbox extends HBox {
         for(int i = 0; i<continent.length; i++){
             ArrayList<Subvention> subventionsInContinent = continent[i].getSubventions();
             for(int j = 0; j<subventionsInContinent.size(); j++){
-                if(subventionsInContinent.get(j).getTilesSolarProject() != null && subventionsInContinent.get(j).getTilesSolarProject().isMisEnPlace() ){
+                if(subventionsInContinent.get(j).getProject() != null && subventionsInContinent.get(j).getProject().isMisEnPlace() ){
                     subventions.add(subventionsInContinent.get(j));
                 }
             }

@@ -44,7 +44,6 @@ public class Player {
     public Player() {
         initExpertise();
         initScientifiques();
-        initLobbyCards();
         actionPrincipaleDone = false;
         actionGratuiteDone = new boolean[NBACTIONGRATUITE];
         CEP = 2;
@@ -60,9 +59,14 @@ public class Player {
     /**
      * Initialise la liste de cartes lobby du joueur
      */
-    private void initLobbyCards() {
+    public void giveLobbyCards(List<LobbyCard> cards, int nb) {
         lobbyCards = new ArrayList<>();
-        lobbyCards.add(new LobbyCard());
+        for (int i = 0; i<nb; i++) {
+            System.out.println(cards.get(i));
+            // prendre une carte de cards au hasard
+            // la retirer de cards
+            // ajouter a lobbyCards
+        }
     }
 
     /**
@@ -298,7 +302,7 @@ public class Player {
      * @param project projet a construire
      * @return
      */
-    public boolean canConstruct(ProjectTile project) {
+    public boolean canConstruct(Project project) {
         centralTypes typeCentral = project.getCentralType();
         int[] cout = typeCentral.getCout();
         if (cout[0] > argent) return false;

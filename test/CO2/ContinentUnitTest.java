@@ -9,7 +9,7 @@ public class ContinentUnitTest {
     @Test
     public void testIsContainsTilesSolarProject(){
         Continent c1 = new Continent("Europe", 3, new Image(getClass().getResourceAsStream("images/Continents/Europe.jpg")),1);
-        ProjectTile t1 = new ProjectTile(greenEnergyTypes.SOLAR);
+        Project t1 = new Project(greenEnergyTypes.SOLAR);
         c1.getSubventions().get(2).addTilesSolarProject(t1);
         Assert.assertTrue(c1.isContainsTilesSolarProject());
     }

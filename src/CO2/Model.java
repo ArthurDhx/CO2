@@ -38,13 +38,16 @@ public class Model {
 	private int co2;
 
 	// List des tuiles de projet
-	ArrayList<ProjectTile> projectTiles;
+	ArrayList<Project> projects;
 
 	// Liste des sommets
 	List<SommetTile> allSommetTile;
 
 	// Liste des pistes d'expertises
 	List<PisteExpertise> pistesExpertise;
+
+	// Liste des cartes Lobby
+	List<LobbyCard> lobbyCards;
 
 	// nombre de joueurs
 	private int nbJoueur;
@@ -82,9 +85,9 @@ public class Model {
 	public void init() throws IOException {
 		// Initialisation du tableau contenant les 6 tuiles de projet solaire
 		//TODO : Rabaisser a 6 une fois toutes les tuiles projet mis en place car sinon il n'y a pas assez de tuiles pour la demo
-		projectTiles = new ArrayList<ProjectTile>();
+		projects = new ArrayList<>();
 		for(int i = 0; i< 30; i++){// 30 pour l'instant (représente tous les projet)
-			projectTiles.add(new ProjectTile(SOLAR));
+			projects.add(new Project(SOLAR));
 		}
 		// Initialisation des joueurs
 		initPlayers();
@@ -97,6 +100,39 @@ public class Model {
 		initSommetTile();
 		// Initialisation les barres d'expertise
 		initExpertise();
+		// Initialisation les cartes Lobby
+		initLobbyCards();
+	}
+
+	/**
+	 * Initialise les cartes Lobby
+	 * et en donne 5 au joueur
+	 */
+	private void initLobbyCards() {
+		lobbyCards = new ArrayList<>();
+
+		// cartes proposer un projet sur un continent
+		for (Continent c : continents)
+			lobbyCards.add(new LobbyCard<>(typeLobbyAction.PROPOSER, c));
+
+		// cartes proposer un projet sur une subvention
+		for (subventionTypes sub : subventionTypes.values())
+			lobbyCards.add(new LobbyCard<>(typeLobbyAction.PROPOSER, sub));
+
+		// cartes mettre en place un type de projet
+		for (greenEnergyTypes type : greenEnergyTypes.values())
+			lobbyCards.add(new LobbyCard<>(typeLobbyAction.METTRE, type));
+
+		// cartes construire une centrale
+		for (centralTypes centralType : centralTypes.values())
+			lobbyCards.add(new LobbyCard<>(typeLobbyAction.CONSTRUIRE, centralType.name()));
+
+		// cartes sommet d'un type d'energie
+		for (greenEnergyTypes type : greenEnergyTypes.values())
+			lobbyCards.add(new LobbyCard<>(typeLobbyAction.SOMMET, type));
+
+		// donner 5 cartes parmi ces cartes au joueur
+		getCurrentPLayer().giveLobbyCards(lobbyCards, 5);
 	}
 
 	/**
@@ -213,7 +249,7 @@ public class Model {
 	 * @return le nombre de tuiles "Projet Solaire" restantes dans la pile
 	 */
 	public int getNbSolarProject(){
-		return projectTiles.size();
+		return projects.size();
 	}
 
 	/**
@@ -234,9 +270,9 @@ public class Model {
 		if(!continent.getAgendaTile().isPossiblePlacement(SOLAR)) return false;
 
 		// permet d'ajouter la tuile sur la case subvention
-		if(projectTiles.get(0).addOnSubvention() && projectTiles.get(0).isSubventionPossible()){
-			continent.getSubventions().get(indexSub).addTilesSolarProject(projectTiles.get(0));
-			projectTiles.get(0).setSubventionPossible(false);
+		if(projects.get(0).addOnSubvention() && projects.get(0).isSubventionPossible()){
+			continent.getSubventions().get(indexSub).addTilesSolarProject(projects.get(0));
+			projects.get(0).setSubventionPossible(false);
 			return true;
 		}
 		return false;
@@ -268,7 +304,7 @@ public class Model {
 		} else {
 			// À faire pour toutes les énergies
 			// vérifie si le sommet ainsi que la subvention on tous deux l'énergie solaire.
-			return sommetTile.haveEnergy(SOLAR) && subvention.getTilesSolarProject() != null;
+			return sommetTile.haveEnergy(SOLAR) && subvention.getProject() != null;
 		}
 	}
 
@@ -281,7 +317,7 @@ public class Model {
 		if(curPlayer.getCEP() >= 1){
 			curPlayer.rewardSetupProject(SOLAR);
 			curPlayer.removeCEP();
-			subvention.getTilesSolarProject().setMisEnPlace(true);
+			subvention.getProject().setMisEnPlace(true);
 			return true;
 		}
 		return false;
@@ -292,7 +328,7 @@ public class Model {
 		if(ProjectBuyContinent.getNbCep() >= 1){
 			curPlayer.rewardSetupProject(SOLAR);
 			ProjectBuyContinent.removeCEP();
-			subvention.getTilesSolarProject().setMisEnPlace(true);
+			subvention.getProject().setMisEnPlace(true);
 			return true;
 		}
 		return false;
@@ -405,7 +441,7 @@ public class Model {
     public int putCentral(Subvention projetMisEnPlaceChoisi) {
     	//TODO : Suis qui enleve le projet ne pas oublier de le faire aussi dans le modele
 		// Si le joueur n'as pas assez d'expertise, d'argent ou de ressources technologiques
-		if (!getCurrentPLayer().canConstruct(projetMisEnPlaceChoisi.getTilesSolarProject())) return -3;
+		if (!getCurrentPLayer().canConstruct(projetMisEnPlaceChoisi.getProject())) return -3;
 		// Si pas des scientifique sur projetMisEnplaceChoisi
 		if(projetMisEnPlaceChoisi.isStaffed()) return -2;
 		ArrayList<Central> centrales = projetMisEnPlaceChoisi.getContinent().getCentrales();
@@ -418,9 +454,9 @@ public class Model {
 				// comme seul joueur, il prend le controlle du continent quand il met en place
 				giveControl(projetMisEnPlaceChoisi.getContinent());
 				// Affecation type
-				centrales.get(i).setType(projetMisEnPlaceChoisi.getTilesSolarProject().getCentralType());
+				centrales.get(i).setType(projetMisEnPlaceChoisi.getProject().getCentralType());
 				// le joueur paye la centrale
-				getCurrentPLayer().payCentral(projetMisEnPlaceChoisi.getTilesSolarProject().getCentralType().getCout());
+				getCurrentPLayer().payCentral(projetMisEnPlaceChoisi.getProject().getCentralType().getCout());
 				return centrales.get(i).getIndex();
 			}
 		}

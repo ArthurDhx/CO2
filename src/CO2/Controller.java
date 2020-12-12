@@ -55,7 +55,7 @@ public class Controller {
                     viewGame.addTuilesToSubvention(subvention.getIndex(), viewGame.imgTilesSolarProject, continent);
 
                     // Mets a jour le model
-                    model.projectTiles.remove(0);
+                    model.projects.remove(0);
                     // Le joueur en cours a effectuer son action principale
                 }
             });

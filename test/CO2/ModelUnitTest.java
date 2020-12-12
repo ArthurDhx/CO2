@@ -39,8 +39,8 @@ public class ModelUnitTest {
 
     @Test
     public void testAddTilesSolarProjectToSubventionCase() {
-        ProjectTile[] t1 = new ProjectTile[1];
-        t1[0] = new ProjectTile(greenEnergyTypes.SOLAR);
+        Project[] t1 = new Project[1];
+        t1[0] = new Project(greenEnergyTypes.SOLAR);
         // a refaire modification de la methode addTiles...
         //Assert.assertEquals(model.addTilesSolarProjectToSubventionCase(), t1[0].addOnSubvention());
     }
@@ -107,5 +107,11 @@ public class ModelUnitTest {
         Assert.assertFalse(p.hasControl(continent));
         model.giveControl(continent);
         Assert.assertTrue(p.hasControl(continent));
+    }
+
+    @Test
+    public void testDonne5CartesLobbyAuJoueur() {
+        Player p = model.getCurrentPLayer();
+        Assert.assertEquals(5, p.getLobbyCards().size());
     }
 }

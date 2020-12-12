@@ -6,7 +6,7 @@ import javafx.scene.shape.Rectangle;
 public class Subvention {
 
     // contient un projet
-    private ProjectTile tilesSolarProject;
+    private Project project;
     /*
         false si la subvention a un projet
      */
@@ -56,23 +56,23 @@ public class Subvention {
     public void setContinent(Continent continent){ this.continent = continent; }
 
     // ajoute à cette subvention
-    public void addTilesSolarProject(ProjectTile tilesSolarProject){
-        this.tilesSolarProject = tilesSolarProject;
+    public void addTilesSolarProject(Project tilesSolarProject){
+        this.project = tilesSolarProject;
         // la subvention n'est plus vide
         empty = false;
     }
 
     @Override
     public String toString() {
-        if (tilesSolarProject != null && tilesSolarProject.isMisEnPlace())
+        if (project != null && project.isMisEnPlace())
             return this.continent.getName() +": " + centralTypes.SOLAIRE.toString(); // TODO : Switch avec les autres quand implementer
         return this.continent.getName() +": "+ this.type ;
     }
 
     public boolean isEmpty() { return empty; }
 
-    public ProjectTile getTilesSolarProject() {
-        return tilesSolarProject;
+    public Project getProject() {
+        return project;
     }
     public subventionTypes getType() {
         return type;

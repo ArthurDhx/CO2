@@ -59,7 +59,7 @@ public class ControllerActionGratuite implements EventHandler<ActionEvent> {
                     viewGame.addScientifiqueToProject(projetChoisi.getIndex(), model.getCurrentPLayer().getCurrentScientifique().getImgScientifique(), projetChoisi.getContinent());
                     model.getCurrentPLayer().getCurrentScientifique().setSubvention(projetChoisi);
                     projetChoisi.setStaffed(true);
-                    if (model.getCurrentPLayer().getCurrentScientifique().getSubvention().getTilesSolarProject() != null) {
+                    if (model.getCurrentPLayer().getCurrentScientifique().getSubvention().getProject() != null) {
                         // set la valeur solaire si le scientifique joué est sur un projet solaire
                         model.getCurrentPLayer().getCurrentScientifique().setSubject(new Subject(greenEnergyTypes.SOLAR));
                     }

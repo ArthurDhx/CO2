@@ -2,11 +2,9 @@ package CO2;
 
 
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Continent {
 
@@ -99,7 +97,7 @@ public class Continent {
     public void print() {
         System.out.println("Continent{" +
                 "name=" + name + ", nbCep=" + nbCep +
-                ", subventions=" + subventions.get(0).getTilesSolarProject() + '}');
+                ", subventions=" + subventions.get(0).getProject() + '}');
     }
 
     public void removeCEP(){

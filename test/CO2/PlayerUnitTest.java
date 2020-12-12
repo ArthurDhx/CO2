@@ -4,6 +4,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
+
 public class PlayerUnitTest {
 
     public Player p;
@@ -117,5 +119,22 @@ public class PlayerUnitTest {
         p.giveRevenu(new int[]{5, 5});
         Assert.assertEquals(5 , p.getPointVictoire());
         Assert.assertEquals(26 , p.getArgent());
+    }
+    
+    @Test
+    public void testInitLobbyCards() throws IOException {
+        Assert.assertEquals(null, p.getLobbyCards());
+        Model model = new Model();
+        model.init();
+        Assert.assertEquals(5, p.getLobbyCards().size());
+    }
+
+    @Test
+    public void testPlayLobbyCardRetireLaCarteDeLaMain() throws IOException {
+        Model model = new Model();
+        model.init();
+        Assert.assertEquals(5, p.getLobbyCards().size());
+        p.playLobbyCard(p.getLobbyCards().get(0));
+        Assert.assertEquals(4, p.getLobbyCards().size());
     }
 }

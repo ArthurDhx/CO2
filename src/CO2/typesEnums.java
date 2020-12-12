@@ -4,6 +4,8 @@ enum greenEnergyTypes {SOLAR, BIOMASS, RECYCLING, FUSION, REFORESTATION}
 
 enum subventionTypes {ARGENT, RESSOURCE, RECHERCHE}
 
+enum typeLobbyAction {PROPOSER, METTRE, CONSTRUIRE, SOMMET, MARCHE_ACHAT, MARCHE_VENTE}
+
 enum centralTypes {
     //TODO :  a changer une fois le reste implementer
     REBOISEMENT(10, new int[]{10, 10},10,0),
