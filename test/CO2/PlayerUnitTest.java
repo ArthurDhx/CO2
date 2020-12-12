@@ -15,41 +15,41 @@ public class PlayerUnitTest {
 
     @Test
     public void testExpertiseInit() {
-        Assert.assertEquals(0, p.getExpertise(GreenEnergyTypes.SOLAR));
-        Assert.assertEquals(0, p.getExpertise(GreenEnergyTypes.BIOMASS));
-        Assert.assertEquals(0, p.getExpertise(GreenEnergyTypes.RECYCLING));
-        Assert.assertEquals(0, p.getExpertise(GreenEnergyTypes.FUSION));
-        Assert.assertEquals(0, p.getExpertise(GreenEnergyTypes.REFORESTATION));
+        Assert.assertEquals(0, p.getExpertise(greenEnergyTypes.SOLAR));
+        Assert.assertEquals(0, p.getExpertise(greenEnergyTypes.BIOMASS));
+        Assert.assertEquals(0, p.getExpertise(greenEnergyTypes.RECYCLING));
+        Assert.assertEquals(0, p.getExpertise(greenEnergyTypes.FUSION));
+        Assert.assertEquals(0, p.getExpertise(greenEnergyTypes.REFORESTATION));
     }
 
     @Test
     public void testIncrementExpertiseSolaire() {
-        p.addExpertise(GreenEnergyTypes.SOLAR, 1);
-        Assert.assertEquals(1, p.getExpertise(GreenEnergyTypes.SOLAR));
+        p.addExpertise(greenEnergyTypes.SOLAR, 1);
+        Assert.assertEquals(1, p.getExpertise(greenEnergyTypes.SOLAR));
     }
 
     @Test
     public void testIncrementExpretiseBiomass() {
-        p.addExpertise(GreenEnergyTypes.BIOMASS, 1);
-        Assert.assertEquals(1, p.getExpertise(GreenEnergyTypes.BIOMASS));
+        p.addExpertise(greenEnergyTypes.BIOMASS, 1);
+        Assert.assertEquals(1, p.getExpertise(greenEnergyTypes.BIOMASS));
     }
 
     @Test
     public void testIncrementExpretiseRecycling() {
-        p.addExpertise(GreenEnergyTypes.RECYCLING, 1);
-        Assert.assertEquals(1, p.getExpertise(GreenEnergyTypes.RECYCLING));
+        p.addExpertise(greenEnergyTypes.RECYCLING, 1);
+        Assert.assertEquals(1, p.getExpertise(greenEnergyTypes.RECYCLING));
     }
 
     @Test
     public void testIncrementExpretiseFusion() {
-        p.addExpertise(GreenEnergyTypes.FUSION, 1);
-        Assert.assertEquals(1, p.getExpertise(GreenEnergyTypes.FUSION));
+        p.addExpertise(greenEnergyTypes.FUSION, 1);
+        Assert.assertEquals(1, p.getExpertise(greenEnergyTypes.FUSION));
     }
 
     @Test
     public void testIncrementExpretiseReforestation() {
-        p.addExpertise(GreenEnergyTypes.REFORESTATION, 1);
-        Assert.assertEquals(1, p.getExpertise(GreenEnergyTypes.REFORESTATION));
+        p.addExpertise(greenEnergyTypes.REFORESTATION, 1);
+        Assert.assertEquals(1, p.getExpertise(greenEnergyTypes.REFORESTATION));
     }
 
     @Test
@@ -76,14 +76,14 @@ public class PlayerUnitTest {
     @Test
     public void testMettreEnPlaceProjet(){
         Assert.assertEquals(2,p.getCEP());
-        p.rewardSetupProject(GreenEnergyTypes.SOLAR);
+        p.rewardSetupProject(greenEnergyTypes.SOLAR);
         Assert.assertEquals(1,p.getCEP());
     }
     
     @Test
     public void testMettreEnPlaceSolar() {
         Assert.assertEquals(0, p.getResourcesTech());
-        p.rewardSetupProject(GreenEnergyTypes.SOLAR);
+        p.rewardSetupProject(greenEnergyTypes.SOLAR);
         Assert.assertEquals(3, p.getResourcesTech());
     }
 

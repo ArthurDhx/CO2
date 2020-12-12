@@ -2,8 +2,6 @@ package CO2;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.Tooltip;
-import javafx.scene.image.ImageView;
 
 import java.util.Optional;
 
@@ -35,9 +33,9 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
 
     private int[] calculMissingRessources(Subvention projetMisEnPlaceChoisi, Player currentPLayer) {
         int[] tab =  new int[3];
-        tab[0] = projetMisEnPlaceChoisi.getTilesSolarProject().getTypeToCentral().getExpertise() - model.getCurrentPLayer().getExpertise(projetMisEnPlaceChoisi.getTilesSolarProject().getType());
-        tab[1] = projetMisEnPlaceChoisi.getTilesSolarProject().getTypeToCentral().getCout()[0] - model.getCurrentPLayer().getArgent();
-        tab[2] = projetMisEnPlaceChoisi.getTilesSolarProject().getTypeToCentral().getCout()[1] - model.getCurrentPLayer().getResourcesTech();
+        tab[0] = projetMisEnPlaceChoisi.getTilesSolarProject().getCentralType().getExpertise() - model.getCurrentPLayer().getExpertise(projetMisEnPlaceChoisi.getTilesSolarProject().getEnergyType());
+        tab[1] = projetMisEnPlaceChoisi.getTilesSolarProject().getCentralType().getCout()[0] - model.getCurrentPLayer().getArgent();
+        tab[2] = projetMisEnPlaceChoisi.getTilesSolarProject().getCentralType().getCout()[1] - model.getCurrentPLayer().getResourcesTech();
         for (int i = 0; i< tab.length; i++) if (tab[i] < 0) tab[i] = 0;
         return tab;
     }
@@ -59,15 +57,15 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
             Optional<Subvention> resulltSubv = viewGame.hboxAction.dialogSubvention.showAndWait();
             resulltSubv.ifPresent(subvention -> {
                 // meme principe que au dessus
-                if(model.addTilesSolarProjectToSubventionCase(continentChoisi,subvention.getIndex())){
+                if(model.addProjectTileToSubvention(continentChoisi,subvention.getIndex())){
                     // Si la tuile peut etre ajouter
                     // Affiche la tuile a l'ecran
                     viewGame.addTuilesToSubvention(subvention.getIndex(), viewGame.imgTilesSolarProject, continentChoisi);
                     // Mets a jour le model
-                    model.tilesSolarProjects.remove(0);
+                    model.projectTiles.remove(0);
                     // Récupération du type et application de l'effet de la subvention choisie
-                    typesSubvention type = subvention.effect(model.getCurrentPLayer());
-                    if(type == typesSubvention.RECHERCHE){ //Si il s'agit d'une subvention recheche
+                    subventionTypes type = subvention.effect(model.getCurrentPLayer());
+                    if(type == subventionTypes.RECHERCHE){ //Si il s'agit d'une subvention recheche
                         actionProposerProjetRecherche();
                     }
                     viewGame.reloadresourcesTech();
@@ -136,7 +134,7 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
                         projetChoisi.setStaffed(true);
                         if (model.getCurrentPLayer().getCurrentScientifique().getSubvention().getTilesSolarProject() != null) {
                             // set la valeur solaire si le scientifique joué est sur un projet solaire
-                            model.getCurrentPLayer().getCurrentScientifique().setSubject(new Subject(GreenEnergyTypes.SOLAR));
+                            model.getCurrentPLayer().getCurrentScientifique().setSubject(new Subject(greenEnergyTypes.SOLAR));
                         }
                     }
                 });
@@ -230,14 +228,14 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
             int index = model.putCentral(projetMisEnPlaceChoisi);
             if( index >= 0) {
 
-                viewGame.addCentrale(typesCentral.SOLAIRE , projetMisEnPlaceChoisi.getContinent(), index);
+                viewGame.addCentrale(centralTypes.SOLAIRE , projetMisEnPlaceChoisi.getContinent(), index);
                 viewGame.resetSubvention(projetMisEnPlaceChoisi.getContinent(),projetMisEnPlaceChoisi.getIndex());
                 projetMisEnPlaceChoisi.getTilesSolarProject().setMisEnPlace(false);
                 projetMisEnPlaceChoisi.setEmpty(true);
 
                 //gain : point victoire & 1 expertise dans le dommaine de la centrale
-                model.curPlayer.addPointVictoire(projetMisEnPlaceChoisi.getTilesSolarProject().getTypeToCentral().getPtsVictoire());
-                model.curPlayer.addExpertise(projetMisEnPlaceChoisi.getTilesSolarProject().getType(),1);
+                model.curPlayer.addPointVictoire(projetMisEnPlaceChoisi.getTilesSolarProject().getCentralType().getPtsVictoire());
+                model.curPlayer.addExpertise(projetMisEnPlaceChoisi.getTilesSolarProject().getEnergyType(),1);
                 viewGame.reloadPointVictoire();
                 viewGame.reloadPlayerExpertise(model.getCurrentPLayer());
 

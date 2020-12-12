@@ -11,7 +11,7 @@ public class Player {
     final int NBACTIONGRATUITE = 4;
 
     // valeur d'expertise pour chaque energy
-    private Map<GreenEnergyTypes, Integer> expertise;
+    private Map<greenEnergyTypes, Integer> expertise;
     //le joueur à une liste de scientifique, elle peut être vide ou rempli jusqu'a 4 scientifiques maximum
     private List<Scientifique> scientifiques;
     private int curentScientifiqueId;
@@ -67,11 +67,11 @@ public class Player {
      */
     private void initExpertise() {
         expertise = new HashMap<>();
-        expertise.put(GreenEnergyTypes.SOLAR, 0);
-        expertise.put(GreenEnergyTypes.BIOMASS, 0);
-        expertise.put(GreenEnergyTypes.RECYCLING, 0);
-        expertise.put(GreenEnergyTypes.FUSION, 0);
-        expertise.put(GreenEnergyTypes.REFORESTATION, 0);
+        expertise.put(greenEnergyTypes.SOLAR, 0);
+        expertise.put(greenEnergyTypes.BIOMASS, 0);
+        expertise.put(greenEnergyTypes.RECYCLING, 0);
+        expertise.put(greenEnergyTypes.FUSION, 0);
+        expertise.put(greenEnergyTypes.REFORESTATION, 0);
     }
 
     /**
@@ -79,7 +79,7 @@ public class Player {
      * @param type la source d'energie verte concernee
      * @param quantity
      */
-    public void addExpertise(GreenEnergyTypes type, int quantity) {
+    public void addExpertise(greenEnergyTypes type, int quantity) {
         int cur = expertise.get(type);
         expertise.replace(type, cur+quantity);
     }
@@ -128,7 +128,7 @@ public class Player {
      *  - donne la recompense du projet selon le type d'energie
      * @param type type energie du projet
      */
-    public void rewardSetupProject(GreenEnergyTypes type){
+    public void rewardSetupProject(greenEnergyTypes type){
         actionPrincipaleDone = true;
 
         switch (type) {
@@ -159,7 +159,7 @@ public class Player {
      * @param type type d'energie concernee
      * @return
      */
-    public int getExpertise(GreenEnergyTypes type) {
+    public int getExpertise(greenEnergyTypes type) {
         return expertise.get(type);
     }
 
@@ -287,12 +287,12 @@ public class Player {
      * @param project projet a construire
      * @return
      */
-    public boolean canConstruct(TilesSolarProject project) {
-        typesCentral typeCentral = project.getTypeToCentral();
+    public boolean canConstruct(ProjectTile project) {
+        centralTypes typeCentral = project.getCentralType();
         int[] cout = typeCentral.getCout();
         if (cout[0] > argent) return false;
         if (cout[1] > resourcesTech) return false;
-        if (typeCentral.getExpertise() > getExpertise(project.getType())) return false;
+        if (typeCentral.getExpertise() > getExpertise(project.getEnergyType())) return false;
         return true;
     }
 

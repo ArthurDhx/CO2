@@ -3,12 +3,10 @@ package CO2;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-enum typesSubvention {ARGENT, RESSOURCE, RECHERCHE}
-
 public class Subvention {
 
     // contient un projet
-    private TilesSolarProject tilesSolarProject;
+    private ProjectTile tilesSolarProject;
     /*
         false si la subvention a un projet
      */
@@ -23,7 +21,7 @@ public class Subvention {
     private boolean staffed;
 
     //Le continent où se situe la subvention
-    private typesSubvention type;
+    private subventionTypes type;
 
     public Subvention(int index, Continent continent, Rectangle[] tabRectangleSubvention){
         this.index = index;
@@ -37,13 +35,13 @@ public class Subvention {
     private void setType(int index){
         switch(index){
             case 0:
-                type = typesSubvention.ARGENT;
+                type = subventionTypes.ARGENT;
                 break;
             case 1:
-                type = typesSubvention.RESSOURCE;
+                type = subventionTypes.RESSOURCE;
                 break;
             case 2:
-                type = typesSubvention.RECHERCHE;
+                type = subventionTypes.RECHERCHE;
                 break;
         }
     }
@@ -58,7 +56,7 @@ public class Subvention {
     public void setContinent(Continent continent){ this.continent = continent; }
 
     // ajoute à cette subvention
-    public void addTilesSolarProject(TilesSolarProject tilesSolarProject){
+    public void addTilesSolarProject(ProjectTile tilesSolarProject){
         this.tilesSolarProject = tilesSolarProject;
         // la subvention n'est plus vide
         empty = false;
@@ -67,16 +65,16 @@ public class Subvention {
     @Override
     public String toString() {
         if (tilesSolarProject != null && tilesSolarProject.isMisEnPlace())
-            return this.continent.getName() +": " + typesCentral.SOLAIRE.toString(); // TODO : Switch avec les autres quand implementer
+            return this.continent.getName() +": " + centralTypes.SOLAIRE.toString(); // TODO : Switch avec les autres quand implementer
         return this.continent.getName() +": "+ this.type ;
     }
 
     public boolean isEmpty() { return empty; }
 
-    public TilesSolarProject getTilesSolarProject() {
+    public ProjectTile getTilesSolarProject() {
         return tilesSolarProject;
     }
-    public typesSubvention getType() {
+    public subventionTypes getType() {
         return type;
     }
 
@@ -84,16 +82,16 @@ public class Subvention {
      * Applique l'effet de la subvention en fonction de son type
      * @param currentPLayer le joueur courant
      */
-    public typesSubvention effect(Player currentPLayer) {
+    public subventionTypes effect(Player currentPLayer) {
         switch (type) {
             case ARGENT:
-                return typesSubvention.ARGENT;
+                return subventionTypes.ARGENT;
             case RESSOURCE:
                 // Ajoute 2 cubes de ressources technologiques au joueur courant
                 currentPLayer.addResourcesTech(2);
-                return typesSubvention.RESSOURCE;
+                return subventionTypes.RESSOURCE;
             case RECHERCHE:
-                return typesSubvention.RECHERCHE;
+                return subventionTypes.RECHERCHE;
         }
         return null;
     }

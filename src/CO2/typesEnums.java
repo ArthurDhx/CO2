@@ -1,6 +1,10 @@
 package CO2;
 
-enum typesCentral {
+enum greenEnergyTypes {SOLAR, BIOMASS, RECYCLING, FUSION, REFORESTATION}
+
+enum subventionTypes {ARGENT, RESSOURCE, RECHERCHE}
+
+enum centralTypes {
     //TODO :  a changer une fois le reste implementer
     REBOISEMENT(10, new int[]{10, 10},10,0),
     BIOMASSE(10, new int[]{10, 10},10,0),
@@ -17,7 +21,7 @@ enum typesCentral {
     private int expertise ;
     private int co2 ;
 
-    typesCentral(int ptsVictoire, int[] cout, int expertise, int co2) {
+    centralTypes(int ptsVictoire, int[] cout, int expertise, int co2) {
         this.ptsVictoire = ptsVictoire ;
         this.cout = cout ;
         this.expertise = expertise ;

@@ -1,6 +1,5 @@
 package CO2;
 
-import javafx.scene.image.ImageView;
 import java.util.Optional;
 import java.util.Random;
 
@@ -50,13 +49,13 @@ public class Controller {
             Optional<Subvention> resulltSubv = viewGame.hboxAction.dialogSubvention.showAndWait();
             resulltSubv.ifPresent(subvention -> {
                 // meme principe que au dessus
-                if(model.addTilesSolarProjectToSubventionCase(continent,subvention.getIndex())){
+                if(model.addProjectTileToSubvention(continent,subvention.getIndex())){
                     // Si la tuile peut etre ajouter
                     // Affiche la tuile a l'ecran
                     viewGame.addTuilesToSubvention(subvention.getIndex(), viewGame.imgTilesSolarProject, continent);
 
                     // Mets a jour le model
-                    model.tilesSolarProjects.remove(0);
+                    model.projectTiles.remove(0);
                     // Le joueur en cours a effectuer son action principale
                 }
             });
@@ -70,7 +69,7 @@ public class Controller {
         // On recupere les continent
         Continent[] continents= model.getContinents();
         Random random = new Random();
-        typesCentral[] typesCentralsFossile = {typesCentral.CHARBON, typesCentral.PETROLE, typesCentral.GAZNATUREL};
+        centralTypes[] typesCentralsFossile = {centralTypes.CHARBON, centralTypes.PETROLE, centralTypes.GAZNATUREL};
         for (Continent continent: continents ) {
             // On tire au sort le type entre 0 et 2
             int type = random.nextInt(3) ;

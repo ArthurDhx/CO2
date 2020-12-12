@@ -6,13 +6,13 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Expertise {
-    private GreenEnergyTypes type;
+public class PisteExpertise {
+    private greenEnergyTypes type;
     private Color color;
     private int max;
     private List<CasePisteExpertise> piste;
 
-    public Expertise(GreenEnergyTypes type, int max, Color color) {
+    public PisteExpertise(greenEnergyTypes type, int max, Color color) {
         this.type = type;
         this.max = max;
         this.color = color;
@@ -99,11 +99,11 @@ public class Expertise {
         this.color = color;
     }
 
-    public GreenEnergyTypes getType() {
+    public greenEnergyTypes getType() {
         return type;
     }
 
-    public void setType(GreenEnergyTypes type) {
+    public void setType(greenEnergyTypes type) {
         this.type = type;
     }
 

@@ -8,10 +8,10 @@ import java.util.List;
 public class AgendaTile {
 
     // Type d'energie
-    private List<GreenEnergyTypes> energies;
+    private List<greenEnergyTypes> energies;
     private Image imageAgendaTile;
 
-    public AgendaTile(GreenEnergyTypes energy1, GreenEnergyTypes energy2, GreenEnergyTypes energy3, Image imageAgendaTile) {
+    public AgendaTile(greenEnergyTypes energy1, greenEnergyTypes energy2, greenEnergyTypes energy3, Image imageAgendaTile) {
         this.energies = new ArrayList<>();
         energies.add(energy1);
         energies.add(energy2);
@@ -23,16 +23,16 @@ public class AgendaTile {
      * @param energy {"Solar","Biomass","Fusion","Recycling","Reforestation"}
      * @return true si energy est dans la liste des energies acceptables
      */
-    public boolean isPossiblePlacement(GreenEnergyTypes energy) {
+    public boolean isPossiblePlacement(greenEnergyTypes energy) {
         if (energies.contains(energy)) return true;
         return false;
     }
 
-    public List<GreenEnergyTypes> getEnergies() {
+    public List<greenEnergyTypes> getEnergies() {
         return energies;
     }
 
-    public void setEnergies(List<GreenEnergyTypes> energies) {
+    public void setEnergies(List<greenEnergyTypes> energies) {
         this.energies = energies;
     }
 

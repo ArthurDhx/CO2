@@ -9,7 +9,7 @@ public class Central {
     private int index ;
     private Continent continent;
     private boolean occupe ;
-    private typesCentral type ;
+    private centralTypes type ;
 
     public Central(int index, Continent continent, Rectangle[] tabRectangleCentral){
         this.occupe = false ;
@@ -19,7 +19,7 @@ public class Central {
         tabRectangleCentral[index].setStroke(Color.BLACK);
     }
 
-    public void setType(typesCentral type) {
+    public void setType(centralTypes type) {
         this.type = type;
     }
 
@@ -37,7 +37,7 @@ public class Central {
 
     public Continent getContinent() { return continent; }
 
-    public typesCentral getType() {
+    public centralTypes getType() {
         return type;
     }
 }

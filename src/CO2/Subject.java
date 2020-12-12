@@ -4,11 +4,11 @@ public class Subject {
     // le sujet peut contenir un scientifique
     private Scientifique scientifique = null;
     // le sujet à un type d'énergie
-    private GreenEnergyTypes energy;
+    private greenEnergyTypes energy;
 
     public Subject(){}
 
-    public Subject(GreenEnergyTypes energy) {
+    public Subject(greenEnergyTypes energy) {
         this.energy = energy;
     }
 
@@ -21,11 +21,11 @@ public class Subject {
         scientifique.setSubject(this);
     }
 
-    public GreenEnergyTypes getEnergy() {
+    public greenEnergyTypes getEnergy() {
         return energy;
     }
 
-    public void setEnergy(GreenEnergyTypes energy) {
+    public void setEnergy(greenEnergyTypes energy) {
         this.energy = energy;
     }
 

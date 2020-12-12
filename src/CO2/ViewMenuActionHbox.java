@@ -2,12 +2,9 @@ package CO2;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Node;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.layout.HBox;
-import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -279,7 +276,7 @@ public class ViewMenuActionHbox extends HBox {
         Continent[] continent = model.getContinents();
         ArrayList<SommetTile> sommetTiles = new ArrayList<>();
         for(int i = 0; i< continent.length; i++){
-            GreenEnergyTypes energy =  model.getCurrentPLayer().getCurrentScientifique().getSubject().getEnergy();
+            greenEnergyTypes energy =  model.getCurrentPLayer().getCurrentScientifique().getSubject().getEnergy();
             if(continent[i].getSommetTile().haveEnergy(energy) && !continent[i].getSommetTile().isStaffed(model.getCurrentPLayer().getCurrentScientifique().getSubject())) {
                 //si le sommet à l'énergie du scientifique et que cette énergie n'est pas occupé alors il se déplace
                 sommetTiles.add(continent[i].getSommetTile());
@@ -381,7 +378,7 @@ public class ViewMenuActionHbox extends HBox {
         dialogAcheterVendreCEP.setContentText("Choix: ");
     }
 
-    public void dialogChoisirRevenu(GreenEnergyTypes energyType, int revenu) {
+    public void dialogChoisirRevenu(greenEnergyTypes energyType, int revenu) {
         // listes des possibilites de revenu
         List<String> repartitions = new ArrayList<>();
         if (revenu>1) {

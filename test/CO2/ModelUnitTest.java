@@ -1,9 +1,7 @@
 package CO2;
 
-import com.sun.scenario.effect.impl.state.GaussianRenderState;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -27,22 +25,22 @@ public class ModelUnitTest {
 
     @Test
     public void testIncrementExpertiseJoueurCourant() {
-        model.incrementExpertise(GreenEnergyTypes.SOLAR);
-        Assert.assertEquals(1, model.getCurrentPLayer().getExpertise(GreenEnergyTypes.SOLAR));
-        model.incrementExpertise(GreenEnergyTypes.BIOMASS);
-        Assert.assertEquals(1, model.getCurrentPLayer().getExpertise(GreenEnergyTypes.BIOMASS));
-        model.incrementExpertise(GreenEnergyTypes.RECYCLING);
-        Assert.assertEquals(1, model.getCurrentPLayer().getExpertise(GreenEnergyTypes.RECYCLING));
-        model.incrementExpertise(GreenEnergyTypes.FUSION);
-        Assert.assertEquals(1, model.getCurrentPLayer().getExpertise(GreenEnergyTypes.FUSION));
-        model.incrementExpertise(GreenEnergyTypes.REFORESTATION);
-        Assert.assertEquals(1, model.getCurrentPLayer().getExpertise(GreenEnergyTypes.REFORESTATION));
+        model.incrementExpertise(greenEnergyTypes.SOLAR);
+        Assert.assertEquals(1, model.getCurrentPLayer().getExpertise(greenEnergyTypes.SOLAR));
+        model.incrementExpertise(greenEnergyTypes.BIOMASS);
+        Assert.assertEquals(1, model.getCurrentPLayer().getExpertise(greenEnergyTypes.BIOMASS));
+        model.incrementExpertise(greenEnergyTypes.RECYCLING);
+        Assert.assertEquals(1, model.getCurrentPLayer().getExpertise(greenEnergyTypes.RECYCLING));
+        model.incrementExpertise(greenEnergyTypes.FUSION);
+        Assert.assertEquals(1, model.getCurrentPLayer().getExpertise(greenEnergyTypes.FUSION));
+        model.incrementExpertise(greenEnergyTypes.REFORESTATION);
+        Assert.assertEquals(1, model.getCurrentPLayer().getExpertise(greenEnergyTypes.REFORESTATION));
     }
 
     @Test
     public void testAddTilesSolarProjectToSubventionCase() {
-        TilesSolarProject[] t1 = new TilesSolarProject[1];
-        t1[0] = new TilesSolarProject();
+        ProjectTile[] t1 = new ProjectTile[1];
+        t1[0] = new ProjectTile(greenEnergyTypes.SOLAR);
         // a refaire modification de la methode addTiles...
         //Assert.assertEquals(model.addTilesSolarProjectToSubventionCase(), t1[0].addOnSubvention());
     }
@@ -50,23 +48,23 @@ public class ModelUnitTest {
     @Test
     public void testInitContinentAgendaTile() {
         // test si les continents ont bien l'unique agendaTiles ["Reforesting", "Solar", "Fusion"]
-        List<GreenEnergyTypes> listEnergies = new ArrayList<>();
-        listEnergies.add(GreenEnergyTypes.REFORESTATION);
-        listEnergies.add(GreenEnergyTypes.SOLAR);
-        listEnergies.add(GreenEnergyTypes.FUSION);
+        List<greenEnergyTypes> listEnergies = new ArrayList<>();
+        listEnergies.add(greenEnergyTypes.REFORESTATION);
+        listEnergies.add(greenEnergyTypes.SOLAR);
+        listEnergies.add(greenEnergyTypes.FUSION);
         Assert.assertEquals(listEnergies, model.getContinents()[0].getAgendaTile().getEnergies());
     }
 
     @Test
     public void testPlacementPossibleTuileSolaireSurContinent() {
         // tout les continents on l'agendaTiles ["Reforesting", "Solar", "Fusion"] dans ce sprint
-        Assert.assertTrue(model.getContinents()[0].getAgendaTile().isPossiblePlacement(GreenEnergyTypes.SOLAR));
+        Assert.assertTrue(model.getContinents()[0].getAgendaTile().isPossiblePlacement(greenEnergyTypes.SOLAR));
     }
 
     @Test
     public void testPlacementImpossibleTuileRecyclageSurContinent() {
         // tout les continents on l'agendaTiles ["Reforesting", "Solar", "Fusion"] dans ce sprint
-        Assert.assertFalse(model.getContinents()[0].getAgendaTile().isPossiblePlacement(GreenEnergyTypes.RECYCLING));
+        Assert.assertFalse(model.getContinents()[0].getAgendaTile().isPossiblePlacement(greenEnergyTypes.RECYCLING));
     }
 
     @Test
@@ -82,11 +80,11 @@ public class ModelUnitTest {
 
     @Test
     public void testStringToSubject(){
-        Subject subject1 = new Subject(GreenEnergyTypes.SOLAR);
-        Subject subject2 = new Subject(GreenEnergyTypes.RECYCLING);
-        Subject subject3 = new Subject(GreenEnergyTypes.REFORESTATION);
-        Subject subject4 = new Subject(GreenEnergyTypes.FUSION);
-        Subject subject5 = new Subject(GreenEnergyTypes.BIOMASS);
+        Subject subject1 = new Subject(greenEnergyTypes.SOLAR);
+        Subject subject2 = new Subject(greenEnergyTypes.RECYCLING);
+        Subject subject3 = new Subject(greenEnergyTypes.REFORESTATION);
+        Subject subject4 = new Subject(greenEnergyTypes.FUSION);
+        Subject subject5 = new Subject(greenEnergyTypes.BIOMASS);
         Assert.assertEquals(subject1.getEnergy(),model.stringToSubject("Solar").getEnergy());
         Assert.assertEquals(subject2.getEnergy(),model.stringToSubject("Recycling").getEnergy());
         Assert.assertEquals(subject3.getEnergy(),model.stringToSubject("Reforestation").getEnergy());

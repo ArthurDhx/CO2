@@ -225,19 +225,19 @@ public class ViewGame {
 		int offset = 0;
 
 		// pour chaque barre d'expertise
-		for (Expertise expertise : model.expertises) {
+		for (PisteExpertise pisteExpertise : model.pistesExpertise) {
 			// rapel case
 			int i = 0;
 			// pour chaque case de la piste d'expertise
-			for (CasePisteExpertise c : expertise.getPiste()) {
+			for (CasePisteExpertise c : pisteExpertise.getPiste()) {
 				// rectangle de la couleur de l'expertise
 				Rectangle rect = new Rectangle(rectWidth, rectWidth, Color.WHITE);
-				rect.setStroke(expertise.getColor());
+				rect.setStroke(pisteExpertise.getColor());
 				rect.setX(x + offset);
 				rect.setY(y - ((rectWidth+space) * i));
 				// nombre de points de la case
 				Text nb = new Text((x+offset), (y - ((rectWidth+space) * i - 10)), String.valueOf(c.getNumero()));
-				nb.setStroke(expertise.getColor());
+				nb.setStroke(pisteExpertise.getColor());
 
 				pane.getChildren().add(rect);
 				// image bonus si besoin
@@ -264,7 +264,7 @@ public class ViewGame {
 		if (player1ExpertiseIndicator != null) pane.getChildren().removeAll(player1ExpertiseIndicator);
 		player1ExpertiseIndicator = new ArrayList<>();
 		int i = 0;
-		for (GreenEnergyTypes energy : GreenEnergyTypes.values()) {
+		for (greenEnergyTypes energy : greenEnergyTypes.values()) {
 			int expertise = p.getExpertise(energy);
 			if (expertise > 0) {
 				player1ExpertiseIndicator.add(placePlayerExpertise(expertise, i, p.getColor()));
@@ -666,25 +666,25 @@ public class ViewGame {
 	 * @param continent Le continent ou deposer la centrale
 	 * @param index l'index pour la position de la centrale sur le continent
 	 */
-	public void addCentrale(typesCentral type, Continent continent,int index) {
+	public void addCentrale(centralTypes type, Continent continent, int index) {
 		Image central = imgCentralCharbon;
 
 		switch (type){
 			case CHARBON:
 				central = imgCentralCharbon;
-				Tooltip.install(continent.getTabRectangleCentral()[index], new Tooltip("Centrale au Charbon, Pollution : " + typesCentral.CHARBON.getCo2()));
+				Tooltip.install(continent.getTabRectangleCentral()[index], new Tooltip("Centrale au Charbon, Pollution : " + centralTypes.CHARBON.getCo2()));
 				break;
 			case PETROLE :
 				central = imgCentralPetrole;
-				Tooltip.install(continent.getTabRectangleCentral()[index], new Tooltip("Centrale au Petrole, Pollution : " + typesCentral.PETROLE.getCo2()));
+				Tooltip.install(continent.getTabRectangleCentral()[index], new Tooltip("Centrale au Petrole, Pollution : " + centralTypes.PETROLE.getCo2()));
 				break;
 			case GAZNATUREL :
 				central = imgCentralGaz;
-				Tooltip.install(continent.getTabRectangleCentral()[index], new Tooltip("Centrale a Gaz, Pollution : " + typesCentral.GAZNATUREL.getCo2()));
+				Tooltip.install(continent.getTabRectangleCentral()[index], new Tooltip("Centrale a Gaz, Pollution : " + centralTypes.GAZNATUREL.getCo2()));
 				break;
 			case SOLAIRE:
 				central = imgCentralSolar;
-				Tooltip.install(continent.getTabRectangleCentral()[index], new Tooltip("Centrale Solaire, Polution :" + typesCentral.SOLAIRE.getCo2()));
+				Tooltip.install(continent.getTabRectangleCentral()[index], new Tooltip("Centrale Solaire, Polution :" + centralTypes.SOLAIRE.getCo2()));
 				break;
 				//TODO reboissement, recylage, fusionfroide, biomass
 		}

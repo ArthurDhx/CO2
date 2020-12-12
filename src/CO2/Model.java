@@ -3,7 +3,6 @@ package CO2;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -15,7 +14,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-enum GreenEnergyTypes {SOLAR, BIOMASS, RECYCLING, FUSION, REFORESTATION}
+import static CO2.greenEnergyTypes.*;
 
 public class Model {
 
@@ -24,38 +23,31 @@ public class Model {
 	final int NB_TOUR_PAR_DECENNIE = 7; // 6 pour jeu solo + 1 pour pouvoir changer décénnie
 	final int NB_DECENNIE = 2010; // 2010 pour jeu solo, 2020 pour jeu multi
 
-	private int nbJoueur;
+	// tour courant
 	private int tour;
-
+	// nombre de decenies
 	private int nbDecade;
+	// decenie courante
 	private int decade;
-
-	int state;
-	int width;
-	int height;
 
 	//prix courant des CEPs
 	int currentPriceCEP;
 	//nombre de CEP disponible au marché
 	int nbCEPdispo;
-
 	// Valeur du CO2 actuelle
 	private int co2;
 
-	//Tableau contenant les 6 tuiles de projet solaire
-	//TilesSolarProject[] tilesSolarProjects;
-	ArrayList<TilesSolarProject> tilesSolarProjects;
+	// List des tuiles de projet
+	ArrayList<ProjectTile> projectTiles;
 
 	// Liste des sommets
 	List<SommetTile> allSommetTile;
 
-	public List<SommetTile> getAllSommetTile() {
-		return allSommetTile;
-	}
-
 	// Liste des pistes d'expertises
-	List<Expertise> expertises;
+	List<PisteExpertise> pistesExpertise;
 
+	// nombre de joueurs
+	private int nbJoueur;
 	// tableau contenant les joueurs
 	private final Player[] players;
 	// joueur courant
@@ -63,6 +55,10 @@ public class Model {
 	Player curPlayer;
 
 	private Continent[] continents;
+
+	int state;
+	int width;
+	int height;
 
 	public Model() {
 		state = STATE_INIT;
@@ -86,9 +82,9 @@ public class Model {
 	public void init() throws IOException {
 		// Initialisation du tableau contenant les 6 tuiles de projet solaire
 		//TODO : Rabaisser a 6 une fois toutes les tuiles projet mis en place car sinon il n'y a pas assez de tuiles pour la demo
-		tilesSolarProjects = new ArrayList<TilesSolarProject>();
+		projectTiles = new ArrayList<ProjectTile>();
 		for(int i = 0; i< 30; i++){// 30 pour l'instant (représente tous les projet)
-			tilesSolarProjects.add(new TilesSolarProject());
+			projectTiles.add(new ProjectTile(SOLAR));
 		}
 		// Initialisation des joueurs
 		initPlayers();
@@ -107,12 +103,12 @@ public class Model {
 	 * Initialise les barres d'expertise
 	 */
 	private void initExpertise() {
-		expertises = new ArrayList<>();
-		expertises.add(new Expertise(GreenEnergyTypes.SOLAR, 6, Color.GOLD));
-		expertises.add(new Expertise(GreenEnergyTypes.BIOMASS, 7, Color.BURLYWOOD));
-		expertises.add(new Expertise(GreenEnergyTypes.RECYCLING, 7, Color.DEEPSKYBLUE));
-		expertises.add(new Expertise(GreenEnergyTypes.FUSION, 6, Color.DARKSLATEGRAY));
-		expertises.add(new Expertise(GreenEnergyTypes.REFORESTATION, 5, Color.SEAGREEN));
+		pistesExpertise = new ArrayList<>();
+		pistesExpertise.add(new PisteExpertise(SOLAR, 6, Color.GOLD));
+		pistesExpertise.add(new PisteExpertise(BIOMASS, 7, Color.BURLYWOOD));
+		pistesExpertise.add(new PisteExpertise(RECYCLING, 7, Color.DEEPSKYBLUE));
+		pistesExpertise.add(new PisteExpertise(FUSION, 6, Color.DARKSLATEGRAY));
+		pistesExpertise.add(new PisteExpertise(REFORESTATION, 5, Color.SEAGREEN));
 	}
 
 	/**
@@ -155,7 +151,7 @@ public class Model {
 			if(nomContinents.get(i).equals("Océanie")) nbCep = 4;if(nomContinents.get(i).equals("Asie")) nbCep = 6;
 			continents[i] = new Continent(nomContinents.get(i), nbCep, new Image(getClass().getResourceAsStream("images/Continents/" + nomContinents.get(i) +".jpg")),i);
 			// TODO dans un prochain sprint, generer les agendaTiles et en prendre une aleatoire par continent
-			AgendaTile agendaTile = new AgendaTile(GreenEnergyTypes.REFORESTATION, GreenEnergyTypes.SOLAR, GreenEnergyTypes.FUSION, new Image(getClass().getResourceAsStream("images/Agendas/TileAgenda_Reforestation_Solar_Fusion.png")));
+			AgendaTile agendaTile = new AgendaTile(REFORESTATION, SOLAR, FUSION, new Image(getClass().getResourceAsStream("images/Agendas/TileAgenda_Reforestation_Solar_Fusion.png")));
 			continents[i].setAgendaTile(agendaTile);
 
 			/*SommetTile sommetTile = allSommetTile.get(i);
@@ -205,11 +201,11 @@ public class Model {
 
 	public Subject stringToSubject(String subject){
 		Subject subjectEnergy = new Subject();
-		if (subject.equals("Solar")) subjectEnergy.setEnergy(GreenEnergyTypes.SOLAR);
-		if (subject.equals("Fusion")) subjectEnergy.setEnergy(GreenEnergyTypes.FUSION);
-		if (subject.equals("Reforestation")) subjectEnergy.setEnergy(GreenEnergyTypes.REFORESTATION);
-		if (subject.equals("Biomass")) subjectEnergy.setEnergy(GreenEnergyTypes.BIOMASS);
-		if (subject.equals("Recycling")) subjectEnergy.setEnergy(GreenEnergyTypes.RECYCLING);
+		if (subject.equals("Solar")) subjectEnergy.setEnergy(SOLAR);
+		if (subject.equals("Fusion")) subjectEnergy.setEnergy(FUSION);
+		if (subject.equals("Reforestation")) subjectEnergy.setEnergy(REFORESTATION);
+		if (subject.equals("Biomass")) subjectEnergy.setEnergy(BIOMASS);
+		if (subject.equals("Recycling")) subjectEnergy.setEnergy(RECYCLING);
 		return subjectEnergy;
 	}
 
@@ -217,14 +213,14 @@ public class Model {
 	 * @return le nombre de tuiles "Projet Solaire" restantes dans la pile
 	 */
 	public int getNbSolarProject(){
-		return tilesSolarProjects.size();
+		return projectTiles.size();
 	}
 
 	/**
 	 * Ajoute 1 d'expertise au joueur courant pour un type d'energie verte
 	 * @param energyType type d'energie concernee
 	 */
-	public void incrementExpertise(GreenEnergyTypes energyType) {
+	public void incrementExpertise(greenEnergyTypes energyType) {
 		curPlayer = players[curPlayerId];
 		curPlayer.addExpertise(energyType, 1);
 	}
@@ -233,14 +229,14 @@ public class Model {
 	 * permet d'ajouter la tuile sur la case subvention(recherche en collaboration)
 	 * @return true si la tuile veut être ajoutée sinon retourne false
 	 */
-	public boolean addTilesSolarProjectToSubventionCase(Continent continent, int indexSub){
-		// si l'energie solaire ne peux pas etre placee sur le continent -> action impossible
-		if(!continent.getAgendaTile().isPossiblePlacement(GreenEnergyTypes.SOLAR)) return false;
+	public boolean addProjectTileToSubvention(Continent continent, int indexSub){
+		// si l'energie ne peux pas etre placee sur le continent -> action impossible
+		if(!continent.getAgendaTile().isPossiblePlacement(SOLAR)) return false;
 
 		// permet d'ajouter la tuile sur la case subvention
-		if(tilesSolarProjects.get(0).addOnSubvention() && tilesSolarProjects.get(0).subPossible){
-			continent.getSubventions().get(indexSub).addTilesSolarProject(tilesSolarProjects.get(0));
-			tilesSolarProjects.get(0).subPossible = false;
+		if(projectTiles.get(0).addOnSubvention() && projectTiles.get(0).isSubventionPossible()){
+			continent.getSubventions().get(indexSub).addTilesSolarProject(projectTiles.get(0));
+			projectTiles.get(0).setSubventionPossible(false);
 			return true;
 		}
 		return false;
@@ -272,7 +268,7 @@ public class Model {
 		} else {
 			// À faire pour toutes les énergies
 			// vérifie si le sommet ainsi que la subvention on tous deux l'énergie solaire.
-			return sommetTile.haveEnergy(GreenEnergyTypes.SOLAR) && subvention.getTilesSolarProject() != null;
+			return sommetTile.haveEnergy(SOLAR) && subvention.getTilesSolarProject() != null;
 		}
 	}
 
@@ -283,7 +279,7 @@ public class Model {
 	public boolean mettreEnPlaceProjetByPlayer(Continent continent, Subvention subvention){
 		curPlayer = getCurrentPLayer();
 		if(curPlayer.getCEP() >= 1){
-			curPlayer.rewardSetupProject(GreenEnergyTypes.SOLAR);
+			curPlayer.rewardSetupProject(SOLAR);
 			curPlayer.removeCEP();
 			subvention.getTilesSolarProject().setMisEnPlace(true);
 			return true;
@@ -294,7 +290,7 @@ public class Model {
 	public boolean mettreEnPlaceProjetByContinent(Continent continent, Subvention subvention, Continent ProjectBuyContinent){
 		curPlayer = getCurrentPLayer();
 		if(ProjectBuyContinent.getNbCep() >= 1){
-			curPlayer.rewardSetupProject(GreenEnergyTypes.SOLAR);
+			curPlayer.rewardSetupProject(SOLAR);
 			ProjectBuyContinent.removeCEP();
 			subvention.getTilesSolarProject().setMisEnPlace(true);
 			return true;
@@ -382,10 +378,10 @@ public class Model {
 	 * @param energy Energy verte ou était le scientifique
 	 * @param p Le joueur a donnné les bonus
 	 */
-	private void giveRewardsSommetToPlayer(GreenEnergyTypes energy, Player p) {
+	private void giveRewardsSommetToPlayer(greenEnergyTypes energy, Player p) {
 		switch (energy){
 			case SOLAR:
-				p.addExpertise(GreenEnergyTypes.SOLAR, 1);
+				p.addExpertise(SOLAR, 1);
 				break;
 			/*
 			case FUSION ->
@@ -422,9 +418,9 @@ public class Model {
 				// comme seul joueur, il prend le controlle du continent quand il met en place
 				giveControl(projetMisEnPlaceChoisi.getContinent());
 				// Affecation type
-				centrales.get(i).setType(projetMisEnPlaceChoisi.getTilesSolarProject().getTypeToCentral());
+				centrales.get(i).setType(projetMisEnPlaceChoisi.getTilesSolarProject().getCentralType());
 				// le joueur paye la centrale
-				getCurrentPLayer().payCentral(projetMisEnPlaceChoisi.getTilesSolarProject().getTypeToCentral().getCout());
+				getCurrentPLayer().payCentral(projetMisEnPlaceChoisi.getTilesSolarProject().getCentralType().getCout());
 				return centrales.get(i).getIndex();
 			}
 		}
@@ -462,12 +458,12 @@ public class Model {
 		p.giveRevenu(nombres);
 	}
 
-	public List<Expertise> getExpertises() {
-		return expertises;
+	public List<PisteExpertise> getExpertises() {
+		return pistesExpertise;
 	}
 
-	public void setExpertises(List<Expertise> expertises) {
-		this.expertises = expertises;
+	public void setExpertises(List<PisteExpertise> pistesExpertise) {
+		this.pistesExpertise = pistesExpertise;
 	}
 
 	public Player getCurrentPLayer() { return players[curPlayerId]; }
@@ -504,18 +500,18 @@ public class Model {
 	 *             1 = centrale a petrole
 	 *             2 = centrale a gaz
 	 */
-	public void putFossileCentral(Continent continent, typesCentral type) {
+	public void putFossileCentral(Continent continent, centralTypes type) {
 		Central central = continent.getCentrales().get(0) ;
 		central.setOccupe(true);
 		switch (type){
 			case CHARBON :
-				central.setType(CO2.typesCentral.CHARBON);
+				central.setType(centralTypes.CHARBON);
 				break;
 			case PETROLE :
-				central.setType(CO2.typesCentral.PETROLE);
+				central.setType(centralTypes.PETROLE);
 				break;
 			case GAZNATUREL :
-				central.setType(CO2.typesCentral.GAZNATUREL);
+				central.setType(centralTypes.GAZNATUREL);
 				break;
 		}
 		this.co2 += central.getType().getCo2();
@@ -523,5 +519,9 @@ public class Model {
 
 	public int getCo2() {
 		return this.co2 ;
+	}
+
+	public List<SommetTile> getAllSommetTile() {
+		return allSommetTile;
 	}
 }

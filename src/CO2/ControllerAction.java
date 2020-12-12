@@ -36,9 +36,9 @@ public class ControllerAction implements EventHandler<ActionEvent>{
     private void distributionRevenu() {
         Player p = model.getCurrentPLayer();
         // pour chaque piste d'expertise
-        for (Expertise exp : model.getExpertises()) {
+        for (PisteExpertise exp : model.getExpertises()) {
             // type d'energie
-            GreenEnergyTypes type = exp.getType();
+            greenEnergyTypes type = exp.getType();
             // niveau d'expertise du joueur dans ce type d'expertise
             int playerExp = p.getExpertise(type);
             // nombre de revenu correspondant
@@ -68,7 +68,7 @@ public class ControllerAction implements EventHandler<ActionEvent>{
         if(viewGame.hboxAction.dialogChoisirScientifique != null){
             Optional<Scientifique> result = viewGame.hboxAction.dialogChoisirScientifique.showAndWait();
             result.ifPresent(scientifiqueChoisi -> {
-                model.getCurrentPLayer().addExpertise(GreenEnergyTypes.SOLAR, 1);
+                model.getCurrentPLayer().addExpertise(greenEnergyTypes.SOLAR, 1);
                 viewGame.reloadPlayerExpertise(model.getCurrentPLayer());
                 return;
             });
@@ -196,10 +196,10 @@ public class ControllerAction implements EventHandler<ActionEvent>{
                 if(!caseCentral.isOccupe()){
                     //Une fois trouvée, on ajoute une central à cette case
                     //TODO aléatoire pour le type de centrale
-                    viewGame.addCentrale(typesCentral.GAZNATUREL, c, caseCentral.getIndex());
+                    viewGame.addCentrale(centralTypes.GAZNATUREL, c, caseCentral.getIndex());
                     //on met à jour le modèle
                     caseCentral.setOccupe(true);
-                    caseCentral.setType(typesCentral.GAZNATUREL);
+                    caseCentral.setType(centralTypes.GAZNATUREL);
                     //et on sort de la boucle
                     break;
                 }
