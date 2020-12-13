@@ -111,8 +111,7 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
      * Si un projet est propose sur une case recherche en cllaboration et que le joueur décide de déplacer un scientifique
      */
     public void actionProposerProjetRechercheDeplacer(){
-        //On affiche la boite de dialogue pour savoir comment il veut déplacer un scientifique
-        // TODO boite de dialogue pour choisir quelle scientifique on veut bouger
+        //On affiche la boite de dialogue pour savoir quel scientifique choisir
         viewGame.hboxAction.displayActionScientifiqueChoice();
         Optional<String> resultChoixScientifique = viewGame.hboxAction.dialogActionScientifique.showAndWait();
         resultChoixScientifique.ifPresent(scientifique -> {
@@ -128,6 +127,7 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
             }
         });
 
+        //On affiche la boite de dialogue pour savoir comment il veut déplacer un scientifique
         viewGame.hboxAction.displayActionScientifiqueAfterRecherche();
         Optional<String> resultDeplacerScientifique = viewGame.hboxAction.dialogActionScientifiqueAfterRecherche.showAndWait();
         //On récupère le resultat

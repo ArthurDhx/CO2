@@ -425,11 +425,19 @@ public class ViewMenuActionHbox extends HBox {
      * mise en place du dialogue demandant si le joueur veut déplacer un scientifique ou en ajouter un à sa réserve
      */
     public void displayChoisirRechecheChoiceDialog(){
-        dialogChoisirRecherche = new ChoiceDialog<>(
-          "Déplacer un scientifique",
-                "Déplacer un scientifique",
-                "Ajouter un scientifique à la réserve"
-        );
+        if (model.getCurrentPLayer().isAllScientifiqueIsOnSommet()){
+            dialogChoisirRecherche = new ChoiceDialog<>(
+                    "Ajouter un scientifique à la réserve",
+                    "Ajouter un scientifique à la réserve"
+            );
+        } else {
+            dialogChoisirRecherche = new ChoiceDialog<>(
+                    "Déplacer un scientifique",
+                    "Déplacer un scientifique",
+                    "Ajouter un scientifique à la réserve"
+            );
+        }
+
         dialogChoisirRecherche.setTitle("Recherche en collaboration");
         dialogChoisirRecherche.setHeaderText("Quelle action voulez-vous faire ?");
         dialogChoisirRecherche.setContentText("Choix: ");
@@ -446,10 +454,15 @@ public class ViewMenuActionHbox extends HBox {
                 choices.add("Scientifique n°" + (i+1));
             }
         }
-        dialogActionScientifique = new ChoiceDialog<>(
+        if (choices.isEmpty()){
+            dialogActionScientifique = new ChoiceDialog<>("");
+        } else{
+            dialogActionScientifique = new ChoiceDialog<>(
                 choices.get(0),
                 choices
-        );
+            );
+        }
+
         dialogActionScientifique.setTitle("Choisir un scientifique");
         dialogActionScientifique.setHeaderText("Quel scientifique choisir ?");
         dialogActionScientifique.setContentText("Scientifiques : ");
