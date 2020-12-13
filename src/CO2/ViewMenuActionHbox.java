@@ -24,6 +24,7 @@ public class ViewMenuActionHbox extends HBox {
     ChoiceDialog<String> dialogChoisirRevenu;
     ChoiceDialog<String> dialogChoisirRecherche;
     ChoiceDialog<String> dialogActionScientifiqueAfterRecherche;
+    ChoiceDialog<String> dialogActionScientifique;
     ChoiceDialog<String> dialogBuyCEPBy;
     ChoiceDialog<Continent> dialogBuyCEPByContinent;
 
@@ -307,11 +308,32 @@ public class ViewMenuActionHbox extends HBox {
         }
         if(scientifiquesSurProjet.isEmpty()) return;
         dialogChoisirScientifique = new ChoiceDialog<Scientifique>(
-            scientifiquesSurProjet.get(0),
-            scientifiquesSurProjet
+                scientifiquesSurProjet.get(0),
+                scientifiquesSurProjet
         );
         dialogChoisirScientifique.setTitle("Choisir un scientifique");
         dialogChoisirScientifique.setHeaderText("Veuillez choisir un scientifique pour y récupérer l'expertise");
+        dialogChoisirScientifique.setContentText("Scientifiques: ");
+    }
+
+    /**
+     * Affiche le ChoiceDialog permettant de changer de scientifique
+     */
+    public void displayScientifiqueChoiceDialog(){
+        List<Scientifique> scientifiques = model.getCurrentPLayer().getScientifiques();
+        List<Scientifique> choices = new ArrayList<>();
+        for(Scientifique sc: scientifiques){
+            if(sc.getSommetTile() == null){
+                choices.add(sc);
+            }
+        }
+        if(choices.isEmpty()) return;
+        dialogChoisirScientifique = new ChoiceDialog<Scientifique>(
+                choices.get(0),
+                choices
+        );
+        dialogChoisirScientifique.setTitle("Choisir un scientifique");
+        dialogChoisirScientifique.setHeaderText("Veuillez choisir un scientifique");
         dialogChoisirScientifique.setContentText("Scientifiques: ");
     }
 
@@ -411,6 +433,26 @@ public class ViewMenuActionHbox extends HBox {
         dialogChoisirRecherche.setTitle("Recherche en collaboration");
         dialogChoisirRecherche.setHeaderText("Quelle action voulez-vous faire ?");
         dialogChoisirRecherche.setContentText("Choix: ");
+    }
+
+    /**
+     * Permet de choisir comment déplacer un scientifique après avoir mis un projet sur une case recherche en collaboration
+     */
+    public void displayActionScientifiqueChoice(){
+        ArrayList<String> choices = new ArrayList<>();
+        List<Scientifique> lstScientifique = model.getCurrentPLayer().getScientifiques();
+        for (int i = 0; i < lstScientifique.size(); i++) {
+            if (lstScientifique.get(i).getSommetTile() == null){
+                choices.add("Scientifique n°" + (i+1));
+            }
+        }
+        dialogActionScientifique = new ChoiceDialog<>(
+                choices.get(0),
+                choices
+        );
+        dialogActionScientifique.setTitle("Choisir un scientifique");
+        dialogActionScientifique.setHeaderText("Quel scientifique choisir ?");
+        dialogActionScientifique.setContentText("Scientifiques : ");
     }
 
     /**

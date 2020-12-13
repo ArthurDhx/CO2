@@ -113,6 +113,21 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
     public void actionProposerProjetRechercheDeplacer(){
         //On affiche la boite de dialogue pour savoir comment il veut déplacer un scientifique
         // TODO boite de dialogue pour choisir quelle scientifique on veut bouger
+        viewGame.hboxAction.displayActionScientifiqueChoice();
+        Optional<String> resultChoixScientifique = viewGame.hboxAction.dialogActionScientifique.showAndWait();
+        resultChoixScientifique.ifPresent(scientifique -> {
+            if(scientifique.equals("")) return;
+            else if(scientifique.equals("Scientifique n°1")){
+                model.getCurrentPLayer().setCurrentScientifique(0);
+            }else if(scientifique.equals("Scientifique n°2")){
+                model.getCurrentPLayer().setCurrentScientifique(1);
+            }else if(scientifique.equals("Scientifique n°3")){
+                model.getCurrentPLayer().setCurrentScientifique(2);
+            }else {
+                model.getCurrentPLayer().setCurrentScientifique(3);
+            }
+        });
+
         viewGame.hboxAction.displayActionScientifiqueAfterRecherche();
         Optional<String> resultDeplacerScientifique = viewGame.hboxAction.dialogActionScientifiqueAfterRecherche.showAndWait();
         //On récupère le resultat
