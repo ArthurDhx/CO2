@@ -547,6 +547,7 @@ public class ViewGame {
 		ImageView imageViewScientifique = model.getCurrentPLayer().getScientifiques().get(idScientifique).getImgScientifique();
 		imageViewScientifique.setFitWidth(40);
 		imageViewScientifique.setPreserveRatio(true);
+		Tooltip.install(imageViewScientifique, new Tooltip("Scientifique n°" + (idScientifique+1)));
 		deplacerScientifiqueReserve(imageViewScientifique,idScientifique);
 		pane.getChildren().add(imageViewScientifique);
 	}

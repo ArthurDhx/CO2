@@ -487,7 +487,7 @@ public class ViewMenuActionHbox extends HBox {
             choices.add("Déplacer dans la réserve");
         }
         dialogActionScientifiqueAfterRecherche = new ChoiceDialog<>(
-                "",
+                choices.get(0),
                 choices
         );
         dialogActionScientifiqueAfterRecherche.setTitle("Recherche en collaboration");
