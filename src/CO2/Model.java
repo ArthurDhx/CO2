@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -48,6 +49,9 @@ public class Model {
 
 	// Liste des cartes Lobby
 	List<LobbyCard> lobbyCards;
+
+	List<OnuCard> onuCards;
+	List<OnuCard> onuCardsInGame;
 
 	// nombre de joueurs
 	private int nbJoueur;
@@ -91,6 +95,7 @@ public class Model {
 		}
 		// Initialisation des joueurs
 		initPlayers();
+		// Initialisation des tours
 		initTour();
 		// Initialisation des décénnies
 		initDecade();
@@ -102,6 +107,34 @@ public class Model {
 		initExpertise();
 		// Initialisation les cartes Lobby
 		initLobbyCards();
+		// Initialisation les cartes Objectifs de l'ONU
+		initOnuCards();
+	}
+
+	/**
+	 * Initialise les cartes objectif de l'ONU
+	 */
+	private void initOnuCards() {
+		onuCards = new ArrayList<>();
+		int id = 34;
+		for(int i=0; i<13;i++){ // 12 cartes (comme le jeu)
+			// TODO : changer 13 en fonction du nombre de cartes qu'on a
+			onuCards.add(new OnuCard(id, 0)); // création carte ONU et ajout dans la liste totale
+			// ajout du nombre de points de victoires en fonction du nombre de type centrales sur la carte
+			if(onuCards.get(i).getTypesCentral().size() == 2){ // si 2 types
+				int nbPoints = 6 - new Random().nextInt(3); // 4, 5 ou 6
+				onuCards.get(i).setNbPointDeVictoire(nbPoints);
+			}
+			if(onuCards.get(i).getTypesCentral().size() == 3){ // si 3 types
+				int nbPoints = 7 - new Random().nextInt(3); // 5, 6 ou 7
+				onuCards.get(i).setNbPointDeVictoire(nbPoints);
+			}
+			if(onuCards.get(i).getTypesCentral().size() == 4){ // si 4 types
+				int nbPoints = 8 - new Random().nextInt(3); // 6, 7 ou 8
+				onuCards.get(i).setNbPointDeVictoire(nbPoints);
+			}
+			id++;// id de 34 à 46
+		}
 	}
 
 	/**
@@ -500,6 +533,24 @@ public class Model {
 		}
 		// donne les valeurs trouvees au joueur
 		p.giveRevenu(nombres);
+	}
+
+	/**
+	 * Selection de 10 cartes parmis toutes les cartes au début du jeu
+	 * les autres ne seront pas utilisé pour le jeu
+	 * @return List<OnuCard> retourne la liste des cartes sélectionnées
+	 */
+	public List<OnuCard> getOnuCards(){
+		onuCardsInGame = new ArrayList<>(); // liste de carte qui seront selectionnée ppour la partie
+		OnuCard card;
+		for (int i = 0;i<10;i++) { // 10 cartes choisi
+			// selection d'une carte aléatoirement parmis la liste totale des cartes de l'ONU
+			do card = onuCards.get(new Random().nextInt(onuCards.size()));
+			while(onuCardsInGame.contains(card));
+			onuCardsInGame.add(card);
+		}
+		System.out.println("les 10 cartes 'objectifs de l'ONU' selectionnées sont :");
+		return onuCardsInGame;
 	}
 
 	public List<PisteExpertise> getExpertises() {

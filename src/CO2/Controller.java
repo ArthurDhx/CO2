@@ -29,6 +29,7 @@ public class Controller {
 		viewTitle.root.setFocusTraversable(true);
 		viewTitle.root.requestFocus();
 		if (model.getNbJoueur() == 1 ) {
+            initOnuCards();
 		    initStartingProject();
 		    initStartingFossileCentral();
         }
@@ -80,5 +81,12 @@ public class Controller {
         }
         // On met a jour le co2 de la vue
         viewGame.reloadCo2();
+    }
+
+    /**
+     * Permet de choisir aléatoirement 10 cartes "objectifs de l'ONU" au début de la partie
+     */
+    public void initOnuCards(){
+        System.out.println(model.getOnuCards());
     }
 }
