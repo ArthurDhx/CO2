@@ -28,8 +28,8 @@ public class ControllerAction implements EventHandler<ActionEvent>{
         } else if (source == viewGame.hboxAction.btnCancelAction) {
             viewGame.hboxAction.resetHbox();
         }else if (source == viewGame.hboxAction.btnFinTour) { // appuyer sur bouton fin de tour
-            finTour();
             verifOnuCard();
+            finTour();
         }
         viewGame.reloadArgent();
     }
@@ -127,6 +127,8 @@ public class ControllerAction implements EventHandler<ActionEvent>{
         // actualisation du nombre de tour et de décénnie
         viewGame.reloadTour();
         viewGame.reloadDecade();
+        viewGame.reloadresourcesTech();
+        viewGame.reloadPointVictoire();
         // affichage sur la console le nombre de tour et décénnie
         System.out.println("Tour : " + model.getTour() + "/" + (model.NB_TOUR_PAR_DECENNIE-1));
         System.out.println("Décénnie : " + model.getDecade() + "/" + model.NB_DECENNIE);
@@ -221,6 +223,7 @@ public class ControllerAction implements EventHandler<ActionEvent>{
      * vérifie si un joueur à marquer une carte "Objectif de l'ONU"
      */
     public void verifOnuCard(){
-        System.out.println(model.markOnuCard());
+        // TODO : donner la carte selectionnée dans le menu
+        model.giveVictoryPointsOnuCards(model.getOnuCardsInGame().get(1)); // test sur la 2e carte
     }
 }

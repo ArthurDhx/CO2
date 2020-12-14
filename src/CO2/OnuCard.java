@@ -56,6 +56,14 @@ public class OnuCard {
         this.nbPointDeVictoire = nbPointDeVictoire;
     }
 
+    public int getNbPointDeVictoire() {
+        return nbPointDeVictoire;
+    }
+
+    public int getId() {
+        return id;
+    }
+
     @Override
     public String toString() {
         return "OnuCard{" +

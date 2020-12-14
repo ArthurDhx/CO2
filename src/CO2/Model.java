@@ -52,6 +52,7 @@ public class Model {
 
 	List<OnuCard> onuCards;
 	List<OnuCard> onuCardsInGame;
+	OnuCard markedCard;
 
 	// nombre de joueurs
 	private int nbJoueur;
@@ -536,7 +537,7 @@ public class Model {
 	 * les autres ne seront pas utilisé pour le jeu
 	 * @return List<OnuCard> retourne la liste des cartes sélectionnées
 	 */
-	public List<OnuCard> getOnuCards(){
+	public List<OnuCard> initOnuCardsInGame(){
 		onuCardsInGame = new ArrayList<>(); // liste de carte qui seront selectionnée ppour la partie
 		OnuCard card;
 		// TODO : prochain sprint : remettre à jour
@@ -557,33 +558,51 @@ public class Model {
 	 * Vérifier si une des cartes "objectif de l'ONU" du jeu est marquer par un joueur
 	 * @return true si une carte est marquée (si un joueur à contruit tout les types de centrales présents sur une carte)
 	 */
-	public boolean markOnuCard(){
+	public boolean markOnuCard(OnuCard card){
 		ArrayList<String> centralsGreen = new ArrayList<>();
 		String CentraleName;
 		int nbSolaire = 0;
 		// TODO : pour démo : int nbSolaire permet de vérifier que le nombre de solaire dans la carte soit égal au nombre de centrales solaires construites
 		// TODO : prochain sprint : enlever quand on aura implémenter tous les types de projets
-		for(int i=0; i<getContinents().length; i++) {
+		for(int i=0; i<getContinents().length; i++) { // boucle sur continent
 			ArrayList<Central> caseCentrals = continents[i].getCentrales();
-			for (Central c : caseCentrals) {
-				if (c.isOccupe() && !c.isFossile()) {
+			for (Central c : caseCentrals) { // pour toutes les cases de centrales
+				if (c.isOccupe() && !c.isFossile()) { // si centrale occupé et pas fossible
 					nbSolaire++;
-					CentraleName = c.getType().name();
-					centralsGreen.add(CentraleName);
+					CentraleName = c.getType().name(); // récupération du nom
+					centralsGreen.add(CentraleName); // ajouter a la liste des centrales vertes construites sur le jeu
 					System.out.println("liste des centrales vertes :" + centralsGreen);
 				}
 			}
 		}
-		for(OnuCard card : onuCardsInGame) {
-			if (centralsGreen.containsAll(card.getTypesCentral())) {
-				if(nbSolaire == card.getTypesCentral().size()) {
-					System.out.println("ok");
-					System.out.println(card.toString());
-					return true;
-				}
+		if (centralsGreen.containsAll(card.getTypesCentral())) { // si la liste des centrales vertes construites contient tous les types de centrales d'une carte ONU
+			if(nbSolaire == card.getTypesCentral().size()) {
+				return true;
 			}
 		}
 		return false;
+	}
+
+
+	/**
+	 * Vérifier si le joueur a marquer une carte de l'ONU et si il possède au moins un cube de ressource technologique
+	 *	Donne les points de victoires au joueur et diminue ses ressources technologiques de -1
+	 */
+	public void giveVictoryPointsOnuCards(OnuCard card){
+		if (markOnuCard(card) && getCurrentPLayer().getResourcesTech() >= 1){ // si une carte est marquée par le joueur et qur la ressource technologique
+			getCurrentPLayer().setPointVictoire(getCurrentPLayer().getPointVictoire() + card.getNbPointDeVictoire()); // augmente points de victoires avec la carte
+			getCurrentPLayer().setResourcesTech(getCurrentPLayer().getResourcesTech()-1); // diminue ressources technologieques du joueur
+			onuCardsInGame.remove(card); // supprime la carte du jeu
+			System.out.println("carte ONU n°"  + card.getId()+ " jouer !");
+		}else{
+			// TODO : mettre alerte manque ressource technologique
+			System.out.println("pas assez de points de ressource technologique!");
+		}
+	}
+
+
+	public List<OnuCard> getOnuCardsInGame() {
+		return onuCardsInGame;
 	}
 
 	public List<PisteExpertise> getExpertises() {
