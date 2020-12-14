@@ -647,8 +647,8 @@ public class Model {
 	 *             1 = centrale a petrole
 	 *             2 = centrale a gaz
 	 */
-	public void putFossileCentral(Continent continent, centralTypes type) {
-		Central central = continent.getCentrales().get(0) ;
+	public void putFossileCentral(Continent continent, centralTypes type, int index) {
+		Central central = continent.getCentrales().get(index) ;
 		central.setOccupe(true);
 		switch (type){
 			case CHARBON :

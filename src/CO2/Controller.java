@@ -75,7 +75,7 @@ public class Controller {
             // On tire au sort le type entre 0 et 2
             int type = random.nextInt(3) ;
             // On mets a jour le model avec le bon type sur le bon continent
-            model.putFossileCentral(continent, typesCentralsFossile[type]);
+            model.putFossileCentral(continent, typesCentralsFossile[type],0);
             // On ajoute la centrale a la vue
             viewGame.addCentrale(continent.getCentrales().get(0).getType(), continent, 0);
         }

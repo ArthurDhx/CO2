@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 public class ControllerAction implements EventHandler<ActionEvent>{
     Model model ;
@@ -129,6 +130,7 @@ public class ControllerAction implements EventHandler<ActionEvent>{
         viewGame.reloadDecade();
         viewGame.reloadresourcesTech();
         viewGame.reloadPointVictoire();
+        viewGame.reloadCo2();
         // affichage sur la console le nombre de tour et décénnie
         System.out.println("Tour : " + model.getTour() + "/" + (model.NB_TOUR_PAR_DECENNIE-1));
         System.out.println("Décénnie : " + model.getDecade() + "/" + model.NB_DECENNIE);
@@ -192,17 +194,18 @@ public class ControllerAction implements EventHandler<ActionEvent>{
      */
     public void manqueCentral(ArrayList<Continent> continentsEnBesoin){
         //pour chaque continent dans le besoin
+        Random random = new Random();
+        centralTypes[] typesCentralsFossile = {centralTypes.CHARBON, centralTypes.PETROLE, centralTypes.GAZNATUREL};
         for(Continent c: continentsEnBesoin){
             //Phase 1.
             //on cherche la première case de libre dans les centrales du continent
             for(Central caseCentral: c.getCentrales()){
                 if(!caseCentral.isOccupe()){
                     //Une fois trouvée, on ajoute une central à cette case
-                    //TODO aléatoire pour le type de centrale
-                    viewGame.addCentrale(centralTypes.GAZNATUREL, c, caseCentral.getIndex());
+                    int type = random.nextInt(3) ;
+                    viewGame.addCentrale(typesCentralsFossile[type], c, caseCentral.getIndex());
                     //on met à jour le modèle
-                    caseCentral.setOccupe(true);
-                    caseCentral.setType(centralTypes.GAZNATUREL);
+                    model.putFossileCentral(c, typesCentralsFossile[type],caseCentral.getIndex());
                     //et on sort de la boucle
                     break;
                 }
