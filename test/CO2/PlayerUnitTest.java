@@ -126,15 +126,16 @@ public class PlayerUnitTest {
         Assert.assertEquals(null, p.getLobbyCards());
         Model model = new Model();
         model.init();
-        Assert.assertEquals(5, p.getLobbyCards().size());
+        Assert.assertEquals(5, model.getCurrentPLayer().getLobbyCards().size());
     }
 
     @Test
     public void testPlayLobbyCardRetireLaCarteDeLaMain() throws IOException {
         Model model = new Model();
         model.init();
-        Assert.assertEquals(5, p.getLobbyCards().size());
+        p = model.getCurrentPLayer();
+        Assert.assertEquals(5, model.getCurrentPLayer().getLobbyCards().size());
         p.playLobbyCard(p.getLobbyCards().get(0));
-        Assert.assertEquals(4, p.getLobbyCards().size());
+        Assert.assertEquals(4, model.getCurrentPLayer().getLobbyCards().size());
     }
 }

@@ -130,6 +130,7 @@ public class ControllerAction implements EventHandler<ActionEvent>{
         model.getCurrentPLayer().setActionPrincipaleDone(false);
         model.getCurrentPLayer().setDeplacerScientifiqueDone(false);
         model.getCurrentPLayer().setMarcheCEPDone(false);
+        model.getCurrentPLayer().setActionMarche(0);
         viewGame.hboxAction.resetHbox();
         // actualisation du nombre de tour et de décénnie
         viewGame.reloadTour();

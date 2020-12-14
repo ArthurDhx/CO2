@@ -41,6 +41,10 @@ public class Player {
     private boolean[] actionGratuiteDone ;
     private boolean actionPrincipaleDone ;
 
+    // action marche du tour
+    // 0 = aucune; 1 = achat; 2 = vente
+    private int actionMarche = 0;
+
     public Player() {
         initExpertise();
         initScientifiques();
@@ -54,19 +58,6 @@ public class Player {
         color = Color.INDIANRED;
         curentScientifiqueId = 0;
         allScientifiqueIsOnSommet = false;
-    }
-
-    /**
-     * Initialise la liste de cartes lobby du joueur
-     */
-    public void giveLobbyCards(List<LobbyCard> cards, int nb) {
-        lobbyCards = new ArrayList<>();
-        for (int i = 0; i<nb; i++) {
-            System.out.println(cards.get(i));
-            // prendre une carte de cards au hasard
-            // la retirer de cards
-            // ajouter a lobbyCards
-        }
     }
 
     /**
@@ -87,6 +78,69 @@ public class Player {
         expertise.put(greenEnergyTypes.RECYCLING, 0);
         expertise.put(greenEnergyTypes.FUSION, 0);
         expertise.put(greenEnergyTypes.REFORESTATION, 0);
+    }
+
+    /**
+     * Initialise la liste de cartes lobby du joueur
+     */
+    public void giveLobbyCards(List<LobbyCard> cards, int nb) {
+        lobbyCards = new ArrayList<>();
+        // temporaire demo
+        // TODO : supprimer tempo et faire vrai distribution dans la boucle
+        lobbyCards.add(cards.remove(2));
+        lobbyCards.add(cards.remove(5));
+        lobbyCards.add(cards.remove(7));
+        lobbyCards.add(cards.remove(13));
+        lobbyCards.add(cards.remove(18));
+        // FIN temporaire demo
+        for (int i = 0; i<nb; i++) {
+            System.out.println(lobbyCards.get(i));
+            // prendre une carte de cards au hasard
+            // la retirer de cards et ajouter a lobbyCards
+        }
+    }
+
+    /**
+     * Joue la carte choisie par le joueur
+     * @param card la carte choisie
+     */
+    public void playLobbyCard(LobbyCard card) {
+        // donner les
+        Object complement = card.getComplement();
+        switch (card.getLobbyActionType()) {
+            case PROPOSER:
+                if (complement instanceof Continent)
+                    CEP += 3;
+                if (complement instanceof subventionTypes) {
+                    if (subventionTypes.ARGENT.equals(complement)) CEP +=3;
+                    else if (subventionTypes.RESSOURCE.equals(complement)) resourcesTech+=1;
+                    else if (subventionTypes.RECHERCHE.equals(complement)) {
+                        // repasse un mouvement scientifique a false pour autiriser un nouveau
+                        if (actionGratuiteDone[0] && !actionGratuiteDone[1]) actionGratuiteDone[0] = false;
+                        if (!actionGratuiteDone[0] && actionGratuiteDone[1]) actionGratuiteDone[1] = false;
+                    }
+                }
+                break;
+            case METTRE:
+                // TODO: trouver une recompense
+                break;
+            case CONSTRUIRE:
+                // si cette fonction est faite, le joueur a deja payer la centrale, on rembourse
+                argent += 3;
+                break;
+            case SOMMET:
+                addExpertise((greenEnergyTypes) complement, 1);
+                break;
+            case MARCHE_ACHAT:
+                pointVictoire += 2;
+                break;
+            case MARCHE_VENTE:
+                argent +=3;
+                break;
+        }
+
+        // retirer la carte du jeu
+        lobbyCards.remove(card);
     }
 
     /**
@@ -321,15 +375,6 @@ public class Player {
         resourcesTech -= cost[1];
     }
 
-    /**
-     * Joue la carte choisie par le joueur
-     * @param card la carte choisie
-     */
-    public void playLobbyCard(LobbyCard card) {
-        card.play();
-        lobbyCards.remove(card);
-    }
-
     public int getNBACTIONGRATUITE() {
         return NBACTIONGRATUITE;
     }
@@ -421,6 +466,14 @@ public class Player {
         }
         if (all == scientifiques.size()) return true;
         else return false;
+    }
+
+    public int getActionMarche() {
+        return actionMarche;
+    }
+
+    public void setActionMarche(int actionMarche) {
+        this.actionMarche = actionMarche;
     }
 
     public List<LobbyCard> getLobbyCards() {

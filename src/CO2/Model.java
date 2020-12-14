@@ -468,8 +468,8 @@ public class Model {
 	 * @return - <0 Si la centrale n'est pas créable
 	 * 		   - l'index ou la centrale a été posé si cela est possible
 	 */
-    public int putCentral(Subvention projetMisEnPlaceChoisi) {
-    	//TODO : Suis qui enleve le projet ne pas oublier de le faire aussi dans le modele
+	public int putCentral(Subvention projetMisEnPlaceChoisi) {
+		//TODO : Suis qui enleve le projet ne pas oublier de le faire aussi dans le modele
 		// Si le joueur n'as pas assez d'expertise, d'argent ou de ressources technologiques
 		if (!getCurrentPLayer().canConstruct(projetMisEnPlaceChoisi.getProject())) return -3;
 		// Si pas des scientifique sur projetMisEnplaceChoisi
@@ -499,14 +499,14 @@ public class Model {
 			}
 		}
 		return -1 ;
-    }
+	}
 
 	/**
 	 * Donne le controlle d'un continent au joueur courrant
 	 * @param continent continent controller
 	 */
 	public void giveControl(Continent continent) {
-    	// update dans player
+		// update dans player
 		getCurrentPLayer().takeControl(continent);
 		// update dans continent
 		continent.setControlPlayer(getCurrentPLayer());
@@ -583,7 +583,6 @@ public class Model {
 		return false;
 	}
 
-
 	/**
 	 * Vérifier si le joueur a marquer une carte de l'ONU et si il possède au moins un cube de ressource technologique
 	 *	Donne les points de victoires au joueur et diminue ses ressources technologiques de -1
@@ -598,6 +597,98 @@ public class Model {
 			// TODO : mettre alerte manque ressource technologique
 			System.out.println("pas assez de points de ressource technologique!");
 		}
+	}
+
+	/**
+	 * Joue la carte lobby choisie
+	 * @param card
+	 */
+	public void playLobbyCard(LobbyCard card) {
+		if (canPlayLobbyCard(card)) getCurrentPLayer().playLobbyCard(card);
+	}
+
+	/**
+	 * Verifie si le joueur a effectuer la tache requise par la carte lobby
+	 * @param card
+	 * @return
+	 */
+	private boolean canPlayLobbyCard(LobbyCard card) {
+		Player p = getCurrentPLayer();
+		Object complement = card.getComplement();
+
+		switch (card.getLobbyActionType()){
+			case PROPOSER:
+				// 1er type de carte
+				// il doit y avoir un projet non mis en place sur le continent
+				if (complement instanceof Continent) {
+					// le continent de la carte lobby
+					Continent continent = (Continent) complement;
+					for (Subvention sub : continent.getSubventions()) {
+						Project project = sub.getProject();
+						if (project != null && !project.isMisEnPlace())
+							return true;
+					}
+				}
+				// 2e type de carte
+				// il doit y avoir un projet non mis en place sur le type de subvention
+				if (complement instanceof subventionTypes) {
+					// le type de subvention de la carte lobby
+					subventionTypes typeSubvention = (subventionTypes) complement;
+					for (Continent continent : continents) {
+						for (Subvention subvention : continent.getSubventions()) {
+							if (subvention.getType().equals(typeSubvention)) {
+								Project project = subvention.getProject();
+								if (project != null && !project.isMisEnPlace())
+									return true;
+							}
+						}
+					}
+				}
+				break;
+			case METTRE:
+				// le type d'energie de la carte lobby
+				greenEnergyTypes energyType = (greenEnergyTypes) complement;
+				// il doit y avoir un projet mis en place de l'energie mis en place
+				for (Continent continent : continents) {
+					for (Subvention subvention : continent.getSubventions()) {
+						Project project = subvention.getProject();
+						if (project != null && project.isMisEnPlace() && project.getEnergyType().equals(energyType))
+							return true;
+					}
+				}
+				break;
+			case CONSTRUIRE:
+				// le type de la centrale de la carte lobby
+				centralTypes centralType = (centralTypes) complement;
+				// la centrale d'energie indiquee doit etre construite
+				for (Continent continent : continents) {
+					for (Central central : continent.getCentrales()) {
+						if (central.getType().equals(centralType))
+							return true;
+					}
+				}
+			case SOMMET:
+				// le type d'energie de la carte lobby
+				energyType = (greenEnergyTypes) complement;
+				// il doit y avoir un scientifique sur l'energie d'un sommet
+				for (SommetTile sommet : allSommetTile) {
+					if (sommet.haveEnergy(energyType)) {
+						for (Subject subject : sommet.getSubjects()) {
+							if (subject.getEnergy().equals(energyType) && subject.getScientifique() != null) {
+								return true;
+							}
+						}
+					}
+				}
+			case MARCHE_ACHAT:
+				// actionMarche = 1 // le joueur a fait un achat
+				if (p.getActionMarche() == 1) return true;
+			case MARCHE_VENTE:
+				// actionMarche = 2 // le joueur a fait une vente
+				if (p.getActionMarche() == 2) return true;
+		}
+
+		return false;
 	}
 
 

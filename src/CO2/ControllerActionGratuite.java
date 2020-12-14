@@ -113,6 +113,7 @@ public class ControllerActionGratuite implements EventHandler<ActionEvent> {
                         curPlayer.retirerArgent(model.currentPriceCEP);
                         curPlayer.addCEP();
                         model.getCurrentPLayer().setMarcheCEPDone(true);
+                        model.getCurrentPLayer().setActionMarche(1);
                         model.achatCEP();
                     }
                 } else {
@@ -122,6 +123,7 @@ public class ControllerActionGratuite implements EventHandler<ActionEvent> {
                         curPlayer.removeCEP();
                         curPlayer.gainArgent(model.currentPriceCEP);
                         model.getCurrentPLayer().setMarcheCEPDone(true);
+                        model.getCurrentPLayer().setActionMarche(2);
                         model.venteCEP();
                     }
                 }
