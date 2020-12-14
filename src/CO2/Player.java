@@ -95,8 +95,9 @@ public class Player {
      * @param quantity
      */
     public void addExpertise(greenEnergyTypes type, int quantity) {
+        int max = 10;
         int cur = expertise.get(type);
-        expertise.replace(type, cur+quantity);
+        if (cur+quantity <= max) expertise.replace(type, cur+quantity);
     }
 
     /**
