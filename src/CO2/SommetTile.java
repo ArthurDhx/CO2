@@ -70,7 +70,6 @@ public class SommetTile {
     public int getIndexSubject(Subject subject) {
         for (int i = 0; i < this.subjects.size(); i++) {
             if (this.subjects.get(i).getEnergy() == subject.getEnergy()) return i;
-
         }
         return -1;
     }
@@ -78,6 +77,8 @@ public class SommetTile {
     public ImageView getImageSommetTile() {
         return imageSommetTile;
     }
+
+    public ArrayList<Subject> getSubjects() { return subjects; }
 
     /**
      * un scientifique est présent sur un sujet donnée en paramètre
@@ -99,6 +100,8 @@ public class SommetTile {
     public void setContinent(Continent continent) {
         this.continent = continent;
     }
+
+    public void setSubjects(ArrayList<Subject> subjects) { this.subjects = subjects; }
 
     /**
      * @return booléen
