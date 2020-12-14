@@ -591,11 +591,11 @@ public class Model {
 		if (markOnuCard(card) && getCurrentPLayer().getResourcesTech() >= 1){ // si une carte est marquée par le joueur et qur la ressource technologique
 			getCurrentPLayer().setPointVictoire(getCurrentPLayer().getPointVictoire() + card.getNbPointDeVictoire()); // augmente points de victoires avec la carte
 			getCurrentPLayer().setResourcesTech(getCurrentPLayer().getResourcesTech()-1); // diminue ressources technologieques du joueur
-			onuCardsInGame.remove(card); // supprime la carte du jeu
 			System.out.println("carte ONU n°"  + card.getId()+ " jouer !");
+			onuCardsInGame.remove(card); // supprime la carte du jeu
 		}else{
 			// TODO : mettre alerte manque ressource technologique
-			System.out.println("pas assez de points de ressource technologique!");
+			System.out.println("Carte ONU : pas de carte marquée ou pas assez de cubes de ressource technologique!");
 		}
 	}
 
@@ -689,6 +689,13 @@ public class Model {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Retire un CEP de la reserve du joueur s'il en a au moins 1 et s'il contrôle un continent
+	 */
+	public void removeCEP(){
+		getCurrentPLayer().setCEP(getCurrentPLayer().getCEP()-1);
 	}
 
 

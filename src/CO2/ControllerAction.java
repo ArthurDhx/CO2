@@ -132,7 +132,7 @@ public class ControllerAction implements EventHandler<ActionEvent>{
         model.getCurrentPLayer().setMarcheCEPDone(false);
         model.getCurrentPLayer().setActionMarche(0);
         viewGame.hboxAction.resetHbox();
-        // actualisation du nombre de tour et de décénnie
+        // actualisation du nombre de tour, de décénnie, Ressources Techno, CEP, Point de Victoire, CO2
         viewGame.reloadTour();
         viewGame.reloadDecade();
         viewGame.reloadresourcesTech();
@@ -228,9 +228,13 @@ public class ControllerAction implements EventHandler<ActionEvent>{
                     // TODO : Mettre les vrai condition
                     if (model.curPlayer.getCEP() >= 1) {
                         // La vrai condition = model.curPlayer.getCEP() > 1
-                        //on retire CEP
+                        // on retire CEP
+                        model.removeCEP();
+                        System.out.println("Paiement à la banque d'un CEP de ma réserve");
                     } else if (continentController.getNbCep() >= 1 ) {
                         //si il y a des cep dans continent controler on prend
+                        continentController.setNbCep(continentController.getNbCep()-1);
+                        System.out.println("Paiement à la banque d'un CEP du continent " + continentController.getName());
                     } else {
                         // Si on a pas de cep dans les contient controler et dans nos poche alors
                         if (model.currentPriceCEP > model.curPlayer.getArgent()) {
@@ -252,6 +256,7 @@ public class ControllerAction implements EventHandler<ActionEvent>{
      */
     public void verifOnuCard(){
         // TODO : donner la carte selectionnée dans le menu
+        // TODO : provoque erreur terminal si la carte 1 n'existe plus (faire gaffe) quand clique fin du tour
         model.giveVictoryPointsOnuCards(model.getOnuCardsInGame().get(1)); // test sur la 2e carte
     }
 }

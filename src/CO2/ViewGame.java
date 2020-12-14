@@ -399,12 +399,12 @@ public class ViewGame {
 		int y = 0;
 
 		switch (continentId) {
-			case 0 : y = continentY[continentId] - 50;
-			case 1 : y = continentY[continentId] - 30;
-            case 2 : y = continentY[continentId] - 50;
-            case 3 : y = continentY[continentId] - 100;
-			case 4 : y = continentY[continentId] - 80;
-            case 5 : y = continentY[continentId] - 100;
+			case 0 : y = continentY[continentId] - 50;break;
+			case 1 : y = continentY[continentId] - 30;break;
+            case 2 : y = continentY[continentId] - 50;break;
+            case 3 : y = continentY[continentId] - 100;break;
+			case 4 : y = continentY[continentId] - 80;break;
+            case 5 : y = continentY[continentId] - 100;break;
         }
 		return new Circle(continentX[continentId]+75,y, 15, playerColor);
 	}
