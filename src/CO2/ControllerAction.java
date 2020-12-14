@@ -31,6 +31,12 @@ public class ControllerAction implements EventHandler<ActionEvent>{
         }else if (source == viewGame.hboxAction.btnFinTour) { // appuyer sur bouton fin de tour
             verifOnuCard();
             finTour();
+        } else if (source == viewGame.hboxAction.btnTest) {
+            model.curPlayer.setCEP(0);
+            model.curPlayer.setArgent(0);
+            model.curPlayer.getContinentsControlles().get(0).setNbCep(0);
+            viewGame.reloadCEP();
+            viewGame.reloadArgent();
         }
         viewGame.reloadArgent();
     }
@@ -129,6 +135,7 @@ public class ControllerAction implements EventHandler<ActionEvent>{
         viewGame.reloadTour();
         viewGame.reloadDecade();
         viewGame.reloadresourcesTech();
+        viewGame.reloadCEP();
         viewGame.reloadPointVictoire();
         viewGame.reloadCo2();
         // affichage sur la console le nombre de tour et décénnie
@@ -217,6 +224,23 @@ public class ControllerAction implements EventHandler<ActionEvent>{
                 if(continentController.equals(c)){
                     //affichage d'un message
                     viewGame.displayAlertWithoutHeaderText("Danger !", "Vous controllez un continent en manque d'énergie ! "+c.getName()+" Vous devez payer !!");
+                    // TODO : Mettre les vrai condition
+                    if (model.curPlayer.getCEP() >= 1) {
+                        // La vrai condition = model.curPlayer.getCEP() > 1
+                        //on retire CEP
+                    } else if (continentController.getNbCep() >= 1 ) {
+                        //si il y a des cep dans continent controler on prend
+                    } else {
+                        // Si on a pas de cep dans les contient controler et dans nos poche alors
+                        if (model.currentPriceCEP > model.curPlayer.getArgent()) {
+                            // La vrai condition = model.currentPriceCEP > model.curPlayer.getArgent()
+                            // on echange nos pv contre de l'agrgent puis on achete un cep
+                            viewGame.displayAlertWithoutHeaderText("Echange", "Vous n'avez pas assez de CEP\n" +
+                                    "Le jeux va échanger vos point de victoire pour acheter un CEP");
+                            model.tradePVtoCEP();
+                            System.out.println("trade fait");
+                        }
+                    }
                 }
             }
         }

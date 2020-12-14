@@ -671,4 +671,15 @@ public class Model {
 	public List<SommetTile> getAllSommetTile() {
 		return allSommetTile;
 	}
+
+	public void tradePVtoCEP() {
+		while (currentPriceCEP > curPlayer.getArgent()) {
+			curPlayer.setPointVictoire(curPlayer.getPointVictoire()-1);
+			curPlayer.gainArgent(1);
+		}
+		curPlayer.retirerArgent(currentPriceCEP);
+		curPlayer.addCEP();
+		achatCEP();
+		curPlayer.removeCEP();
+	}
 }

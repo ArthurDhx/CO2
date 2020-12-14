@@ -163,5 +163,9 @@ public class Continent {
         if (nbcentralOccuped == centrales.size()) return true;
         else return false;
     }
+
+    public void setNbCep(int nbCep) {
+        this.nbCep = nbCep;
+    }
 }
 

@@ -21,6 +21,7 @@ import java.util.Optional;
 
 public class ViewGame {
 
+	public Object btnTest;
 	Model model;
     Pane pane;
 

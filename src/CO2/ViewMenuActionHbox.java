@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ViewMenuActionHbox extends HBox {
+    //TODO : A delete
+    public Button btnTest;
     Model model ;
 
     // Les différents ChoiceDialog s'affichant selon l'action choisis
@@ -81,9 +83,9 @@ public class ViewMenuActionHbox extends HBox {
 
         btnCancelAction = new Button("Annuler");
         btnCancelActionScientifique = new Button("Annuler");
-        this.getChildren().addAll(btnActionPrincipale, btnActionGratuite,btnFinTour);
-
-        btnFinTour = new Button("Fin du tour");
+        //TODO : A delete
+        btnTest = new Button("Test");
+        this.getChildren().addAll(btnActionPrincipale, btnActionGratuite,btnFinTour,btnTest);
     }
 
     /**
@@ -345,6 +347,8 @@ public class ViewMenuActionHbox extends HBox {
         if (!model.getCurrentPLayer().isActionPrincipaleDone()) this.getChildren().add(btnActionPrincipale);
         if (!model.getCurrentPLayer().isAllActionGratuiteDone()) this.getChildren().add(btnActionGratuite);
         this.getChildren().add(btnFinTour);
+
+        this.getChildren().add(btnTest);
     }
 
     /**
@@ -356,6 +360,9 @@ public class ViewMenuActionHbox extends HBox {
         btnActionPrincipale.setOnAction(handler);
         btnCancelAction.setOnAction(handler);
         btnFinTour.setOnAction(handler);
+
+        //TODO : A delete
+        btnTest.setOnAction(handler);
     }
 
     /**
