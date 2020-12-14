@@ -535,9 +535,18 @@ public class ViewGame {
 	 * @param idSubvention
 	 */
 	public void resetSubvention(Continent continent, int idSubvention){
-		if (idSubvention == 0) continent.getTabRectangleSubvention()[idSubvention].setFill(new ImagePattern(imgArgent));
-		if (idSubvention == 1) continent.getTabRectangleSubvention()[idSubvention].setFill(new ImagePattern(imgRessource));
-		if (idSubvention == 2) continent.getTabRectangleSubvention()[idSubvention].setFill(new ImagePattern(imgRecherche));
+		if (idSubvention == 0){
+			continent.getTabRectangleSubvention()[idSubvention].setFill(new ImagePattern(imgArgent));
+			Tooltip.install(continent.getTabRectangleSubvention()[idSubvention],new Tooltip("Proposer un projet : autant de $ que de cep du continent"));
+		}
+		if (idSubvention == 1){
+			continent.getTabRectangleSubvention()[idSubvention].setFill(new ImagePattern(imgRessource));
+			Tooltip.install(continent.getTabRectangleSubvention()[idSubvention],new Tooltip("Proposer un projet : donne 2 cubes de ressources"));
+		}
+		if (idSubvention == 2){
+			continent.getTabRectangleSubvention()[idSubvention].setFill(new ImagePattern(imgRecherche));
+			Tooltip.install(continent.getTabRectangleSubvention()[idSubvention],new Tooltip("Proposer un projet : Déplace un scientifique ou +1 scientifique"));
+		}
 	}
 
 	/**
