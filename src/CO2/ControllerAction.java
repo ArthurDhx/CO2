@@ -29,6 +29,7 @@ public class ControllerAction implements EventHandler<ActionEvent>{
             viewGame.hboxAction.resetHbox();
         }else if (source == viewGame.hboxAction.btnFinTour) { // appuyer sur bouton fin de tour
             finTour();
+            verifOnuCard();
         }
         viewGame.reloadArgent();
     }
@@ -214,5 +215,12 @@ public class ControllerAction implements EventHandler<ActionEvent>{
                 }
             }
         }
+    }
+
+    /**
+     * vérifie si un joueur à marquer une carte "Objectif de l'ONU"
+     */
+    public void verifOnuCard(){
+        System.out.println(model.markOnuCard());
     }
 }

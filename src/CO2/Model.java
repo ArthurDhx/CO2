@@ -399,10 +399,6 @@ public class Model {
 		return false;
 	}
 
-	public boolean tilesSolarProjectOnWhichContinent(){
-		// à développer pour savoir quel continent contient les tuiles de projet solaire
-		return continents[0].isContainsTilesSolarProject();
-	}
 	public void achatCEP(){
 		this.nbCEPdispo -= 1;
 		if(nbCEPdispo == 0){
@@ -543,14 +539,51 @@ public class Model {
 	public List<OnuCard> getOnuCards(){
 		onuCardsInGame = new ArrayList<>(); // liste de carte qui seront selectionnée ppour la partie
 		OnuCard card;
-		for (int i = 0;i<10;i++) { // 10 cartes choisi
+		// TODO : prochain sprint : remettre à jour
+		//for (int i = 0;i<10;i++) { // 10 cartes choisi (7 pour 2 joueurs)
+		for (int i = 0;i<2;i++) { // 10 cartes choisi (7 pour 2 joueurs)
 			// selection d'une carte aléatoirement parmis la liste totale des cartes de l'ONU
-			do card = onuCards.get(new Random().nextInt(onuCards.size()));
-			while(onuCardsInGame.contains(card));
+			//do card = onuCards.get(new Random().nextInt(onuCards.size()));
+			//while(onuCardsInGame.contains(card));
+			card = onuCards.get(new Random().nextInt(onuCards.size()));
 			onuCardsInGame.add(card);
 		}
 		System.out.println("les 10 cartes 'objectifs de l'ONU' selectionnées sont :");
 		return onuCardsInGame;
+	}
+
+
+	/**
+	 * Vérifier si une des cartes "objectif de l'ONU" du jeu est marquer par un joueur
+	 * @return true si une carte est marquée (si un joueur à contruit tout les types de centrales présents sur une carte)
+	 */
+	public boolean markOnuCard(){
+		ArrayList<String> centralsGreen = new ArrayList<>();
+		String CentraleName;
+		int nbSolaire = 0;
+		// TODO : pour démo : int nbSolaire permet de vérifier que le nombre de solaire dans la carte soit égal au nombre de centrales solaires construites
+		// TODO : prochain sprint : enlever quand on aura implémenter tous les types de projets
+		for(int i=0; i<getContinents().length; i++) {
+			ArrayList<Central> caseCentrals = continents[i].getCentrales();
+			for (Central c : caseCentrals) {
+				if (c.isOccupe() && !c.isFossile()) {
+					nbSolaire++;
+					CentraleName = c.getType().name();
+					centralsGreen.add(CentraleName);
+					System.out.println("liste des centrales vertes :" + centralsGreen);
+				}
+			}
+		}
+		for(OnuCard card : onuCardsInGame) {
+			if (centralsGreen.containsAll(card.getTypesCentral())) {
+				if(nbSolaire == card.getTypesCentral().size()) {
+					System.out.println("ok");
+					System.out.println(card.toString());
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	public List<PisteExpertise> getExpertises() {

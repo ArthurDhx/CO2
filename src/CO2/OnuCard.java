@@ -21,13 +21,17 @@ public class OnuCard {
      * la liste est variable de 2 à 4 types
      */
     public void setTypesCentral(ArrayList<String> typesCentral) {
-        final Random random = new Random();
+        //final Random random = new Random();
+        // TODO : prochain sprint : remettre à jour
+        //for(int i=0;i< randomNbType();i++) {
         for(int i=0;i< randomNbType();i++) {
             String type;
             // selection d'un type de centrale verte
-            do type = centralTypes.values()[random.nextInt(centralTypes.values().length - 3)].name();
+            //do type = centralTypes.values()[random.nextInt(centralTypes.values().length - 3)].name();
+            //do type = centralTypes.values()[2].name();
+            type = centralTypes.values()[2].name();
             // test si ce type n'est pas déjà dans la liste
-            while(typesCentral.contains(type));
+            //while(typesCentral.contains(type));
             // ajout du type à la liste
             typesCentral.add(type);
         }
