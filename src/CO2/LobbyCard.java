@@ -31,7 +31,7 @@ public class LobbyCard<T> {
                 action = " proposé un projet sur ";
                 if (complement instanceof Continent) {
                     action += "le continent " + ((Continent) complement).getName();
-                    recompense = " 3€";
+                    recompense = " 3 CEP";
                 }
                 if (complement instanceof subventionTypes) {
                     if (subventionTypes.ARGENT.equals(complement)) {
