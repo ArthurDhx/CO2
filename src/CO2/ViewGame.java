@@ -216,7 +216,7 @@ public class ViewGame {
 	/**
 	 * Affiche les barres d'expertise
 	 * la premiere case de la premiere piste est en bas a gauche
-	 * a partir de (1300, 800)
+	 * a partir de (xStart, yStart)
 	 */
 	private void initExpertise(int xStart, int yStart, int rectWidth, int space) {
 		int x = xStart;
