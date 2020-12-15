@@ -29,7 +29,6 @@ public class ControllerAction implements EventHandler<ActionEvent>{
         } else if (source == viewGame.hboxAction.btnCancelAction) {
             viewGame.hboxAction.resetHbox();
         }else if (source == viewGame.hboxAction.btnFinTour) { // appuyer sur bouton fin de tour
-            verifOnuCard();
             finTour();
         } else if (source == viewGame.hboxAction.btnTest) {
             model.curPlayer.setCEP(0);
@@ -130,7 +129,7 @@ public class ControllerAction implements EventHandler<ActionEvent>{
         model.getCurrentPLayer().setActionPrincipaleDone(false);
         model.getCurrentPLayer().setDeplacerScientifiqueDone(false);
         model.getCurrentPLayer().setMarcheCEPDone(false);
-        model.getCurrentPLayer().setLobbyCardDone(false);
+        model.getCurrentPLayer().setCardDone(false);
         model.getCurrentPLayer().setActionMarche(0);
         viewGame.hboxAction.resetHbox();
         // actualisation du nombre de tour, de décénnie, Ressources Techno, CEP, Point de Victoire, CO2
@@ -250,12 +249,5 @@ public class ControllerAction implements EventHandler<ActionEvent>{
         }
     }
 
-    /**
-     * vérifie si un joueur à marquer une carte "Objectif de l'ONU"
-     */
-    public void verifOnuCard(){
-        // TODO : donner la carte selectionnée dans le menu
         // TODO : provoque erreur terminal si la carte 1 n'existe plus (faire gaffe) quand clique fin du tour
-        model.giveVictoryPointsOnuCards(model.getOnuCardsInGame().get(1)); // test sur la 2e carte
-    }
 }

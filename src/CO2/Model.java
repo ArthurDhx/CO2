@@ -587,15 +587,14 @@ public class Model {
 	 * Vérifier si le joueur a marquer une carte de l'ONU et si il possède au moins un cube de ressource technologique
 	 *	Donne les points de victoires au joueur et diminue ses ressources technologiques de -1
 	 */
-	public void giveVictoryPointsOnuCards(OnuCard card){
+	public void giveVictoryPointsOnuCards(OnuCard card) throws Exception {
 		if (markOnuCard(card) && getCurrentPLayer().getResourcesTech() >= 1){ // si une carte est marquée par le joueur et qur la ressource technologique
 			getCurrentPLayer().setPointVictoire(getCurrentPLayer().getPointVictoire() + card.getNbPointDeVictoire()); // augmente points de victoires avec la carte
 			getCurrentPLayer().setResourcesTech(getCurrentPLayer().getResourcesTech()-1); // diminue ressources technologieques du joueur
 			System.out.println("carte ONU n°"  + card.getId()+ " jouer !");
 			onuCardsInGame.remove(card); // supprime la carte du jeu
 		}else{
-			// TODO : mettre alerte manque ressource technologique
-			System.out.println("Carte ONU : pas de carte marquée ou pas assez de cubes de ressource technologique!");
+			throw new Exception("Pas de carte marquée ou pas assez de cubes de ressource technologique!");
 		}
 	}
 

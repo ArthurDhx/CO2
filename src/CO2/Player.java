@@ -282,8 +282,8 @@ public class Player {
      * Permet de dire que l'action gratuite jouer carte est faite ou non pendant ce tour
      * @param done
      */
-    public void setLobbyCardDone(boolean done){
-        this.actionGratuiteDone[4] = done ;
+    public void setCardDone(boolean done){
+        this.actionGratuiteDone[3] = done ;
     }
 
 

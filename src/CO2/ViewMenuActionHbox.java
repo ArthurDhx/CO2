@@ -32,6 +32,7 @@ public class ViewMenuActionHbox extends HBox {
     ChoiceDialog<Continent> dialogBuyCEPByContinent;
     ChoiceDialog<LobbyCard> dialogJouerCarteLobby;
     ChoiceDialog<String> dialogMajeurMineur ;
+    ChoiceDialog<OnuCard> dialogMarqueOnuCard ;
 
     // Les boutons associe aux actions principales
     Button btnActionPrincipale;
@@ -473,6 +474,17 @@ public class ViewMenuActionHbox extends HBox {
         dialogJouerCarteLobby.setContentText("Carte : ");
     }
 
+    public void displayMarqueOnuChoiceDialog() {
+        List<OnuCard> choices = model.getOnuCardsInGame();
+        dialogMarqueOnuCard = new ChoiceDialog<>(
+                choices.get(0),
+                choices
+        );
+        dialogMarqueOnuCard.setTitle("Marquer les points du carte Onu");
+        dialogMarqueOnuCard.setHeaderText("Quelle carte choissisez vous ?");
+        dialogMarqueOnuCard.setContentText("Carte : ");
+    }
+
     /**
      * Permet de choisir comment déplacer un scientifique après avoir mis un projet sur une case recherche en collaboration
      */
@@ -565,4 +577,6 @@ public class ViewMenuActionHbox extends HBox {
         dialogMajeurMineur.setTitle("Jouer une carte lobby");
         dialogMajeurMineur.setHeaderText("Choisir le type :");
     }
+
+
 }

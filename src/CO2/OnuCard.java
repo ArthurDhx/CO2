@@ -66,10 +66,7 @@ public class OnuCard {
 
     @Override
     public String toString() {
-        return "OnuCard{" +
-                "id=" + id +
-                ", nbPointDeVictoire=" + nbPointDeVictoire +
-                ", typesCentral=" + typesCentral +
-                "} \n";
+        return "Créer 1 centrale de type " + typesCentral.get(0) + " et 1 centrale de type " + typesCentral.get(0)
+                + "\n Pour gagner " + nbPointDeVictoire + " Points de victoire" ;
     }
 }

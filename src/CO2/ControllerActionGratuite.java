@@ -139,19 +139,15 @@ public class ControllerActionGratuite implements EventHandler<ActionEvent> {
     }
 
     private void marquePointOnu() {
-        viewGame.hboxAction.displayPlayLobbyCardChoiceDialog();
-        Optional<LobbyCard> resultLobby = viewGame.hboxAction.dialogJouerCarteLobby.showAndWait();
-        resultLobby.ifPresent(lobbyCard -> {
-            viewGame.hboxAction.displayMajeurMineurChoiceDialog();
-            Optional<String> resultType = viewGame.hboxAction.dialogMajeurMineur.showAndWait();
-            resultType.ifPresent(type -> {
-                boolean resultat = false ;
-                if (type.equals("Majeur")) resultat = model.playLobbyCard(lobbyCard,true);
-                else resultat = model.playLobbyCard(lobbyCard,false);
-                System.out.println(resultat);
-                if (!resultat) viewGame.displayAlertWithoutHeaderText("Action Impossible", "Veuillez finir vos tâches avant d'essayer de jouer la carte");
-                else model.getCurrentPLayer().setLobbyCardDone(true);
-            });
+        viewGame.hboxAction.displayMarqueOnuChoiceDialog();
+        Optional<OnuCard> resultOnuCard = viewGame.hboxAction.dialogMarqueOnuCard.showAndWait();
+        resultOnuCard.ifPresent(onuCard -> {
+            try {
+                model.giveVictoryPointsOnuCards(onuCard);
+                model.getCurrentPLayer().setCardDone(true);
+            } catch (Exception e) {
+                viewGame.displayAlertWithoutHeaderText("Impossible de marquer les points" , e.getMessage());
+            }
         });
     }
 
