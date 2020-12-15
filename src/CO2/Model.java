@@ -606,7 +606,7 @@ public class Model {
 	 * @return false si la mission n'est pas remplie
 	 */
 	public boolean playLobbyCard(LobbyCard card, boolean majeur) {
-		boolean canPLay = canPLay = canPlayLobbyCard(card);
+		boolean canPLay = canPlayLobbyCard(card);
 		if (majeur && canPLay) getCurrentPLayer().playLobbyCard(card);
 		if (!majeur && canPLay) getCurrentPLayer().playMinorLobbyCard(card);
 		return canPLay;
