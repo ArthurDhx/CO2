@@ -133,8 +133,16 @@ public class ControllerActionGratuite implements EventHandler<ActionEvent> {
             });
         } else if (source == viewGame.hboxAction.btnJouerCarteLobby) {
             playLobbyCard();
+            viewGame.reloadArgent();
+            viewGame.reloadCEP();
+            viewGame.reloadPointVictoire();
+            viewGame.reloadresourcesTech();
+            viewGame.hboxAction.resetHbox();
         } else if (source == viewGame.hboxAction.btnMarquerPointOnu) {
             marquePointOnu();
+            viewGame.reloadPointVictoire();
+            viewGame.reloadresourcesTech();
+            viewGame.hboxAction.resetHbox();
         }
     }
 
@@ -160,8 +168,10 @@ public class ControllerActionGratuite implements EventHandler<ActionEvent> {
             resultType.ifPresent(type -> {
                 boolean resultat = false ;
                 if (type.equals("Majeur")) resultat = model.playLobbyCard(lobbyCard,true);
-                else resultat = model.playLobbyCard(lobbyCard,false);
-                System.out.println(resultat);
+                else{
+                    resultat = true;
+                    model.getCurrentPLayer().playMinorLobbyCard(lobbyCard);
+                }
                 if (!resultat) viewGame.displayAlertWithoutHeaderText("Action Impossible", "Veuillez finir vos tâches avant d'essayer de jouer la carte");
             });
             return;

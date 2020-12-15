@@ -159,7 +159,7 @@ public class Model {
 
 		// cartes construire une centrale
 		for (centralTypes centralType : centralTypes.values())
-			lobbyCards.add(new LobbyCard<>(lobbyActionTypes.CONSTRUIRE, centralType.name(), lobbyMineurTypes.ARGENT));
+			lobbyCards.add(new LobbyCard<>(lobbyActionTypes.CONSTRUIRE, centralType, lobbyMineurTypes.ARGENT));
 
 		// cartes sommet d'un type d'energie
 		for (greenEnergyTypes type : greenEnergyTypes.values())
@@ -575,8 +575,11 @@ public class Model {
 				}
 			}
 		}
+		System.out.println("nbsolaire !" + nbSolaire);
+		System.out.println(card.getTypesCentral());
+		System.out.println(card.getTypesCentral().size());
 		if (centralsGreen.containsAll(card.getTypesCentral())) { // si la liste des centrales vertes construites contient tous les types de centrales d'une carte ONU
-			if(nbSolaire == card.getTypesCentral().size()) {
+			if(nbSolaire >= card.getTypesCentral().size()) {
 				return true;
 			}
 		}

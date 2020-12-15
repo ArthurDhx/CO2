@@ -112,7 +112,7 @@ public class Player {
                 if (complement instanceof Continent)
                     CEP += 3;
                 if (complement instanceof subventionTypes) {
-                    if (subventionTypes.ARGENT.equals(complement)) CEP +=3;
+                    if (subventionTypes.ARGENT.equals(complement)) argent +=3;
                     else if (subventionTypes.RESSOURCE.equals(complement)) resourcesTech+=1;
                     else if (subventionTypes.RECHERCHE.equals(complement)) {
                         // repasse un mouvement scientifique a false pour autiriser un nouveau
@@ -138,6 +138,7 @@ public class Player {
                 argent +=3;
                 break;
         }
+        actionGratuiteDone[3] = true;
 
         // retirer la carte du jeu
         lobbyCards.remove(card);
@@ -148,6 +149,7 @@ public class Player {
      * @param card la carte choisie
      */
     public void playMinorLobbyCard(LobbyCard card) {
+        actionGratuiteDone[3] = true;
         // donner les recompenses
         switch (card.getLobbyMineurType()) {
             case ARGENT:
