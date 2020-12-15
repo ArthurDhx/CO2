@@ -601,9 +601,10 @@ public class Model {
 
 	/**
 	 * Joue la carte lobby choisie
-	 * @param card
+	 * @param card carte lobby choisie
+	 * @param majeur determine si le joueur veut jouer le lobby mineur (false) ou majeur(true)
 	 */
-	public void playLobbyCard(LobbyCard card) {
+	public void playLobbyCard(LobbyCard card, boolean majeur) {
 		if (canPlayLobbyCard(card)) getCurrentPLayer().playLobbyCard(card);
 	}
 
