@@ -196,7 +196,7 @@ public class ViewGame {
 
 
 		initContinent();
-		initExpertise(50, 5);
+		initExpertise(1320, 840, 50, 5);
 		initSubvention();
 		initCentral();
 
@@ -218,9 +218,9 @@ public class ViewGame {
 	 * la premiere case de la premiere piste est en bas a gauche
 	 * a partir de (1300, 800)
 	 */
-	private void initExpertise(int rectWidth, int space) {
-		int x = 1320;
-		int y = 840;
+	private void initExpertise(int xStart, int yStart, int rectWidth, int space) {
+		int x = xStart;
+		int y = yStart;
 		// nb pixels entre la gauche de la piste courrante
 		// et la gauche de la piste la plus a gauche
 		int offset = 0;
@@ -253,6 +253,15 @@ public class ViewGame {
 				pane.getChildren().add(nb);
 				i++;
 			}
+			// logo de l'expertise au dessus de la barre
+			ImageView imgExpertise = new ImageView(new Image(getClass().getResourceAsStream("images/BonusExpertise/"+pisteExpertise.getType()+".png")));
+			imgExpertise.setFitWidth(rectWidth - 5);
+			imgExpertise.setFitHeight(rectWidth - 5);
+			imgExpertise.setX(x + offset + 2.5);
+			imgExpertise.setY(y - ((rectWidth + space) * 10) + 2.5);
+			pane.getChildren().add(imgExpertise);
+
+			// offset la prochaine piste
 			offset += rectWidth + space;
 		}
 
