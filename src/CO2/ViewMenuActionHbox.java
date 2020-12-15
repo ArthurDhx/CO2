@@ -289,7 +289,7 @@ public class ViewMenuActionHbox extends HBox {
         ArrayList<SommetTile> sommetTiles = new ArrayList<>();
         for(int i = 0; i< continent.length; i++){
             greenEnergyTypes energy =  model.getCurrentPLayer().getCurrentScientifique().getSubject().getEnergy();
-            if(continent[i].getSommetTile().haveEnergy(energy) && !continent[i].getSommetTile().isStaffed(model.getCurrentPLayer().getCurrentScientifique().getSubject())) {
+            if(continent[i].getSommetTile().haveEnergyAndUnoccupied(energy) && !continent[i].getSommetTile().isStaffed(model.getCurrentPLayer().getCurrentScientifique().getSubject())) {
                 //si le sommet à l'énergie du scientifique et que cette énergie n'est pas occupé alors il se déplace
                 sommetTiles.add(continent[i].getSommetTile());
             }

@@ -338,7 +338,7 @@ public class Model {
 		} else {
 			// À faire pour toutes les énergies
 			// vérifie si le sommet ainsi que la subvention on tous deux l'énergie solaire.
-			return sommetTile.haveEnergy(SOLAR) && subvention.getProject() != null;
+			return sommetTile.haveEnergyAndUnoccupied(SOLAR) && subvention.getProject() != null;
 		}
 	}
 
@@ -680,9 +680,9 @@ public class Model {
 				energyType = (greenEnergyTypes) complement;
 				// il doit y avoir un scientifique sur l'energie d'un sommet
 				for (SommetTile sommet : allSommetTile) {
-					if (sommet.haveEnergy(energyType)) {
+					if (sommet.hasEnergy(energyType)) {
 						for (Subject subject : sommet.getSubjects()) {
-							if (subject.getEnergy().equals(energyType) && subject.getScientifique() != null) {
+							if (subject.getEnergy().equals(energyType) && sommet.isStaffed(subject)) {
 								return true;
 							}
 						}

@@ -41,13 +41,23 @@ public class SommetTile {
     /**
      * @param energyTypes Une energie verte
      * @return un booléen
-     * vérifie si le sommet contient cette énergie
+     * vérifie si le sommet contient cette énergie et qu'il n'y a pas de scientifique dessus
      */
-    public boolean haveEnergy(greenEnergyTypes energyTypes){
+    public boolean haveEnergyAndUnoccupied(greenEnergyTypes energyTypes){
         for (Subject s: this.subjects) {
             // si le sujet a comme energie l'energie envoyé et qu'il n'y a pas de scientifique sur cette source alors renvoie true
             if(s.getEnergy().equals(energyTypes) && s.getScientifique() == null) return true;
         }
+        return false;
+    }
+
+    /**
+     * @param energyTypes Une energie verte
+     * @return un booléen
+     */
+    public boolean hasEnergy(greenEnergyTypes energyTypes){
+        for (Subject subject : subjects)
+            if(subject.getEnergy().equals(energyTypes)) return true;
         return false;
     }
 

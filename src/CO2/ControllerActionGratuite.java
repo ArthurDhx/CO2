@@ -168,10 +168,8 @@ public class ControllerActionGratuite implements EventHandler<ActionEvent> {
             resultType.ifPresent(type -> {
                 boolean resultat = false ;
                 if (type.equals("Majeur")) resultat = model.playLobbyCard(lobbyCard,true);
-                else{
-                    resultat = true;
-                    model.getCurrentPLayer().playMinorLobbyCard(lobbyCard);
-                }
+                else resultat = model.playLobbyCard(lobbyCard, false);
+                viewGame.reloadPlayerExpertise(model.getCurrentPLayer());
                 if (!resultat) viewGame.displayAlertWithoutHeaderText("Action Impossible", "Veuillez finir vos tâches avant d'essayer de jouer la carte");
             });
             return;

@@ -9,6 +9,7 @@ import java.util.Map;
 
 public class Player {
     final int NBACTIONGRATUITE = 4;
+    final int MAX_EXPERTISE = 10;
 
     // valeur d'expertise pour chaque energy
     private Map<greenEnergyTypes, Integer> expertise;
@@ -177,9 +178,8 @@ public class Player {
      * @param quantity
      */
     public void addExpertise(greenEnergyTypes type, int quantity) {
-        int max = 10;
         int cur = expertise.get(type);
-        if (cur+quantity <= max) expertise.replace(type, cur+quantity);
+        if (cur+quantity <= MAX_EXPERTISE) expertise.replace(type, cur+quantity);
     }
 
     /**

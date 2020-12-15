@@ -7,7 +7,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class SommetUnitTest {
 
@@ -35,14 +34,14 @@ public class SommetUnitTest {
 
     @Test
     public void testHaveEnergy() {
-        Assert.assertTrue(sommetTile.haveEnergy(greenEnergyTypes.FUSION));
-        Assert.assertTrue(sommetTile.haveEnergy(greenEnergyTypes.RECYCLING));
-        Assert.assertTrue(sommetTile.haveEnergy(greenEnergyTypes.BIOMASS));
+        Assert.assertTrue(sommetTile.haveEnergyAndUnoccupied(greenEnergyTypes.FUSION));
+        Assert.assertTrue(sommetTile.haveEnergyAndUnoccupied(greenEnergyTypes.RECYCLING));
+        Assert.assertTrue(sommetTile.haveEnergyAndUnoccupied(greenEnergyTypes.BIOMASS));
     }
 
     @Test
     public void testHaveEnergy2() {
-        Assert.assertFalse(sommetTile.haveEnergy(greenEnergyTypes.SOLAR));
+        Assert.assertFalse(sommetTile.haveEnergyAndUnoccupied(greenEnergyTypes.SOLAR));
     }
 
     @Test
