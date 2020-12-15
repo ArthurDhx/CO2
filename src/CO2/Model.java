@@ -123,15 +123,15 @@ public class Model {
 			onuCards.add(new OnuCard(id, 0)); // création carte ONU et ajout dans la liste totale
 			// ajout du nombre de points de victoires en fonction du nombre de type centrales sur la carte
 			if(onuCards.get(i).getTypesCentral().size() == 2){ // si 2 types
-				int nbPoints = 6 - new Random().nextInt(3); // 4, 5 ou 6
+				int nbPoints = 4 - new Random().nextInt(2); // 3 ou 4
 				onuCards.get(i).setNbPointDeVictoire(nbPoints);
 			}
 			if(onuCards.get(i).getTypesCentral().size() == 3){ // si 3 types
-				int nbPoints = 7 - new Random().nextInt(3); // 5, 6 ou 7
+				int nbPoints = 6 - new Random().nextInt(2); // 5 ou 6
 				onuCards.get(i).setNbPointDeVictoire(nbPoints);
 			}
 			if(onuCards.get(i).getTypesCentral().size() == 4){ // si 4 types
-				int nbPoints = 8 - new Random().nextInt(3); // 6, 7 ou 8
+				int nbPoints = 8 - new Random().nextInt(2); // 7 ou 8
 				onuCards.get(i).setNbPointDeVictoire(nbPoints);
 			}
 			id++;// id de 34 à 46
@@ -541,8 +541,7 @@ public class Model {
 		onuCardsInGame = new ArrayList<>(); // liste de carte qui seront selectionnée ppour la partie
 		OnuCard card;
 		// TODO : prochain sprint : remettre à jour
-		//for (int i = 0;i<10;i++) { // 10 cartes choisi (7 pour 2 joueurs)
-		for (int i = 0;i<2;i++) { // 10 cartes choisi (7 pour 2 joueurs)
+		for (int i = 0;i<10;i++) { // 10 cartes choisi (7 pour 2 joueurs)
 			// selection d'une carte aléatoirement parmis la liste totale des cartes de l'ONU
 			//do card = onuCards.get(new Random().nextInt(onuCards.size()));
 			//while(onuCardsInGame.contains(card));

@@ -227,11 +227,16 @@ public class ControllerAction implements EventHandler<ActionEvent>{
                     viewGame.displayAlertWithoutHeaderText("Danger !", "Vous controllez un continent en manque d'énergie ! "+c.getName()+" Vous devez payer !!");
                     if (model.curPlayer.getCEP() >= 1) {
                         // on retire CEP
+                        viewGame.displayAlertWithoutHeaderText("Paiement", "Pour régler le paiement, vous payez un CEP de votre réserve");
                         model.removeCEP();
+                        viewGame.reloadCEP();
                         System.out.println("Paiement à la banque d'un CEP de ma réserve");
                     } else if (continentController.getNbCep() >= 1 ) {
                         //si il y a des cep dans continent controler on prend
+                        viewGame.displayAlertWithoutHeaderText("PaiementCEPContinentControle", "Pour régler le paiement, comme vous n'avez plus de CEP dans votre réserve, \n" +
+                                " vous payez un CEP du continent "+ continentController.getName() +" que vous controlez");
                         continentController.setNbCep(continentController.getNbCep()-1);
+                        viewGame.reloadCEP();
                         System.out.println("Paiement à la banque d'un CEP du continent " + continentController.getName());
                     } else {
                         // Si on a pas de cep dans les contient controler et dans nos poche alors
