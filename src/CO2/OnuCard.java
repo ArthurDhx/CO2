@@ -12,7 +12,7 @@ public class OnuCard {
         this.id = id;
         this.nbPointDeVictoire = nbPointDeVictoire;
         typesCentral = new ArrayList<>();
-        setTypesCentral(typesCentral);
+        setTypesCentral(typesCentral, new Random());
     }
 
     /**
@@ -20,11 +20,11 @@ public class OnuCard {
      * la liste doit être composée de types différents
      * la liste est variable de 2 à 4 types
      */
-    public void setTypesCentral(ArrayList<String> typesCentral) {
+    public void setTypesCentral(ArrayList<String> typesCentral, Random random) {
         //final Random random = new Random();
         // TODO : prochain sprint : remettre à jour
         //for(int i=0;i< randomNbType();i++) {
-        for(int i=0;i< randomNbType();i++) {
+        for(int i = 0; i< random(random); i++) {
             String type;
             // selection d'un type de centrale verte
             //do type = centralTypes.values()[random.nextInt(centralTypes.values().length - 3)].name();
@@ -42,10 +42,10 @@ public class OnuCard {
      * ce nombre définira le nombre de type de centrales de la carte
      * @return int nombre aléatoire
      */
-    public int randomNbType() {
-        final Random random = new Random();
+    public int random(Random random) {
         return 4-random.nextInt(3);
     }
+
 
     public ArrayList<String> getTypesCentral() {
         return typesCentral;
