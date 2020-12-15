@@ -239,8 +239,15 @@ public class ControllerAction implements EventHandler<ActionEvent>{
                         viewGame.reloadCEP();
                         System.out.println("Paiement à la banque d'un CEP du continent " + continentController.getName());
                     } else {
+                        if ((continentController.getNbCep()< 1 && model.curPlayer.getCEP()<1) && model.currentPriceCEP <= model.getCurrentPLayer().getArgent()){
+                            viewGame.displayAlertWithoutHeaderText("PaiementCEPMarche", "Pour régler le paiement, comme vous n'avez plus de CEP ni votre réserve, \n" +
+                                    "ni dans votre(vos) continent(s) controlé, vous acheté un CEP au marché que vous payez à la banque");
+                            model.tradeDollarstoCEP();
+                            viewGame.reloadCEP();
+                            System.out.println("Paiement à la banque d'un CEP du marché");
+                        }
                         // Si on a pas de cep dans les contient controler et dans nos poche alors
-                        if (model.currentPriceCEP > model.curPlayer.getArgent()) {
+                        else if (model.currentPriceCEP > model.curPlayer.getArgent()) {
                             // La vrai condition = model.currentPriceCEP > model.curPlayer.getArgent()
                             // on echange nos pv contre de l'agrgent puis on achete un cep
                             viewGame.displayAlertWithoutHeaderText("Echange", "Vous n'avez pas assez de CEP\n" +

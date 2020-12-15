@@ -787,4 +787,9 @@ public class Model {
 		achatCEP();
 		curPlayer.removeCEP();
 	}
+
+	public void tradeDollarstoCEP() {
+		curPlayer.retirerArgent(currentPriceCEP);
+		achatCEP();
+	}
 }
