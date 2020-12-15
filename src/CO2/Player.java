@@ -105,7 +105,7 @@ public class Player {
      * @param card la carte choisie
      */
     public void playLobbyCard(LobbyCard card) {
-        // donner les
+        // donner les recompenses
         Object complement = card.getComplement();
         switch (card.getLobbyActionType()) {
             case PROPOSER:
@@ -139,6 +139,32 @@ public class Player {
                 break;
         }
 
+        // retirer la carte du jeu
+        lobbyCards.remove(card);
+    }
+
+    /**
+     * Joue le lobby mineur de la carte choisie par le joueur
+     * @param card la carte choisie
+     */
+    public void playMinorLobbyCard(LobbyCard card) {
+        // donner les recompenses
+        switch (card.getLobbyMineurType()) {
+            case ARGENT:
+                argent+=2;
+                break;
+            case CEP:
+                CEP+=1;
+                break;
+            case RESOURCES:
+                resourcesTech+=1;
+                break;
+            case SCIENTIFIQUE:
+                // repasse un mouvement scientifique a false pour autiriser un nouveau
+                if (actionGratuiteDone[0] && !actionGratuiteDone[1]) actionGratuiteDone[0] = false;
+                if (!actionGratuiteDone[0] && actionGratuiteDone[1]) actionGratuiteDone[1] = false;
+                break;
+        }
         // retirer la carte du jeu
         lobbyCards.remove(card);
     }

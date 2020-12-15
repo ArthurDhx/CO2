@@ -147,23 +147,23 @@ public class Model {
 
 		// cartes proposer un projet sur un continent
 		for (Continent c : continents)
-			lobbyCards.add(new LobbyCard<>(lobbyActionTypes.PROPOSER, c));
+			lobbyCards.add(new LobbyCard<>(lobbyActionTypes.PROPOSER, c, lobbyMineurTypes.ARGENT));
 
 		// cartes proposer un projet sur une subvention
 		for (subventionTypes sub : subventionTypes.values())
-			lobbyCards.add(new LobbyCard<>(lobbyActionTypes.PROPOSER, sub));
+			lobbyCards.add(new LobbyCard<>(lobbyActionTypes.PROPOSER, sub, lobbyMineurTypes.ARGENT));
 
 		// cartes mettre en place un type de projet
 		for (greenEnergyTypes type : greenEnergyTypes.values())
-			lobbyCards.add(new LobbyCard<>(lobbyActionTypes.METTRE, type));
+			lobbyCards.add(new LobbyCard<>(lobbyActionTypes.METTRE, type, lobbyMineurTypes.ARGENT));
 
 		// cartes construire une centrale
 		for (centralTypes centralType : centralTypes.values())
-			lobbyCards.add(new LobbyCard<>(lobbyActionTypes.CONSTRUIRE, centralType.name()));
+			lobbyCards.add(new LobbyCard<>(lobbyActionTypes.CONSTRUIRE, centralType.name(), lobbyMineurTypes.ARGENT));
 
 		// cartes sommet d'un type d'energie
 		for (greenEnergyTypes type : greenEnergyTypes.values())
-			lobbyCards.add(new LobbyCard<>(lobbyActionTypes.SOMMET, type));
+			lobbyCards.add(new LobbyCard<>(lobbyActionTypes.SOMMET, type, lobbyMineurTypes.ARGENT));
 
 		// donner 5 cartes parmi ces cartes au joueur
 		getCurrentPLayer().giveLobbyCards(lobbyCards, 5);
@@ -603,13 +603,18 @@ public class Model {
 	 * Joue la carte lobby choisie
 	 * @param card carte lobby choisie
 	 * @param majeur determine si le joueur veut jouer le lobby mineur (false) ou majeur(true)
+	 * @return false si la mission n'est pas remplie
 	 */
-	public void playLobbyCard(LobbyCard card, boolean majeur) {
-		if (canPlayLobbyCard(card)) getCurrentPLayer().playLobbyCard(card);
+	public boolean playLobbyCard(LobbyCard card, boolean majeur) {
+		boolean canPLay = canPLay = canPlayLobbyCard(card);
+		if (majeur && canPLay) getCurrentPLayer().playLobbyCard(card);
+		if (!majeur && canPLay) getCurrentPLayer().playMinorLobbyCard(card);
+		return canPLay;
 	}
 
 	/**
-	 * Verifie si le joueur a effectuer la tache requise par la carte lobby
+	 * Verifie si le joueur a effectuer la tache de lobby majeur
+	 * requise par la carte lobby
 	 * @param card
 	 * @return
 	 */

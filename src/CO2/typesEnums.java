@@ -5,6 +5,19 @@ enum greenEnergyTypes {SOLAR, BIOMASS, RECYCLING, FUSION, REFORESTATION}
 enum subventionTypes {ARGENT, RESSOURCE, RECHERCHE}
 
 enum lobbyActionTypes {PROPOSER, METTRE, CONSTRUIRE, SOMMET, MARCHE_ACHAT, MARCHE_VENTE}
+enum lobbyMineurTypes {
+    RESOURCES("1 ressource technologique"),
+    ARGENT("2€"),
+    CEP("1 CEP"),
+    SCIENTIFIQUE("1 deplacement de scientifique");
+
+    String description;
+
+    lobbyMineurTypes(String description) {
+        this.description = description;
+    }
+}
+
 
 enum centralTypes {
     //TODO :  a changer une fois le reste implementer

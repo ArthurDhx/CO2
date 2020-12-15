@@ -5,6 +5,9 @@ public class LobbyCard<T> {
     // action de lobby majeur a faire
     private lobbyActionTypes lobbyActionType;
 
+    // recompense de lobby mineur
+    private lobbyMineurTypes lobbyMineurType;
+
     // complement
     private T complement;
 
@@ -12,9 +15,10 @@ public class LobbyCard<T> {
     private String action;
     private String recompense;
 
-    public LobbyCard(lobbyActionTypes lobbyActionType, T complement) {
+    public LobbyCard(lobbyActionTypes lobbyActionType, T complement, lobbyMineurTypes lobbyMineurType) {
         this.lobbyActionType = lobbyActionType;
         this.complement = complement;
+        this.lobbyMineurType = lobbyMineurType;
         init();
     }
 
@@ -81,9 +85,19 @@ public class LobbyCard<T> {
         this.complement = complement;
     }
 
+    public lobbyMineurTypes getLobbyMineurType() {
+        return lobbyMineurType;
+    }
+
+    public void setLobbyMineurType(lobbyMineurTypes lobbyMineurType) {
+        this.lobbyMineurType = lobbyMineurType;
+    }
+
     @Override
     public String toString() {
         return "Pour completer cette carte lobby vous devez avoir"+ action+
-                "\nrecompense:"+ recompense;
+                "\nRecompenses au choix:"+
+                "\n Majeur -" + recompense+
+                "\n Mineur - " + lobbyMineurType.description;
     }
 }
