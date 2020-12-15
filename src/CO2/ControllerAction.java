@@ -225,9 +225,7 @@ public class ControllerAction implements EventHandler<ActionEvent>{
                 if(continentController.equals(c)){
                     //affichage d'un message
                     viewGame.displayAlertWithoutHeaderText("Danger !", "Vous controllez un continent en manque d'énergie ! "+c.getName()+" Vous devez payer !!");
-                    // TODO : Mettre les vrai condition
                     if (model.curPlayer.getCEP() >= 1) {
-                        // La vrai condition = model.curPlayer.getCEP() > 1
                         // on retire CEP
                         model.removeCEP();
                         System.out.println("Paiement à la banque d'un CEP de ma réserve");
