@@ -12,6 +12,7 @@ import java.util.List;
 public class ViewMenuActionHbox extends HBox {
     //TODO : A delete
     public Button btnTest;
+
     Model model ;
 
     // Les différents ChoiceDialog s'affichant selon l'action choisis
@@ -29,6 +30,8 @@ public class ViewMenuActionHbox extends HBox {
     ChoiceDialog<String> dialogActionScientifique;
     ChoiceDialog<String> dialogBuyCEPBy;
     ChoiceDialog<Continent> dialogBuyCEPByContinent;
+    ChoiceDialog<LobbyCard> dialogJouerCarteLobby;
+    ChoiceDialog<String> dialogMajeurMineur ;
 
     // Les boutons associe aux actions principales
     Button btnActionPrincipale;
@@ -38,7 +41,9 @@ public class ViewMenuActionHbox extends HBox {
 
     // Les boutons associe aux actions gratuites
     Button btnActionGratuite;
+
     Button btnMarche;
+
     Button btnDeplacerScientifique;
     Button btnScientifique1;
     Button btnScientifique2;
@@ -47,7 +52,9 @@ public class ViewMenuActionHbox extends HBox {
     Button btnDeplacerScientifiqToProject;
     Button btnDeplacerScientifiqToSommet;
     Button btnDeplacerScientifiqToReserve;
-    Button btnJouerCarte;
+
+    Button btnMarquerPointOnu;
+    Button btnJouerCarteLobby;
 
     // Button present dans le menu
     Button btnFinTour;
@@ -78,7 +85,8 @@ public class ViewMenuActionHbox extends HBox {
         btnDeplacerScientifiqToSommet = new Button("Déplacer le scientifque sur un sommet");
         btnDeplacerScientifiqToReserve = new Button("Déplacer le scientifque dans la réserve");
         btnMarche = new Button("Marché au CEP");
-        btnJouerCarte = new Button("Jouer une carte");
+        btnJouerCarteLobby = new Button("Jouer une carte lobby");
+        btnMarquerPointOnu = new Button("Marquer les points d'une carte ONU");
         btnFinTour = new Button("Fin du tour");
 
         btnCancelAction = new Button("Annuler");
@@ -239,7 +247,7 @@ public class ViewMenuActionHbox extends HBox {
         // si l'action n'est pas faite et que tous les scientifiques ne sont pas sur un sommet alors afficher l'action
         if (!actionFaite[0] && !model.getCurrentPLayer().isAllScientifiqueIsOnSommet()) this.getChildren().add(btnDeplacerScientifique);
         if (!actionFaite[2]) this.getChildren().add(btnMarche);
-        if (!actionFaite[3]) this.getChildren().add(btnJouerCarte);
+        if (!actionFaite[3]) this.getChildren().addAll(btnJouerCarteLobby,btnMarquerPointOnu);
 
         this.getChildren().add(btnCancelAction);
     }
@@ -390,7 +398,8 @@ public class ViewMenuActionHbox extends HBox {
         btnDeplacerScientifiqToReserve.setOnAction(handler);
         btnCancelActionScientifique.setOnAction(handler);
         btnMarche.setOnAction(handler);
-        btnJouerCarte.setOnAction(handler);
+        btnJouerCarteLobby.setOnAction(handler);
+        btnMarquerPointOnu.setOnAction(handler);
     }
 
     /**
@@ -448,6 +457,20 @@ public class ViewMenuActionHbox extends HBox {
         dialogChoisirRecherche.setTitle("Recherche en collaboration");
         dialogChoisirRecherche.setHeaderText("Quelle action voulez-vous faire ?");
         dialogChoisirRecherche.setContentText("Choix: ");
+    }
+
+    /**
+     * Affiche le choicedialog pour jouer la carte
+     */
+    public void displayPlayLobbyCardChoiceDialog(){
+        List<LobbyCard> choices = model.getCurrentPLayer().getLobbyCards();
+        dialogJouerCarteLobby = new ChoiceDialog<>(
+                choices.get(0),
+                choices
+        );
+        dialogJouerCarteLobby.setTitle("Jouer une carte de lobby");
+        dialogJouerCarteLobby.setHeaderText("Quelle carte choissisez vous ?");
+        dialogJouerCarteLobby.setContentText("Carte : ");
     }
 
     /**
@@ -531,5 +554,15 @@ public class ViewMenuActionHbox extends HBox {
         dialogBuyCEPByContinent.setTitle("Mettre en place un projet");
         dialogBuyCEPByContinent.setHeaderText("Avec les CEP de quel continent voulez vouz payer ?");
         dialogBuyCEPByContinent.setContentText("Choix: ");
+    }
+
+    public void displayMajeurMineurChoiceDialog() {
+        String[] choice = {"Majeur","Mineur"};
+        dialogMajeurMineur = new ChoiceDialog<>(
+                choice[0],
+                choice
+        );
+        dialogMajeurMineur.setTitle("Jouer une carte lobby");
+        dialogMajeurMineur.setHeaderText("Choisir le type :");
     }
 }

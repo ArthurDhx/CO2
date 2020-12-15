@@ -97,7 +97,7 @@ public class LobbyCard<T> {
     public String toString() {
         return "Pour completer cette carte lobby vous devez avoir"+ action+
                 "\nRecompenses au choix:"+
-                "\n Majeur -" + recompense+
-                "\n Mineur - " + lobbyMineurType.description;
+                "\n   Majeur -" + recompense+
+                "\n    Mineur - " + lobbyMineurType.description;
     }
 }

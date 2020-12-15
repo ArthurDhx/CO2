@@ -131,8 +131,44 @@ public class ControllerActionGratuite implements EventHandler<ActionEvent> {
                 viewGame.reloadCEP();
                 viewGame.hboxAction.resetHbox();
             });
-        } else if (source == viewGame.hboxAction.btnJouerCarte) {
-            System.out.println("bouton jouer carte");
+        } else if (source == viewGame.hboxAction.btnJouerCarteLobby) {
+            playLobbyCard();
+        } else if (source == viewGame.hboxAction.btnMarquerPointOnu) {
+            marquePointOnu();
         }
+    }
+
+    private void marquePointOnu() {
+        viewGame.hboxAction.displayPlayLobbyCardChoiceDialog();
+        Optional<LobbyCard> resultLobby = viewGame.hboxAction.dialogJouerCarteLobby.showAndWait();
+        resultLobby.ifPresent(lobbyCard -> {
+            viewGame.hboxAction.displayMajeurMineurChoiceDialog();
+            Optional<String> resultType = viewGame.hboxAction.dialogMajeurMineur.showAndWait();
+            resultType.ifPresent(type -> {
+                boolean resultat = false ;
+                if (type.equals("Majeur")) resultat = model.playLobbyCard(lobbyCard,true);
+                else resultat = model.playLobbyCard(lobbyCard,false);
+                System.out.println(resultat);
+                if (!resultat) viewGame.displayAlertWithoutHeaderText("Action Impossible", "Veuillez finir vos tâches avant d'essayer de jouer la carte");
+                else model.getCurrentPLayer().setLobbyCardDone(true);
+            });
+        });
+    }
+
+    private void playLobbyCard() {
+        viewGame.hboxAction.displayPlayLobbyCardChoiceDialog();
+        Optional<LobbyCard> resultLobby = viewGame.hboxAction.dialogJouerCarteLobby.showAndWait();
+        resultLobby.ifPresent(lobbyCard -> {
+            viewGame.hboxAction.displayMajeurMineurChoiceDialog();
+            Optional<String> resultType = viewGame.hboxAction.dialogMajeurMineur.showAndWait();
+            resultType.ifPresent(type -> {
+                boolean resultat = false ;
+                if (type.equals("Majeur")) resultat = model.playLobbyCard(lobbyCard,true);
+                else resultat = model.playLobbyCard(lobbyCard,false);
+                System.out.println(resultat);
+                if (!resultat) viewGame.displayAlertWithoutHeaderText("Action Impossible", "Veuillez finir vos tâches avant d'essayer de jouer la carte");
+            });
+            return;
+        });
     }
 }

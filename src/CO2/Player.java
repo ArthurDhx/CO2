@@ -278,6 +278,14 @@ public class Player {
         this.actionGratuiteDone[0] = done ;
     }
 
+    /**
+     * Permet de dire que l'action gratuite jouer carte est faite ou non pendant ce tour
+     * @param done
+     */
+    public void setLobbyCardDone(boolean done){
+        this.actionGratuiteDone[4] = done ;
+    }
+
 
     /**
      * Permet de dire que l'action "aller au marché" est faite ou non pendant ce tour
