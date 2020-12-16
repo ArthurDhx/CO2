@@ -42,7 +42,7 @@ public class LobbyCard<T> {
                         recompense = " 1 ressource technologique";
                     } else if (subventionTypes.RECHERCHE.equals(complement)) {
                         action += "la subvention recherche";
-                        recompense = " 1 deplacement de scientifique";
+                        recompense = " 1 nouveau scientifique";
                     }
                 }
                 break;

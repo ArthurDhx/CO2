@@ -137,6 +137,7 @@ public class ControllerActionGratuite implements EventHandler<ActionEvent> {
             viewGame.reloadCEP();
             viewGame.reloadPointVictoire();
             viewGame.reloadresourcesTech();
+            viewGame.reloadPlayerExpertise(model.getCurrentPLayer());
             viewGame.hboxAction.resetHbox();
         } else if (source == viewGame.hboxAction.btnMarquerPointOnu) {
             marquePointOnu();
@@ -173,7 +174,10 @@ public class ControllerActionGratuite implements EventHandler<ActionEvent> {
                 boolean resultat = false ;
                 if (type.equals("Majeur")) resultat = model.playLobbyCard(lobbyCard,true);
                 else resultat = model.playLobbyCard(lobbyCard, false);
-                viewGame.reloadPlayerExpertise(model.getCurrentPLayer());
+                // ajout graphique scientifique si cette carte est joueur
+                if (resultat && lobbyCard.getLobbyActionType().equals(lobbyActionTypes.PROPOSER) && lobbyCard.getComplement().equals(subventionTypes.RECHERCHE)) {
+                    viewGame.addScientifiqueToPane(model.getCurrentPLayer().getLastAddScientifiqueId());
+                }
                 if (!resultat) viewGame.displayAlertWithoutHeaderText("Action Impossible", "Veuillez finir vos tâches avant d'essayer de jouer la carte");
             });
             return;

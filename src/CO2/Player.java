@@ -89,7 +89,7 @@ public class Player {
         // temporaire demo
         // TODO : supprimer tempo et faire vrai distribution dans la boucle
         lobbyCards.add(cards.remove(2));
-        lobbyCards.add(cards.remove(5));
+        lobbyCards.add(cards.remove(7));
         lobbyCards.add(cards.remove(7));
         lobbyCards.add(cards.remove(13));
         lobbyCards.add(cards.remove(18));
@@ -116,9 +116,8 @@ public class Player {
                     if (subventionTypes.ARGENT.equals(complement)) argent +=3;
                     else if (subventionTypes.RESSOURCE.equals(complement)) resourcesTech+=1;
                     else if (subventionTypes.RECHERCHE.equals(complement)) {
-                        // repasse un mouvement scientifique a false pour autiriser un nouveau
-                        if (actionGratuiteDone[0] && !actionGratuiteDone[1]) actionGratuiteDone[0] = false;
-                        if (!actionGratuiteDone[0] && actionGratuiteDone[1]) actionGratuiteDone[1] = false;
+                        // donne un nouveau scientifique
+                        addScientifique();
                     }
                 }
                 break;
@@ -514,5 +513,9 @@ public class Player {
 
     public List<LobbyCard> getLobbyCards() {
         return lobbyCards;
+    }
+
+    public int getLastAddScientifiqueId() {
+        return scientifiques.size()-1;
     }
 }

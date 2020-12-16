@@ -147,15 +147,15 @@ public class Model {
 
 		// cartes proposer un projet sur un continent
 		for (Continent c : continents)
-			lobbyCards.add(new LobbyCard<>(lobbyActionTypes.PROPOSER, c, lobbyMineurTypes.ARGENT));
+			lobbyCards.add(new LobbyCard<>(lobbyActionTypes.PROPOSER, c, lobbyMineurTypes.RESOURCES));
 
 		// cartes proposer un projet sur une subvention
 		for (subventionTypes sub : subventionTypes.values())
-			lobbyCards.add(new LobbyCard<>(lobbyActionTypes.PROPOSER, sub, lobbyMineurTypes.ARGENT));
+			lobbyCards.add(new LobbyCard<>(lobbyActionTypes.PROPOSER, sub, lobbyMineurTypes.CEP));
 
 		// cartes mettre en place un type de projet
 		for (greenEnergyTypes type : greenEnergyTypes.values())
-			lobbyCards.add(new LobbyCard<>(lobbyActionTypes.METTRE, type, lobbyMineurTypes.ARGENT));
+			lobbyCards.add(new LobbyCard<>(lobbyActionTypes.METTRE, type, lobbyMineurTypes.SCIENTIFIQUE));
 
 		// cartes construire une centrale
 		for (centralTypes centralType : centralTypes.values())
