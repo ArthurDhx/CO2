@@ -148,6 +148,8 @@ public class ControllerActionGratuite implements EventHandler<ActionEvent> {
 
     private void marquePointOnu() {
         viewGame.hboxAction.displayMarqueOnuChoiceDialog();
+        if (viewGame.hboxAction.dialogMarqueOnuCard == null)
+            viewGame.displayAlertWithoutHeaderText("Carte Onu" , "Il n'y a plus de carte dans le jeux !");
         Optional<OnuCard> resultOnuCard = viewGame.hboxAction.dialogMarqueOnuCard.showAndWait();
         resultOnuCard.ifPresent(onuCard -> {
             try {
@@ -161,6 +163,8 @@ public class ControllerActionGratuite implements EventHandler<ActionEvent> {
 
     private void playLobbyCard() {
         viewGame.hboxAction.displayPlayLobbyCardChoiceDialog();
+        if (viewGame.hboxAction.dialogJouerCarteLobby == null)
+            viewGame.displayAlertWithoutHeaderText("Carte Lobby" , "Il n'y a plus de carte dans le jeux !");
         Optional<LobbyCard> resultLobby = viewGame.hboxAction.dialogJouerCarteLobby.showAndWait();
         resultLobby.ifPresent(lobbyCard -> {
             viewGame.hboxAction.displayMajeurMineurChoiceDialog();
