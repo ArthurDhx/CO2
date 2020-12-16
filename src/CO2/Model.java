@@ -609,7 +609,10 @@ public class Model {
 	public boolean playLobbyCard(LobbyCard card, boolean majeur) {
 		boolean canPLay = canPlayLobbyCard(card);
 		if (majeur && canPLay) getCurrentPLayer().playLobbyCard(card);
-		if (!majeur && canPLay) getCurrentPLayer().playMinorLobbyCard(card);
+		if (!majeur) {
+			getCurrentPLayer().playMinorLobbyCard(card);
+			return true;
+		}
 		return canPLay;
 	}
 

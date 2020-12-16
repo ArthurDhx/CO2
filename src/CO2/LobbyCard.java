@@ -95,9 +95,7 @@ public class LobbyCard<T> {
 
     @Override
     public String toString() {
-        return "Pour completer cette carte lobby vous devez avoir"+ action+
-                "\nRecompenses au choix:"+
-                "\n   Majeur -" + recompense+
-                "\n    Mineur - " + lobbyMineurType.description;
+        return "Vous devez avoir"+ action +" pour obtenir la récompense majeur"+ recompense +
+                "\nOu choisissez la recompense mineur " + lobbyMineurType.description;
     }
 }
