@@ -11,14 +11,6 @@ public class Project {
         this.energyType = energyType;
     }
 
-    /**
-     * A decrire
-     * @return
-     */
-    public boolean addOnSubvention(){
-        // a développer pour choisir d'ajouter la tuile ou non
-        return true;
-    }
 
     /**
      * Donne le type de centrale correspondant au type de projet

@@ -75,7 +75,7 @@ public class ControllerAction implements EventHandler<ActionEvent>{
         if(viewGame.hboxAction.dialogChoisirScientifique != null){
             Optional<Scientifique> result = viewGame.hboxAction.dialogChoisirScientifique.showAndWait();
             result.ifPresent(scientifiqueChoisi -> {
-                model.getCurrentPLayer().addExpertise(greenEnergyTypes.SOLAR, 1);
+                model.getCurrentPLayer().addExpertise(scientifiqueChoisi.getSubject().getEnergy(), 1);
                 viewGame.reloadPlayerExpertise(model.getCurrentPLayer());
                 return;
             });

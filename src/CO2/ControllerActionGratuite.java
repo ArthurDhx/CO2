@@ -46,7 +46,6 @@ public class ControllerActionGratuite implements EventHandler<ActionEvent> {
             viewGame.hboxAction.displayActionGratuite();
         } else if (source == viewGame.hboxAction.btnDeplacerScientifiqToProject) {
             // Affiche le ChoiceDialog qui permet de deplacer un scientifque
-            // TODO boite de dialogue pour choisir quelle scientifique on veut bouger
             viewGame.hboxAction.displayDeplacerScientifiqueChoiceDialog();
             if (viewGame.hboxAction.dialogDeplacerScientifiqueProjet == null) return;
             if (model.getCurrentPLayer().getCurrentScientifique().getSubvention() != null){
@@ -60,8 +59,8 @@ public class ControllerActionGratuite implements EventHandler<ActionEvent> {
                     model.getCurrentPLayer().getCurrentScientifique().setSubvention(projetChoisi);
                     projetChoisi.setStaffed(true);
                     if (model.getCurrentPLayer().getCurrentScientifique().getSubvention().getProject() != null) {
-                        // set la valeur solaire si le scientifique joué est sur un projet solaire
-                        model.getCurrentPLayer().getCurrentScientifique().setSubject(new Subject(greenEnergyTypes.SOLAR));
+                        // set la valeur de l'energie si le scientifique joué est sur un projet
+                        model.getCurrentPLayer().getCurrentScientifique().setSubject(new Subject(projetChoisi.getEnergyTypes()));
                     }
                 }
                 model.getCurrentPLayer().setDeplacerScientifiqueDone(true);

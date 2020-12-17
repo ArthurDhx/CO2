@@ -15,11 +15,15 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLSyntaxErrorException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class ViewGame {
+
+	public final int PROPOSER_PROJET = 0;
+	public final int METTRE_EN_PLACE_PROJET = 1;
 
 	public Object btnTest;
 	Model model;
@@ -53,8 +57,16 @@ public class ViewGame {
 
 
 	//projets
-	Image imgTilesSolarProject;
-	Image imgTilesSolarProjectBack;
+	Image biomassProjetRecto;
+	Image biomassProjectVerso;
+	Image fusionProjetRecto;
+	Image fusionProjectVerso;
+	Image reforestationProjetRecto;
+	Image reforestationProjectVerso;
+	Image recyclingProjetRecto;
+	Image recyclingProjectVerso;
+	Image solarProjetRecto;
+	Image solarProjectVerso;
 
 	//centrales
 	Image imgCentralSolar;
@@ -180,9 +192,17 @@ public class ViewGame {
 		imgRecherche = new Image(getClass().getResourceAsStream("images/recherche.png"));
 
 
-    	// On récupère l'image de la tuile et on l'ajoute à l'écran
-		imgTilesSolarProject = new Image(getClass().getResourceAsStream("images/Projets/TilesSolarProjectRecto.png"));
-		imgTilesSolarProjectBack = new Image(getClass().getResourceAsStream("images/Projets/TilesSolarProjectVerso.png"));
+		// On récupère l'image de la tuile et on l'ajoute à l'écran
+		biomassProjetRecto = new Image(getClass().getResourceAsStream("images/Projets/BiomassProjectRecto.png"));
+		biomassProjectVerso = new Image(getClass().getResourceAsStream("images/Projets/BiomassProjectVerso.png"));
+		fusionProjetRecto = new Image(getClass().getResourceAsStream("images/Projets/FusionProjectRecto.png"));
+		fusionProjectVerso = new Image(getClass().getResourceAsStream("images/Projets/FusionProjectVerso.png"));
+		reforestationProjetRecto = new Image(getClass().getResourceAsStream("images/Projets/ReforestationProjectRecto.png"));
+		reforestationProjectVerso = new Image(getClass().getResourceAsStream("images/Projets/ReforestationProjectVerso.png"));
+		recyclingProjetRecto = new Image(getClass().getResourceAsStream("images/Projets/RecyclingProjectRecto.png"));
+		recyclingProjectVerso = new Image(getClass().getResourceAsStream("images/Projets/RecyclingProjectVerso.png"));
+		solarProjetRecto = new Image(getClass().getResourceAsStream("images/Projets/SolarProjectRecto.png"));
+		solarProjectVerso = new Image(getClass().getResourceAsStream("images/Projets/SolarProjectVerso.png"));
 		imgCentralSolar = new Image(getClass().getResourceAsStream("images/Centrales/Solar.png"));
 		imgCentralCharbon = new Image(getClass().getResourceAsStream("images/Centrales/Coal.png"));
 		imgCentralPetrole = new Image(getClass().getResourceAsStream("images/Centrales/Oil.png"));
@@ -276,7 +296,7 @@ public class ViewGame {
 		int i = 0;
 		for (greenEnergyTypes energy : greenEnergyTypes.values()) {
 			int expertise = p.getExpertise(energy);
-			if (expertise > 0) {
+			if (expertise >= 0) {
 				player1ExpertiseIndicator.add(placePlayerExpertise(expertise, i, p.getColor()));
 				i++;
 			}
@@ -517,25 +537,78 @@ public class ViewGame {
 		}
 	}
 
-	/** Ajoute la tuile sur la case souhaitée correspondant à une subvention
-	 * @param subventionChoice
-	 * @param imageProject
-	 */
-	public void addTuilesToSubvention(int subventionChoice, Image imageProject, Continent continent){
-		//TODO : Switch pour tooltip une fois toute les tuiles implementés
-		Tooltip.install(continent.getTabRectangleSubvention()[subventionChoice], new Tooltip("Mettre en place : coût : 1 cep, obtient:+ 3 Ressources technologiques"));
-		continent.getTabRectangleSubvention()[subventionChoice].setFill(new ImagePattern(imageProject));
-	}
-
 	/**
-	 * Mettre en place une subvention
+	 * Propose ou mets en place un projet selon state (cf constante)
 	 * @param projectChoice
-	 * @param imageSolarProjectBack
+	 * @param greenEnergyTypes
+	 * @param state
 	 * @param continent
 	 */
-	public void mettreEnPlaceProjet(int projectChoice, Image imageSolarProjectBack, Continent continent){
-		continent.getTabRectangleSubvention()[projectChoice].setFill(new ImagePattern(imageSolarProjectBack));
-		Tooltip.install(continent.getTabRectangleSubvention()[projectChoice], new Tooltip(" Construire centrale : coût :8$, 4 ressources, min : 2 expertises, obtient : 1 expertise, 10 pts de victoire "));
+	public void changeProjectState(int projectChoice, greenEnergyTypes greenEnergyTypes, int state, Continent continent){
+		int argent = 0;
+		int ressTech = 0;
+		int cep = 0;
+		int expRec = 0;
+		int expGain = 0;
+		int ptVictoire = 0;
+
+		String side ="";
+		if(state == PROPOSER_PROJET) {
+			side = "Recto";
+			// tooltip data
+			switch (greenEnergyTypes) {
+				case REFORESTATION:
+					cep = 2;
+					break;
+				case SOLAR:
+					ressTech = 3;
+					break;
+				case FUSION:
+					ressTech = 1;
+					argent =5;
+					break;
+				case BIOMASS:
+					argent = 3;
+					ressTech = 1;
+					cep = 1;
+					break;
+				case RECYCLING:
+					argent = 5;
+					cep = 1;
+					break;
+			}
+			Tooltip.install(continent.getTabRectangleSubvention()[projectChoice], new Tooltip("Mettre en place : \nCoût : \n- 1 CEP\n\nGains : \n- "+ argent + " €\n- "+ ressTech +" ressource(s) technologique(s)\n- "+ cep +" CEP"));
+		}
+		else if (state == METTRE_EN_PLACE_PROJET) {
+			side = "Verso";
+			//TODO :  a changer une fois le reste implementer avec centralTypes
+			//tooltip data
+			switch (greenEnergyTypes) {
+				case REFORESTATION:
+					// cout et gain reforestation
+					break;
+				case SOLAR:
+					argent = 8;
+					ressTech = 4;
+					expRec = 2;
+					expGain = 1;
+					ptVictoire = 1;
+					break;
+				case FUSION:
+					// cout et gain fusion
+					break;
+				case BIOMASS:
+					// cout et gain biomass
+					break;
+				case RECYCLING:
+					// cout et gain recycling
+					break;
+			}
+			Tooltip.install(continent.getTabRectangleSubvention()[projectChoice], new Tooltip(" Construire centrale : \nCoût :\n- "+argent+" $ \n- "+ressTech+" ressource(s) technologique(s)\n- min "+expRec+" d\'expertises \n\nGains : \n- "+expGain+" expertise \n- "+ ptVictoire +" points de victoire "));
+		}
+
+		Image imgProject = new Image(getClass().getResourceAsStream("images/Projets/"+greenEnergyTypes+"Project"+side+".png"));
+		continent.getTabRectangleSubvention()[projectChoice].setFill(new ImagePattern(imgProject));
 	}
 
 	/**

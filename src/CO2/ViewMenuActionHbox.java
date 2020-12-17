@@ -18,6 +18,7 @@ public class ViewMenuActionHbox extends HBox {
     // Les différents ChoiceDialog s'affichant selon l'action choisis
     ChoiceDialog<Continent> dialogProposerProjet;
     ChoiceDialog<Subvention> dialogSubvention;
+    ChoiceDialog<greenEnergyTypes> dialogEnergie;
     ChoiceDialog<Subvention> dialogDeplacerScientifiqueProjet;
     ChoiceDialog<SommetTile> dialogDeplacerScientifiqueSommet;
     ChoiceDialog<Scientifique> dialogChoisirScientifique;
@@ -150,6 +151,27 @@ public class ViewMenuActionHbox extends HBox {
     public void displayActionPrincipale() {
         this.getChildren().removeAll(this.getChildren());
         this.getChildren().addAll(btnProposerProjet,btnMettreProjet,btnConstruire,btnCancelAction);
+    }
+
+    /**
+     * Choisir une energie
+     */
+    public void displayEnergyChoiceDialog() {
+        ArrayList<greenEnergyTypes> energyTypes = new ArrayList<>();
+        // Récupere les énergies
+        for (greenEnergyTypes ge: greenEnergyTypes.values()) {
+            //si il y encore des cartes de l'energie on l'ajoute a la liste
+            if (model.projectsPacket.get(ge.name()) != 0){
+                energyTypes.add(ge);
+            }
+        }
+        dialogEnergie = new ChoiceDialog<greenEnergyTypes>(
+                energyTypes.get(0), // choix par défaut
+                energyTypes
+        );
+        dialogEnergie.setTitle("Choisir une énergie");
+        dialogEnergie.setHeaderText("Veuillez choisir une énergie");
+        dialogEnergie.setContentText("Énergies :");
     }
 
     /**

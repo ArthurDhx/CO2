@@ -8,10 +8,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,8 +35,9 @@ public class Model {
 	// Valeur du CO2 actuelle
 	private int co2;
 
-	// List des tuiles de projet
-	ArrayList<Project> projects;
+
+	// paquet des projets
+	Map<String,Integer> projectsPacket;
 
 	// Liste des sommets
 	List<SommetTile> allSommetTile;
@@ -61,6 +59,8 @@ public class Model {
 	// joueur courant
 	int curPlayerId;
 	Player curPlayer;
+	//energie choisis par le joueur courant
+	private greenEnergyTypes curEnergyChoice;
 
 	private Continent[] continents;
 
@@ -77,11 +77,13 @@ public class Model {
 		nbDecade = 1;
 		decade = 1970;
 		players = new Player[nbJoueur];
+		projectsPacket = new HashMap<String, Integer>();
 		curPlayerId = 0;
 		//On initialise le prix des CEPs à 3
 		currentPriceCEP = 3;
 		//On place 2 CEP dans le marché
 		nbCEPdispo = 2;
+		curEnergyChoice = BIOMASS;
 	}
 
 	/**
@@ -89,11 +91,13 @@ public class Model {
 	 */
 	public void init() throws IOException {
 		// Initialisation du tableau contenant les 6 tuiles de projet solaire
-		//TODO : Rabaisser a 6 une fois toutes les tuiles projet mis en place car sinon il n'y a pas assez de tuiles pour la demo
-		projects = new ArrayList<>();
-		for(int i = 0; i< 30; i++){// 30 pour l'instant (représente tous les projet)
-			projects.add(new Project(SOLAR));
-		}
+
+		projectsPacket.put(BIOMASS.name(), 6);
+		projectsPacket.put(FUSION.name(), 6);
+		projectsPacket.put(RECYCLING.name(), 6);
+		projectsPacket.put(REFORESTATION.name(), 6);
+		projectsPacket.put(SOLAR.name(), 6);
+
 		// Initialisation des joueurs
 		initPlayers();
 		// Initialisation des tours
@@ -280,13 +284,6 @@ public class Model {
 	}
 
 	/**
-	 * @return le nombre de tuiles "Projet Solaire" restantes dans la pile
-	 */
-	public int getNbSolarProject(){
-		return projects.size();
-	}
-
-	/**
 	 * Ajoute 1 d'expertise au joueur courant pour un type d'energie verte
 	 * @param energyType type d'energie concernee
 	 */
@@ -296,20 +293,36 @@ public class Model {
 	}
 
 	/**
-	 * permet d'ajouter la tuile sur la case subvention(recherche en collaboration)
-	 * @return true si la tuile veut être ajoutée sinon retourne false
+	 * permet de vérifier si la tuile est plaçable ou non
+	 * @return boolean
 	 */
-	public boolean addProjectTileToSubvention(Continent continent, int indexSub){
+	public boolean verrifAddProjectTileToSubvention(Continent continent, Subvention subvention){
 		// si l'energie ne peux pas etre placee sur le continent -> action impossible
+		//TODO verfier avec les toutes les énergies de l'agenda
 		if(!continent.getAgendaTile().isPossiblePlacement(SOLAR)) return false;
 
-		// permet d'ajouter la tuile sur la case subvention
-		if(projects.get(0).addOnSubvention() && projects.get(0).isSubventionPossible()){
-			continent.getSubventions().get(indexSub).addTilesSolarProject(projects.get(0));
-			projects.get(0).setSubventionPossible(false);
-			return true;
-		}
+		if(subvention.getProject() == null || subvention.getProject().isSubventionPossible()) return true;
+
 		return false;
+	}
+
+	/**
+	 * permet d'ajouter la tuile sur la case subvention(recherche en collaboration) une fois vérifié
+	 */
+	public void addProjectTileToSubvention(Continent continent, Subvention subvention, greenEnergyTypes energyChoisi){
+		setCurEnergyChoice(energyChoisi); //récup l'énergie du projet
+		subvention.setEnergyTypes(energyChoisi);
+
+		//création du nouveau projet ( et l'asigne à la subvention)
+		Project newProject = new Project(energyChoisi);
+		subvention.setProject(newProject);
+		subvention.getProject().setSubventionPossible(false);
+		continent.getSubventions().get(subvention.getIndex()).addTilesProject(newProject);
+
+		//maj du paquet du projet
+		projectsPacket.put(getCurEnergyChoice().name(),projectsPacket.get(getCurEnergyChoice().name())-1);
+
+		System.out.println("Energie choisis = " + getCurEnergyChoice());
 	}
 
 	/**
@@ -346,10 +359,10 @@ public class Model {
 	 * Permet de savoir si un joueur peut mettre en place un projet ET LE MET EN PLACE
 	 * @return
 	 */
-	public boolean mettreEnPlaceProjetByPlayer(Continent continent, Subvention subvention){
+	public boolean mettreEnPlaceProjetByPlayer(greenEnergyTypes greenEnergyTypes, Subvention subvention){
 		curPlayer = getCurrentPLayer();
 		if(curPlayer.getCEP() >= 1){
-			curPlayer.rewardSetupProject(SOLAR);
+			curPlayer.rewardSetupProject(greenEnergyTypes);
 			curPlayer.removeCEP();
 			subvention.getProject().setMisEnPlace(true);
 			return true;
@@ -357,10 +370,10 @@ public class Model {
 		return false;
 	}
 
-	public boolean mettreEnPlaceProjetByContinent(Continent continent, Subvention subvention, Continent ProjectBuyContinent){
+	public boolean mettreEnPlaceProjetByContinent(greenEnergyTypes greenEnergyTypes, Subvention subvention, Continent ProjectBuyContinent){
 		curPlayer = getCurrentPLayer();
 		if(ProjectBuyContinent.getNbCep() >= 1){
-			curPlayer.rewardSetupProject(SOLAR);
+			curPlayer.rewardSetupProject(greenEnergyTypes);
 			ProjectBuyContinent.removeCEP();
 			subvention.getProject().setMisEnPlace(true);
 			return true;
@@ -495,6 +508,7 @@ public class Model {
 					//réduisez le niveau de CO2 globale en enlevant celui de la centrale fossile
 					this.co2 -= centrales.get(i).getType().getCo2();
 				}
+				projetMisEnPlaceChoisi.setEnergyTypes(null);
 				return centrales.get(i).getIndex();
 			}
 		}
@@ -723,7 +737,9 @@ public class Model {
 
 	public Player getCurrentPLayer() { return players[curPlayerId]; }
 
-	public Continent[] getContinents() { return continents; }
+	public Continent[] getContinents() {
+		return continents;
+	}
 
 	public int getTour() {
 		return tour;
@@ -794,5 +810,13 @@ public class Model {
 	public void tradeDollarstoCEP() {
 		curPlayer.retirerArgent(currentPriceCEP);
 		achatCEP();
+	}
+
+	public void setCurEnergyChoice(greenEnergyTypes energyChoisi) {
+		this.curEnergyChoice = energyChoisi;
+	}
+
+	public greenEnergyTypes getCurEnergyChoice() {
+		return curEnergyChoice;
 	}
 }

@@ -22,6 +22,8 @@ public class Subvention {
 
     //Le continent où se situe la subvention
     private subventionTypes type;
+    // l'energie de la subventoion si il y a un projet
+    private greenEnergyTypes energyTypes;
 
     public Subvention(int index, Continent continent, Rectangle[] tabRectangleSubvention){
         this.index = index;
@@ -30,6 +32,7 @@ public class Subvention {
         tabRectangleSubvention[index] = new Rectangle(65, 65, Color.WHITE);
         tabRectangleSubvention[index].setStroke(Color.BLACK);
         this.staffed = false;
+        energyTypes = null;
     }
 
     private void setType(int index){
@@ -56,8 +59,8 @@ public class Subvention {
     public void setContinent(Continent continent){ this.continent = continent; }
 
     // ajoute à cette subvention
-    public void addTilesSolarProject(Project tilesSolarProject){
-        this.project = tilesSolarProject;
+    public void addTilesProject(Project project){
+        this.project = project;
         // la subvention n'est plus vide
         empty = false;
     }
@@ -106,5 +109,17 @@ public class Subvention {
 
     public void setEmpty(boolean empty) {
         this.empty = empty;
+    }
+
+    public greenEnergyTypes getEnergyTypes() {
+        return energyTypes;
+    }
+
+    public void setEnergyTypes(greenEnergyTypes energyTypes) {
+        this.energyTypes = energyTypes;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
     }
 }

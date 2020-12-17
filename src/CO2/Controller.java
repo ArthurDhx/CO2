@@ -49,16 +49,22 @@ public class Controller {
             // la subvention choisis par le joueur
             Optional<Subvention> resulltSubv = viewGame.hboxAction.dialogSubvention.showAndWait();
             resulltSubv.ifPresent(subvention -> {
-                // meme principe que au dessus
-                if(model.addProjectTileToSubvention(continent,subvention.getIndex())){
+                // choisis l'energie
+                viewGame.hboxAction.displayEnergyChoiceDialog() ;
+                Optional<greenEnergyTypes> resultEnergy = viewGame.hboxAction.dialogEnergie.showAndWait();
+                resultEnergy.ifPresent(energyChoisi -> {
                     // Si la tuile peut etre ajouter
-                    // Affiche la tuile a l'ecran
-                    viewGame.addTuilesToSubvention(subvention.getIndex(), viewGame.imgTilesSolarProject, continent);
+                    if(model.verrifAddProjectTileToSubvention(continent, subvention)) {
+                        // Mets a jour le model : fait en sorte que le projet ne puisse pas etre réutilisé
+                        model.addProjectTileToSubvention(continent, subvention, energyChoisi);
 
-                    // Mets a jour le model
-                    model.projects.remove(0);
-                    // Le joueur en cours a effectuer son action principale
-                }
+                        // Affiche la tuile a l'écran
+                        viewGame.changeProjectState(subvention.getIndex(), model.getCurEnergyChoice(), viewGame.PROPOSER_PROJET, continent);
+
+                        // Le joueur en cours a effectuer son action principale
+                    }
+                });
+
             });
         }
     }

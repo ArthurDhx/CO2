@@ -52,7 +52,7 @@ public class Player {
         actionPrincipaleDone = false;
         actionGratuiteDone = new boolean[NBACTIONGRATUITE];
         CEP = 2;
-        resourcesTech = 0;
+        resourcesTech = 70;
         argent = 21;
         pointVictoire = 0;
         continentsControlles = new ArrayList<>();
@@ -74,11 +74,11 @@ public class Player {
      */
     private void initExpertise() {
         expertise = new HashMap<>();
-        expertise.put(greenEnergyTypes.SOLAR, 0);
-        expertise.put(greenEnergyTypes.BIOMASS, 0);
-        expertise.put(greenEnergyTypes.RECYCLING, 0);
-        expertise.put(greenEnergyTypes.FUSION, 0);
-        expertise.put(greenEnergyTypes.REFORESTATION, 0);
+        expertise.put(greenEnergyTypes.SOLAR, 10);
+        expertise.put(greenEnergyTypes.BIOMASS, 10);
+        expertise.put(greenEnergyTypes.RECYCLING,10);
+        expertise.put(greenEnergyTypes.FUSION, 10);
+        expertise.put(greenEnergyTypes.REFORESTATION, 10);
     }
 
     /**

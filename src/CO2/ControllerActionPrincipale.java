@@ -56,23 +56,28 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
             // la subvention choisis par le joueur
             Optional<Subvention> resulltSubv = viewGame.hboxAction.dialogSubvention.showAndWait();
             resulltSubv.ifPresent(subvention -> {
-                // meme principe que au dessus
-                if(model.addProjectTileToSubvention(continentChoisi,subvention.getIndex())){
+                // choisis l'energie
+                viewGame.hboxAction.displayEnergyChoiceDialog() ;
+                Optional<greenEnergyTypes> resultEnergy = viewGame.hboxAction.dialogEnergie.showAndWait();
+                resultEnergy.ifPresent(energyChoisi -> {
                     // Si la tuile peut etre ajouter
-                    // Affiche la tuile a l'ecran
-                    viewGame.addTuilesToSubvention(subvention.getIndex(), viewGame.imgTilesSolarProject, continentChoisi);
-                    // Mets a jour le model
-                    model.projects.remove(0);
-                    // Récupération du type et application de l'effet de la subvention choisie
-                    subventionTypes type = subvention.effect(model.getCurrentPLayer());
-                    if(type == subventionTypes.RECHERCHE){ //Si il s'agit d'une subvention recheche
-                        actionProposerProjetRecherche();
+                    if(model.verrifAddProjectTileToSubvention(continentChoisi, subvention)){
+                        // Mets a jour le model : fait en sorte que le projet ne puisse pas etre réutilisé
+                        model.addProjectTileToSubvention(subvention.getContinent(), subvention, energyChoisi);
+
+                        // Affiche la tuile a l'écran
+                        viewGame.changeProjectState(subvention.getIndex(), model.getCurEnergyChoice(), viewGame.PROPOSER_PROJET, continentChoisi);
+
+                        // Récupération du type et application de l'effet de la subvention choisie
+                        subventionTypes type = subvention.effect(model.getCurrentPLayer());
+                        if(type == subventionTypes.RECHERCHE){ //Si il s'agit d'une subvention recheche
+                            actionProposerProjetRecherche();
+                        }
+                        viewGame.reloadresourcesTech();
+                        // Le joueur en cours a effectuer son action principale
+                        model.getCurrentPLayer().setActionPrincipaleDone(true);
                     }
-                    viewGame.reloadresourcesTech();
-                    // Le joueur en cours a effectuer son action principale
-                    model.getCurrentPLayer().setActionPrincipaleDone(true);
-                }
-                return;
+                });
             });
         });
         // Si un dialog a été quitté reset la hbox
@@ -148,8 +153,8 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
                         model.getCurrentPLayer().getCurrentScientifique().setSubvention(projetChoisi);
                         projetChoisi.setStaffed(true);
                         if (model.getCurrentPLayer().getCurrentScientifique().getSubvention().getProject() != null) {
-                            // set la valeur solaire si le scientifique joué est sur un projet solaire
-                            model.getCurrentPLayer().getCurrentScientifique().setSubject(new Subject(greenEnergyTypes.SOLAR));
+                            // set la valeur de l'énergie si le scientifique joué est sur cette energie
+                            model.getCurrentPLayer().getCurrentScientifique().setSubject(new Subject(projetChoisi.getEnergyTypes()));
                         }
                     }
                 });
@@ -205,18 +210,20 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
             resultBuyCEPBy.ifPresent(BuyCEPBy -> {
                 if(BuyCEPBy == "ma réserve"){
                     System.out.println("Joueur paye !!!");
-                    if(model.mettreEnPlaceProjetByPlayer(projetChoisi.getContinent(), projetChoisi)) {
-                        viewGame.mettreEnPlaceProjet(projetChoisi.getIndex() , viewGame.imgTilesSolarProjectBack, projetChoisi.getContinent());
+                    if(model.mettreEnPlaceProjetByPlayer(projetChoisi.getEnergyTypes(), projetChoisi)) {
+                        viewGame.changeProjectState(projetChoisi.getIndex() , projetChoisi.getEnergyTypes(), viewGame.METTRE_EN_PLACE_PROJET, projetChoisi.getContinent());
                         viewGame.reloadresourcesTech();
                         viewGame.reloadCEP();
+                    }else {
+                        viewGame.displayAlertWithoutHeaderText("Pas assez de CEP", "Vous n'avez pas assez de CEP \npour mettre en place le projet "+projetChoisi.getEnergyTypes() + " \nsur la subvention " + projetChoisi.getType() + " du continent " + projetChoisi.getContinent());
                     }
                 }
                 else{
                     viewGame.hboxAction.displayBuyCEPByContinent();
                     Optional<Continent> resultContinentBuyCEP = viewGame.hboxAction.dialogBuyCEPByContinent.showAndWait();
                     resultContinentBuyCEP.ifPresent(BuyCEPByContinent -> {
-                        if(model.mettreEnPlaceProjetByContinent(projetChoisi.getContinent(), projetChoisi, BuyCEPByContinent)){
-                            viewGame.mettreEnPlaceProjet(projetChoisi.getIndex() , viewGame.imgTilesSolarProjectBack, projetChoisi.getContinent());
+                        if(model.mettreEnPlaceProjetByContinent(projetChoisi.getEnergyTypes(), projetChoisi, BuyCEPByContinent)){
+                            viewGame.changeProjectState(projetChoisi.getIndex() , projetChoisi.getEnergyTypes(), viewGame.METTRE_EN_PLACE_PROJET, projetChoisi.getContinent());
                             viewGame.reloadresourcesTech();
                             viewGame.reloadCEP();
                         }
@@ -242,10 +249,13 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
         result.ifPresent(projetMisEnPlaceChoisi -> {
             int index = model.putCentral(projetMisEnPlaceChoisi);
             if( index >= 0) {
+                // remet la carte projet dans le paquet
+                model.projectsPacket.put(model.getCurEnergyChoice().name(),model.projectsPacket.get(model.getCurEnergyChoice().name())+1);
 
                 viewGame.addCentrale(centralTypes.SOLAIRE , projetMisEnPlaceChoisi.getContinent(), index);
                 viewGame.resetSubvention(projetMisEnPlaceChoisi.getContinent(),projetMisEnPlaceChoisi.getIndex());
                 projetMisEnPlaceChoisi.getProject().setMisEnPlace(false);
+                projetMisEnPlaceChoisi.getProject().setSubventionPossible(true);
                 projetMisEnPlaceChoisi.setEmpty(true);
 
                 //gain : point victoire & 1 expertise dans le dommaine de la centrale
