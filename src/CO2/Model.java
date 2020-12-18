@@ -19,7 +19,7 @@ public class Model {
 	final static int STATE_INIT = 1; // Title
 	final static int STATE_PLAY = 2; // Game
 	final int NB_TOUR_PAR_DECENNIE = 7; // 6 pour jeu solo + 1 pour pouvoir changer décénnie
-	final int NB_DECENNIE = 2010; // 2010 pour jeu solo, 2020 pour jeu multi
+	final int NB_DECENNIE = 2010; // 2010 pour jeu solo, 2020 pour jeu multi à 5 joueurs
 
 	// tour courant
 	private int tour;

@@ -348,7 +348,7 @@ public class ViewGame {
 	//A appeler lors d'une modification de l'argent du joueur
 	public void reloadresourcesTech() {
 		pane.getChildren().remove(resourcesTechJoueur);
-		resourcesTechJoueur = new Text(TEXT_X, 95, "Vous avez " + model.getCurrentPLayer().getResourcesTech() + " cubes de ressources technologiques. ");
+		resourcesTechJoueur = new Text(TEXT_X, 95, "Vous avez " + model.getCurrentPLayer().getResourcesTech() + " cubes de ressources technologiques ");
 		pane.getChildren().add(resourcesTechJoueur);
 	}
 
@@ -391,7 +391,9 @@ public class ViewGame {
 	 */
 	public void reloadCo2() {
 		pane.getChildren().remove(co2);
-		co2 = new Text(TEXT_X, 125, "Valeur du CO2 : " + model.getCo2() + ". ");
+		co2 = new Text(TEXT_X, 125, "Valeur du CO2 : " + model.getCo2() + "/500 \n" +
+				"(si en 2000 le CO2 est à moins \n" +
+				"de 350, vous perdez)");
 		pane.getChildren().add(co2);
 	}
 
@@ -745,6 +747,7 @@ public class ViewGame {
 				Stage stage = (Stage) scene.getWindow();
 				// fermeture de la fenetre du jeu actuel
 				stage.close();
+				System.out.println("coucou");
 				// création de la nouvelle partie
 				Main main = new Main();
 				main.start(new Stage());

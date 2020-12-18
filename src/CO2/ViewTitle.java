@@ -9,6 +9,9 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 
 public class ViewTitle {
 
@@ -17,6 +20,7 @@ public class ViewTitle {
     Group root;
     Pane paneIntro;
     Pane paneGame;
+
 
     Button btn;
     //ComboBox<String> comboBox;
@@ -30,6 +34,31 @@ public class ViewTitle {
 		paneGame = new Pane();
 		paneGame.setPrefSize(model.width,model.height);
 
+		Text text = new Text( 700, 50,
+				"Dans les années 70, les gouvernements mondiaux font face à une demande d’énergie sans " +
+						"précédent et des centrales de plus en plus polluantes sont construites n’importe où afin " +
+						"de répondre à cette demande. Année après année, la pollution qu’elles génèrent augmente " +
+						"et personne ne fait rien pour la réduire. De nos jours, l’impact de cette pollution est " +
+						"devenu trop grand et l’humanité commence à réaliser que nous devons répondre à nos besoins " +
+						"énergétiques via des sources d’énergie propre. Les compagnies ayant une compétence en " +
+						"énergies propres et durables sont appelées pour proposer des projets qui fourniront " +
+						"l’énergie nécessaire sans polluer l’environnement. Les gouvernements désirent financer ces " +
+						"projets et investir dans leur mise en place. \n\n" +
+						"Dans le jeu CO2, chaque joueur gère une compagnie répondant aux requêtes gouvernementales " +
+						"pour de nouvelles centrales à énergies vertes. \n\n" +
+						"Le but est de stopper l’augmentation de la pollution, tout en répondant à la demande " +
+						"croissante d’énergie durable et bien sûr de faire des profits. \n\n" +
+						"Vous aurez besoin d’assez de connaissances, d’argent et de ressources pour construire des " +
+						"centrales propres. Des sommets sur l’énergie favoriseront la prise de conscience mondiale " +
+						"et permettront aux compagnies de partager un peu de leur expertise, tout en apprenant encore " +
+						"plus des autres. \n\n" +
+						"Rappelez-vous que si la pollution n’est pas stoppée, ce sera la fin de la partie pour tout " +
+						"le monde.\n");
+
+		text.setFont(new Font(15));
+		text.setWrappingWidth(800);
+		text.setTextAlignment(TextAlignment.JUSTIFY);
+
 		btn = new Button();
 		btn.setText("Lancer la partie");
 
@@ -41,7 +70,7 @@ public class ViewTitle {
 		btn.setLayoutX(970);
 		// Valeur pour plusieur joueur
 		// btn.setLayoutY(600);
-		btn.setLayoutY(400);
+		btn.setLayoutY(450);
 
 		Image imgMainTitle = new Image("CO2/images/CO2MainTitle.jpg");
 		ImageView imageViewMainTitle = new ImageView(imgMainTitle);
@@ -70,6 +99,7 @@ public class ViewTitle {
 		// Choix du joueur desactivé
 		//paneIntro.getChildren().add(lbNbJoueur);
 		//paneIntro.getChildren().add(comboBox);
+		paneIntro.getChildren().add(text);
 		paneIntro.getChildren().add(btn);
     }
 
