@@ -74,6 +74,7 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
                             actionProposerProjetRecherche();
                         }
                         viewGame.reloadresourcesTech();
+                        viewGame.reloadArgent();
                         // Le joueur en cours a effectuer son action principale
                         model.getCurrentPLayer().setActionPrincipaleDone(true);
                     }

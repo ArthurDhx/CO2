@@ -88,6 +88,8 @@ public class Subvention {
     public subventionTypes effect(Player currentPLayer) {
         switch (type) {
             case ARGENT:
+                if(this.getContinent().getNbCep() >=1) currentPLayer.gainArgent(this.getContinent().getNbCep());
+                else currentPLayer.gainArgent(1);
                 return subventionTypes.ARGENT;
             case RESSOURCE:
                 // Ajoute 2 cubes de ressources technologiques au joueur courant
