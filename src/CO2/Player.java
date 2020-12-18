@@ -224,12 +224,14 @@ public class Player {
      * Applique les effets de mise en place d'un projet au joueur :
      *  - donne la recompense du projet selon le type d'energie
      * @param type type energie du projet
+     * @return cep a prendre dans le marché
      */
-    public void rewardSetupProject(greenEnergyTypes type){
+    public int rewardSetupProject(greenEnergyTypes type){
         actionPrincipaleDone = true;
-
+        int cep = 0;
         switch (type) {
             case REFORESTATION:
+                cep = 2;
                 // prendre 2 CEP du marcher
                 break;
             case SOLAR:
@@ -242,13 +244,16 @@ public class Player {
             case BIOMASS:
                 argent += 3;
                 resourcesTech += 1;
+                cep=1;
                 // prendre 1 CEP du marché
                 break;
             case RECYCLING:
                 argent += 5;
+                cep = 1;
                 // prendre 1 CEP du marché
                 break;
         }
+        return cep;
     }
 
     /**
@@ -326,6 +331,10 @@ public class Player {
      */
     public void addCEP(){ CEP += 1; }
 
+
+    public void addCEP(int nb){
+        CEP += nb;
+    }
     /**
      * Incremente le nombre de CEP de l'utilisateur
      */

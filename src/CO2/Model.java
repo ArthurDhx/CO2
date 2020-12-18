@@ -362,7 +362,9 @@ public class Model {
 	public boolean mettreEnPlaceProjetByPlayer(greenEnergyTypes greenEnergyTypes, Subvention subvention){
 		curPlayer = getCurrentPLayer();
 		if(curPlayer.getCEP() >= 1){
-			curPlayer.rewardSetupProject(greenEnergyTypes);
+			int nbCep = curPlayer.rewardSetupProject(greenEnergyTypes);
+			achatCEP(nbCep);
+			curPlayer.addCEP(nbCep);
 			curPlayer.removeCEP();
 			subvention.getProject().setMisEnPlace(true);
 			return true;
@@ -373,7 +375,9 @@ public class Model {
 	public boolean mettreEnPlaceProjetByContinent(greenEnergyTypes greenEnergyTypes, Subvention subvention, Continent ProjectBuyContinent){
 		curPlayer = getCurrentPLayer();
 		if(ProjectBuyContinent.getNbCep() >= 1){
-			curPlayer.rewardSetupProject(greenEnergyTypes);
+			int nbCep = curPlayer.rewardSetupProject(greenEnergyTypes);
+			achatCEP(nbCep);
+			curPlayer.addCEP(nbCep);
 			ProjectBuyContinent.removeCEP();
 			subvention.getProject().setMisEnPlace(true);
 			return true;
@@ -413,8 +417,8 @@ public class Model {
 		return false;
 	}
 
-	public void achatCEP(){
-		this.nbCEPdispo -= 1;
+	public void achatCEP(int nbAchat){
+		this.nbCEPdispo -= nbAchat;
 		if(nbCEPdispo == 0){
 			nbCEPdispo += 2;
 			if(currentPriceCEP < 8) currentPriceCEP += 1;
@@ -803,13 +807,13 @@ public class Model {
 		}
 		curPlayer.retirerArgent(currentPriceCEP);
 		curPlayer.addCEP();
-		achatCEP();
+		achatCEP(1);
 		curPlayer.removeCEP();
 	}
 
 	public void tradeDollarstoCEP() {
 		curPlayer.retirerArgent(currentPriceCEP);
-		achatCEP();
+		achatCEP(1);
 	}
 
 	public void setCurEnergyChoice(greenEnergyTypes energyChoisi) {

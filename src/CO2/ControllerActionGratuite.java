@@ -113,7 +113,7 @@ public class ControllerActionGratuite implements EventHandler<ActionEvent> {
                         curPlayer.addCEP();
                         model.getCurrentPLayer().setMarcheCEPDone(true);
                         model.getCurrentPLayer().setActionMarche(1);
-                        model.achatCEP();
+                        model.achatCEP(1);
                     }
                 } else {
                     if (curPlayer.getCEP() < 1) {

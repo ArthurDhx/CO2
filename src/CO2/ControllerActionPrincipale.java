@@ -214,6 +214,7 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
                         viewGame.changeProjectState(projetChoisi.getIndex() , projetChoisi.getEnergyTypes(), viewGame.METTRE_EN_PLACE_PROJET, projetChoisi.getContinent());
                         viewGame.reloadresourcesTech();
                         viewGame.reloadCEP();
+                        viewGame.reloadArgent();
                     }else {
                         viewGame.displayAlertWithoutHeaderText("Pas assez de CEP", "Vous n'avez pas assez de CEP \npour mettre en place le projet "+projetChoisi.getEnergyTypes() + " \nsur la subvention " + projetChoisi.getType() + " du continent " + projetChoisi.getContinent());
                     }
@@ -226,6 +227,7 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
                             viewGame.changeProjectState(projetChoisi.getIndex() , projetChoisi.getEnergyTypes(), viewGame.METTRE_EN_PLACE_PROJET, projetChoisi.getContinent());
                             viewGame.reloadresourcesTech();
                             viewGame.reloadCEP();
+                            viewGame.reloadArgent();
                         }
                     });
                 }
