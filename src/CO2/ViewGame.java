@@ -193,16 +193,16 @@ public class ViewGame {
 
 
 		// On récupère l'image de la tuile et on l'ajoute à l'écran
-		biomassProjetRecto = new Image(getClass().getResourceAsStream("images/Projets/BiomassProjectRecto.png"));
-		biomassProjectVerso = new Image(getClass().getResourceAsStream("images/Projets/BiomassProjectVerso.png"));
-		fusionProjetRecto = new Image(getClass().getResourceAsStream("images/Projets/FusionProjectRecto.png"));
-		fusionProjectVerso = new Image(getClass().getResourceAsStream("images/Projets/FusionProjectVerso.png"));
-		reforestationProjetRecto = new Image(getClass().getResourceAsStream("images/Projets/ReforestationProjectRecto.png"));
-		reforestationProjectVerso = new Image(getClass().getResourceAsStream("images/Projets/ReforestationProjectVerso.png"));
-		recyclingProjetRecto = new Image(getClass().getResourceAsStream("images/Projets/RecyclingProjectRecto.png"));
-		recyclingProjectVerso = new Image(getClass().getResourceAsStream("images/Projets/RecyclingProjectVerso.png"));
-		solarProjetRecto = new Image(getClass().getResourceAsStream("images/Projets/SolarProjectRecto.png"));
-		solarProjectVerso = new Image(getClass().getResourceAsStream("images/Projets/SolarProjectVerso.png"));
+		biomassProjetRecto = new Image(getClass().getResourceAsStream("images/Projets/BIOMASSProjectRecto.png"));
+		biomassProjectVerso = new Image(getClass().getResourceAsStream("images/Projets/BIOMASSProjectVerso.png"));
+		fusionProjetRecto = new Image(getClass().getResourceAsStream("images/Projets/FUSIONProjectRecto.png"));
+		fusionProjectVerso = new Image(getClass().getResourceAsStream("images/Projets/FUSIONProjectVerso.png"));
+		reforestationProjetRecto = new Image(getClass().getResourceAsStream("images/Projets/REFORESTATIONProjectRecto.png"));
+		reforestationProjectVerso = new Image(getClass().getResourceAsStream("images/Projets/REFORESTATIONProjectVerso.png"));
+		recyclingProjetRecto = new Image(getClass().getResourceAsStream("images/Projets/RECYCLINGProjectRecto.png"));
+		recyclingProjectVerso = new Image(getClass().getResourceAsStream("images/Projets/RECYCLINGProjectVerso.png"));
+		solarProjetRecto = new Image(getClass().getResourceAsStream("images/Projets/SOLARProjectRecto.png"));
+		solarProjectVerso = new Image(getClass().getResourceAsStream("images/Projets/SOLARProjectVerso.png"));
 		imgCentralSolar = new Image(getClass().getResourceAsStream("images/Centrales/Solar.png"));
 		imgCentralCharbon = new Image(getClass().getResourceAsStream("images/Centrales/Coal.png"));
 		imgCentralPetrole = new Image(getClass().getResourceAsStream("images/Centrales/Oil.png"));
