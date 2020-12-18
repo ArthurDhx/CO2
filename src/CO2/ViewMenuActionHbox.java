@@ -318,7 +318,6 @@ public class ViewMenuActionHbox extends HBox {
         }
         System.out.println(sommetTiles);
         //Si aucun sommet n'est mis en place, on ne fait rien
-
         dialogDeplacerScientifiqueSommet = new ChoiceDialog<SommetTile>(
                 sommetTiles.get(0), // Choix par défaut
                 sommetTiles
@@ -329,7 +328,7 @@ public class ViewMenuActionHbox extends HBox {
     }
 
     /**
-     * Affiche le ChoiceDialog permettant de récuperer l'expertise grace au scientifiq en fin de tour
+     * Affiche le ChoiceDialog permettant de récuperer l'expertise grace au scientifique en fin de tour
      */
     public void displayFinTourScientifiqueChoiceDialog(){
         List<Scientifique> scientifiques = model.getCurrentPLayer().getScientifiques();

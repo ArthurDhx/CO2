@@ -248,29 +248,32 @@ public class Model {
 
 		int continentNb = 0;
 		while((st = bufferedReader.readLine()) != null) {
-			String location = st.split(" ")[0];
-			String subject1 = st.split(" ")[1];
-			String subject2 = st.split(" ")[2];
-			String subject3 = st.split(" ")[3];
-			String subject4 = st.split(" ")[4];
 
-			subjects.add(stringToSubject(subject1));
-			subjects.add(stringToSubject(subject2));
-			if(!subject3.equals("none")) subjects.add(stringToSubject(subject3));
-			if(!subject4.equals("none")) subjects.add(stringToSubject(subject4));
+				String location = st.split(" ")[0];
+				String subject1 = st.split(" ")[1];
+				String subject2 = st.split(" ")[2];
+				String subject3 = st.split(" ")[3];
+				String subject4 = st.split(" ")[4];
 
-			lstAllSommet.add(new SommetTile(location,this.continents[continentNb], subjects.size(), subjects,new ImageView(new Image(getClass().getResourceAsStream("images/Sommets/"+location+".png")))));
-			subjects.clear();
-			if (continentNb < 5){
-				continentNb++;
-			} else {
-				continentNb = 0;
-			}
+				subjects.add(stringToSubject(subject1));
+				subjects.add(stringToSubject(subject2));
+				if (!subject3.equals("none")) subjects.add(stringToSubject(subject3));
+				if (!subject4.equals("none")) subjects.add(stringToSubject(subject4));
+
+				lstAllSommet.add(new SommetTile(location, null, subjects.size(), subjects, new ImageView(new Image(getClass().getResourceAsStream("images/Sommets/" + location + ".png")))));
+				subjects.clear();
+				if (continentNb < 5) {
+					continentNb++;
+				} else {
+					continentNb = 0;
+				}
 		}
 		bufferedReader.close();
+		SommetTile sommetTile;
 		this.allSommetTile = lstAllSommet;
-		for(int i=0; i<6 ;i++){
-			SommetTile sommetTile = allSommetTile.get(i);
+		for (int i = 0; i < 6; i++) {
+			sommetTile = lstAllSommet.remove(new Random().nextInt(lstAllSommet.size()));
+			sommetTile.setContinent(continents[i]);
 			continents[i].setSommetTile(sommetTile);
 		}
 	}
@@ -353,7 +356,7 @@ public class Model {
 		} else {
 			// À faire pour toutes les énergies
 			// vérifie si le sommet ainsi que la subvention on tous deux l'énergie solaire.
-			return sommetTile.haveEnergyAndUnoccupied(SOLAR) && subvention.getProject() != null;
+			return sommetTile.haveEnergyAndUnoccupied(subvention.getEnergyTypes()) && subvention.getProject() != null;
 		}
 	}
 
@@ -438,7 +441,9 @@ public class Model {
 	 */
 	public void giveRewardsSommet() {
 		// boucle sur tous les sommets du jeu
-		for(SommetTile sommet: this.getAllSommetTile()){
+		System.out.println(allSommetTile);
+		for(SommetTile sommet: allSommetTile){
+			System.out.println(sommet.isFull());
 			if(sommet.isFull()){ // si le sommet est rempli de scientifique
 				ArrayList<Scientifique> scientifiques =  sommet.getScientifiques(); // récupère les scientifiques d'un sommet
 				for(Player p: players){
