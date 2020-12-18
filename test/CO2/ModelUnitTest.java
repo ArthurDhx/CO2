@@ -1,21 +1,47 @@
 package CO2;
 
+import jdk.jfr.Enabled;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
+import static org.mockito.Mockito.when;
 
 public class ModelUnitTest {
 
     Model model;
 
+
     @Before
     public void setup() throws IOException {
         model = new Model();
         model.init();
+    }
+
+    @Test
+    public void testInitOnuCards() {
+        Random rand1 = Mockito.mock(Random.class);
+        Random rand2 = Mockito.mock(Random.class);
+        Random rand3 = Mockito.mock(Random.class);
+        when(rand1.nextInt(Mockito.anyInt())).thenReturn(1,2); // 3
+        when(rand2.nextInt(Mockito.anyInt())).thenReturn(0,2); // 6
+        when(rand3.nextInt(Mockito.anyInt())).thenReturn(1,2); // 7
+        model.initOnuCards(rand1, rand2, rand3);
+    }
+
+    @Test
+    public void testInitOnuCardsInGame() {
+        // test de la ligne : do card = onuCards.get(randOnuCard.nextInt(onuCards.size()));
+        Random random = Mockito.mock(Random.class);
+        OnuCard card = model.getOnuCards().get(1);
+        when(random.nextInt(Mockito.anyInt())).thenReturn(1, 13);
+        Assert.assertEquals(card, model.getOnuCards().get(random.nextInt(model.getOnuCards().size())));
     }
 
     @Test
@@ -113,5 +139,115 @@ public class ModelUnitTest {
     public void testDonne5CartesLobbyAuJoueur() {
         Player p = model.getCurrentPLayer();
         Assert.assertEquals(5, p.getLobbyCards().size());
+    }
+
+
+    public void initCard(OnuCard card, boolean diff){
+        ArrayList<String> types = new ArrayList<>();
+        types.add(centralTypes.REBOISEMENT.name());
+        types.add(centralTypes.SOLAIRE.name());
+        if(diff) types.add(centralTypes.FUSIONFROIDE.name());
+        Mockito.when(card.getTypesCentral()).thenReturn(types);
+    }
+
+    public void initListTypesCentral(ArrayList<String> list, boolean diff){
+        list.add(centralTypes.SOLAIRE.name());
+        list.add(centralTypes.REBOISEMENT.name());
+        if(!diff) list.add(centralTypes.FUSIONFROIDE.name());
+    }
+
+    @Test
+    public void testMarkOnuCard() {
+        // création OnuCard
+        OnuCard card = Mockito.mock(OnuCard.class);
+        initCard(card, false);
+        // création liste des centrales sur le jeu
+        ArrayList<String> list = new ArrayList<>();
+        initListTypesCentral(list, false);
+        // comparaison des types de centrales dans la liste et de la carte
+        Assert.assertTrue(model.markOnuCard(card, list));
+    }
+
+    @Test
+    public void testMarkOnuCard2() {
+        // création OnuCard
+        OnuCard card = Mockito.mock(OnuCard.class);
+        initCard(card, true);
+        // création liste des centrales sur le jeu
+        ArrayList<String> list = new ArrayList<>();
+        initListTypesCentral(list, true);
+        // comparaison des types de centrales dans la liste et de la carte
+        Assert.assertFalse(model.markOnuCard(card, list));
+    }
+
+    @Test
+    public void testgiveVictoryPointsOnuCards(){
+        // markOnuCard(card, centralGreen) renvoie true
+        OnuCard card = Mockito.mock(OnuCard.class);
+        initCard(card,false);
+        ArrayList<String> list = new ArrayList<>();
+        initListTypesCentral(list,false);
+        try {
+            // le joueur courant dispose de 2 ressource technologique
+            model.getCurrentPLayer().setResourcesTech(2);
+            // la carte peut donc être joué
+            model.giveVictoryPointsOnuCards(card,list);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testgiveVictoryPointsOnuCards2() {
+        // markOnuCard(card, centralGreen) renvoie false
+        OnuCard card = Mockito.mock(OnuCard.class);
+        initCard(card,true);
+        ArrayList<String> list = new ArrayList<>();
+        initListTypesCentral(list,true);
+        try {
+            // le joueur courant dispose de 2 ressource technologique
+            model.getCurrentPLayer().setResourcesTech(2);
+            // la carte ne peut donc être joué (markOnuCard(...) => false)
+            model.giveVictoryPointsOnuCards(card,list);
+        }catch (Exception e) {
+            // renvoie une exception
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testgiveVictoryPointsOnuCards3() throws Exception{
+        // markOnuCard(card, centralGreen) renvoie true
+        OnuCard card = Mockito.mock(OnuCard.class);
+        initCard(card,false);
+        ArrayList<String> list = new ArrayList<>();
+        initListTypesCentral(list,false);
+        try {
+            // le joueur courant dispose de 0 ressource technologique
+            model.getCurrentPLayer().setResourcesTech(0);
+            // la carte ne peut donc être joué (ressourceTech <= 1)
+            model.giveVictoryPointsOnuCards(card,list);
+        }catch (Exception e) {
+            // renvoie une exception
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testgiveVictoryPointsOnuCards4() throws Exception{
+        // markOnuCard(card, centralGreen) renvoie false
+        OnuCard card = Mockito.mock(OnuCard.class);
+        initCard(card,true);
+        ArrayList<String> list = new ArrayList<>();
+        initListTypesCentral(list,true);
+        try {
+            // le joueur courant dispose de 0 ressource technologique
+            model.getCurrentPLayer().setResourcesTech(0);
+            // la carte ne peut donc être joué (ressourceTech <= 1 && markOnuCard(..) => false)
+            model.giveVictoryPointsOnuCards(card,list);
+        }catch (Exception e) {
+            // renvoie une exception
+            e.printStackTrace();
+        }
     }
 }

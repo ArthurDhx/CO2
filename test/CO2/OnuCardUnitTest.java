@@ -10,7 +10,7 @@ import java.util.Random;
 public class OnuCardUnitTest {
 
     @Test
-    public void testRandomNbType(){
+    public void testRandom(){
         OnuCard card = new OnuCard(10, 4);
         Random random = Mockito.mock(Random.class);
         Mockito.when(random.nextInt(Mockito.anyInt())).thenReturn(1,3);
@@ -19,13 +19,10 @@ public class OnuCardUnitTest {
 
     @Test
     public void testSetTypesCentral(){
-        OnuCard card = new OnuCard(10,4);
-        ArrayList<String> typesCentral = new ArrayList<>();
-        typesCentral.add(centralTypes.values()[2].name());
-        typesCentral.add(centralTypes.values()[3].name());
+        // test de la ligne : centralTypes.values()[random.nextInt(centralTypes.values().length - 3)].name();
         Random random = Mockito.mock(Random.class);
-        Mockito.when(random.nextInt(Mockito.anyInt())).thenReturn(1,3);
-        // TODO : prochain sprint : ajouter en paramètre de la méthode un ramdom pour les types de centrales
-        card.setTypesCentral(typesCentral, random);
+        Mockito.when(random.nextInt(Mockito.anyInt())).thenReturn(1, 10);
+        Assert.assertEquals(centralTypes.values()[1].name(), centralTypes.values()[random.nextInt(centralTypes.values().length-3)].name());
+
     }
 }
