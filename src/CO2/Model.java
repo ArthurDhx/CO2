@@ -113,29 +113,31 @@ public class Model {
 		// Initialisation les cartes Lobby
 		initLobbyCards();
 		// Initialisation les cartes Objectifs de l'ONU
-		initOnuCards();
+		initOnuCards(new Random(), new Random(), new Random());
 	}
 
 	/**
 	 * Initialise les cartes objectif de l'ONU
+	 * @param rand2typesCentral random de point de victoire pour 2 types de centrales
+	 * @param rand3typesCentral random de point de victoire pour 3 types de centrales
+	 * @param rand4typesCentral random de point de victoire pour 4 types de centrales
 	 */
-	private void initOnuCards() {
+	public void initOnuCards(Random rand2typesCentral, Random rand3typesCentral, Random rand4typesCentral) {
 		onuCards = new ArrayList<>();
 		int id = 34;
 		for(int i=0; i<13;i++){ // 12 cartes (comme le jeu)
-			// TODO : changer 13 en fonction du nombre de cartes qu'on a
 			onuCards.add(new OnuCard(id, 0)); // création carte ONU et ajout dans la liste totale
 			// ajout du nombre de points de victoires en fonction du nombre de type centrales sur la carte
 			if(onuCards.get(i).getTypesCentral().size() == 2){ // si 2 types
-				int nbPoints = 4 - new Random().nextInt(2); // 3 ou 4
+				int nbPoints = 4 - rand2typesCentral.nextInt(2); // 3 ou 4
 				onuCards.get(i).setNbPointDeVictoire(nbPoints);
 			}
 			if(onuCards.get(i).getTypesCentral().size() == 3){ // si 3 types
-				int nbPoints = 6 - new Random().nextInt(2); // 5 ou 6
+				int nbPoints = 6 - rand3typesCentral.nextInt(2); // 5 ou 6
 				onuCards.get(i).setNbPointDeVictoire(nbPoints);
 			}
 			if(onuCards.get(i).getTypesCentral().size() == 4){ // si 4 types
-				int nbPoints = 8 - new Random().nextInt(2); // 7 ou 8
+				int nbPoints = 8 - rand4typesCentral.nextInt(2); // 7 ou 8
 				onuCards.get(i).setNbPointDeVictoire(nbPoints);
 			}
 			id++;// id de 34 à 46
@@ -554,51 +556,41 @@ public class Model {
 	 * Selection de 10 cartes parmis toutes les cartes au début du jeu
 	 * les autres ne seront pas utilisé pour le jeu
 	 * @return List<OnuCard> retourne la liste des cartes sélectionnées
+	 * @param randOnuCard
 	 */
-	public List<OnuCard> initOnuCardsInGame(){
+	public List<OnuCard> initOnuCardsInGame(Random randOnuCard){
 		onuCardsInGame = new ArrayList<>(); // liste de carte qui seront selectionnée ppour la partie
 		OnuCard card;
-		// TODO : prochain sprint : remettre à jour
 		for (int i = 0;i<10;i++) { // 10 cartes choisi (7 pour 2 joueurs)
 			// selection d'une carte aléatoirement parmis la liste totale des cartes de l'ONU
-			//do card = onuCards.get(new Random().nextInt(onuCards.size()));
-			//while(onuCardsInGame.contains(card));
-			card = onuCards.get(new Random().nextInt(onuCards.size()));
+			do card = onuCards.get(randOnuCard.nextInt(onuCards.size()));
+			while(onuCardsInGame.contains(card));
 			onuCardsInGame.add(card);
 		}
 		System.out.println("les 10 cartes 'objectifs de l'ONU' selectionnées sont :");
 		return onuCardsInGame;
 	}
 
+	public List<OnuCard> getOnuCards() { return onuCards; }
 
 	/**
 	 * Vérifier si une des cartes "objectif de l'ONU" du jeu est marquer par un joueur
 	 * @return true si une carte est marquée (si un joueur à contruit tout les types de centrales présents sur une carte)
 	 */
-	public boolean markOnuCard(OnuCard card){
-		ArrayList<String> centralsGreen = new ArrayList<>();
+	public boolean markOnuCard(OnuCard card, ArrayList<String> centralGreen){
 		String CentraleName;
-		int nbSolaire = 0;
-		// TODO : pour démo : int nbSolaire permet de vérifier que le nombre de solaire dans la carte soit égal au nombre de centrales solaires construites
-		// TODO : prochain sprint : enlever quand on aura implémenter tous les types de projets
 		for(int i=0; i<getContinents().length; i++) { // boucle sur continent
 			ArrayList<Central> caseCentrals = continents[i].getCentrales();
 			for (Central c : caseCentrals) { // pour toutes les cases de centrales
 				if (c.isOccupe() && !c.isFossile()) { // si centrale occupé et pas fossible
-					nbSolaire++;
 					CentraleName = c.getType().name(); // récupération du nom
-					centralsGreen.add(CentraleName); // ajouter a la liste des centrales vertes construites sur le jeu
-					System.out.println("liste des centrales vertes :" + centralsGreen);
+					centralGreen.add(CentraleName); // ajouter a la liste des centrales vertes construites sur le jeu
+					System.out.println("liste des centrales vertes :" + centralGreen);
 				}
 			}
 		}
-		System.out.println("nbsolaire !" + nbSolaire);
-		System.out.println(card.getTypesCentral());
-		System.out.println(card.getTypesCentral().size());
-		if (centralsGreen.containsAll(card.getTypesCentral())) { // si la liste des centrales vertes construites contient tous les types de centrales d'une carte ONU
-			if(nbSolaire >= card.getTypesCentral().size()) {
+		if (centralGreen.containsAll(card.getTypesCentral())) { // si la liste des centrales vertes construites contient tous les types de centrales d'une carte ONU
 				return true;
-			}
 		}
 		return false;
 	}
@@ -607,14 +599,14 @@ public class Model {
 	 * Vérifier si le joueur a marquer une carte de l'ONU et si il possède au moins un cube de ressource technologique
 	 *	Donne les points de victoires au joueur et diminue ses ressources technologiques de -1
 	 */
-	public void giveVictoryPointsOnuCards(OnuCard card) throws Exception {
-		if (markOnuCard(card) && getCurrentPLayer().getResourcesTech() >= 1){ // si une carte est marquée par le joueur et qur la ressource technologique
+	public void giveVictoryPointsOnuCards(OnuCard card, ArrayList<String> centralGreen) throws Exception {
+		if (markOnuCard(card, centralGreen) && getCurrentPLayer().getResourcesTech() >= 1){ // si une carte est marquée par le joueur et qur la ressource technologique
 			getCurrentPLayer().setPointVictoire(getCurrentPLayer().getPointVictoire() + card.getNbPointDeVictoire()); // augmente points de victoires avec la carte
 			getCurrentPLayer().setResourcesTech(getCurrentPLayer().getResourcesTech()-1); // diminue ressources technologieques du joueur
 			System.out.println("carte ONU n°"  + card.getId()+ " jouer !");
 			onuCardsInGame.remove(card); // supprime la carte du jeu
 		}else{
-			throw new Exception("Pas de carte marquée ou pas assez de cubes de ressource technologique!");
+			throw new Exception("Pas de carte marquée ou/et pas assez de cubes de ressource technologique!");
 		}
 	}
 

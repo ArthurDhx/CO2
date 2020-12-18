@@ -93,6 +93,6 @@ public class Controller {
      * Permet de choisir aléatoirement 10 cartes "objectifs de l'ONU" au début de la partie
      */
     public void initOnuCards(){
-        System.out.println(model.initOnuCardsInGame()); // sélectionne les cartes pour la partie
+        System.out.println(model.initOnuCardsInGame(new Random())); // sélectionne les cartes pour la partie
     }
 }

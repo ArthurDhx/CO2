@@ -3,6 +3,7 @@ package CO2;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 public class ControllerActionGratuite implements EventHandler<ActionEvent> {
@@ -153,7 +154,7 @@ public class ControllerActionGratuite implements EventHandler<ActionEvent> {
         Optional<OnuCard> resultOnuCard = viewGame.hboxAction.dialogMarqueOnuCard.showAndWait();
         resultOnuCard.ifPresent(onuCard -> {
             try {
-                model.giveVictoryPointsOnuCards(onuCard);
+                model.giveVictoryPointsOnuCards(onuCard, new ArrayList<>());
                 model.getCurrentPLayer().setCardDone(true);
             } catch (Exception e) {
                 viewGame.displayAlertWithoutHeaderText("Impossible de marquer les points" , e.getMessage());
