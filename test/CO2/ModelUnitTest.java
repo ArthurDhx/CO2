@@ -99,7 +99,8 @@ public class ModelUnitTest {
         Continent c = model.getContinents()[0];
         Assert.assertEquals(2,p.getCEP());
         Assert.assertEquals(0,p.getResourcesTech());
-        model.mettreEnPlaceProjetByPlayer(greenEnergyTypes.SOLAR,c.getSubventions().get(0));
+        model.addProjectTileToSubvention(c,c.getSubventions().get(0),greenEnergyTypes.SOLAR); //propose un projet
+        model.mettreEnPlaceProjetByPlayer(greenEnergyTypes.SOLAR,c.getSubventions().get(0)); //met en place le projet
         Assert.assertEquals(1,p.getCEP());
         Assert.assertEquals(3,p.getResourcesTech());
     }
@@ -263,6 +264,16 @@ public class ModelUnitTest {
         }catch (Exception e) {
             // renvoie une exception
             e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testPullEvent(){
+        Random random = Mockito.mock(Random.class);
+        Mockito.when(random.nextInt(Mockito.anyInt())).thenReturn(0,1,2,3,4,5);
+        for (int i = 0; i < 6; i++) {
+            model.pullEvent(random);
+            Assert.assertEquals(i, model.currentEvent);
         }
     }
 }
