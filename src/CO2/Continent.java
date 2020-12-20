@@ -174,8 +174,16 @@ public class Continent {
         this.nbCep = nbCep;
     }
 
-    public void addRessTech(int nbRessTech){
+    public void setNbRessTech(int nbRessTech) {
         this.nbRessTech = nbRessTech;
+    }
+
+    public boolean hasGreenCentral(){
+        // si multi vérifier l'appartenance de la centrale
+        for (Central c : centrales) {
+            if (c.isOccupe() && !c.isFossile()) return true;
+        }
+        return false;
     }
 }
 

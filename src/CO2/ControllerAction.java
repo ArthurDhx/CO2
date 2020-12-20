@@ -157,14 +157,35 @@ public class ControllerAction implements EventHandler<ActionEvent>{
      * Gestion des évènements
      */
     private void resolutionEvenements() {
+        Continent continentEvent = model.getContinents()[model.currentEvent];
         if (model.getCo2() >= 350){
             // une catastrophe a lieu
-            viewGame.displayAlertWithoutHeaderText("Évènements", "dans le rouge");
+            viewGame.displayAlertWithoutHeaderText("Évènements", "Le CO2 dépasse les 350ppm une catastrophe va se produire en "+ continentEvent + " !");
+            // si multi vérifier tous les joueurs
+            Player curPlayer = model.getCurrentPLayer();
+            if (!continentEvent.hasGreenCentral()) {
+                // le joueur n'as pas de centrale à énergie verte
+                if (curPlayer.getResourcesTech() >= 1){
+                    // si il a des ressources technologiques il paye avec celle-ci
+                    viewGame.displayAlertWithoutHeaderText("Évènements", "Malheuresment vous n'avez pas de centrale à énergie verte en "+ continentEvent +" !\nVous devez céder une ressource techonologique à ce continent.");
+                    curPlayer.setResourcesTech(curPlayer.getResourcesTech()-1);
+                    continentEvent.setNbRessTech(continentEvent.getNbRessTech()+1);
+                    viewGame.reloadCEPRessTech();
+                } else {
+                    // si il n'as pas de ressources technologiques il perd 2 pts de victoire
+                    viewGame.displayAlertWithoutHeaderText("Évènements", "Malheuresment vous n'avez pas de centrale à énergie verte en "+ continentEvent +" !\nVous devez perdez 2 points de victoire car vous n'avez plus de\nressources techonologiques.");
+                    curPlayer.setPointVictoire(curPlayer.getPointVictoire()-2);
+                    viewGame.reloadPointVictoire();
+                }
+            } else {
+                viewGame.displayAlertWithoutHeaderText("Évènements", "Féliciation vous avez une centrale en "+ continentEvent +" !\nVous ne payer rien pour cette catastrophe !");
+            }
         } else {
             //rien n’arrive à la région, mais l’évènement est quand même considéré comme résolu
-            viewGame.displayAlertWithoutHeaderText("Évènements", "Bravo ! une catastrophe a été évitée\n sur en "+ model.getContinents()[model.currentEvent] +" !");
-            model.pullEvent(new Random());
+            viewGame.displayAlertWithoutHeaderText("Évènements", "Bravo ! une catastrophe a été évitée\nen " + continentEvent + " !");
         }
+        model.pullEvent(new Random());
+        viewGame.updateEvent();
     }
 
     /**

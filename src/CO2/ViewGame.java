@@ -461,7 +461,7 @@ public class ViewGame {
 	 */
 	public void updateEvent(){
 		evenement.setFill(new ImagePattern(model.getImgCurEvent()));
-		Tooltip.install(evenement,new Tooltip("Si le niveau global de pollution de CO2\n est supérieur ou égal à 350 ppm,\n une catastrophe aura lieu en "+ model.getContinents()[model.currentEvent]+"."));
+		Tooltip.install(evenement,new Tooltip("Si le niveau global de pollution de CO2\nest supérieur ou égal à 350 ppm,\nune catastrophe aura lieu en "+ model.getContinents()[model.currentEvent]+"."));
 	}
 
 	/**
