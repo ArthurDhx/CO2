@@ -156,7 +156,7 @@ public class ControllerAction implements EventHandler<ActionEvent>{
     /**
      * Gestion des évènements
      */
-    private void resolutionEvenements() {
+    private void élicitation() {
         Continent continentEvent = model.getContinents()[model.currentEvent];
         if (model.getCo2() >= 350){
             // une catastrophe a lieu
@@ -173,12 +173,12 @@ public class ControllerAction implements EventHandler<ActionEvent>{
                     viewGame.reloadCEPRessTech();
                 } else {
                     // si il n'as pas de ressources technologiques il perd 2 pts de victoire
-                    viewGame.displayAlertWithoutHeaderText("Évènements", "Malheuresment vous n'avez pas de centrale à énergie verte en "+ continentEvent +" !\nVous devez perdez 2 points de victoire car vous n'avez plus de\nressources techonologiques.");
+                    viewGame.displayAlertWithoutHeaderText("Évènements", "Malheuresment vous n'avez pas de centrale à énergie verte en "+ continentEvent +" !\nVous perdez 2 points de victoire car vous n'avez plus de\nressources techonologiques.");
                     curPlayer.setPointVictoire(curPlayer.getPointVictoire()-2);
                     viewGame.reloadPointVictoire();
                 }
             } else {
-                viewGame.displayAlertWithoutHeaderText("Évènements", "Féliciation vous avez une centrale en "+ continentEvent +" !\nVous ne payer rien pour cette catastrophe !");
+                viewGame.displayAlertWithoutHeaderText("Évènements", "Félicitation vous avez une centrale en "+ continentEvent +" !\nVous ne payer rien pour cette catastrophe !");
             }
         } else {
             //rien n’arrive à la région, mais l’évènement est quand même considéré comme résolu
