@@ -36,9 +36,12 @@ public class Model {
 	// Valeur du CO2 actuelle
 	private int co2;
 
-
 	// paquet des projets
 	Map<String,Integer> projectsPacket;
+
+	// evenements
+	Map<Integer,Image> events;
+	int currentEvent;
 
 	// Liste des sommets
 	List<SommetTile> allSommetTile;
@@ -79,12 +82,14 @@ public class Model {
 		decade = 1970;
 		players = new Player[nbJoueur];
 		projectsPacket = new HashMap<String, Integer>();
+		events = new HashMap<Integer, Image>();
 		curPlayerId = 0;
 		//On initialise le prix des CEPs à 3
 		currentPriceCEP = 3;
 		//On place 2 CEP dans le marché
 		nbCEPdispo = 2;
 		curEnergyChoice = BIOMASS;
+		pullEvent(new Random());
 	}
 
 	/**
@@ -227,12 +232,13 @@ public class Model {
 			if(nomContinents.get(i).equals("Amérique du Sud")) nbCep = 4;if(nomContinents.get(i).equals("Amérique du Nord")) nbCep = 5;
 			if(nomContinents.get(i).equals("Océanie")) nbCep = 4;if(nomContinents.get(i).equals("Asie")) nbCep = 6;
 			continents[i] = new Continent(nomContinents.get(i), nbCep, new Image(getClass().getResourceAsStream("images/Continents/" + nomContinents.get(i) +".jpg")),i);
+
 			// TODO dans un prochain sprint, generer les agendaTiles et en prendre une aleatoire par continent
 			AgendaTile agendaTile = new AgendaTile(REFORESTATION, SOLAR, FUSION, new Image(getClass().getResourceAsStream("images/Agendas/TileAgenda_Reforestation_Solar_Fusion.png")));
 			continents[i].setAgendaTile(agendaTile);
 
-			/*SommetTile sommetTile = allSommetTile.get(i);
-			continents[i].setSommetTile(sommetTile);*/
+			//Init carte évènements
+            events.put(i,new Image(getClass().getResourceAsStream("images/Evenements/" + nomContinents.get(i) +".png")));
 		}
 	}
 
@@ -288,6 +294,12 @@ public class Model {
 		if (subject.equals("Recycling")) subjectEnergy.setEnergy(RECYCLING);
 		return subjectEnergy;
 	}
+
+	public void pullEvent(Random random){
+        int indexEvent = random.nextInt(6);
+	    while (indexEvent == currentEvent) indexEvent = random.nextInt(6);
+        currentEvent = indexEvent;
+    }
 
 	/**
 	 * Ajoute 1 d'expertise au joueur courant pour un type d'energie verte
@@ -444,7 +456,7 @@ public class Model {
 		// boucle sur tous les sommets du jeu
 		System.out.println(allSommetTile);
 		for(SommetTile sommet: allSommetTile){
-			System.out.println(sommet.isFull());
+			//System.out.println(sommet.isFull());
 			if(sommet.isFull()){ // si le sommet est rempli de scientifique
 				ArrayList<Scientifique> scientifiques =  sommet.getScientifiques(); // récupère les scientifiques d'un sommet
 				for(Player p: players){
@@ -846,4 +858,8 @@ public class Model {
 		curPlayer.setCEP(0);
 		return curPlayer.getArgent();
 	}
+
+	public Image getImgCurEvent(){
+	    return events.get(currentEvent);
+  }
 }
