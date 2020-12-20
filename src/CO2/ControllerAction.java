@@ -156,7 +156,7 @@ public class ControllerAction implements EventHandler<ActionEvent>{
     /**
      * Gestion des évènements
      */
-    private void élicitation() {
+    private void resolutionEvenements() {
         Continent continentEvent = model.getContinents()[model.currentEvent];
         if (model.getCo2() >= 350){
             // une catastrophe a lieu
