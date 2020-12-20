@@ -15,7 +15,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.SQLSyntaxErrorException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -77,6 +76,8 @@ public class ViewGame {
 	ViewMenuActionHbox hboxAction;
 	private Object AlertType;
 
+	//evenements
+	Rectangle evenement;
 
 	Scene scene;
 
@@ -219,13 +220,14 @@ public class ViewGame {
 		initExpertise(1320, 840, 50, 5);
 		initSubvention();
 		initCentral();
+		initEvenements();
 
 		reloadTour();
 		reloadDecade();
 		reloadArgent();
 		reloadPointVictoire();
 		reloadresourcesTech();
-		reloadCEP();
+		reloadCEPRessTech();
 		reloadCo2();
 
 		hboxAction = new ViewMenuActionHbox(model);
@@ -353,7 +355,7 @@ public class ViewGame {
 	}
 
 	//A appeler lors d'une modification des CEP
-	public void reloadCEP(){
+	public void reloadCEPRessTech(){
 		//reload CEP Joueur
 		pane.getChildren().remove(CEPJoueur);
 		CEPJoueur = new Text(TEXT_X,80,"Vous avez "+model.getCurrentPLayer().getCEP()+" CEP");
@@ -372,12 +374,12 @@ public class ViewGame {
 		pane.getChildren().remove(CEPEurope);
 		pane.getChildren().remove(CEPOceanie);
 		pane.getChildren().remove(CEPAfrique);
-		CEPEurope = new Text(continentX[0]+60, continentY[0]-70, "L'Europe à "+model.getContinents()[0].getNbCep()+" CEP");
-		CEPAfrique = new Text(continentX[1]+60,continentY[1]-50, "L'Afrique à "+model.getContinents()[1].getNbCep()+" CEP");
-		CEPAmSud = new Text(continentX[2]+45, continentY[2]-70, "L'Amérique du Sud à "+model.getContinents()[2].getNbCep()+" CEP");
-		CEPAmNord = new Text(continentX[3]+45, continentY[3]-120, "L'Amérique du Nord à "+model.getContinents()[3].getNbCep()+" CEP");
-		CEPOceanie = new Text(continentX[4]+60, continentY[4]-100, "L'Océanie à "+model.getContinents()[4].getNbCep()+" CEP");
-		CEPAsie = new Text(continentX[5]+85, continentY[5]-120, "L'Asie à "+model.getContinents()[5].getNbCep()+" CEP");
+		CEPEurope = new Text(continentX[0]+60, continentY[0]-70, "L'Europe à "+model.getContinents()[0].getNbCep()+" CEP \net " + model.getContinents()[0].getNbRessTech() +" Ressource(s) technologique(s)");
+		CEPAfrique = new Text(continentX[1]+60,continentY[1]-60, "L'Afrique à "+model.getContinents()[1].getNbCep()+" CEP \net " + model.getContinents()[1].getNbRessTech() +" Ressource(s) technologique(s)");
+		CEPAmSud = new Text(continentX[2]+45, continentY[2]-70, "L'Amérique du Sud à "+model.getContinents()[2].getNbCep()+" CEP \net " + model.getContinents()[2].getNbRessTech() +" Ressource(s) technologique(s)");
+		CEPAmNord = new Text(continentX[3]+45, continentY[3]-120, "L'Amérique du Nord à "+model.getContinents()[3].getNbCep()+" CEP \net " + model.getContinents()[3].getNbRessTech() +" Ressource(s) technologique(s)");
+		CEPOceanie = new Text(continentX[4]+60, continentY[4]-110, "L'Océanie à "+model.getContinents()[4].getNbCep()+" CEP \net " + model.getContinents()[4].getNbRessTech() +" Ressource(s) technologique(s)");
+		CEPAsie = new Text(continentX[5]+85, continentY[5]-120, "L'Asie à "+model.getContinents()[5].getNbCep()+" CEP \net " + model.getContinents()[5].getNbRessTech() +" Ressource(s) technologique(s)");
 		pane.getChildren().add(CEPAsie);
 		pane.getChildren().add(CEPAmNord);
 		pane.getChildren().add(CEPAmSud);
@@ -438,6 +440,28 @@ public class ViewGame {
             case 5 : y = continentY[continentId] - 100;break;
         }
 		return new Circle(continentX[continentId]+75,y, 15, playerColor);
+	}
+
+	/**
+	 * Initialisation des évènements
+	 */
+	public void initEvenements(){
+		Text txtEvenement = new Text(1510,15,"Évènements");
+		evenement = new Rectangle(1495, 20, 90, 140);
+		evenement.setFill(Color.WHITE);
+
+		updateEvent();
+
+		pane.getChildren().add(txtEvenement);
+		pane.getChildren().add(evenement);
+	}
+
+	/**
+	 * Charge l'image de l'évenement courant
+	 */
+	public void updateEvent(){
+		evenement.setFill(new ImagePattern(model.getImgCurEvent()));
+		Tooltip.install(evenement,new Tooltip("Si le niveau global de pollution de CO2\n est supérieur ou égal à 350 ppm,\n une catastrophe aura lieu en "+ model.getContinents()[model.currentEvent]+"."));
 	}
 
 	/**

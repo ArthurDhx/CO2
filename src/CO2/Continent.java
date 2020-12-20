@@ -12,6 +12,7 @@ public class Continent {
     private final ArrayList<Subvention> subventions;
     private final Rectangle[] tabRectangleSubvention;
     private int nbCep;
+    private int nbRessTech;
     private final ArrayList<Central> centrales;
     private final Rectangle[] tabRectangleCentral;
     private final Image imgContinent;
@@ -27,6 +28,7 @@ public class Continent {
     public Continent(String name, int nbCep, Image imgContinent, int index) {
         this.name = name;
         this.nbCep = nbCep;
+        this.nbRessTech = 0;
         this.imgContinent = imgContinent;
         this.subventions = new ArrayList<>(3);
         this.centrales = new ArrayList<>();
@@ -118,6 +120,10 @@ public class Continent {
 
     public int getNbCep() { return nbCep; }
 
+    public int getNbRessTech() {
+        return nbRessTech;
+    }
+
     public ArrayList<Subvention> getSubventions() { return subventions; }
 
     public Image getImgContinent() {return imgContinent;}
@@ -166,6 +172,10 @@ public class Continent {
 
     public void setNbCep(int nbCep) {
         this.nbCep = nbCep;
+    }
+
+    public void addRessTech(int nbRessTech){
+        this.nbRessTech = nbRessTech;
     }
 }
 

@@ -34,7 +34,7 @@ public class ControllerAction implements EventHandler<ActionEvent>{
             model.curPlayer.setCEP(0);
             model.curPlayer.setArgent(0);
             model.curPlayer.getContinentsControlles().get(0).setNbCep(0);
-            viewGame.reloadCEP();
+            viewGame.reloadCEPRessTech();
             viewGame.reloadArgent();
         }
         viewGame.reloadArgent();
@@ -122,6 +122,7 @@ public class ControllerAction implements EventHandler<ActionEvent>{
             else{ //Si il manque une/des centrale(s)s à un/des continent(s)
                 manqueCentral(continentsEnBesoin);
             }
+            resolutionEvenements();
         }
         model.endGame();
         // récompense sommets
@@ -136,7 +137,7 @@ public class ControllerAction implements EventHandler<ActionEvent>{
         viewGame.reloadTour();
         viewGame.reloadDecade();
         viewGame.reloadresourcesTech();
-        viewGame.reloadCEP();
+        viewGame.reloadCEPRessTech();
         viewGame.reloadPointVictoire();
         viewGame.reloadCo2();
         // affichage sur la console le nombre de tour et décénnie
@@ -149,6 +150,20 @@ public class ControllerAction implements EventHandler<ActionEvent>{
             viewGame.isEndGame();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * Gestion des évènements
+     */
+    private void resolutionEvenements() {
+        if (model.getCo2() >= 350){
+            // une catastrophe a lieu
+            viewGame.displayAlertWithoutHeaderText("Évènements", "dans le rouge");
+        } else {
+            //rien n’arrive à la région, mais l’évènement est quand même considéré comme résolu
+            viewGame.displayAlertWithoutHeaderText("Évènements", "Bravo ! une catastrophe a été évitée\n sur en "+ model.getContinents()[model.currentEvent] +" !");
+            model.pullEvent(new Random());
         }
     }
 
@@ -229,21 +244,21 @@ public class ControllerAction implements EventHandler<ActionEvent>{
                         // on retire CEP
                         viewGame.displayAlertWithoutHeaderText("Paiement", "Pour régler le paiement, vous payez un CEP de votre réserve");
                         model.removeCEP();
-                        viewGame.reloadCEP();
+                        viewGame.reloadCEPRessTech();
                         System.out.println("Paiement à la banque d'un CEP de ma réserve");
                     } else if (continentController.getNbCep() >= 1 ) {
                         //si il y a des cep dans continent controler on prend
                         viewGame.displayAlertWithoutHeaderText("PaiementCEPContinentControle", "Pour régler le paiement, comme vous n'avez plus de CEP dans votre réserve, \n" +
                                 " vous payez un CEP du continent "+ continentController.getName() +" que vous controlez");
                         continentController.setNbCep(continentController.getNbCep()-1);
-                        viewGame.reloadCEP();
+                        viewGame.reloadCEPRessTech();
                         System.out.println("Paiement à la banque d'un CEP du continent " + continentController.getName());
                     } else {
                         if ((continentController.getNbCep()< 1 && model.curPlayer.getCEP()<1) && model.currentPriceCEP <= model.getCurrentPLayer().getArgent()){
                             viewGame.displayAlertWithoutHeaderText("PaiementCEPMarche", "Pour régler le paiement, comme vous n'avez plus de CEP ni votre réserve, \n" +
                                     "ni dans votre(vos) continent(s) controlé, vous acheté un CEP au marché que vous payez à la banque");
                             model.tradeDollarstoCEP();
-                            viewGame.reloadCEP();
+                            viewGame.reloadCEPRessTech();
                             System.out.println("Paiement à la banque d'un CEP du marché");
                         }
                         // Si on a pas de cep dans les contient controler et dans nos poche alors

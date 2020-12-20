@@ -128,13 +128,13 @@ public class ControllerActionGratuite implements EventHandler<ActionEvent> {
                     }
                 }
                 viewGame.reloadArgent();
-                viewGame.reloadCEP();
+                viewGame.reloadCEPRessTech();
                 viewGame.hboxAction.resetHbox();
             });
         } else if (source == viewGame.hboxAction.btnJouerCarteLobby) {
             playLobbyCard();
             viewGame.reloadArgent();
-            viewGame.reloadCEP();
+            viewGame.reloadCEPRessTech();
             viewGame.reloadPointVictoire();
             viewGame.reloadresourcesTech();
             viewGame.reloadPlayerExpertise(model.getCurrentPLayer());
