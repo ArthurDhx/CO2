@@ -76,17 +76,48 @@ public class PlayerUnitTest {
     }
 
     @Test
-    public void testMettreEnPlaceProjet(){
-        Assert.assertEquals(2,p.getCEP());
-        p.rewardSetupProject(greenEnergyTypes.SOLAR);
-        Assert.assertEquals(1,p.getCEP());
+    public void testMettreEnPlaceReforestaion() {
+        //Reforestaion = 2cep
+        Assert.assertEquals(2, p.rewardSetupProject(greenEnergyTypes.REFORESTATION));
     }
-    
+
     @Test
     public void testMettreEnPlaceSolar() {
+        // Solar = 3 ressTech
         Assert.assertEquals(0, p.getResourcesTech());
         p.rewardSetupProject(greenEnergyTypes.SOLAR);
         Assert.assertEquals(3, p.getResourcesTech());
+    }
+
+    @Test
+    public void testMettreEnPlaceFusion() {
+        //Fusion = 1 resstech et 5$
+        p.setArgent(0);
+        Assert.assertEquals(0, p.getResourcesTech());
+        Assert.assertEquals(0, p.getArgent());
+        p.rewardSetupProject(greenEnergyTypes.FUSION);
+        Assert.assertEquals(1, p.getResourcesTech());
+        Assert.assertEquals(5, p.getArgent());
+    }
+
+    @Test
+    public void testMettreEnPlaceBiomass() {
+        //Biomass = 1 ressTech et 3$
+        p.setArgent(0);
+        Assert.assertEquals(0, p.getResourcesTech());
+        Assert.assertEquals(0, p.getArgent());
+        p.rewardSetupProject(greenEnergyTypes.BIOMASS);
+        Assert.assertEquals(1, p.getResourcesTech());
+        Assert.assertEquals(3, p.getArgent());
+    }
+    @Test
+    public void testMettreEnPlaceRecycling() {
+        //Recycling 5$ et 1 cep
+        p.setArgent(0);
+        Assert.assertEquals(0, p.getArgent());
+        p.rewardSetupProject(greenEnergyTypes.RECYCLING);
+        Assert.assertEquals(5, p.getArgent());
+        Assert.assertEquals(1, p.rewardSetupProject(greenEnergyTypes.RECYCLING));
     }
 
     @Test
