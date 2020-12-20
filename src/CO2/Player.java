@@ -331,7 +331,6 @@ public class Player {
      */
     public void addCEP(){ CEP += 1; }
 
-
     public void addCEP(int nb){
         CEP += nb;
     }

@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -819,5 +820,30 @@ public class Model {
 
 	public greenEnergyTypes getCurEnergyChoice() {
 		return curEnergyChoice;
+	}
+
+	/**
+	 * Recupere tout les CEP des continents controlle et les ajoutent a ceux de l'utilisateur
+	 * @return le nombre de CEP total
+	 */
+	public int getAllCEP(){
+		//Pour tout les continent controlle
+		for(Continent continentControlle: curPlayer.getContinentsControlles()){
+			//On ajoute au CEP du joueur les CEP du continent controlle
+			curPlayer.addCEP(continentControlle.getNbCep());
+		}
+		return curPlayer.getCEP();
+	}
+
+	/**
+	 * Vent tout les CEP du joueur au prix du marche actuel
+	 * @return le nombre total d'argent du joueur
+	 */
+	public int sellAllCEP(){
+		//On ajoute a l'argent du joueur le nombre de CEP qu'il a * le prix courant des CEP
+		curPlayer.gainArgent(curPlayer.getCEP()*currentPriceCEP);
+		//On retire tout les CEP du joueur
+		curPlayer.setCEP(0);
+		return curPlayer.getArgent();
 	}
 }

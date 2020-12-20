@@ -734,24 +734,51 @@ public class ViewGame {
 	public void isEndGame() throws IOException {
 		// si le nombre de décénnie max est atteinte => renvoie true par model.EndGame
 		if(model.endGame()){
-			// message d'alerte (confirmation)
-			Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-			alert.setHeaderText(null);
-			alert.setTitle("Partie terminé !");
-			alert.setContentText("la partie est terminée, Voulez-vous rejouer?");
-			ButtonType btnRestart = new ButtonType("Oui");
-			alert.getButtonTypes().setAll(btnRestart);
-			Optional<ButtonType> result = alert.showAndWait();
-			if (result.get() == btnRestart) {
-				// récupération de la fenetre du jeu
-				Stage stage = (Stage) scene.getWindow();
-				// fermeture de la fenetre du jeu actuel
-				stage.close();
-				System.out.println("coucou");
-				// création de la nouvelle partie
-				Main main = new Main();
-				main.start(new Stage());
-			}
+			//Récupération des CEP
+			displayRecuperationCEP();
+			//Vente des CEP
+			displayVenteCEP();
+			//demande si le joueur veux rejouer ou non
+			AskReplay();
+		}
+	}
+
+	public void displayVenteCEP(){
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+		alert.setHeaderText(null);
+		alert.setTitle("Vente des CEP");
+		alert.setContentText("Vous avez un total de "+model.sellAllCEP()+" € (après la vente de tout vos CEP)");
+		ButtonType validate = new ButtonType("Ok");
+		Optional<ButtonType> result = alert.showAndWait();
+	}
+
+	public void displayRecuperationCEP(){
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+		alert.setHeaderText(null);
+		alert.setTitle("Récupération des CEP");
+		alert.setContentText("Vous avez un total de "+model.getAllCEP()+" CEP (continents controllé inclus)");
+		ButtonType validate = new ButtonType("Ok");
+		Optional<ButtonType> result = alert.showAndWait();
+	}
+
+	public void AskReplay() throws IOException {
+		// message d'alerte (confirmation)
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+		alert.setHeaderText(null);
+		alert.setTitle("Partie terminé !");
+		alert.setContentText("la partie est terminée, Voulez-vous rejouer?");
+		ButtonType btnRestart = new ButtonType("Oui");
+		alert.getButtonTypes().setAll(btnRestart);
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == btnRestart) {
+			// récupération de la fenetre du jeu
+			Stage stage = (Stage) scene.getWindow();
+			// fermeture de la fenetre du jeu actuel
+			stage.close();
+			System.out.println("coucou");
+			// création de la nouvelle partie
+			Main main = new Main();
+			main.start(new Stage());
 		}
 	}
 

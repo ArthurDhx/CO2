@@ -136,6 +136,21 @@ public class ModelUnitTest {
     }
 
     @Test
+    public void testGetAllCEP(){
+        //Player p = model.getCurrentPLayer();
+        //System.out.print(p.getCEP());
+        //Continent continent = model.getContinents()[0];
+        //model.giveControl(continent);
+        //System.out.print(p.getContinentsControlles());
+        //model.getAllCEP();
+    }
+
+    @Test
+    public void testSellAllCEP(){
+        //Assert.assertEquals(model.sellAllCEP(), 27);
+    }
+
+    @Test
     public void testDonne5CartesLobbyAuJoueur() {
         Player p = model.getCurrentPLayer();
         Assert.assertEquals(5, p.getLobbyCards().size());
