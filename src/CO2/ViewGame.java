@@ -768,11 +768,31 @@ public class ViewGame {
 		if(model.endGame()){
 			//Récupération des CEP
 			displayRecuperationCEP();
+			//Point objectif de compagnie
+			displayPointObjectifCompagnie();
 			//Vente des CEP
 			displayVenteCEP();
+			//Calcul score final
+			displayScoreFinal();
 			//demande si le joueur veux rejouer ou non
 			AskReplay();
 		}
+	}
+
+	public void displayScoreFinal(){
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+		alert.setHeaderText(null);
+		alert.setTitle("Score final");
+		alert.setContentText("Vous marquez un total de "+model.getScoreFinal()+" point(s) pour cette partie.");
+		Optional<ButtonType> result = alert.showAndWait();
+	}
+
+	public void displayPointObjectifCompagnie(){
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+		alert.setHeaderText(null);
+		alert.setTitle("Objectif de compagnie");
+		alert.setContentText("Vous marquez "+model.getPointsObjectifCompagnie()+" point(s) de votre objectif de compagnie");
+		Optional<ButtonType> result = alert.showAndWait();
 	}
 
 	public void displayVenteCEP(){
@@ -780,7 +800,6 @@ public class ViewGame {
 		alert.setHeaderText(null);
 		alert.setTitle("Vente des CEP");
 		alert.setContentText("Vous avez un total de "+model.sellAllCEP()+" € (après la vente de tout vos CEP)");
-		ButtonType validate = new ButtonType("Ok");
 		Optional<ButtonType> result = alert.showAndWait();
 	}
 
@@ -789,7 +808,6 @@ public class ViewGame {
 		alert.setHeaderText(null);
 		alert.setTitle("Récupération des CEP");
 		alert.setContentText("Vous avez un total de "+model.getAllCEP()+" CEP (continents controllé inclus)");
-		ButtonType validate = new ButtonType("Ok");
 		Optional<ButtonType> result = alert.showAndWait();
 	}
 

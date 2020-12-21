@@ -49,6 +49,9 @@ public class Player {
     // Il a maintenant également un objectif de compagnie
     ObjectifsCompagnie objectifCompagnie;
 
+    //Permet de calculer un des objectif de compagnie
+    int nbCarteObjectifONURemporte;
+
     public Player() {
         initExpertise();
         initScientifiques();
@@ -189,6 +192,14 @@ public class Player {
      * @param amount
      */
     public void addResourcesTech(int amount) { resourcesTech += Math.abs(amount); }
+
+    /**
+     * Lorque le joueur marque les points d'une carte objectif de l'ONU, on incrémente le compteur
+     * @param nb
+     */
+    public void addCarteObjectifONURemporte(int nb){ nbCarteObjectifONURemporte+= nb; }
+
+    public int getNbCarteObjectifONURemporte(){ return nbCarteObjectifONURemporte; }
 
     /**
      * Retire un nombre de ressources technologiques si le joueur a assez de cubes

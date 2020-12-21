@@ -646,6 +646,7 @@ public class Model {
 		if (markOnuCard(card, centralGreen) && getCurrentPLayer().getResourcesTech() >= 1){ // si une carte est marquée par le joueur et qur la ressource technologique
 			getCurrentPLayer().setPointVictoire(getCurrentPLayer().getPointVictoire() + card.getNbPointDeVictoire()); // augmente points de victoires avec la carte
 			getCurrentPLayer().setResourcesTech(getCurrentPLayer().getResourcesTech()-1); // diminue ressources technologieques du joueur
+			getCurrentPLayer().addCarteObjectifONURemporte(1);
 			System.out.println("carte ONU n°"  + card.getId()+ " jouer !");
 			onuCardsInGame.remove(card); // supprime la carte du jeu
 		}else{
@@ -865,11 +866,11 @@ public class Model {
 	 */
 	public int getAllCEP(){
 		//Pour tout les continent controlle
-		for(Continent continentControlle: curPlayer.getContinentsControlles()){
+		for(Continent continentControlle: getCurrentPLayer().getContinentsControlles()){
 			//On ajoute au CEP du joueur les CEP du continent controlle
-			curPlayer.addCEP(continentControlle.getNbCep());
+			getCurrentPLayer().addCEP(continentControlle.getNbCep());
 		}
-		return curPlayer.getCEP();
+		return getCurrentPLayer().getCEP();
 	}
 
 	/**
@@ -878,10 +879,56 @@ public class Model {
 	 */
 	public int sellAllCEP(){
 		//On ajoute a l'argent du joueur le nombre de CEP qu'il a * le prix courant des CEP
-		curPlayer.gainArgent(curPlayer.getCEP()*currentPriceCEP);
+		getCurrentPLayer().gainArgent(getCurrentPLayer().getCEP()*currentPriceCEP);
 		//On retire tout les CEP du joueur
-		curPlayer.setCEP(0);
-		return curPlayer.getArgent();
+		getCurrentPLayer().setCEP(0);
+		return getCurrentPLayer().getArgent();
+	}
+
+	/**
+	 *
+	 * @return les points gagnez par l'objectif de compagnie
+	 */
+	public int getPointsObjectifCompagnie(){
+		ObjectifsCompagnie objectif = getCurrentPLayer().getObjectifCompagnie();
+		int nbPoint;
+		switch (objectif.getId()){
+			case 0: //3 points pour chaque région où vous avez au moins 1 centrale Maximum de 15 points.
+				//Pour 1 joueur, si le joueur controlle un continent alors il a au moins une central dedans
+				int nbContinentAvecCentral = getCurrentPLayer().getContinentsControlles().size();
+				nbPoint = 3*nbContinentAvecCentral;
+				if(nbPoint >= 15) {
+					getCurrentPLayer().addPointVictoire(15);
+					return 15;
+				}
+				getCurrentPLayer().addPointVictoire(nbPoint);
+				return nbPoint;
+			case 1: // 3 points pour chaque carte "objectif de l’ONU” que vous avez remportée Maximum de 15 points.
+				nbPoint = 3*getCurrentPLayer().getNbCarteObjectifONURemporte();
+				if(nbPoint >= 15) {
+					getCurrentPLayer().addPointVictoire(15);
+					return 15;
+				}
+				getCurrentPLayer().addPointVictoire(nbPoint);
+				return nbPoint;
+			case 2: // 2 points pour chaque CEP en main Maximum de 16 points.
+				nbPoint = 2*getCurrentPLayer().getCEP();
+				if(nbPoint >= 16) {
+					getCurrentPLayer().addPointVictoire(15);
+					return 16;
+				}
+				getCurrentPLayer().addPointVictoire(nbPoint);
+				return nbPoint;
+		}
+		return 0;
+	}
+
+	public int getScoreFinal(){
+		//Calcul nb point provenant de l'argent gagné:
+		if(getCurrentPLayer().getArgent()%2 != 0) getCurrentPLayer().retirerArgent(1);
+		int nbPointArgent = getCurrentPLayer().getArgent()/2;
+		getCurrentPLayer().addPointVictoire(nbPointArgent);
+		return getCurrentPLayer().getPointVictoire();
 	}
 
 	public Image getImgCurEvent(){
