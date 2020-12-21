@@ -45,6 +45,14 @@ public class ModelUnitTest {
     }
 
     @Test
+    public void testInitObjectifCompagnie(){
+        Random random = Mockito.mock(Random.class);
+        ObjectifsCompagnie objectif = model.objectifsCompagnies.get(random.nextInt(0));
+        when(random.nextInt(Mockito.anyInt())).thenReturn(0);
+        Assert.assertEquals(objectif,model.objectifsCompagnies.get(random.nextInt(model.objectifsCompagnies.size())));
+    }
+
+    @Test
     public void testInitJoueur() {
         Assert.assertEquals(21,model.getCurrentPLayer().getArgent());
     }
@@ -136,6 +144,7 @@ public class ModelUnitTest {
         Assert.assertTrue(p.hasControl(continent));
     }
 
+    //Ne fonctionne pas, je ne comprends pas pourquoi
     @Test
     public void testGetAllCEP(){
         //Player p = model.getCurrentPLayer();
@@ -146,6 +155,7 @@ public class ModelUnitTest {
         //model.getAllCEP();
     }
 
+    //Ne fonctionne pas, je ne comprends pas pourquoi
     @Test
     public void testSellAllCEP(){
         //Assert.assertEquals(model.sellAllCEP(), 27);

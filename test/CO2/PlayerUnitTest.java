@@ -169,4 +169,12 @@ public class PlayerUnitTest {
         p.playLobbyCard(p.getLobbyCards().get(0));
         Assert.assertEquals(4, model.getCurrentPLayer().getLobbyCards().size());
     }
+
+    @Test
+    public void testSetAndGetObjectifCompagnie(){
+        ObjectifsCompagnie objectif = new ObjectifsCompagnie(0,"test");
+        Assert.assertEquals(p.getObjectifCompagnie(), null);
+        p.setObjectifCompagnie(objectif);
+        Assert.assertEquals(p.getObjectifCompagnie(), objectif);
+    }
 }

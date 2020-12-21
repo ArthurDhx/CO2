@@ -46,6 +46,9 @@ public class Player {
     // 0 = aucune; 1 = achat; 2 = vente
     private int actionMarche = 0;
 
+    // Il a maintenant également un objectif de compagnie
+    ObjectifsCompagnie objectifCompagnie;
+
     public Player() {
         initExpertise();
         initScientifiques();
@@ -324,6 +327,17 @@ public class Player {
 
     public int getCurentScientifiqueId() {
         return curentScientifiqueId;
+    }
+
+    /**
+     * getter et setter pour l'objectif de compagnie
+     */
+    public void setObjectifCompagnie(ObjectifsCompagnie objectifCompagnie){
+        this.objectifCompagnie = objectifCompagnie;
+    }
+
+    public ObjectifsCompagnie getObjectifCompagnie(){
+        return objectifCompagnie;
     }
 
     /**

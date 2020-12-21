@@ -36,6 +36,7 @@ public class ViewGame {
 	Text co2 ;
 	Text CEPJoueur;
 	Text CEPMarche;
+	Text objectifCompagnie;
 
 	//text pour afficher le nombre de CEP de chaque continent
 	Text CEPAsie;
@@ -229,6 +230,7 @@ public class ViewGame {
 		reloadresourcesTech();
 		reloadCEPRessTech();
 		reloadCo2();
+		reloadObjectifCompagnie();
 
 		hboxAction = new ViewMenuActionHbox(model);
 		hboxAction.init();
@@ -397,6 +399,12 @@ public class ViewGame {
 				"(si en 2000 le CO2 est à moins \n" +
 				"de 350, vous perdez)");
 		pane.getChildren().add(co2);
+	}
+
+	public void reloadObjectifCompagnie() {
+		pane.getChildren().remove(objectifCompagnie);
+		objectifCompagnie = new Text(1320, 200, "Objectif de votre compagnie:\n"+model.getCurrentPLayer().getObjectifCompagnie().getLibelle());
+		pane.getChildren().add(objectifCompagnie);
 	}
 
 	/**

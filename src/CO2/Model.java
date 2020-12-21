@@ -52,6 +52,9 @@ public class Model {
 	// Liste des cartes Lobby
 	List<LobbyCard> lobbyCards;
 
+	// Liste des différent objectifs de compagnie
+	List<ObjectifsCompagnie> objectifsCompagnies;
+
 	List<OnuCard> onuCards;
 	List<OnuCard> onuCardsInGame;
 	OnuCard markedCard;
@@ -120,6 +123,28 @@ public class Model {
 		initLobbyCards();
 		// Initialisation les cartes Objectifs de l'ONU
 		initOnuCards(new Random(), new Random(), new Random());
+		// Initialisation des objectifs de compagnie
+		// A ne pas placer avant l'initialisation des joueurs
+		initObjectifCompagnie();
+	}
+
+	/**
+	 * Permet de créer les 3 objectifs de compagnie possibles
+	 */
+	public void initObjectifCompagnie(){
+		objectifsCompagnies = new ArrayList<>();
+		//Initialisation des objectifs de compagnie
+		objectifsCompagnies.add(new ObjectifsCompagnie(0, "3 points pour chaque région où \nvous avez au moins 1 centrale\nMaximum de 15 points."));
+		objectifsCompagnies.add(new ObjectifsCompagnie(1,"3 points pour chaque carte \n“objectif de l’ONU” que vous avez remportée\nMaximum de 15 points. "));
+		objectifsCompagnies.add(new ObjectifsCompagnie(2, "2 points pour chaque CEP en main\nMaximum de 16 points."));
+		//Tirage aléatoire d'un objectif parmis les 3
+		//1 objectif différent par joueur
+		for(int i = 0; i<nbJoueur; i++){
+			Random random = new Random();
+			int idx = random.nextInt(objectifsCompagnies.size());
+			players[i].setObjectifCompagnie(objectifsCompagnies.get(idx));
+			objectifsCompagnies.remove(idx);
+		}
 	}
 
 	/**
