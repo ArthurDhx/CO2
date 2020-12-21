@@ -450,11 +450,49 @@ public class Model {
 	 */
 	public boolean endGame() {
 		// si le nombre de décénnie a atteint son maximum
+		//TODO Remettre à la fin du projet: "|| co2 >= 500 "
 		if (decade == NB_DECENNIE) {
 			// alors c'est la fin du jeu
 			System.out.println("FIN DU JEU");
 			// return true
 			Model model = new Model();
+			return true;
+		}
+		else if(decade == NB_DECENNIE-10 && co2 <= 350){
+			// alors c'est la fin du jeu
+			System.out.println("FIN DU JEU");
+			// return true
+			Model model = new Model();
+			return true;
+		}
+		else if(checkCentralVerte()){
+			// alors c'est la fin du jeu
+			System.out.println("FIN DU JEU");
+			// return true
+			Model model = new Model();
+			return true;
+		}
+		return false;
+	}
+
+	public boolean checkCentralVerte(){
+		int nbContinentFullCentralVerte = 0;
+		for (int i =0; i<continents.length; i++){ //Pour chaque continent...
+			int nbCentralVerte = 0;
+			for(Central c: continents[i].getCentrales()){
+				if(!c.isOccupe()) break;
+				else if(c.isFossile()) {
+					break;
+				}
+				else if(!c.isFossile()){
+					nbCentralVerte += 1;
+				}
+			}
+			if(nbCentralVerte == continents[i].getCentrales().size()){
+				nbContinentFullCentralVerte += 1;
+			}
+		}
+		if(nbContinentFullCentralVerte == 2){
 			return true;
 		}
 		return false;

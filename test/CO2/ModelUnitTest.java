@@ -286,4 +286,9 @@ public class ModelUnitTest {
             Assert.assertEquals(i, model.currentEvent);
         }
     }
+    
+    //@Test
+    //public void testCheckCentralVerte(){
+
+    //}
 }

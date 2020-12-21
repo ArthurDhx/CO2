@@ -766,6 +766,13 @@ public class ViewGame {
 	public void isEndGame() throws IOException {
 		// si le nombre de décénnie max est atteinte => renvoie true par model.EndGame
 		if(model.endGame()){
+			//TODO Remettre à la fin du projet
+			//if(model.getCo2() >= 500){ //Fin malheureuse
+			//	displayFinMalheureuse();
+			//	AskReplay();
+			//	return;
+			//}
+			//Fin classique
 			//Récupération des CEP
 			displayRecuperationCEP();
 			//Point objectif de compagnie
@@ -776,7 +783,16 @@ public class ViewGame {
 			displayScoreFinal();
 			//demande si le joueur veux rejouer ou non
 			AskReplay();
+			return;
 		}
+	}
+
+	public void displayFinMalheureuse(){
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+		alert.setHeaderText(null);
+		alert.setTitle("Quelle horreur !");
+		alert.setContentText("Le taux de CO2 dépasse les 500 ppm. Vous devez trouver une nouvelle planète à habiter !");
+		Optional<ButtonType> result = alert.showAndWait();
 	}
 
 	public void displayScoreFinal(){
