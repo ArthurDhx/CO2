@@ -348,8 +348,8 @@ public class ViewGame {
 
 				// placer le cercle au bon endroit
 				player1ExpertiseIndicator.add(placePlayerExpertise(expertise, i, p.getColor()));
-				i++;
 			}
+			i++;
 		}
 
 		pane.getChildren().addAll(player1ExpertiseIndicator);
