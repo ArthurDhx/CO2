@@ -8,7 +8,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.Connection;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -203,7 +202,7 @@ public class Model {
 			lobbyCards.add(new LobbyCard<>(lobbyActionTypes.SOMMET, type, lobbyMineurTypes.ARGENT));
 
 		// donner 5 cartes parmi ces cartes au joueur
-		getCurrentPLayer().giveLobbyCards(lobbyCards, 5);
+		getCurrentPLayer().giveLobbyCards(lobbyCards, 5, new Random());
 	}
 
 	/**
@@ -342,10 +341,7 @@ public class Model {
 	 * @param choix choix eventuel (continent ou type d'expertise pour les bonus a choix)
 	 */
 	public void giveExpertiseBonus(Player p, BonusExpertise bonus, Object choix) {
-		if (bonus.equals(BonusExpertise.CEP)) {
-			Continent continent = (Continent) choix;
-			continent.addCEP(1);
-		}
+		if (bonus.equals(BonusExpertise.CEP)) ((Continent) choix).addCEP(1);
 		if (bonus.equals(BonusExpertise.EXPERTISE)) p.addExpertise((greenEnergyTypes) choix, 1);
 		if (bonus.equals(BonusExpertise.BIOMASS)) p.addExpertise(BIOMASS, 1);
 		if (bonus.equals(BonusExpertise.FUSION)) p.addExpertise(FUSION, 1);
@@ -569,17 +565,18 @@ public class Model {
 			case SOLAR:
 				p.addExpertise(SOLAR, 1);
 				break;
-			/*
-			case FUSION ->
+			case FUSION:
+				p.addExpertise(FUSION, 1);
 					break;
-			case BIOMASS ->
+			case BIOMASS:
+				p.addExpertise(BIOMASS, 1);
 					break;
-			case RECYCLING ->
+			case RECYCLING:
+				p.addExpertise(RECYCLING, 1);
 					break;
-			case REFORESTATION ->
+			case REFORESTATION:
+				p.addExpertise(REFORESTATION, 1);
 					break;
-			 */
-
 		}
 	}
 

@@ -2,10 +2,7 @@ package CO2;
 
 import javafx.scene.paint.Color;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Player {
     final int NBACTIONGRATUITE = 4;
@@ -90,20 +87,10 @@ public class Player {
     /**
      * Initialise la liste de cartes lobby du joueur
      */
-    public void giveLobbyCards(List<LobbyCard> cards, int nb) {
+    public void giveLobbyCards(List<LobbyCard> cards, int nb, Random random) {
         lobbyCards = new ArrayList<>();
-        // temporaire demo
-        // TODO : supprimer tempo et faire vrai distribution dans la boucle
-        lobbyCards.add(cards.remove(2));
-        lobbyCards.add(cards.remove(7));
-        lobbyCards.add(cards.remove(7));
-        lobbyCards.add(cards.remove(13));
-        lobbyCards.add(cards.remove(18));
-        // FIN temporaire demo
         for (int i = 0; i<nb; i++) {
-            System.out.println(lobbyCards.get(i));
-            // prendre une carte de cards au hasard
-            // la retirer de cards et ajouter a lobbyCards
+            lobbyCards.add(cards.remove(random.nextInt(cards.size())));
         }
     }
 
