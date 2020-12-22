@@ -291,4 +291,34 @@ public class ModelUnitTest {
     //public void testCheckCentralVerte(){
 
     //}
+
+    @Test
+    public void testBonusExpertise() {
+        model.giveExpertiseBonus(model.getCurrentPLayer(), BonusExpertise.BIOMASS, null);
+        Assert.assertEquals(1, model.getCurrentPLayer().getExpertise(greenEnergyTypes.BIOMASS));
+        model.giveExpertiseBonus(model.getCurrentPLayer(), BonusExpertise.FUSION, null);
+        Assert.assertEquals(1, model.getCurrentPLayer().getExpertise(greenEnergyTypes.FUSION));
+        model.giveExpertiseBonus(model.getCurrentPLayer(), BonusExpertise.SOLAR, null);
+        Assert.assertEquals(1, model.getCurrentPLayer().getExpertise(greenEnergyTypes.SOLAR));
+        model.giveExpertiseBonus(model.getCurrentPLayer(), BonusExpertise.REFORESTATION, null);
+        Assert.assertEquals(1, model.getCurrentPLayer().getExpertise(greenEnergyTypes.REFORESTATION));
+        model.giveExpertiseBonus(model.getCurrentPLayer(), BonusExpertise.RECYCLING, null);
+        Assert.assertEquals(1, model.getCurrentPLayer().getExpertise(greenEnergyTypes.RECYCLING));
+
+        model.giveExpertiseBonus(model.getCurrentPLayer(), BonusExpertise.RESOURCE, null);
+        Assert.assertEquals(1, model.getCurrentPLayer().getResourcesTech());
+    }
+
+    @Test
+    public void testBonusExpertiseAChoix() {
+        Continent continentChoix = model.getContinents()[2];
+        // cep du continent mis a 0 pour etre sur qu'on peut donner a ce continent
+        continentChoix.setNbCep(0);
+        greenEnergyTypes expertiseChoix = greenEnergyTypes.RECYCLING;
+
+        model.giveExpertiseBonus(model.getCurrentPLayer(), BonusExpertise.CEP, continentChoix);
+        Assert.assertEquals(1,continentChoix.getNbCep());
+        model.giveExpertiseBonus(model.getCurrentPLayer(), BonusExpertise.EXPERTISE, expertiseChoix);
+        Assert.assertEquals(1, model.getCurrentPLayer().getExpertise(expertiseChoix));
+    }
 }
