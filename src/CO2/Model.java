@@ -47,7 +47,7 @@ public class Model {
 	List<SommetTile> allSommetTile;
 
 	// Liste des pistes d'expertises
-	List<PisteExpertise> pistesExpertise;
+	private List<PisteExpertise> pistesExpertise;
 
 	// Liste des cartes Lobby
 	List<LobbyCard> lobbyCards;
@@ -263,7 +263,7 @@ public class Model {
 			continents[i].setAgendaTile(agendaTile);
 
 			//Init carte évènements
-            events.put(i,new Image(getClass().getResourceAsStream("images/Evenements/" + nomContinents.get(i) +".png")));
+			events.put(i,new Image(getClass().getResourceAsStream("images/Evenements/" + nomContinents.get(i) +".png")));
 		}
 	}
 
@@ -281,24 +281,24 @@ public class Model {
 		int continentNb = 0;
 		while((st = bufferedReader.readLine()) != null) {
 
-				String location = st.split(" ")[0];
-				String subject1 = st.split(" ")[1];
-				String subject2 = st.split(" ")[2];
-				String subject3 = st.split(" ")[3];
-				String subject4 = st.split(" ")[4];
+			String location = st.split(" ")[0];
+			String subject1 = st.split(" ")[1];
+			String subject2 = st.split(" ")[2];
+			String subject3 = st.split(" ")[3];
+			String subject4 = st.split(" ")[4];
 
-				subjects.add(stringToSubject(subject1));
-				subjects.add(stringToSubject(subject2));
-				if (!subject3.equals("none")) subjects.add(stringToSubject(subject3));
-				if (!subject4.equals("none")) subjects.add(stringToSubject(subject4));
+			subjects.add(stringToSubject(subject1));
+			subjects.add(stringToSubject(subject2));
+			if (!subject3.equals("none")) subjects.add(stringToSubject(subject3));
+			if (!subject4.equals("none")) subjects.add(stringToSubject(subject4));
 
-				lstAllSommet.add(new SommetTile(location, null, subjects.size(), subjects, new ImageView(new Image(getClass().getResourceAsStream("images/Sommets/" + location + ".png")))));
-				subjects.clear();
-				if (continentNb < 5) {
-					continentNb++;
-				} else {
-					continentNb = 0;
-				}
+			lstAllSommet.add(new SommetTile(location, null, subjects.size(), subjects, new ImageView(new Image(getClass().getResourceAsStream("images/Sommets/" + location + ".png")))));
+			subjects.clear();
+			if (continentNb < 5) {
+				continentNb++;
+			} else {
+				continentNb = 0;
+			}
 		}
 		bufferedReader.close();
 		SommetTile sommetTile;
@@ -321,10 +321,10 @@ public class Model {
 	}
 
 	public void pullEvent(Random random){
-        int indexEvent = random.nextInt(6);
-	    while (indexEvent == currentEvent) indexEvent = random.nextInt(6);
-        currentEvent = indexEvent;
-    }
+		int indexEvent = random.nextInt(6);
+		while (indexEvent == currentEvent) indexEvent = random.nextInt(6);
+		currentEvent = indexEvent;
+	}
 
 	/**
 	 * Ajoute 1 d'expertise au joueur courant pour un type d'energie verte
@@ -333,6 +333,26 @@ public class Model {
 	public void incrementExpertise(greenEnergyTypes energyType) {
 		curPlayer = players[curPlayerId];
 		curPlayer.addExpertise(energyType, 1);
+	}
+
+	/**
+	 * Donne le bonus d'expertise
+	 * @param p joueur concerne
+	 * @param bonus bonus a donner
+	 * @param choix choix eventuel (continent ou type d'expertise pour les bonus a choix)
+	 */
+	public void giveExpertiseBonus(Player p, BonusExpertise bonus, Object choix) {
+		if (bonus.equals(BonusExpertise.CEP)) {
+			Continent continent = (Continent) choix;
+			continent.addCEP(1);
+		}
+		if (bonus.equals(BonusExpertise.EXPERTISE)) p.addExpertise((greenEnergyTypes) choix, 1);
+		if (bonus.equals(BonusExpertise.BIOMASS)) p.addExpertise(BIOMASS, 1);
+		if (bonus.equals(BonusExpertise.FUSION)) p.addExpertise(FUSION, 1);
+		if (bonus.equals(BonusExpertise.REFORESTATION)) p.addExpertise(REFORESTATION, 1);
+		if (bonus.equals(BonusExpertise.SOLAR)) p.addExpertise(SOLAR, 1);
+		if (bonus.equals(BonusExpertise.RECYCLING)) p.addExpertise(RECYCLING, 1);
+		if (bonus.equals(BonusExpertise.RESOURCE)) p.addResourcesTech(1);
 	}
 
 	/**
@@ -671,7 +691,7 @@ public class Model {
 			}
 		}
 		if (centralGreen.containsAll(card.getTypesCentral())) { // si la liste des centrales vertes construites contient tous les types de centrales d'une carte ONU
-				return true;
+			return true;
 		}
 		return false;
 	}
@@ -970,6 +990,14 @@ public class Model {
 	}
 
 	public Image getImgCurEvent(){
-	    return events.get(currentEvent);
-  }
+		return events.get(currentEvent);
+	}
+
+	public List<PisteExpertise> getPistesExpertise() {
+		return pistesExpertise;
+	}
+
+	public void setPistesExpertise(List<PisteExpertise> pistesExpertise) {
+		this.pistesExpertise = pistesExpertise;
+	}
 }

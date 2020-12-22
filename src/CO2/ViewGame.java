@@ -250,7 +250,7 @@ public class ViewGame {
 		int offset = 0;
 
 		// pour chaque barre d'expertise
-		for (PisteExpertise pisteExpertise : model.pistesExpertise) {
+		for (PisteExpertise pisteExpertise : model.getPistesExpertise()) {
 			// rapel case
 			int i = 0;
 			// pour chaque case de la piste d'expertise
@@ -295,16 +295,63 @@ public class ViewGame {
 
 	//A appeler lors d'une modification d'expertise
 	public void reloadPlayerExpertise(Player p){
+		// initialisation de la liste des cercle representant le joueur
 		if (player1ExpertiseIndicator != null) pane.getChildren().removeAll(player1ExpertiseIndicator);
 		player1ExpertiseIndicator = new ArrayList<>();
+
+		// pour chaque piste
 		int i = 0;
-		for (greenEnergyTypes energy : greenEnergyTypes.values()) {
-			int expertise = p.getExpertise(energy);
-			if (expertise >= 0) {
+		for (PisteExpertise pisteExpertise : model.getPistesExpertise()) {
+			// expertise du joueur pour cette energie
+			int expertise = p.getExpertise(pisteExpertise.getType());
+			// si le joueur a de l'expertise
+			if (expertise > 0) {
+				// si le joueur atteint un palier bonus
+				BonusExpertise bonus = pisteExpertise.getSpecialBonus(expertise);
+				if (bonus != null) {
+					// si bonus a choix
+					if (bonus.equals(BonusExpertise.CEP) || bonus.equals(BonusExpertise.EXPERTISE)) {
+						// choix continent
+						if (bonus.equals(BonusExpertise.CEP)) {
+							hboxAction.dialogChoisirContinentForExpBonus();
+							if (hboxAction.dialogExpertiseBonusCEP != null) {
+								Optional<Continent> result = hboxAction.dialogExpertiseBonusCEP.showAndWait();
+								result.ifPresent(continent -> {
+									// donne le bonus en fonction du continent choisi
+									model.giveExpertiseBonus(p, bonus, continent);
+									reloadCEPRessTech();
+									return;
+								});
+							}
+						}
+						// choix expertise
+						if (bonus.equals(BonusExpertise.EXPERTISE)) {
+							hboxAction.dialogChoisirExpertiseForExpBonus();
+							if (hboxAction.dialogExpertiseBonusExpertise != null) {
+								Optional<greenEnergyTypes> result = hboxAction.dialogExpertiseBonusExpertise.showAndWait();
+								result.ifPresent(expertiseChoice -> {
+									// donne le bonus en fonction de l'expertise choisi
+									model.giveExpertiseBonus(p, bonus, expertiseChoice);
+									return;
+								});
+							}
+						}
+					} else {
+						// donne le bonus
+						model.giveExpertiseBonus(p, bonus, null);
+						reloadresourcesTech();
+					}
+					// message information
+					displayAlertWithoutHeaderText("Gain de bonus d'expertise",
+							"Vous avez atteint "+expertise+ " d'expertise "+ pisteExpertise.getType() +", vous avez donc gagné "+ bonus.description);
+				}
+
+				// placer le cercle au bon endroit
 				player1ExpertiseIndicator.add(placePlayerExpertise(expertise, i, p.getColor()));
 				i++;
 			}
 		}
+
 		pane.getChildren().addAll(player1ExpertiseIndicator);
 	}
 	//A appeler lors d'une modification du controle de continent

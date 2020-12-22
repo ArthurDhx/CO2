@@ -355,10 +355,10 @@ public class Player {
      * Incremente le nombre de CEP de l'utiliseur
      */
     public void addCEP(){ CEP += 1; }
-
     public void addCEP(int nb){
         CEP += nb;
     }
+
     /**
      * Incremente le nombre de CEP de l'utilisateur
      */

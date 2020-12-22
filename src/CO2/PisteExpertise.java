@@ -91,6 +91,20 @@ public class PisteExpertise {
         }
     }
 
+    /**
+     * Donne le bonus s'il existe pour un niveau d'expertise donne
+     * @param expertise niveau a tester
+     * @return
+     */
+    public BonusExpertise getSpecialBonus(int expertise) {
+        // bonus de la case choisie
+        BonusExpertise bonus = piste.get(expertise-1).getBonus();
+        // si il y a un bonus different de l'autorisation de construction
+        if (!bonus.equals(BonusExpertise.NULL) && !bonus.equals(BonusExpertise.CONSTRUCT))
+            return bonus;
+        return null;
+    }
+
     public Color getColor() {
         return color;
     }
@@ -124,7 +138,25 @@ public class PisteExpertise {
     }
 }
 
-enum BonusExpertise {NULL, CONSTRUCT, SOLAR, BIOMASS, RECYCLING, FUSION, REFORESTATION, RESOURCE, CEP, EXPERTISE}
+enum BonusExpertise {
+    NULL("pas de bonus"),
+    CONSTRUCT("Autorisation de construire une centrale du type indiqué"),
+    SOLAR("1 d'expertise solaire"),
+    BIOMASS("1 d'expertise biomasse"),
+    RECYCLING("1 d'expertise recyclage"),
+    FUSION("1 d'expertise fusion"),
+    REFORESTATION("1 d'expertise reforestation"),
+    RESOURCE("1 cube de ressource technologique"),
+    CEP("1 CEP sur le continent choisi"),
+    EXPERTISE("1 d'expertise dans l'energie choisie");
+
+    String description;
+
+    BonusExpertise(String description) {
+        this.description = description;
+    }
+}
+
 class CasePisteExpertise {
     // le numero en haut de la case
     private int numero;

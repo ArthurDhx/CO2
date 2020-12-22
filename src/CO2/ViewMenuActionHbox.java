@@ -24,6 +24,8 @@ public class ViewMenuActionHbox extends HBox {
     ChoiceDialog<Scientifique> dialogChoisirScientifique;
     ChoiceDialog<Subvention> dialogMettreEnPlaceProjet;
     ChoiceDialog<Subvention> dialogConstruireCentrale;
+    ChoiceDialog<Continent> dialogExpertiseBonusCEP;
+    ChoiceDialog<greenEnergyTypes> dialogExpertiseBonusExpertise;
     ChoiceDialog<String> dialogAcheterVendreCEP;
     ChoiceDialog<String> dialogChoisirRevenu;
     ChoiceDialog<String> dialogChoisirRecherche;
@@ -188,6 +190,40 @@ public class ViewMenuActionHbox extends HBox {
         dialogProposerProjet.setTitle("Proposer un projet");
         dialogProposerProjet.setHeaderText("Veuillez choisir un continent");
         dialogProposerProjet.setContentText("Continent:");
+    }
+
+    /**
+     * Affiche le ChoiceDialog qui permet de choisir un continent
+     * pour le bonus d'expertise CEP
+     */
+    public void dialogChoisirContinentForExpBonus() {
+        // Récupere les différents continent
+        Continent[] continent = model.getContinents();
+        // Creer les differents choix disponible
+        dialogExpertiseBonusCEP = new ChoiceDialog<Continent>(
+                continent[0], // Choix par défaut
+                continent
+        );
+        dialogExpertiseBonusCEP.setTitle("Bonus d'expertise");
+        dialogExpertiseBonusCEP.setHeaderText("Choisissez a quel continent donner un CEP");
+        dialogExpertiseBonusCEP.setContentText("Continent:");
+    }
+
+    /**
+     * Affiche le ChoiceDialog qui permet de une expertise
+     * pour le bonus d'expertise expertise
+     */
+    public void dialogChoisirExpertiseForExpBonus() {
+        // Récupere les différentes expertises
+        greenEnergyTypes[] expertise = greenEnergyTypes.values();
+        // Creer les differents choix disponible
+        dialogExpertiseBonusExpertise = new ChoiceDialog<greenEnergyTypes>(
+                expertise[0], // Choix par défaut
+                expertise
+        );
+        dialogExpertiseBonusExpertise.setTitle("Bonus d'expertise");
+        dialogExpertiseBonusExpertise.setHeaderText("Choisissez une expertise pour y gagner un point");
+        dialogExpertiseBonusExpertise.setContentText("Expertise:");
     }
 
     /**
