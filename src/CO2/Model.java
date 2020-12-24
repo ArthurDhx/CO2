@@ -603,7 +603,18 @@ public class Model {
 				// Affecation type
 				centrales.get(i).setType(projetMisEnPlaceChoisi.getProject().getCentralType());
 				// le joueur paye la centrale
-				getCurrentPLayer().payCentral(projetMisEnPlaceChoisi.getProject().getCentralType().getCout());
+
+				// Si le joueur a un continent controlé on réduit le cout de 1 en prenant le cube du continent
+				int[] cout = {
+					projetMisEnPlaceChoisi.getProject().getCentralType().getCout()[0],
+							projetMisEnPlaceChoisi.getProject().getCentralType().getCout()[1]
+				};
+				int index = curPlayer.getContinentsControlles().indexOf(projetMisEnPlaceChoisi.getContinent());
+				if (index >= 0 ) {
+					curPlayer.getContinentsControlles().get(index).removeCEP();
+					cout[1]--;
+				}
+				getCurrentPLayer().payCentral(cout);
 
 				if (centrales.get(i).isOccupe() && centrales.get(i).isFossile() && projetMisEnPlaceChoisi.getContinent().allPlantsAreOccupied()) {
 					// récompenses du remplacement

@@ -269,6 +269,7 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
                 // reload payement
                 viewGame.reloadresourcesTech();
                 viewGame.reloadArgent();
+                viewGame.reloadCEPRessTech();
 
                 viewGame.reloadContinentControl(model.getCurrentPLayer());
             } else {
