@@ -30,12 +30,12 @@ public class ControllerAction implements EventHandler<ActionEvent>{
             viewGame.hboxAction.resetHbox();
         }else if (source == viewGame.hboxAction.btnFinTour) { // appuyer sur bouton fin de tour
             finTour();
-        } else if (source == viewGame.hboxAction.btnTest) {
-            model.curPlayer.setCEP(0);
-            model.curPlayer.setArgent(0);
-            model.curPlayer.getContinentsControlles().get(0).setNbCep(0);
-            viewGame.reloadCEPRessTech();
+        } else if (source == viewGame.hboxAction.btnDefausser) {
+            model.getCurrentPLayer().gainArgent(8);
+            model.getCurrentPLayer().getObjectifCompagnie().setId(-1);
             viewGame.reloadArgent();
+            viewGame.reloadObjectifCompagnie();
+            viewGame.hboxAction.resetHbox();
         }
         viewGame.reloadArgent();
     }

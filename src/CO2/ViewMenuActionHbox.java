@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ViewMenuActionHbox extends HBox {
-    //TODO : A delete
-    public Button btnTest;
 
     Model model ;
 
@@ -36,6 +34,8 @@ public class ViewMenuActionHbox extends HBox {
     ChoiceDialog<LobbyCard> dialogJouerCarteLobby;
     ChoiceDialog<String> dialogMajeurMineur ;
     ChoiceDialog<OnuCard> dialogMarqueOnuCard ;
+
+    Button btnDefausser ;
 
     // Les boutons associe aux actions principales
     Button btnActionPrincipale;
@@ -95,9 +95,8 @@ public class ViewMenuActionHbox extends HBox {
 
         btnCancelAction = new Button("Annuler");
         btnCancelActionScientifique = new Button("Annuler");
-        //TODO : A delete
-        btnTest = new Button("Test");
-        this.getChildren().addAll(btnActionPrincipale, btnActionGratuite,btnFinTour,btnTest);
+        btnDefausser = new Button("Défausser son O.C");
+        this.getChildren().addAll(btnActionPrincipale, btnActionGratuite,btnDefausser,btnFinTour);
     }
 
     /**
@@ -412,9 +411,8 @@ public class ViewMenuActionHbox extends HBox {
         this.getChildren().removeAll(this.getChildren());
         if (!model.getCurrentPLayer().isActionPrincipaleDone()) this.getChildren().add(btnActionPrincipale);
         if (!model.getCurrentPLayer().isAllActionGratuiteDone()) this.getChildren().add(btnActionGratuite);
+        if (model.getCurrentPLayer().getObjectifCompagnie().getId() != -1 ) this.getChildren().add(btnDefausser);
         this.getChildren().add(btnFinTour);
-
-        this.getChildren().add(btnTest);
     }
 
     /**
@@ -426,9 +424,7 @@ public class ViewMenuActionHbox extends HBox {
         btnActionPrincipale.setOnAction(handler);
         btnCancelAction.setOnAction(handler);
         btnFinTour.setOnAction(handler);
-
-        //TODO : A delete
-        btnTest.setOnAction(handler);
+        btnDefausser.setOnAction(handler);
     }
 
     /**

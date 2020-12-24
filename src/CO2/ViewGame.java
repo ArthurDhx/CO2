@@ -2,6 +2,7 @@ package CO2;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
@@ -82,6 +83,8 @@ public class ViewGame {
 
 	ViewMenuActionHbox hboxAction;
 	private Object AlertType;
+
+	Button btnDefausser;
 
 	//evenements
 	Rectangle evenement;
@@ -460,7 +463,9 @@ public class ViewGame {
 
 	public void reloadObjectifCompagnie() {
 		pane.getChildren().remove(objectifCompagnie);
-		objectifCompagnie = new Text(1320, 200, "Objectif de votre compagnie:\n"+model.getCurrentPLayer().getObjectifCompagnie().getLibelle());
+		if (model.getCurrentPLayer().getObjectifCompagnie().getId() != -1)
+			objectifCompagnie = new Text(1320, 200, "Objectif de votre compagnie:\n"+model.getCurrentPLayer().getObjectifCompagnie().getLibelle());
+		else objectifCompagnie = new Text(1320, 200, "Vous n'avez plus d'objectif de compagnie !\n");
 		pane.getChildren().add(objectifCompagnie);
 	}
 
@@ -847,8 +852,8 @@ public class ViewGame {
 			//Fin classique
 			//Récupération des CEP
 			displayRecuperationCEP();
-			//Point objectif de compagnie
-			displayPointObjectifCompagnie();
+			//Point objectif de compagnie, si pas défaussé
+			if (model.getCurrentPLayer().getObjectifCompagnie().getId() != -1) displayPointObjectifCompagnie();
 			//Vente des CEP
 			displayVenteCEP();
 			//Calcul score final
