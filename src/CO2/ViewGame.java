@@ -70,6 +70,12 @@ public class ViewGame {
 
 	//centrales
 	Image imgCentralSolar;
+	Image imgCentralBiomass;
+	Image imgCentralNuclear;
+	Image imgCentralRecycling;
+	Image imgCentralReforestation;
+
+
 	Image imgCentralCharbon;
 	Image imgCentralPetrole;
 	Image imgCentralGaz;
@@ -206,6 +212,10 @@ public class ViewGame {
 		solarProjetRecto = new Image(getClass().getResourceAsStream("images/Projets/SOLARProjectRecto.png"));
 		solarProjectVerso = new Image(getClass().getResourceAsStream("images/Projets/SOLARProjectVerso.png"));
 		imgCentralSolar = new Image(getClass().getResourceAsStream("images/Centrales/Solar.png"));
+		imgCentralBiomass = new Image(getClass().getResourceAsStream("images/Centrales/Biomass.png"));
+		imgCentralNuclear = new Image(getClass().getResourceAsStream("images/Centrales/Nuclear.png"));
+		imgCentralRecycling= new Image(getClass().getResourceAsStream("images/Centrales/Recycling.png"));
+		imgCentralReforestation= new Image(getClass().getResourceAsStream("images/Centrales/Reforestation.png"));
 		imgCentralCharbon = new Image(getClass().getResourceAsStream("images/Centrales/Coal.png"));
 		imgCentralPetrole = new Image(getClass().getResourceAsStream("images/Centrales/Oil.png"));
 		imgCentralGaz = new Image(getClass().getResourceAsStream("images/Centrales/Gas.png"));
@@ -662,27 +672,42 @@ public class ViewGame {
 		}
 		else if (state == METTRE_EN_PLACE_PROJET) {
 			side = "Verso";
-			//TODO :  a changer une fois le reste implementer avec centralTypes
 			//tooltip data
 			switch (greenEnergyTypes) {
 				case REFORESTATION:
-					// cout et gain reforestation
+					argent = centralTypes.REBOISEMENT.getCout()[0];
+					ressTech = centralTypes.REBOISEMENT.getCout()[1];
+					expRec = centralTypes.REBOISEMENT.getExpertise();
+					expGain = 1 ;
+					ptVictoire = centralTypes.REBOISEMENT.getPtsVictoire();
 					break;
 				case SOLAR:
-					argent = 8;
-					ressTech = 4;
-					expRec = 2;
-					expGain = 1;
-					ptVictoire = 1;
+					argent = centralTypes.SOLAIRE.getCout()[0];
+					ressTech = centralTypes.SOLAIRE.getCout()[1];
+					expRec = centralTypes.SOLAIRE.getExpertise();
+					expGain = 1 ;
+					ptVictoire = centralTypes.SOLAIRE.getPtsVictoire();
 					break;
 				case FUSION:
-					// cout et gain fusion
+					argent = centralTypes.FUSIONFROIDE.getCout()[0];
+					ressTech = centralTypes.FUSIONFROIDE.getCout()[1];
+					expRec = centralTypes.FUSIONFROIDE.getExpertise();
+					expGain = 1 ;
+					ptVictoire = centralTypes.FUSIONFROIDE.getPtsVictoire();
 					break;
 				case BIOMASS:
-					// cout et gain biomass
+					argent = centralTypes.BIOMASSE.getCout()[0];
+					ressTech = centralTypes.BIOMASSE.getCout()[1];
+					expRec = centralTypes.BIOMASSE.getExpertise();
+					expGain = 1 ;
+					ptVictoire = centralTypes.BIOMASSE.getPtsVictoire();
 					break;
 				case RECYCLING:
-					// cout et gain recycling
+					argent = centralTypes.RECYCLAGE.getCout()[0];
+					ressTech = centralTypes.RECYCLAGE.getCout()[1];
+					expRec = centralTypes.RECYCLAGE.getExpertise();
+					expGain = 1 ;
+					ptVictoire = centralTypes.RECYCLAGE.getPtsVictoire();
 					break;
 			}
 			Tooltip.install(continent.getTabRectangleSubvention()[projectChoice], new Tooltip(" Construire centrale : \nCoût :\n- "+argent+" $ \n- "+ressTech+" ressource(s) technologique(s)\n- min "+expRec+" d\'expertises \n\nGains : \n- "+expGain+" expertise \n- "+ ptVictoire +" points de victoire "));
@@ -922,7 +947,22 @@ public class ViewGame {
 				central = imgCentralSolar;
 				Tooltip.install(continent.getTabRectangleCentral()[index], new Tooltip("Centrale Solaire, Polution :" + centralTypes.SOLAIRE.getCo2()));
 				break;
-				//TODO reboissement, recylage, fusionfroide, biomass
+			case REBOISEMENT:
+				central = imgCentralReforestation;
+				Tooltip.install(continent.getTabRectangleCentral()[index], new Tooltip("Centrale de Reboisement, Polution :" + centralTypes.REBOISEMENT.getCo2()));
+				break;
+			case RECYCLAGE:
+				central = imgCentralRecycling;
+				Tooltip.install(continent.getTabRectangleCentral()[index], new Tooltip("Centrale de Recyclage, Polution :" + centralTypes.RECYCLAGE.getCo2()));
+				break;
+			case FUSIONFROIDE:
+				central = imgCentralNuclear;
+				Tooltip.install(continent.getTabRectangleCentral()[index], new Tooltip("Centrale à fusion froide, Polution :" + centralTypes.FUSIONFROIDE.getCo2()));
+				break;
+			case BIOMASSE:
+				central = imgCentralBiomass;
+				Tooltip.install(continent.getTabRectangleCentral()[index], new Tooltip("Centrale à bio-masse, Polution :" + centralTypes.BIOMASSE.getCo2()));
+				break;
 		}
 		continent.getTabRectangleCentral()[index].setFill(new ImagePattern(central));
 	}

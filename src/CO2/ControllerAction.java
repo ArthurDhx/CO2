@@ -225,7 +225,7 @@ public class ControllerAction implements EventHandler<ActionEvent>{
     /**
      * Permet d'effectuer les actions pour les contients n'ayant pas assez de central c'est-à-dire:
      * 1. Prenez la centrale à combustible fossile du haut de la pile et posez-la sur la case énergie libre la plus à gauche de la région.
-     * 2. Augmentez le niveau global de pollution de CO2 du nombre indiqué par la centrale à combustible fossile. (Char-bon = 40 ppm, Pétrole = 30 ppm, Gaz = 20 ppm). TODO (Yassino)
+     * 2. Augmentez le niveau global de pollution de CO2 du nombre indiqué par la centrale à combustible fossile. (Char-bon = 40 ppm, Pétrole = 30 ppm, Gaz = 20 ppm).
      * 3. Si un joueur contrôle la région, il doit payer 1 CEP à labanque de sa réserve ou d’une région qu’il contrôle (pas nécessairement de la région concernée !).
      *    S’il ne possède pas de CEP (ni dans sa réserve, ni dans une des régions qu’il contrôle):
      *    il doit en acheter un au marché.

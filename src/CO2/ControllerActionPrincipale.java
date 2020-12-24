@@ -254,8 +254,7 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
             if( index >= 0) {
                 // remet la carte projet dans le paquet
                 model.projectsPacket.put(model.getCurEnergyChoice().name(),model.projectsPacket.get(model.getCurEnergyChoice().name())+1);
-
-                viewGame.addCentrale(centralTypes.SOLAIRE , projetMisEnPlaceChoisi.getContinent(), index);
+                viewGame.addCentrale(projetMisEnPlaceChoisi.getProject().getCentralType() , projetMisEnPlaceChoisi.getContinent(), index);
                 viewGame.resetSubvention(projetMisEnPlaceChoisi.getContinent(),projetMisEnPlaceChoisi.getIndex());
                 projetMisEnPlaceChoisi.getProject().setMisEnPlace(false);
                 projetMisEnPlaceChoisi.getProject().setSubventionPossible(true);

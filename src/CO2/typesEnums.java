@@ -20,12 +20,11 @@ enum lobbyMineurTypes {
 
 
 enum centralTypes {
-    //TODO :  a changer une fois le reste implementer
-    REBOISEMENT(10, new int[]{10, 10},10,0),
-    BIOMASSE(10, new int[]{10, 10},10,0),
-    SOLAIRE(10, new int[]{8, 4},2,0),
-    RECYCLAGE(10, new int[]{10, 10},10,0),
-    FUSIONFROIDE(10, new int[]{10, 10},10,0),
+    REBOISEMENT(120, new int[]{10, 3},3,0),
+    BIOMASSE(75, new int[]{6, 1},1,0),
+    SOLAIRE(105, new int[]{8, 2},2,0),
+    RECYCLAGE(75, new int[]{6, 1},1,0),
+    FUSIONFROIDE(105, new int[]{8, 2},2,0),
     CHARBON(10, new int[]{10, 10},10,40),
     PETROLE(10, new int[]{10, 10},10,30),
     GAZNATUREL(10, new int[]{10, 10},10,20);

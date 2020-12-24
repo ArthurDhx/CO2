@@ -43,7 +43,6 @@ public class Controller {
                 "Mode 1 Joueur",
                 "Des projets vont etre affécté aux regions aléatoirement,\n" +
                         "Vous allez devoir choisir sur qu'elle case de subvention ceux-ci seront disposés");
-        //TODO: [Yassine] a retravailler en while une fois toutes les tuiles implementer
         for (Continent continent: model.getContinents()) {
             viewGame.hboxAction.displayChoisirSubventionChoiceDialog(continent);
             // la subvention choisis par le joueur
