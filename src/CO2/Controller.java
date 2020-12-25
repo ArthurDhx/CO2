@@ -1,7 +1,6 @@
 package CO2;
 
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 public class Controller {
 
@@ -41,17 +40,29 @@ public class Controller {
     public void initStartingProject(){
         viewGame.displayAlertWithoutHeaderText(
                 "Mode 1 Joueur",
-                "Des projets vont etre affécté aux regions aléatoirement,\n" +
+                "Vos projets vont être affectés aux régions aléatoirement,\n" +
                         "Vous allez devoir choisir sur qu'elle case de subvention ceux-ci seront disposés");
+
+        // Prenez 1 tuile de chacun des 5 projets en main
+        final int NB_PROJET = 5;
+        List<Integer> projetsJoueur = new ArrayList<>();
+        for (int i = 0; i < NB_PROJET; i++) projetsJoueur.add(i);
+
+        // Mélange les projets
+        Collections.shuffle(projetsJoueur);
+
+        // Pour chaque continent on propose de poser le projet
         for (Continent continent: model.getContinents()) {
-            viewGame.hboxAction.displayChoisirSubventionChoiceDialog(continent);
-            // la subvention choisis par le joueur
-            Optional<Subvention> resulltSubv = viewGame.hboxAction.dialogSubvention.showAndWait();
-            resulltSubv.ifPresent(subvention -> {
-                // choisis l'energie
-                viewGame.hboxAction.displayEnergyChoiceDialog() ;
-                Optional<greenEnergyTypes> resultEnergy = viewGame.hboxAction.dialogEnergie.showAndWait();
-                resultEnergy.ifPresent(energyChoisi -> {
+            // si il reste des projets dans la main alors on propose un projet
+            if (!projetsJoueur.isEmpty()){
+                viewGame.hboxAction.displayChoisirSubventionChoiceDialog(continent);
+                // la subvention choisis par le joueur
+                Optional<Subvention> resulltSubv = viewGame.hboxAction.dialogSubvention.showAndWait();
+                resulltSubv.ifPresent(subvention -> {
+                    // tire une energie
+                    greenEnergyTypes energyChoisi = greenEnergyTypes.values()[projetsJoueur.get(0)];
+                    projetsJoueur.remove(0);
+
                     // Si la tuile peut etre ajouter
                     if(model.verrifAddProjectTileToSubvention(continent, subvention)) {
                         // Mets a jour le model : fait en sorte que le projet ne puisse pas etre réutilisé
@@ -63,8 +74,7 @@ public class Controller {
                         // Le joueur en cours a effectuer son action principale
                     }
                 });
-
-            });
+            }
         }
     }
 
