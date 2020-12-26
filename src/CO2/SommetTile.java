@@ -118,11 +118,13 @@ public class SommetTile {
      * vérifie si le sommet est remplie de scientifique / fini
      */
     public boolean isFull(){
+        System.out.println(subjects);
         for(Subject s: subjects){
             if(s.getScientifique() == null){
                 return false;
             }
         }
+        System.out.println("test");
         return true;
     }
 

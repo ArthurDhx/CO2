@@ -125,21 +125,29 @@ public class ControllerAction implements EventHandler<ActionEvent>{
             resolutionEvenements();
         }
         model.endGame();
+
         // récompense sommets
-        model.giveRewardsSommet();
+       if(model.giveRewardsSommet() != null) {
+            for (int i = 0; i <model.getCurrentPLayer().getScientifiques().size(); i++) {
+                viewGame.displayAlertWithoutHeaderText("Sommet", "un sommet est rempli! \n" + "les scientifiques sont redonner aux joueurs \n et vous recevez un point d'expertise sur chaque sujet du sommet.");
+                viewGame.deplacerScientifiqueReserve(model.getCurrentPLayer().getScientifiques().get(i).getImgScientifique(), i);
+            }
+        }
+
         model.getCurrentPLayer().setActionPrincipaleDone(false);
         model.getCurrentPLayer().setDeplacerScientifiqueDone(false);
         model.getCurrentPLayer().setMarcheCEPDone(false);
         model.getCurrentPLayer().setCardDone(false);
         model.getCurrentPLayer().setActionMarche(0);
         viewGame.hboxAction.resetHbox();
-        // actualisation du nombre de tour, de décénnie, Ressources Techno, CEP, Point de Victoire, CO2
+        // actualisation du nombre de tour, de décénnie, Ressources Techno, CEP, Point de Victoire, CO2, expertise
         viewGame.reloadTour();
         viewGame.reloadDecade();
         viewGame.reloadresourcesTech();
         viewGame.reloadCEPRessTech();
         viewGame.reloadPointVictoire();
         viewGame.reloadCo2();
+        viewGame.reloadPlayerExpertise(model.getCurrentPLayer());
         // affichage sur la console le nombre de tour et décénnie
         System.out.println("Tour : " + model.getTour() + "/" + (model.NB_TOUR_PAR_DECENNIE-1));
         System.out.println("Décénnie : " + model.getDecade() + "/" + model.NB_DECENNIE);

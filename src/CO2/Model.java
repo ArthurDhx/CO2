@@ -301,9 +301,10 @@ public class Model {
 		}
 		bufferedReader.close();
 		SommetTile sommetTile;
-		this.allSommetTile = lstAllSommet;
+		allSommetTile = new ArrayList<>();
 		for (int i = 0; i < 6; i++) {
 			sommetTile = lstAllSommet.remove(new Random().nextInt(lstAllSommet.size()));
+			allSommetTile.add(sommetTile);
 			sommetTile.setContinent(continents[i]);
 			continents[i].setSommetTile(sommetTile);
 		}
@@ -530,12 +531,11 @@ public class Model {
 	/**
 	 * donne les récompenses de tous les scientifiques
 	 * si ils sont complet
+	 * @return true si sommet complet
 	 */
-	public void giveRewardsSommet() {
+	public ArrayList<Scientifique> giveRewardsSommet() {
 		// boucle sur tous les sommets du jeu
-		System.out.println(allSommetTile);
 		for(SommetTile sommet: allSommetTile){
-			//System.out.println(sommet.isFull());
 			if(sommet.isFull()){ // si le sommet est rempli de scientifique
 				ArrayList<Scientifique> scientifiques =  sommet.getScientifiques(); // récupère les scientifiques d'un sommet
 				for(Player p: players){
@@ -543,17 +543,22 @@ public class Model {
 						if(scientifiques.contains(sPlayer)){ // si le sommet contient le scientifique d'un joueur
 							// on donne le bonus du joueur en fonction du sujet étudié par le scientifique
 							giveRewardsSommetToPlayer(sPlayer.getSubject().getEnergy(), p);
-							sPlayer.setSubject(null); // le scientifique n'a plus de sujet
-							sPlayer.setSommetTile(null); // le scientifique n'est plus sur le sommet
+							//sPlayer.setSubject(null); // le scientifique n'a plus de sujet
+							//sPlayer.setSommetTile(null); // le scientifique n'est plus sur le sommet
 							// si multi : redonner chaque scientifique à chaque joueur
 							p.setScientifiques(sommet.getScientifiques()); // redonne les scientifiques sur le sommet au joueur
-							sommet.setContinent(null); // supression du sommet sur le continent
-							sommet.getContinent().setSommetTile(new SommetTile()); // création d'un nouveau sommet
+							//sommet.setContinent(null); // supression du sommet sur le continent
+
+							// sommet.getContinent().setSommetTile(new SommetTile()); // création d'un nouveau sommet
+							// return true;
 						}
 					}
+					return sommet.getScientifiques();
 				}
 			}
 		}
+		// return false;
+		return null;
 	}
 
 	/**
@@ -665,14 +670,13 @@ public class Model {
 	 * Selection de 10 cartes parmis toutes les cartes au début du jeu
 	 * les autres ne seront pas utilisé pour le jeu
 	 * @return List<OnuCard> retourne la liste des cartes sélectionnées
-	 * @param randOnuCard
 	 */
-	public List<OnuCard> initOnuCardsInGame(Random randOnuCard){
+	public List<OnuCard> initOnuCardsInGame(){
 		onuCardsInGame = new ArrayList<>(); // liste de carte qui seront selectionnée ppour la partie
 		OnuCard card;
 		for (int i = 0;i<10;i++) { // 10 cartes choisi (7 pour 2 joueurs)
 			// selection d'une carte aléatoirement parmis la liste totale des cartes de l'ONU
-			do card = onuCards.get(randOnuCard.nextInt(onuCards.size()));
+			do card = onuCards.get(new Random().nextInt(onuCards.size()));
 			while(onuCardsInGame.contains(card));
 			onuCardsInGame.add(card);
 		}

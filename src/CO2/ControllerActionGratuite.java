@@ -79,6 +79,12 @@ public class ControllerActionGratuite implements EventHandler<ActionEvent> {
                     model.getCurrentPLayer().getCurrentScientifique().getSubvention().setStaffed(false);
                     viewGame.addScientifiqueToSommet(model.getCurrentPLayer().getCurrentScientifique().getImgScientifique(), model.getCurrentPLayer().getCurrentScientifique(), sommetChoisi);
                     model.getCurrentPLayer().getCurrentScientifique().setSommetTile(sommetChoisi);
+                    for (Subject s : sommetChoisi.getSubjects()){
+                        if(s.getEnergy() == model.getCurrentPLayer().getCurrentScientifique().getSubvention().getEnergyTypes()) {
+                            model.getCurrentPLayer().getCurrentScientifique().setSubject(s);
+                            s.setScientifique(model.getCurrentPLayer().getCurrentScientifique());
+                        }
+                    }
                     model.getCurrentPLayer().getCurrentScientifique().setSubvention(null);
                     model.getCurrentPLayer().setDeplacerScientifiqueDone(true);
                     sommetChoisi.setStaffedOnEnergy(model.getCurrentPLayer().getCurrentScientifique().getSubject());
@@ -94,7 +100,7 @@ public class ControllerActionGratuite implements EventHandler<ActionEvent> {
             //model.getCurrentPLayer().addExpertise(model.getCurrentPLayer().getCurrentScientifique().getSubject().getEnergy(), 1);
             //viewGame.displayAlertWithoutHeaderText("Gain d'expertise", "En remettant votre scientifique dans votre réserve, vous gagné 1 d’expertise dans le type d’énergie " + model.getCurrentPLayer().getCurrentScientifique().getSubject().getEnergy() + " !");
             //remettre le scientifique dans la réserve
-            viewGame.deplacerScientifiqueReserve(model.getCurrentPLayer().getCurrentScientifique().getImgScientifique(),model.getCurrentPLayer().getCurentScientifiqueId() );
+            viewGame.deplacerScientifiqueReserve(model.getCurrentPLayer().getCurrentScientifique().getImgScientifique(),model.getCurrentPLayer().getCurentScientifiqueId());
             model.getCurrentPLayer().setDeplacerScientifiqueDone(true);
             viewGame.hboxAction.resetHbox();
             model.getCurrentPLayer().getCurrentScientifique().moveToReserve();
