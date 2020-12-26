@@ -224,6 +224,7 @@ public class Model {
 		for (int i = 0; i < nbJoueur; i++) {
 			players[i] = new Player();
 		}
+		curPlayer = getCurrentPLayer();
 	}
 	/**
 	 * Initialise le nombre de tour
@@ -1003,6 +1004,10 @@ public class Model {
 
 	public Image getImgCurEvent(){
 		return events.get(currentEvent);
+	}
+
+	public void setCurrentPriceCEP(int currentPriceCEP) {
+		this.currentPriceCEP = currentPriceCEP;
 	}
 
 	public List<PisteExpertise> getPistesExpertise() {

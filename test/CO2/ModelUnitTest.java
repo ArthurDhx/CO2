@@ -321,4 +321,64 @@ public class ModelUnitTest {
         model.giveExpertiseBonus(model.getCurrentPLayer(), BonusExpertise.EXPERTISE, expertiseChoix);
         Assert.assertEquals(1, model.getCurrentPLayer().getExpertise(expertiseChoix));
     }
+
+    @Test
+    public void testPutCentralFossileContinentCharbon() {
+        int index = 1 ;
+        Continent continent = model.getContinents()[1];
+        centralTypes types = centralTypes.CHARBON ;
+
+        model.putFossileCentral(continent,types,index);
+
+        Assert.assertTrue(model.getContinents()[1].getCentrales().get(index).isOccupe());
+        Assert.assertEquals(types,model.getContinents()[1].getCentrales().get(index).getType());
+    }
+
+    @Test
+    public void testPutCentralFossileContinentPetrole() {
+        int index = 1 ;
+        Continent continent = model.getContinents()[1];
+        centralTypes types = centralTypes.PETROLE ;
+
+        model.putFossileCentral(continent,types,index);
+
+        Assert.assertTrue(model.getContinents()[1].getCentrales().get(index).isOccupe());
+        Assert.assertEquals(types,model.getContinents()[1].getCentrales().get(index).getType());
+    }
+
+    @Test
+    public void testPutCentralFossileContinentGaz() {
+        int index = 1 ;
+        Continent continent = model.getContinents()[1];
+        centralTypes types = centralTypes.GAZNATUREL ;
+
+        model.putFossileCentral(continent,types,index);
+
+        Assert.assertTrue(model.getContinents()[1].getCentrales().get(index).isOccupe());
+        Assert.assertEquals(types,model.getContinents()[1].getCentrales().get(index).getType());
+    }
+
+    @Test
+    public void testTradePvToCEP(){
+        model.getCurrentPLayer().setPointVictoire(10);
+        model.getCurrentPLayer().setArgent(10);
+        model.setCurrentPriceCEP(12);
+
+        model.tradePVtoCEP();
+
+        Assert.assertEquals(0,model.getCurrentPLayer().getArgent());
+        Assert.assertEquals(8,model.getCurrentPLayer().getPointVictoire());
+    }
+
+    @Test
+    public void testAugmenterCo2AjoutCentral() {
+        int index = 1 ;
+        Continent continent = model.getContinents()[1];
+        centralTypes types = CO2.centralTypes.PETROLE ;
+        int co2expected = model.getCo2() + centralTypes.PETROLE.getCo2() ;
+
+        model.putFossileCentral(continent,types,index);
+
+        Assert.assertEquals(co2expected,model.getCo2());
+    }
 }
