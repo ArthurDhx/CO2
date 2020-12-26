@@ -128,8 +128,8 @@ public class ControllerAction implements EventHandler<ActionEvent>{
 
         // récompense sommets
        if(model.giveRewardsSommet() != null) {
-            for (int i = 0; i <model.getCurrentPLayer().getScientifiques().size(); i++) {
-                viewGame.displayAlertWithoutHeaderText("Sommet", "un sommet est rempli! \n" + "les scientifiques sont redonner aux joueurs \n et vous recevez un point d'expertise sur chaque sujet du sommet.");
+           viewGame.displayAlertWithoutHeaderText("Sommet", "un sommet est rempli! \n" + "les scientifiques sont redonner aux joueurs \n et vous recevez un point d'expertise sur chaque sujet du sommet.");
+           for (int i = 0; i <model.getCurrentPLayer().getScientifiques().size(); i++) {
                 viewGame.deplacerScientifiqueReserve(model.getCurrentPLayer().getScientifiques().get(i).getImgScientifique(), i);
             }
         }
