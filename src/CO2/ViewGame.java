@@ -184,6 +184,7 @@ public class ViewGame {
 			continentY[4] + 90, // ligne de centrale de l'océanie
 			continentY[5] + 80  // ligne de centrale de l'asie
 	};
+	private ImageView[] imageViewSommetTiles;
 
 	public ViewGame(Scene scene, Model model, Pane pane) throws IOException {
 		this.model = model;
@@ -543,7 +544,7 @@ public class ViewGame {
 		// Tableau des images agenda
 		ImageView[] imageViewAgendaTiles = new ImageView[6];
 		// Tableau des images sommets
-		ImageView[] imageViewSommetTiles = new ImageView[6];
+		imageViewSommetTiles = new ImageView[6];
 		for(int i = 0; i<imageViewContinents.length;i++) {
 			// initialisation des Image View pour chaque tableau
 			imageViewContinents[i] = new ImageView(model.getContinents()[i].getImgContinent());
@@ -576,6 +577,21 @@ public class ViewGame {
 			pane.getChildren().add(imageViewAgendaTiles[i]);
 			pane.getChildren().add(imageViewSommetTiles[i]);
 		}
+	}
+
+	/**
+	 * réaffiche un sommet (remplacement) lorsque un sommet est fini
+	 */
+	public void reloadSommet(SommetTile sommet){
+    	int i = model.getIndexContinentSommet(sommet);
+    	pane.getChildren().remove(imageViewSommetTiles[i]);
+		imageViewSommetTiles[i] = model.getContinents()[i].getSommetTile().getImageSommetTile();
+		imageViewSommetTiles[i].setX(sommetX[i]);
+		imageViewSommetTiles[i].setY(sommetY[i]);
+		imageViewSommetTiles[i].setFitWidth(AGENDA_SOMMET_WIDTH);
+		imageViewSommetTiles[i].setPreserveRatio(true);
+		pane.getChildren().add(imageViewSommetTiles[i]);
+
 	}
 
 	/**

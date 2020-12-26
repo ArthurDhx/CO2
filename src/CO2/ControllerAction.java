@@ -127,13 +127,15 @@ public class ControllerAction implements EventHandler<ActionEvent>{
         model.endGame();
 
         // récompense sommets
-       if(model.giveRewardsSommet() != null) {
-           viewGame.displayAlertWithoutHeaderText("Sommet", "un sommet est rempli! \n" + "les scientifiques sont redonner aux joueurs \n et vous recevez un point d'expertise sur chaque sujet du sommet.");
-           for (int i = 0; i <model.getCurrentPLayer().getScientifiques().size(); i++) {
+        SommetTile sommetFull = model.getCurrentSommetFull(); // récupère le sommet fini
+        if(model.giveRewardsSommet(sommetFull) != null) {
+            viewGame.reloadSommet(sommetFull); // on réaffiche un nouveau sommet
+            viewGame.displayAlertWithoutHeaderText("Sommet", "un sommet est rempli! \n" + "les scientifiques sont redonner aux joueurs \n et vous recevez un point d'expertise sur chaque sujet du sommet.");
+            for (int i = 0; i <model.getCurrentPLayer().getScientifiques().size(); i++) {
+                // déplace les scientifiques sur le sommet dans la réserve
                 viewGame.deplacerScientifiqueReserve(model.getCurrentPLayer().getScientifiques().get(i).getImgScientifique(), i);
             }
         }
-
         model.getCurrentPLayer().setActionPrincipaleDone(false);
         model.getCurrentPLayer().setDeplacerScientifiqueDone(false);
         model.getCurrentPLayer().setMarcheCEPDone(false);
@@ -175,13 +177,13 @@ public class ControllerAction implements EventHandler<ActionEvent>{
                 // le joueur n'as pas de centrale à énergie verte
                 if (curPlayer.getResourcesTech() >= 1){
                     // si il a des ressources technologiques il paye avec celle-ci
-                    viewGame.displayAlertWithoutHeaderText("Évènements", "Malheuresment vous n'avez pas de centrale à énergie verte en "+ continentEvent +" !\nVous devez céder une ressource techonologique à ce continent.");
+                    viewGame.displayAlertWithoutHeaderText("Évènements", "Malheureusement vous n'avez pas de centrale à énergie verte en "+ continentEvent +" !\nVous devez céder une ressource techonologique à ce continent.");
                     curPlayer.setResourcesTech(curPlayer.getResourcesTech()-1);
                     continentEvent.setNbRessTech(continentEvent.getNbRessTech()+1);
                     viewGame.reloadCEPRessTech();
                 } else {
                     // si il n'as pas de ressources technologiques il perd 2 pts de victoire
-                    viewGame.displayAlertWithoutHeaderText("Évènements", "Malheuresment vous n'avez pas de centrale à énergie verte en "+ continentEvent +" !\nVous perdez 2 points de victoire car vous n'avez plus de\nressources techonologiques.");
+                    viewGame.displayAlertWithoutHeaderText("Évènements", "Malheureusement vous n'avez pas de centrale à énergie verte en "+ continentEvent +" !\nVous perdez 2 points de victoire car vous n'avez plus de\nressources techonologiques.");
                     curPlayer.setPointVictoire(curPlayer.getPointVictoire()-2);
                     viewGame.reloadPointVictoire();
                 }

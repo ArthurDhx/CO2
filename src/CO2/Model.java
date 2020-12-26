@@ -44,6 +44,7 @@ public class Model {
 
 	// Liste des sommets
 	List<SommetTile> allSommetTile;
+	ArrayList<SommetTile> lstAllSommet;
 
 	// Liste des pistes d'expertises
 	private List<PisteExpertise> pistesExpertise;
@@ -156,20 +157,36 @@ public class Model {
 		onuCards = new ArrayList<>();
 		int id = 34;
 		for(int i=0; i<13;i++){ // 12 cartes (comme le jeu)
-			onuCards.add(new OnuCard(id, 0)); // création carte ONU et ajout dans la liste totale
+			OnuCard onu = null;
+			boolean exist = false;
+			do{
+				onu = new OnuCard(id, 0); // création de la carte onu
+				for (OnuCard o : onuCards){ // boucle sur les OnuCards
+					if(o.getTypesCentral().size() == onu.getTypesCentral().size()){
+						ArrayList centralTypeListOther = new ArrayList<>(o.getTypesCentral());
+						ArrayList centralTypeListCurrent = new ArrayList(onu.getTypesCentral());
+						centralTypeListCurrent.removeAll(centralTypeListOther);
+						if(centralTypeListCurrent.isEmpty()){
+							exist = true;
+							break;
+						}else{
+							exist = false;
+						}
+					}
+				}
+			}while (exist);
 			// ajout du nombre de points de victoires en fonction du nombre de type centrales sur la carte
-			if(onuCards.get(i).getTypesCentral().size() == 2){ // si 2 types
-				int nbPoints = 4 - rand2typesCentral.nextInt(2); // 3 ou 4
-				onuCards.get(i).setNbPointDeVictoire(nbPoints);
+			switch (onu.getTypesCentral().size()){
+				case 2: // 2 type d'énergie
+					onu.setNbPointDeVictoire(4 - rand2typesCentral.nextInt(2)); // 3 ou 4
+					break;
+				case 3: // 3 type d'énergie
+					onu.setNbPointDeVictoire(6 - rand3typesCentral.nextInt(2)); // 5 ou 6
+					break;
+				case 4: // 3 type d'énergie
+					onu.setNbPointDeVictoire(8 - rand4typesCentral.nextInt(2)); // 7 ou 8
 			}
-			if(onuCards.get(i).getTypesCentral().size() == 3){ // si 3 types
-				int nbPoints = 6 - rand3typesCentral.nextInt(2); // 5 ou 6
-				onuCards.get(i).setNbPointDeVictoire(nbPoints);
-			}
-			if(onuCards.get(i).getTypesCentral().size() == 4){ // si 4 types
-				int nbPoints = 8 - rand4typesCentral.nextInt(2); // 7 ou 8
-				onuCards.get(i).setNbPointDeVictoire(nbPoints);
-			}
+			onuCards.add(onu);
 			id++;// id de 34 à 46
 		}
 	}
@@ -267,11 +284,12 @@ public class Model {
 		}
 	}
 
+
 	/**
 	 * Initialise les sommets
 	 */
 	public void initSommetTile() throws IOException {
-		ArrayList<SommetTile> lstAllSommet = new ArrayList<SommetTile>();
+		lstAllSommet = new ArrayList<SommetTile>();
 		ArrayList<Subject> subjects= new ArrayList<Subject>();
 
 		File fichier = new File("src/CO2/sommetTile.txt");
@@ -530,35 +548,62 @@ public class Model {
 	}
 
 	/**
-	 * donne les récompenses de tous les scientifiques
-	 * si ils sont complet
-	 * @return true si sommet complet
+	 * donne le sommet
+	 * @return sommet complet
 	 */
-	public ArrayList<Scientifique> giveRewardsSommet() {
+	public SommetTile getCurrentSommetFull(){
 		// boucle sur tous les sommets du jeu
-		for(SommetTile sommet: allSommetTile){
-			if(sommet.isFull()){ // si le sommet est rempli de scientifique
-				ArrayList<Scientifique> scientifiques =  sommet.getScientifiques(); // récupère les scientifiques d'un sommet
-				for(Player p: players){
-					for(Scientifique sPlayer: p.getScientifiques()){ // récupère tous les scientifiques d'un joueur
-						if(scientifiques.contains(sPlayer)){ // si le sommet contient le scientifique d'un joueur
-							// on donne le bonus du joueur en fonction du sujet étudié par le scientifique
-							giveRewardsSommetToPlayer(sPlayer.getSubject().getEnergy(), p);
-							//sPlayer.setSubject(null); // le scientifique n'a plus de sujet
-							//sPlayer.setSommetTile(null); // le scientifique n'est plus sur le sommet
-							// si multi : redonner chaque scientifique à chaque joueur
-							p.setScientifiques(sommet.getScientifiques()); // redonne les scientifiques sur le sommet au joueur
-							//sommet.setContinent(null); // supression du sommet sur le continent
-
-							// sommet.getContinent().setSommetTile(new SommetTile()); // création d'un nouveau sommet
-							// return true;
-						}
-					}
-					return sommet.getScientifiques();
-				}
+		for(SommetTile sommet: allSommetTile) {
+			if (sommet.isFull()) { // si le sommet est rempli de scientifique
+				return sommet;
 			}
 		}
-		// return false;
+		return null;
+	}
+
+	/**
+	 * retourne l'index du continent d'un sommet dommer en paramètre
+	 * @param sommet d'un continent
+	 */
+	public int getIndexContinentSommet(SommetTile sommet){
+		// boucle sur tous les sommets du jeu
+		for(int i = 0;i<continents.length;i++) {
+			if (sommet.getContinent() == continents[i]) {
+				return i;
+			}
+		}
+		return -1;
+	}
+
+	/**
+	 * donne les récompenses de tous les scientifiques et redonne les sceintifiques aux joueurs
+	 * @return la liste des scientifiques sur le sommet fini
+	 */
+	public ArrayList<Scientifique> giveRewardsSommet(SommetTile sommet) {
+		if(sommet == null) return null;
+		ArrayList<Scientifique> scientifiques =  sommet.getScientifiques(); // récupère les scientifiques d'un sommet
+		for(Player p: players){
+			for(Scientifique sPlayer: p.getScientifiques()){ // récupère tous les scientifiques d'un joueur
+				if(scientifiques.contains(sPlayer)){ // si le sommet contient le scientifique d'un joueur
+					// on donne le bonus du joueur en fonction du sujet étudié par le scientifique
+					giveRewardsSommetToPlayer(sPlayer.getSubject().getEnergy(), p);
+					sPlayer.setSubject(null); // le scientifique n'a plus de sujet
+					sPlayer.setSommetTile(null); // le scientifique n'est plus sur le sommet
+					// si multi : redonner chaque scientifique à chaque joueur
+					p.setScientifiques(sommet.getScientifiques()); // redonne les scientifiques sur le sommet au joueur
+					// création d'un nouveau sommet
+					allSommetTile.remove(sommet); // suppression du sommet dans la liste des sommets
+					lstAllSommet.add(sommet); // remettre le sommet fini dans la liste de tous les sommets hors jeu
+					SommetTile sommetTile;
+					Continent continent = sommet.getContinent();
+					sommetTile = lstAllSommet.remove(new Random().nextInt(lstAllSommet.size())); // récupération d'un sommet aléatoire dans la liste des sommets hors jeu
+					allSommetTile.add(sommetTile); // ajout du sommet au jeu
+					sommetTile.setContinent(continent); // ajout du continent au sommet
+					continent.setSommetTile(sommetTile); // ajout du sommet au continent
+				}
+			}
+			return sommet.getScientifiques();
+		}
 		return null;
 	}
 
