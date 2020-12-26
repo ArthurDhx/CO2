@@ -162,15 +162,17 @@ public class Model {
 			do{
 				onu = new OnuCard(id, 0); // création de la carte onu
 				for (OnuCard o : onuCards){ // boucle sur les OnuCards
+					// compare la taille de la carte qui vient d'être créer avec la taille des cartes du jeu
 					if(o.getTypesCentral().size() == onu.getTypesCentral().size()){
+						// récupère les 2 listes
 						ArrayList centralTypeListOther = new ArrayList<>(o.getTypesCentral());
 						ArrayList centralTypeListCurrent = new ArrayList(onu.getTypesCentral());
-						centralTypeListCurrent.removeAll(centralTypeListOther);
-						if(centralTypeListCurrent.isEmpty()){
-							exist = true;
-							break;
+						centralTypeListCurrent.removeAll(centralTypeListOther); // enlève une liste dans une autre
+						if(centralTypeListCurrent.isEmpty()){ // vérifie si c'est vide
+							exist = true; // il existe déjà une carte avec ces types
+							break; // sortir du for
 						}else{
-							exist = false;
+							exist = false; // nouvelle carte
 						}
 					}
 				}
