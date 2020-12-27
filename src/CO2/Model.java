@@ -228,16 +228,13 @@ public class Model {
 			lobbyCards.add(new LobbyCard<>(lobbyActionTypes.PROPOSER, sub, lobbyMineurTypes.CEP));
 
 		// cartes mettre en place un type de projet
-		for (greenEnergyTypes type : greenEnergyTypes.values())
-			lobbyCards.add(new LobbyCard<>(lobbyActionTypes.METTRE, type, lobbyMineurTypes.SCIENTIFIQUE));
-
 		// cartes construire une centrale
-		for (centralTypes centralType : centralTypes.values())
-			lobbyCards.add(new LobbyCard<>(lobbyActionTypes.CONSTRUIRE, centralType, lobbyMineurTypes.ARGENT));
-
 		// cartes sommet d'un type d'energie
-		for (greenEnergyTypes type : greenEnergyTypes.values())
+		for (greenEnergyTypes type : greenEnergyTypes.values()) {
+			lobbyCards.add(new LobbyCard<>(lobbyActionTypes.METTRE, type, lobbyMineurTypes.SCIENTIFIQUE));
+			lobbyCards.add(new LobbyCard<>(lobbyActionTypes.CONSTRUIRE, type, lobbyMineurTypes.ARGENT));
 			lobbyCards.add(new LobbyCard<>(lobbyActionTypes.SOMMET, type, lobbyMineurTypes.ARGENT));
+		}
 
 		// donner 5 cartes parmi ces cartes au joueur
 		getCurrentPLayer().giveLobbyCards(lobbyCards, 5, new Random());
