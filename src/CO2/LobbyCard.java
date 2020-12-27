@@ -51,7 +51,7 @@ public class LobbyCard<T> {
                 recompense = " a determiner";
                 break;
             case CONSTRUIRE:
-                action = " construit une centrale d'energie " + ((centralTypes) complement).name();
+                action = " construit une centrale d'energie " + complement;
                 recompense = " 3€ remboursés sur le coût de construction";
                 break;
             case SOMMET:
