@@ -402,8 +402,7 @@ public class Model {
 	 */
 	public boolean verrifAddProjectTileToSubvention(Continent continent, Subvention subvention){
 		// si l'energie ne peux pas etre placee sur le continent -> action impossible
-		//TODO verfier avec les toutes les énergies de l'agenda
-		if(!continent.getAgendaTile().isPossiblePlacement(SOLAR)) return false;
+		if(!continent.getAgendaTile().isPossiblePlacement(subvention.getEnergyTypes())) return false;
 
 		if(subvention.getProject() == null || subvention.getProject().isSubventionPossible()) return true;
 
