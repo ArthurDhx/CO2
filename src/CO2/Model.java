@@ -114,7 +114,7 @@ public class Model {
 		// Initialisation des décénnies
 		initDecade();
 		// Initialisation des continents
-		initContinents();
+		initContinents(new Random());
 		// Initialisation des sommets
 		initSommetTile();
 		// Initialisation les barres d'expertise
@@ -281,8 +281,9 @@ public class Model {
 
 	/**
 	 * Initialise les continents
+	 * @param random
 	 */
-	private void initContinents(){
+	private void initContinents(Random random){
 		continents = new Continent[6];
 		ArrayList<String> nomContinents = new ArrayList<>(Arrays.asList("Europe", "Afrique", "Amérique du Sud", "Amérique du Nord", "Océanie", "Asie"));
 		int nbCep = 0;
@@ -293,8 +294,14 @@ public class Model {
 			if(nomContinents.get(i).equals("Océanie")) nbCep = 4;if(nomContinents.get(i).equals("Asie")) nbCep = 6;
 			continents[i] = new Continent(nomContinents.get(i), nbCep, new Image(getClass().getResourceAsStream("images/Continents/" + nomContinents.get(i) +".jpg")),i);
 
-			// TODO dans un prochain sprint, generer les agendaTiles et en prendre une aleatoire par continent
-			AgendaTile agendaTile = new AgendaTile(REFORESTATION, SOLAR, FUSION, new Image(getClass().getResourceAsStream("images/Agendas/TileAgenda_Reforestation_Solar_Fusion.png")));
+			// Choix des energies de la carte agenda du continent
+			ArrayList<greenEnergyTypes> energyTypesListe = new ArrayList<>();
+			energyTypesListe.addAll(Arrays.asList(greenEnergyTypes.values()));
+			greenEnergyTypes agendaEnergies[] = new greenEnergyTypes[3];
+			for (int j = 0; j<agendaEnergies.length; j++)
+				agendaEnergies[j] = energyTypesListe.remove(random.nextInt(energyTypesListe.size()));
+			// creation de la carte agenda
+			AgendaTile agendaTile = new AgendaTile(agendaEnergies[0], agendaEnergies[1], agendaEnergies[2], new Image(getClass().getResourceAsStream("images/Agendas/AgendaTile_"+agendaEnergies[0]+"_"+agendaEnergies[1]+"_"+agendaEnergies[2]+".png")));
 			continents[i].setAgendaTile(agendaTile);
 
 			//Init carte évènements
