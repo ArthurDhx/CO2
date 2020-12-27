@@ -408,9 +408,6 @@ public class ViewMenuActionHbox extends HBox {
      * Affiche le ChoiceDialog qui permet de choisir une expertise supplémentaire présente sur le sommet
      */
     public void displayChoisirExpretiseSommetFini(SommetTile sommet){
-        //On récupère les sommets
-        //SommetTile sommet = model.getCurrentSommetFull();
-        //Continent continent = sommet.getContinent();
         ArrayList<greenEnergyTypes> types = new ArrayList<>();
         for (Subject s : sommet.getSubjects()) {
             types.add(s.getEnergy());
