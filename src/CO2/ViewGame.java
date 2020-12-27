@@ -320,10 +320,13 @@ public class ViewGame {
 			int expertise = p.getExpertise(pisteExpertise.getType());
 			// si le joueur a de l'expertise
 			if (expertise > 0) {
-				// si le joueur atteint un palier bonus
+				// si le joueur atteint un palier bonus et qu'il n'a pas deja pris la recompense
 				BonusExpertise bonus = pisteExpertise.getSpecialBonus(expertise);
-				if (bonus != null) {
-					// si bonus a choix
+				if (bonus != null && !model.getCurrentPLayer().getBonusExpertise(pisteExpertise.getType()) ) {
+					// declare le bonus comme pris
+					model.getCurrentPLayer().setBonusExpertise(pisteExpertise.getType(), true);
+
+					// si bonus a choix faire choisir
 					if (bonus.equals(BonusExpertise.CEP) || bonus.equals(BonusExpertise.EXPERTISE)) {
 						// choix continent
 						if (bonus.equals(BonusExpertise.CEP)) {

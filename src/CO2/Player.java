@@ -10,6 +10,8 @@ public class Player {
 
     // valeur d'expertise pour chaque energy
     private Map<greenEnergyTypes, Integer> expertise;
+    // indique si le joueur a recuperer sa recompense dans chaque expertise
+    private HashMap<greenEnergyTypes, Boolean> bonusExpertise;
     //le joueur à une liste de scientifique, elle peut être vide ou rempli jusqu'a 4 scientifiques maximum
     private List<Scientifique> scientifiques;
     private int curentScientifiqueId;
@@ -82,6 +84,12 @@ public class Player {
         expertise.put(greenEnergyTypes.RECYCLING,0);
         expertise.put(greenEnergyTypes.FUSION, 0);
         expertise.put(greenEnergyTypes.REFORESTATION, 0);
+        bonusExpertise = new HashMap<>();
+        bonusExpertise.put(greenEnergyTypes.SOLAR, false);
+        bonusExpertise.put(greenEnergyTypes.BIOMASS, false);
+        bonusExpertise.put(greenEnergyTypes.RECYCLING,false);
+        bonusExpertise.put(greenEnergyTypes.FUSION, false);
+        bonusExpertise.put(greenEnergyTypes.REFORESTATION, false);
     }
 
     /**
@@ -172,6 +180,7 @@ public class Player {
     public void addExpertise(greenEnergyTypes type, int quantity) {
         int cur = expertise.get(type);
         if (cur+quantity <= MAX_EXPERTISE) expertise.replace(type, cur+quantity);
+        bonusExpertise.replace(type, false);
     }
 
     /**
@@ -264,6 +273,24 @@ public class Player {
      */
     public int getExpertise(greenEnergyTypes type) {
         return expertise.get(type);
+    }
+
+    /**
+     * Getter du bonus d'expertise pour un type d'energie donnee
+     * @param type type d'energie concernee
+     * @return
+     */
+    public boolean getBonusExpertise(greenEnergyTypes type) {
+        return bonusExpertise.get(type);
+    }
+
+    /**
+     * Setter du bonus d'expertise pour un type d'energie donnee
+     * @param type type d'energie concernee
+     * @return
+     */
+    public boolean setBonusExpertise(greenEnergyTypes type, boolean value) {
+        return bonusExpertise.replace(type, value);
     }
 
     /**
