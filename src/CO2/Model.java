@@ -194,6 +194,25 @@ public class Model {
 	}
 
 	/**
+	 * Selection de 10 cartes parmis toutes les cartes au début du jeu
+	 * les autres ne seront pas utilisé pour le jeu
+	 * @return List<OnuCard> retourne la liste des cartes sélectionnées
+	 */
+	public List<OnuCard> initOnuCardsInGame(){
+		onuCardsInGame = new ArrayList<>(); // liste de carte qui seront selectionnée ppour la partie
+		OnuCard card;
+		for (int i = 0;i<10;i++) { // 10 cartes choisi (7 pour 2 joueurs)
+			// selection d'une carte aléatoirement parmis la liste totale des cartes de l'ONU
+			do card = onuCards.get(new Random().nextInt(onuCards.size()));
+			while(onuCardsInGame.contains(card));
+			onuCardsInGame.add(card);
+		}
+		System.out.println("les 10 cartes 'objectifs de l'ONU' selectionnées sont :");
+		return onuCardsInGame;
+	}
+
+
+	/**
 	 * Initialise les cartes Lobby
 	 * et en donne 5 au joueur
 	 */
@@ -248,7 +267,7 @@ public class Model {
 	/**
 	 * Initialise le nombre de tour
 	 */
-	private void initTour(){
+	public void initTour(){
 		if (nbJoueur == 2) setTour(5);
 		if (nbJoueur == 3) setTour(4);
 		if (nbJoueur == 4) setTour(3);
@@ -257,7 +276,7 @@ public class Model {
 	/**
 	 * Initialise le nombre de décennie
 	 */
-	private void initDecade(){
+	public void initDecade(){
 		if (nbDecade == 2) setDecade(1980);
 		if (nbDecade == 3) setDecade(1990);
 		if (nbDecade == 4) setDecade(2000);
@@ -563,8 +582,9 @@ public class Model {
 		return null;
 	}
 
+
 	/**
-	 * retourne l'index du continent d'un sommet dommer en paramètre
+	 * retourne l'index du continent d'un sommet donner en paramètre
 	 * @param sommet d'un continent
 	 */
 	public int getIndexContinentSommet(SommetTile sommet){
@@ -576,6 +596,7 @@ public class Model {
 		}
 		return -1;
 	}
+
 
 	/**
 	 * donne les récompenses de tous les scientifiques et redonne les sceintifiques aux joueurs
@@ -713,26 +734,6 @@ public class Model {
 		// donne les valeurs trouvees au joueur
 		p.giveRevenu(nombres);
 	}
-
-	/**
-	 * Selection de 10 cartes parmis toutes les cartes au début du jeu
-	 * les autres ne seront pas utilisé pour le jeu
-	 * @return List<OnuCard> retourne la liste des cartes sélectionnées
-	 */
-	public List<OnuCard> initOnuCardsInGame(){
-		onuCardsInGame = new ArrayList<>(); // liste de carte qui seront selectionnée ppour la partie
-		OnuCard card;
-		for (int i = 0;i<10;i++) { // 10 cartes choisi (7 pour 2 joueurs)
-			// selection d'une carte aléatoirement parmis la liste totale des cartes de l'ONU
-			do card = onuCards.get(new Random().nextInt(onuCards.size()));
-			while(onuCardsInGame.contains(card));
-			onuCardsInGame.add(card);
-		}
-		System.out.println("les 10 cartes 'objectifs de l'ONU' selectionnées sont :");
-		return onuCardsInGame;
-	}
-
-	public List<OnuCard> getOnuCards() { return onuCards; }
 
 	/**
 	 * Vérifier si une des cartes "objectif de l'ONU" du jeu est marquer par un joueur
@@ -880,6 +881,7 @@ public class Model {
 		getCurrentPLayer().setCEP(getCurrentPLayer().getCEP()-1);
 	}
 
+	public List<OnuCard> getOnuCards() { return onuCards; }
 
 	public List<OnuCard> getOnuCardsInGame() {
 		return onuCardsInGame;
@@ -887,6 +889,9 @@ public class Model {
 
 	public List<PisteExpertise> getExpertises() {
 		return pistesExpertise;
+	}
+	public void setAllSommetTile(List<SommetTile> allSommetTile) {
+		this.allSommetTile = allSommetTile;
 	}
 
 	public void setExpertises(List<PisteExpertise> pistesExpertise) {
@@ -901,6 +906,10 @@ public class Model {
 
 	public int getTour() {
 		return tour;
+	}
+
+	public void setContinents(Continent[] continents) {
+		this.continents = continents;
 	}
 
 	public void setTour(int tour) {
@@ -977,6 +986,10 @@ public class Model {
 	public greenEnergyTypes getCurEnergyChoice() {
 		return curEnergyChoice;
 	}
+
+	public int getNbCEPdispo() { return nbCEPdispo; }
+
+	public void setNbCEPdispo(int nbCEPdispo) { this.nbCEPdispo = nbCEPdispo; }
 
 	/**
 	 * Recupere tout les CEP des continents controlle et les ajoutent a ceux de l'utilisateur
