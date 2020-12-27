@@ -1,13 +1,13 @@
 package CO2;
 
-import jdk.jfr.Enabled;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import javafx.scene.image.Image;
+import org.junit.*;
+import org.junit.rules.ExpectedException;
 import org.mockito.Mockito;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -42,6 +42,26 @@ public class ModelUnitTest {
         OnuCard card = model.getOnuCards().get(1);
         when(random.nextInt(Mockito.anyInt())).thenReturn(1, 13);
         Assert.assertEquals(card, model.getOnuCards().get(random.nextInt(model.getOnuCards().size())));
+    }
+
+    @Test
+    public void testInitTour() {
+        // on admet que le nombre de joueur est 4
+        model.setNbJoueur(4);
+        // on test la fonction initTour
+        model.initTour();
+        // on vérifie que le tour correspond à 3
+        Assert.assertEquals(3, model.getTour());
+    }
+
+    @Test
+    public void testInitDecade() {
+        // on admet que le nombre de décennie est 3
+        model.setNbDecade(3);
+        // on test la fonction initDecade
+        model.initDecade();
+        // on vérifie que la décénnie est 1990
+        Assert.assertEquals(1990, model.getDecade());
     }
 
     @Test
@@ -167,7 +187,11 @@ public class ModelUnitTest {
         Assert.assertEquals(5, p.getLobbyCards().size());
     }
 
-
+    /**
+     * initialise les OnuCard
+     * @param card la carte
+     * @param diff la différence pour savoir si elle est marqué par un joueur (pour test)
+     */
     public void initCard(OnuCard card, boolean diff){
         ArrayList<String> types = new ArrayList<>();
         types.add(centralTypes.REBOISEMENT.name());
@@ -176,6 +200,11 @@ public class ModelUnitTest {
         Mockito.when(card.getTypesCentral()).thenReturn(types);
     }
 
+    /**
+     * initialise les types de centrales
+     * @param list la liste
+     * @param diff la différence pour savoir si elle est marqué par un joueur (pour test)
+     */
     public void initListTypesCentral(ArrayList<String> list, boolean diff){
         list.add(centralTypes.SOLAIRE.name());
         list.add(centralTypes.REBOISEMENT.name());
@@ -206,75 +235,67 @@ public class ModelUnitTest {
         Assert.assertFalse(model.markOnuCard(card, list));
     }
 
-    @Test
-    public void testgiveVictoryPointsOnuCards(){
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    @Test (expected = Exception.class)
+    public void testGiveVictoryPointsOnuCards() throws Exception {
         // markOnuCard(card, centralGreen) renvoie true
         OnuCard card = Mockito.mock(OnuCard.class);
         initCard(card,false);
         ArrayList<String> list = new ArrayList<>();
         initListTypesCentral(list,false);
-        try {
-            // le joueur courant dispose de 2 ressource technologique
-            model.getCurrentPLayer().setResourcesTech(2);
-            // la carte peut donc être joué
-            model.giveVictoryPointsOnuCards(card,list);
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
+        // le joueur courant dispose de 2 ressource technologique
+        model.getCurrentPLayer().setResourcesTech(2);
+        // la carte peut donc être joué
+        model.giveVictoryPointsOnuCards(card,list);
+        // pas de renvoie d'exception
+        thrown.expect(Exception.class);
     }
 
-    @Test
-    public void testgiveVictoryPointsOnuCards2() {
+    @Test (expected = Exception.class)
+    public void testGiveVictoryPointsOnuCards2() throws Exception{
         // markOnuCard(card, centralGreen) renvoie false
         OnuCard card = Mockito.mock(OnuCard.class);
         initCard(card,true);
         ArrayList<String> list = new ArrayList<>();
         initListTypesCentral(list,true);
-        try {
-            // le joueur courant dispose de 2 ressource technologique
-            model.getCurrentPLayer().setResourcesTech(2);
-            // la carte ne peut donc être joué (markOnuCard(...) => false)
-            model.giveVictoryPointsOnuCards(card,list);
-        }catch (Exception e) {
-            // renvoie une exception
-            e.printStackTrace();
-        }
+        // le joueur courant dispose de 2 ressource technologique
+        model.getCurrentPLayer().setResourcesTech(2);
+        // la carte ne peut donc être joué (markOnuCard(...) => false)
+        model.giveVictoryPointsOnuCards(card,list);
+        // renvoie une exception
+        thrown.expect(Exception.class);
     }
 
-    @Test
-    public void testgiveVictoryPointsOnuCards3() throws Exception{
+    @Test (expected = Exception.class)
+    public void testGiveVictoryPointsOnuCards3() throws Exception{
         // markOnuCard(card, centralGreen) renvoie true
         OnuCard card = Mockito.mock(OnuCard.class);
         initCard(card,false);
         ArrayList<String> list = new ArrayList<>();
         initListTypesCentral(list,false);
-        try {
-            // le joueur courant dispose de 0 ressource technologique
-            model.getCurrentPLayer().setResourcesTech(0);
-            // la carte ne peut donc être joué (ressourceTech <= 1)
-            model.giveVictoryPointsOnuCards(card,list);
-        }catch (Exception e) {
-            // renvoie une exception
-            e.printStackTrace();
-        }
+        // le joueur courant dispose de 0 ressource technologique
+        model.getCurrentPLayer().setResourcesTech(0);
+        // la carte ne peut donc être joué (ressourceTech <= 1)
+        model.giveVictoryPointsOnuCards(card,list);
+        // renvoie une exception
+        thrown.expect(Exception.class);
     }
 
-    @Test
-    public void testgiveVictoryPointsOnuCards4() throws Exception{
+    @Test (expected = Exception.class)
+    public void testGiveVictoryPointsOnuCards4() throws Exception{
         // markOnuCard(card, centralGreen) renvoie false
         OnuCard card = Mockito.mock(OnuCard.class);
         initCard(card,true);
         ArrayList<String> list = new ArrayList<>();
         initListTypesCentral(list,true);
-        try {
-            // le joueur courant dispose de 0 ressource technologique
-            model.getCurrentPLayer().setResourcesTech(0);
-            // la carte ne peut donc être joué (ressourceTech <= 1 && markOnuCard(..) => false)
-            model.giveVictoryPointsOnuCards(card,list);
-        }catch (Exception e) {
-            // renvoie une exception
-            e.printStackTrace();
-        }
+        // le joueur courant dispose de 0 ressource technologique
+        model.getCurrentPLayer().setResourcesTech(0);
+        // la carte ne peut donc être joué (ressourceTech <= 1 && markOnuCard(..) => false)
+        model.giveVictoryPointsOnuCards(card,list);
+        // renvoie une exception
+        thrown.expect(Exception.class);
     }
 
     @Test
@@ -371,6 +392,20 @@ public class ModelUnitTest {
     }
 
     @Test
+    public void testDollarsToCEP(){
+        // argent du joueur à 10
+        model.getCurrentPLayer().setArgent(10);
+        // 3 CEP dispo au marché
+        model.setNbCEPdispo(3);
+        // test de la méthode tradeDollarstoCEP
+        model.tradeDollarstoCEP();
+        // l'argent du joueur est de 7 car il a payé un CEP
+        Assert.assertEquals(7, model.getCurrentPLayer().getArgent());
+        // il rest 2 CEP au marché
+        Assert.assertEquals(2, model.getNbCEPdispo());
+    }
+
+    @Test
     public void testAugmenterCo2AjoutCentral() {
         int index = 1 ;
         Continent continent = model.getContinents()[1];
@@ -381,4 +416,105 @@ public class ModelUnitTest {
 
         Assert.assertEquals(co2expected,model.getCo2());
     }
+
+    /**
+     * initialisation des sujets
+     * @param subject sujet
+     * @param types energy associé au sujet
+     */
+    public void initSubject(Subject subject, greenEnergyTypes types){
+        // switch sur les types
+        switch (types){
+            case FUSION :
+                subject.setEnergy(greenEnergyTypes.FUSION);
+                break;
+            case BIOMASS :
+                subject.setEnergy(greenEnergyTypes.BIOMASS);
+                break;
+            case RECYCLING :
+                subject.setEnergy(greenEnergyTypes.RECYCLING);
+                break;
+            case SOLAR :
+                subject.setEnergy(greenEnergyTypes.SOLAR);
+                break;
+        }
+    }
+
+    /**
+     * inititialisation des sommets
+     * @param sommet le sommet
+     * @param sommetSubject liste des sommets
+     * @param types le type du sujet 1
+     * @param types2 le type du sujet 2
+     */
+    public void initSommets(SommetTile sommet, ArrayList<Subject> sommetSubject, greenEnergyTypes types, greenEnergyTypes types2 ){
+        // initialisation des sujets
+        for( int i = 0;i<2;i++) {
+            Subject sub = new Subject();
+            if(i==0) initSubject(sub, types);
+            if(i==1) initSubject(sub, types2);
+            // ajout des sujets à la liste
+            sommetSubject.add(sub);
+        }
+        // ajout de la liste des sujets ua sommet
+        sommet.setSubjects(sommetSubject);
+    }
+
+    @Test
+    public void testGetCurrentSommetFull(){
+        ArrayList<SommetTile> listSommet = new ArrayList<>(); // création liste de sommet
+        SommetTile sommetRome = new SommetTile(); // création sommet Rome
+        SommetTile sommetCanberra = new SommetTile(); // création sommet Canberra
+        // ajout des sommets à la liste des sommets
+        listSommet.add(sommetRome);
+        listSommet.add(sommetCanberra);
+        // création liste des sujets pour Rome
+        ArrayList<Subject> sommetRomeSubject = new ArrayList<>();
+        //ajout des sujets
+        initSommets(sommetRome, sommetRomeSubject, greenEnergyTypes.FUSION, greenEnergyTypes.BIOMASS);
+
+        // boucle sur les sujets du sommet de Rome
+        for (Subject s : sommetRome.getSubjects()) {
+            // ajout des scientifiques aux sujets => sommet rempli
+            Scientifique scientifique = new Scientifique();
+            scientifique.setSubject(s);
+            s.setScientifique(scientifique);
+        }
+
+        // création liste des sujets pour Canberra
+        ArrayList<Subject> sommetCanberraSubject = new ArrayList<>();
+        // ajout des sujets
+        initSommets(sommetCanberra, sommetCanberraSubject, greenEnergyTypes.SOLAR, greenEnergyTypes.RECYCLING);
+
+        // ajout des sommets aux continents
+        model.getContinents()[0].setSommetTile(sommetRome);
+        model.getContinents()[1].setSommetTile(sommetCanberra);
+
+        model.setAllSommetTile(listSommet);
+
+        // test de la méthode getCurrentSommetFull => égal au sommet Rome car sommet rempli
+        Assert.assertEquals(sommetRome, model.getCurrentSommetFull());
+    }
+
+    @Test
+    public void testGetIndexContinentSommet(){
+        // initialisation des continents
+        Continent[] continents = new Continent[2];
+        ArrayList<String> nomContinents = new ArrayList<>(Arrays.asList("Europe", "Afrique"));
+        int nbCep = 0;
+        for(int i=0; i<2 ;i++) {
+            if(nomContinents.get(i).equals("Europe")) nbCep = 5;if(nomContinents.get(i).equals("Afrique")) nbCep = 3;
+            continents[i] = new Continent(nomContinents.get(i), nbCep, new Image(getClass().getResourceAsStream("images/Continents/" + nomContinents.get(i) + ".jpg")), i);
+        }
+        // création sommet + ce sommet sur continent 0
+        SommetTile sommet = new SommetTile();
+        continents[0].setSommetTile(sommet);
+        sommet.setContinent(continents[0]);
+
+        model.setContinents(continents);
+
+        Assert.assertEquals(0, model.getIndexContinentSommet(sommet));
+    }
+
+
 }
