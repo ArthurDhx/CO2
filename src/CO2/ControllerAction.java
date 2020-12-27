@@ -129,8 +129,18 @@ public class ControllerAction implements EventHandler<ActionEvent>{
         // récompense sommets
         SommetTile sommetFull = model.getCurrentSommetFull(); // récupère le sommet fini
         if(model.giveRewardsSommet(sommetFull) != null) {
+            viewGame.displayAlertWithoutHeaderText("Sommet", "un sommet est rempli! \n" + "les scientifiques sont redonner aux joueurs \n et vous recevez un point d'expertise sur chaque sujet du sommet. \n" +
+                    "Vous recevez également un point d'expertise supplémentaire  dans l'un des deux sujets du sommet de votre choix");
+            viewGame.hboxAction.displayChoisirExpretiseSommetFini(sommetFull);
+            if(viewGame.hboxAction.dialogExpertiseBonusExpertise != null) {
+                Optional<greenEnergyTypes> result = viewGame.hboxAction.dialogExpertiseBonusExpertise.showAndWait();
+                result.ifPresent(typesChoisi -> {
+                    model.getCurrentPLayer().addExpertise(typesChoisi, 1);
+                    viewGame.reloadPlayerExpertise(model.getCurrentPLayer());
+                    return;
+                });
+            }
             viewGame.reloadSommet(sommetFull); // on réaffiche un nouveau sommet
-            viewGame.displayAlertWithoutHeaderText("Sommet", "un sommet est rempli! \n" + "les scientifiques sont redonner aux joueurs \n et vous recevez un point d'expertise sur chaque sujet du sommet.");
             for (int i = 0; i <model.getCurrentPLayer().getScientifiques().size(); i++) {
                 // déplace les scientifiques sur le sommet dans la réserve
                 viewGame.deplacerScientifiqueReserve(model.getCurrentPLayer().getScientifiques().get(i).getImgScientifique(), i);

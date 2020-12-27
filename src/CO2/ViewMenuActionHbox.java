@@ -405,6 +405,26 @@ public class ViewMenuActionHbox extends HBox {
     }
 
     /**
+     * Affiche le ChoiceDialog qui permet de choisir une expertise supplémentaire présente sur le sommet
+     */
+    public void displayChoisirExpretiseSommetFini(SommetTile sommet){
+        //On récupère les sommets
+        //SommetTile sommet = model.getCurrentSommetFull();
+        //Continent continent = sommet.getContinent();
+        ArrayList<greenEnergyTypes> types = new ArrayList<>();
+        for (Subject s : sommet.getSubjects()) {
+            types.add(s.getEnergy());
+        }
+        dialogExpertiseBonusExpertise = new ChoiceDialog<greenEnergyTypes>(
+                types.get(0),
+                types
+        );
+        dialogExpertiseBonusExpertise.setTitle("Choisir une expertise");
+        dialogExpertiseBonusExpertise.setHeaderText("Veuiller choisir une expertise des sujets du sommet");
+        dialogExpertiseBonusExpertise.setContentText("Expertise :");
+    }
+
+    /**
      * Reset la hbox a son état initiale selon les actions disponible par le joueur
      */
     public void resetHbox() {
