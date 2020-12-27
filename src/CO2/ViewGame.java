@@ -458,7 +458,7 @@ public class ViewGame {
 		pane.getChildren().remove(co2);
 		co2 = new Text(TEXT_X, 125, "Valeur du CO2 : " + model.getCo2() + "/500 \n" +
 				"(si en 2000 le CO2 est à moins \n" +
-				"de 350, vous perdez)");
+				"de 350, la partie \n se termine)");
 		pane.getChildren().add(co2);
 	}
 
