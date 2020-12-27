@@ -400,9 +400,9 @@ public class Model {
 	 * permet de vérifier si la tuile est plaçable ou non
 	 * @return boolean
 	 */
-	public boolean verrifAddProjectTileToSubvention(Continent continent, Subvention subvention){
+	public boolean verrifAddProjectTileToSubvention(Continent continent, Subvention subvention, greenEnergyTypes energy){
 		// si l'energie ne peux pas etre placee sur le continent -> action impossible
-		if(!continent.getAgendaTile().isPossiblePlacement(subvention.getEnergyTypes())) return false;
+		if(!continent.getAgendaTile().isPossiblePlacement(energy)) return false;
 
 		if(subvention.getProject() == null || subvention.getProject().isSubventionPossible()) return true;
 

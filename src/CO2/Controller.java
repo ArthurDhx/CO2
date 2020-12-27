@@ -64,7 +64,7 @@ public class Controller {
                     projetsJoueur.remove(0);
 
                     // Si la tuile peut etre ajouter
-                    if(model.verrifAddProjectTileToSubvention(continent, subvention)) {
+                    if(model.verrifAddProjectTileToSubvention(continent, subvention, energyChoisi)) {
                         // Mets a jour le model : fait en sorte que le projet ne puisse pas etre réutilisé
                         model.addProjectTileToSubvention(continent, subvention, energyChoisi);
 

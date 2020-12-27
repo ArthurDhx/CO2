@@ -61,7 +61,7 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
                 Optional<greenEnergyTypes> resultEnergy = viewGame.hboxAction.dialogEnergie.showAndWait();
                 resultEnergy.ifPresent(energyChoisi -> {
                     // Si la tuile peut etre ajouter
-                    if(model.verrifAddProjectTileToSubvention(continentChoisi, subvention)){
+                    if(model.verrifAddProjectTileToSubvention(continentChoisi, subvention, energyChoisi)){
                         // Mets a jour le model : fait en sorte que le projet ne puisse pas etre réutilisé
                         model.addProjectTileToSubvention(subvention.getContinent(), subvention, energyChoisi);
 
