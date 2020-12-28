@@ -510,8 +510,7 @@ public class Model {
 	 */
 	public boolean endGame() {
 		// si le nombre de décénnie a atteint son maximum
-		//TODO Remettre à la fin du projet: "|| co2 >= 500 "
-		if (decade == NB_DECENNIE) {
+		if (decade == NB_DECENNIE || co2 >= 500) {
 			// alors c'est la fin du jeu
 			System.out.println("FIN DU JEU");
 			// return true
