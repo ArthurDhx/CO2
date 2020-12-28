@@ -286,6 +286,7 @@ public class ViewGame {
 					img.setFitHeight(rectWidth - 5);
 					img.setX(x + offset + 2.5);
 					img.setY(y - ((rectWidth + space) * i) + 2.5);
+					Tooltip.install(img, new Tooltip(c.getBonus().description));
 					pane.getChildren().add(img);
 				}
 				pane.getChildren().add(nb);
