@@ -11,7 +11,8 @@ public class Controller {
     protected ControllerActionPrincipale controllerActionPrincipale;
     protected ControllerActionGratuite controllerActionGratuite;
     protected ViewGame viewGame ;
-    protected int tour;
+    private int tour;
+    private greenEnergyTypes energyChoisi;
     
     public Controller(Model model, ViewTitle viewTitle, ViewGame viewGame) {
 		this.model = model;
@@ -41,51 +42,45 @@ public class Controller {
     public void initStartingProject(){
         viewGame.displayAlertWithoutHeaderText(
                 "Mode 1 Joueur",
-                "Vos projets vont être affectés aux régions aléatoirement,\n" +
+                "5 projets vont être affectés aux régions aléatoirement,\n" +
                         "Vous allez devoir choisir sur qu'elle case de subvention ceux-ci seront disposés");
-
-        // Prenez 1 tuile de chacun des 5 projets en main
-        final int NB_PROJET = 5;
-        List<Integer> projetsJoueur = new ArrayList<>();
-        for (int i = 0; i < NB_PROJET; i++) projetsJoueur.add(i);
-
-        // Mélange les projets
-        Collections.shuffle(projetsJoueur);
 
         // Pour chaque continent on propose de poser le projet
         tour = 5;
         while(tour != 0){
+            energyChoisi = null;
             for (Continent continent: model.getContinents()) {
+                if(tour == 0) break;
                 // si il reste des projets dans la main alors on propose un projet
-                if (!projetsJoueur.isEmpty()) {
                     viewGame.hboxAction.displayChoisirSubventionChoiceDialog(continent);
                     // la subvention choisis par le joueur
                     Optional<Subvention> resulltSubv = viewGame.hboxAction.dialogSubvention.showAndWait();
                     resulltSubv.ifPresent(subvention -> {
                         // tire une energie
-                        greenEnergyTypes energyChoisi = greenEnergyTypes.values()[projetsJoueur.get(0)];
-
-                        viewGame.displayAlertWithoutHeaderText(
-                                "Energie tiré aléatoirement",
-                                "Vous avez tiré aléatoirement l'énergie " + energyChoisi);
+                        if (energyChoisi == null){
+                            energyChoisi = greenEnergyTypes.getRandomGreenEnergyTypes();
+                            viewGame.displayAlertWithoutHeaderText(
+                                    "Energie tiré aléatoirement",
+                                    "Vous avez tiré aléatoirement l'énergie " + energyChoisi);
+                        }
 
 
                         // Si la tuile peut etre ajouter
                         if (model.verrifAddProjectTileToSubvention(continent, subvention, energyChoisi)) {
 
-                            projetsJoueur.remove(0);
                             // Mets a jour le model : fait en sorte que le projet ne puisse pas etre réutilisé
                             model.addProjectTileToSubvention(continent, subvention, energyChoisi);
                             tour--;
+                            energyChoisi = null;
                             // Affiche la tuile a l'écran
                             viewGame.changeProjectState(subvention.getIndex(), model.getCurEnergyChoice(), viewGame.PROPOSER_PROJET, continent);
                         }else{
                             viewGame.displayAlertWithoutHeaderText(
                                     "ENERGIE NON PLACABLE DANS LE CONTINENT",
-                                    "L'energie "+ energyChoisi + " n'est pas placable dans le continent " + continent);
+                                    "L'energie "+ energyChoisi + " n'est pas placable dans le continent " + continent + "\n" +
+                                            "On va essayer de la placer sur le prochain continent ");
                         }
                     });
-                }
             }
         }
     }
