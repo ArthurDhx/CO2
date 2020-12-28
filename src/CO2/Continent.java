@@ -106,6 +106,10 @@ public class Continent {
         nbCep --;
     }
 
+    public void removeRessTech(){
+        nbRessTech--;
+    }
+
     public Player getControlPlayer() {
         return controlPlayer;
     }

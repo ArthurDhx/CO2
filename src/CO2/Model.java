@@ -674,8 +674,6 @@ public class Model {
 				// Alors on l'occupe
 				getCurrentPLayer().setActionPrincipaleDone(true);
 				centrales.get(i).setOccupe(true);
-				// comme seul joueur, il prend le controlle du continent quand il met en place
-				giveControl(projetMisEnPlaceChoisi.getContinent());
 				// Affecation type
 				centrales.get(i).setType(projetMisEnPlaceChoisi.getProject().getCentralType());
 				// le joueur paye la centrale
@@ -687,10 +685,12 @@ public class Model {
 				};
 				int index = curPlayer.getContinentsControlles().indexOf(projetMisEnPlaceChoisi.getContinent());
 				if (index >= 0 ) {
-					curPlayer.getContinentsControlles().get(index).removeCEP();
+					curPlayer.getContinentsControlles().get(index).removeRessTech();
 					cout[1]--;
 				}
 				getCurrentPLayer().payCentral(cout);
+				// comme seul joueur, il prend le controlle du continent quand il met en place
+				giveControl(projetMisEnPlaceChoisi.getContinent());
 
 				if (centrales.get(i).isOccupe() && centrales.get(i).isFossile() && projetMisEnPlaceChoisi.getContinent().allPlantsAreOccupied()) {
 					// récompenses du remplacement
