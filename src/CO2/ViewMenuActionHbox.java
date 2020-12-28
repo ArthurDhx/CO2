@@ -86,9 +86,9 @@ public class ViewMenuActionHbox extends HBox {
         btnScientifique2 = new Button("Scientifique n°2");
         btnScientifique3 = new Button("Scientifique n°3");
         btnScientifique4 = new Button("Scientifique n°4");
-        btnDeplacerScientifiqToProject = new Button("Déplacer le scientifque sur un projet");
-        btnDeplacerScientifiqToSommet = new Button("Déplacer le scientifque sur un sommet");
-        btnDeplacerScientifiqToReserve = new Button("Déplacer le scientifque dans la réserve");
+        btnDeplacerScientifiqToProject = new Button("Sur un projet");
+        btnDeplacerScientifiqToSommet = new Button("Sur un sommet");
+        btnDeplacerScientifiqToReserve = new Button("Dans la réserve");
         btnMarche = new Button("Marché au CEP");
         btnJouerCarteLobby = new Button("Jouer une carte lobby");
         btnJouerCarte = new Button("Jouer une carte");
