@@ -157,16 +157,15 @@ public class ViewMenuActionHbox extends HBox {
     }
 
     /**
-     * Choisir une energie
+     * Choisir une energie parmis les energies de la carte agenda du continent pour proposer le projet
+     * @param continent continent choisi
      */
-    public void displayEnergyChoiceDialog() {
+    public void displayEnergyChoiceDialog(Continent continent) {
         ArrayList<greenEnergyTypes> energyTypes = new ArrayList<>();
         // Récupere les énergies
         for (greenEnergyTypes ge: greenEnergyTypes.values()) {
-            //si il y encore des cartes de l'energie on l'ajoute a la liste
-            if (model.projectsPacket.get(ge.name()) != 0){
-                energyTypes.add(ge);
-            }
+            //si il y encore des cartes de l'energie on l'ajoute a la liste et que l'energie est autorisee dans la carte agenda du continent
+            if ((model.projectsPacket.get(ge.name()) != 0) && (continent.getAgendaTile().getEnergies().contains(ge))) energyTypes.add(ge);
         }
         dialogEnergie = new ChoiceDialog<greenEnergyTypes>(
                 energyTypes.get(0), // choix par défaut

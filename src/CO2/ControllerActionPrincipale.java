@@ -56,8 +56,8 @@ public class ControllerActionPrincipale implements EventHandler<ActionEvent>{
             // la subvention choisis par le joueur
             Optional<Subvention> resulltSubv = viewGame.hboxAction.dialogSubvention.showAndWait();
             resulltSubv.ifPresent(subvention -> {
-                // choisis l'energie
-                viewGame.hboxAction.displayEnergyChoiceDialog() ;
+                // choisis l'energie parmis les 3 energies autorisees par la carte agenda du continent choisi
+                viewGame.hboxAction.displayEnergyChoiceDialog(continentChoisi) ;
                 Optional<greenEnergyTypes> resultEnergy = viewGame.hboxAction.dialogEnergie.showAndWait();
                 resultEnergy.ifPresent(energyChoisi -> {
                     // Si la tuile peut etre ajouter
