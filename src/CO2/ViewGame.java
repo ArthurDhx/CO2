@@ -286,7 +286,6 @@ public class ViewGame {
 					img.setFitHeight(rectWidth - 5);
 					img.setX(x + offset + 2.5);
 					img.setY(y - ((rectWidth + space) * i) + 2.5);
-					Tooltip.install(img, new Tooltip(c.getBonus().description));
 					pane.getChildren().add(img);
 				}
 				pane.getChildren().add(nb);
@@ -887,7 +886,7 @@ public class ViewGame {
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 		alert.setHeaderText(null);
 		alert.setTitle("Quelle horreur !");
-		alert.setContentText("Le taux de CO2 dépasse les 500 ppm. Vous devez trouver une nouvelle planète à habiter !");
+		alert.setContentText("Le taux de CO2 dépasse les 500 ppm. Vous devez trouver une nouvelle planète à habiter ! \n Points de victoires: "+model.getCurrentPLayer().getPointVictoire());
 		Optional<ButtonType> result = alert.showAndWait();
 	}
 
