@@ -57,6 +57,7 @@ public class ViewMenuActionHbox extends HBox {
     Button btnDeplacerScientifiqToSommet;
     Button btnDeplacerScientifiqToReserve;
 
+    Button btnJouerCarte;
     Button btnMarquerPointOnu;
     Button btnJouerCarteLobby;
 
@@ -90,6 +91,7 @@ public class ViewMenuActionHbox extends HBox {
         btnDeplacerScientifiqToReserve = new Button("Déplacer le scientifque dans la réserve");
         btnMarche = new Button("Marché au CEP");
         btnJouerCarteLobby = new Button("Jouer une carte lobby");
+        btnJouerCarte = new Button("Jouer une carte");
         btnMarquerPointOnu = new Button("Marquer les points d'une carte ONU");
         btnFinTour = new Button("Fin du tour");
 
@@ -305,9 +307,17 @@ public class ViewMenuActionHbox extends HBox {
         // si l'action n'est pas faite et que tous les scientifiques ne sont pas sur un sommet alors afficher l'action
         if (!actionFaite[0] && !model.getCurrentPLayer().isAllScientifiqueIsOnSommet()) this.getChildren().add(btnDeplacerScientifique);
         if (!actionFaite[2]) this.getChildren().add(btnMarche);
-        if (!actionFaite[3]) this.getChildren().addAll(btnJouerCarteLobby,btnMarquerPointOnu);
+        if (!actionFaite[3]) this.getChildren().addAll(btnJouerCarte);
 
         this.getChildren().add(btnCancelAction);
+    }
+
+    /*
+    * Afficher les actions de carte
+    * */
+    public void diplayActionCarte(){
+        this.getChildren().removeAll(this.getChildren());
+        this.getChildren().addAll(btnJouerCarteLobby,btnMarquerPointOnu, btnCancelAction);
     }
 
     /**
@@ -469,6 +479,7 @@ public class ViewMenuActionHbox extends HBox {
         btnDeplacerScientifiqToReserve.setOnAction(handler);
         btnCancelActionScientifique.setOnAction(handler);
         btnMarche.setOnAction(handler);
+        btnJouerCarte.setOnAction(handler);
         btnJouerCarteLobby.setOnAction(handler);
         btnMarquerPointOnu.setOnAction(handler);
     }

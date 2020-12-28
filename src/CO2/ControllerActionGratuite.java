@@ -150,6 +150,8 @@ public class ControllerActionGratuite implements EventHandler<ActionEvent> {
             viewGame.reloadPointVictoire();
             viewGame.reloadresourcesTech();
             viewGame.hboxAction.resetHbox();
+        } else if (source == viewGame.hboxAction.btnJouerCarte){
+            viewGame.hboxAction.diplayActionCarte();
         }
     }
 
