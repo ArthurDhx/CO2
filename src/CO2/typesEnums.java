@@ -1,6 +1,18 @@
 package CO2;
 
-enum greenEnergyTypes {SOLAR, BIOMASS, RECYCLING, FUSION, REFORESTATION}
+import java.util.Random;
+
+enum greenEnergyTypes {
+    SOLAR, BIOMASS, RECYCLING, FUSION, REFORESTATION;
+    /**
+     * Pick a random value of the BaseColor enum.
+     * @return a random BaseColor.
+     */
+    public static greenEnergyTypes getRandomGreenEnergyTypes() {
+        Random random = new Random();
+        return values()[random.nextInt(values().length)];
+    }
+}
 
 enum subventionTypes {ARGENT, RESSOURCE, RECHERCHE}
 
