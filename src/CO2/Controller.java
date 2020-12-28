@@ -11,6 +11,7 @@ public class Controller {
     protected ControllerActionPrincipale controllerActionPrincipale;
     protected ControllerActionGratuite controllerActionGratuite;
     protected ViewGame viewGame ;
+    protected int tour;
     
     public Controller(Model model, ViewTitle viewTitle, ViewGame viewGame) {
 		this.model = model;
@@ -52,28 +53,39 @@ public class Controller {
         Collections.shuffle(projetsJoueur);
 
         // Pour chaque continent on propose de poser le projet
-        for (Continent continent: model.getContinents()) {
-            // si il reste des projets dans la main alors on propose un projet
-            if (!projetsJoueur.isEmpty()){
-                viewGame.hboxAction.displayChoisirSubventionChoiceDialog(continent);
-                // la subvention choisis par le joueur
-                Optional<Subvention> resulltSubv = viewGame.hboxAction.dialogSubvention.showAndWait();
-                resulltSubv.ifPresent(subvention -> {
-                    // tire une energie
-                    greenEnergyTypes energyChoisi = greenEnergyTypes.values()[projetsJoueur.get(0)];
-                    projetsJoueur.remove(0);
+        tour = 5;
+        while(tour != 0){
+            for (Continent continent: model.getContinents()) {
+                // si il reste des projets dans la main alors on propose un projet
+                if (!projetsJoueur.isEmpty()) {
+                    viewGame.hboxAction.displayChoisirSubventionChoiceDialog(continent);
+                    // la subvention choisis par le joueur
+                    Optional<Subvention> resulltSubv = viewGame.hboxAction.dialogSubvention.showAndWait();
+                    resulltSubv.ifPresent(subvention -> {
+                        // tire une energie
+                        greenEnergyTypes energyChoisi = greenEnergyTypes.values()[projetsJoueur.get(0)];
 
-                    // Si la tuile peut etre ajouter
-                    if(model.verrifAddProjectTileToSubvention(continent, subvention, energyChoisi)) {
-                        // Mets a jour le model : fait en sorte que le projet ne puisse pas etre réutilisé
-                        model.addProjectTileToSubvention(continent, subvention, energyChoisi);
+                        viewGame.displayAlertWithoutHeaderText(
+                                "Energie tiré aléatoirement",
+                                "Vous avez tiré aléatoirement l'énergie " + energyChoisi);
 
-                        // Affiche la tuile a l'écran
-                        viewGame.changeProjectState(subvention.getIndex(), model.getCurEnergyChoice(), viewGame.PROPOSER_PROJET, continent);
 
-                        // Le joueur en cours a effectuer son action principale
-                    }
-                });
+                        // Si la tuile peut etre ajouter
+                        if (model.verrifAddProjectTileToSubvention(continent, subvention, energyChoisi)) {
+
+                            projetsJoueur.remove(0);
+                            // Mets a jour le model : fait en sorte que le projet ne puisse pas etre réutilisé
+                            model.addProjectTileToSubvention(continent, subvention, energyChoisi);
+                            tour--;
+                            // Affiche la tuile a l'écran
+                            viewGame.changeProjectState(subvention.getIndex(), model.getCurEnergyChoice(), viewGame.PROPOSER_PROJET, continent);
+                        }else{
+                            viewGame.displayAlertWithoutHeaderText(
+                                    "ENERGIE NON PLACABLE DANS LE CONTINENT",
+                                    "L'energie "+ energyChoisi + " n'est pas placable dans le continent " + continent);
+                        }
+                    });
+                }
             }
         }
     }
