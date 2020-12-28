@@ -844,11 +844,11 @@ public class Model {
 				break;
 			case CONSTRUIRE:
 				// le type de la centrale de la carte lobby
-				centralTypes centralType = (centralTypes) complement;
+				energyType = (greenEnergyTypes) complement;
 				// la centrale d'energie indiquee doit etre construite
 				for (Continent continent : continents) {
 					for (Central central : continent.getCentrales()) {
-						if (central.getType().equals(centralType))
+						if (central.energyEquals(energyType))
 							return true;
 					}
 				}

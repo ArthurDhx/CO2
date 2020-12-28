@@ -187,6 +187,20 @@ public class ModelUnitTest {
         Assert.assertEquals(5, p.getLobbyCards().size());
     }
 
+    @Test
+    public void testCarteLobbyVerfifProposer() {
+        // carte lobby
+        Continent continent = model.getContinents()[0];
+        LobbyCard<Continent> card = new LobbyCard(lobbyActionTypes.PROPOSER, continent, lobbyMineurTypes.ARGENT);
+
+        Assert.assertFalse(model.playLobbyCard(card, true));
+
+        // conditions
+        continent.getSubventions().get(0).setProject(new Project(greenEnergyTypes.SOLAR));
+
+        Assert.assertTrue(model.playLobbyCard(card, true));
+    }
+
     /**
      * initialise les OnuCard
      * @param card la carte

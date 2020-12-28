@@ -19,6 +19,20 @@ public class Central {
         tabRectangleCentral[index].setStroke(Color.BLACK);
     }
 
+    /**
+     * Compare le type de centrale et d'energie verte
+     * @param energyType
+     * @return
+     */
+    public boolean energyEquals(greenEnergyTypes energyType) {
+        if (energyType.equals(greenEnergyTypes.SOLAR) && type.equals(centralTypes.SOLAIRE)) return true;
+        if (energyType.equals(greenEnergyTypes.BIOMASS) && type.equals(centralTypes.BIOMASSE)) return true;
+        if (energyType.equals(greenEnergyTypes.FUSION) && type.equals(centralTypes.FUSIONFROIDE)) return true;
+        if (energyType.equals(greenEnergyTypes.RECYCLING) && type.equals(centralTypes.RECYCLAGE)) return true;
+        if (energyType.equals(greenEnergyTypes.REFORESTATION) && type.equals(centralTypes.REBOISEMENT)) return true;
+        return false;
+    }
+
     public void setType(centralTypes type) {
         this.type = type;
     }
