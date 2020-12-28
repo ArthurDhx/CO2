@@ -123,10 +123,10 @@ public class Player {
                 }
                 break;
             case METTRE:
-                // TODO: trouver une recompense
+                resourcesTech+=3;
                 break;
             case CONSTRUIRE:
-                // si cette fonction est faite, le joueur a deja payer la centrale, on rembourse
+                // si cette fonction est faite, le joueur a deja payer la centrale => on rembourse
                 argent += 3;
                 break;
             case SOMMET:

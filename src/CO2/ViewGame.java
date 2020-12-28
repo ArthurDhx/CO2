@@ -440,12 +440,12 @@ public class ViewGame {
 		pane.getChildren().remove(CEPEurope);
 		pane.getChildren().remove(CEPOceanie);
 		pane.getChildren().remove(CEPAfrique);
-		CEPEurope = new Text(continentX[0]+60, continentY[0]-70, "L'Europe à "+model.getContinents()[0].getNbCep()+" CEP \net " + model.getContinents()[0].getNbRessTech() +" Ressource(s) technologique(s)");
-		CEPAfrique = new Text(continentX[1]+60,continentY[1]-60, "L'Afrique à "+model.getContinents()[1].getNbCep()+" CEP \net " + model.getContinents()[1].getNbRessTech() +" Ressource(s) technologique(s)");
-		CEPAmSud = new Text(continentX[2]+45, continentY[2]-70, "L'Amérique du Sud à "+model.getContinents()[2].getNbCep()+" CEP \net " + model.getContinents()[2].getNbRessTech() +" Ressource(s) technologique(s)");
-		CEPAmNord = new Text(continentX[3]+45, continentY[3]-120, "L'Amérique du Nord à "+model.getContinents()[3].getNbCep()+" CEP \net " + model.getContinents()[3].getNbRessTech() +" Ressource(s) technologique(s)");
-		CEPOceanie = new Text(continentX[4]+60, continentY[4]-110, "L'Océanie à "+model.getContinents()[4].getNbCep()+" CEP \net " + model.getContinents()[4].getNbRessTech() +" Ressource(s) technologique(s)");
-		CEPAsie = new Text(continentX[5]+85, continentY[5]-120, "L'Asie à "+model.getContinents()[5].getNbCep()+" CEP \net " + model.getContinents()[5].getNbRessTech() +" Ressource(s) technologique(s)");
+		CEPEurope = new Text(continentX[0]+60, continentY[0]-70, "L'Europe à "+model.getContinents()[0].getNbCep()+"/5 CEP \net " + model.getContinents()[0].getNbRessTech() +" Ressource(s) technologique(s)");
+		CEPAfrique = new Text(continentX[1]+60,continentY[1]-60, "L'Afrique à "+model.getContinents()[1].getNbCep()+"/3 CEP \net " + model.getContinents()[1].getNbRessTech() +" Ressource(s) technologique(s)");
+		CEPAmSud = new Text(continentX[2]+45, continentY[2]-70, "L'Amérique du Sud à "+model.getContinents()[2].getNbCep()+"/4 CEP \net " + model.getContinents()[2].getNbRessTech() +" Ressource(s) technologique(s)");
+		CEPAmNord = new Text(continentX[3]+45, continentY[3]-120, "L'Amérique du Nord à "+model.getContinents()[3].getNbCep()+"/5 CEP \net " + model.getContinents()[3].getNbRessTech() +" Ressource(s) technologique(s)");
+		CEPOceanie = new Text(continentX[4]+60, continentY[4]-110, "L'Océanie à "+model.getContinents()[4].getNbCep()+"/4 CEP \net " + model.getContinents()[4].getNbRessTech() +" Ressource(s) technologique(s)");
+		CEPAsie = new Text(continentX[5]+85, continentY[5]-120, "L'Asie à "+model.getContinents()[5].getNbCep()+"/6 CEP \net " + model.getContinents()[5].getNbRessTech() +" Ressource(s) technologique(s)");
 		pane.getChildren().add(CEPAsie);
 		pane.getChildren().add(CEPAmNord);
 		pane.getChildren().add(CEPAmSud);

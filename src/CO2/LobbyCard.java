@@ -48,7 +48,7 @@ public class LobbyCard<T> {
                 break;
             case METTRE:
                 action = " mis en place un projet d'energie " + complement;
-                recompense = " a determiner";
+                recompense = " 3 cubes de ressources technologiques";
                 break;
             case CONSTRUIRE:
                 action = " construit une centrale d'energie " + complement;
@@ -95,7 +95,7 @@ public class LobbyCard<T> {
 
     @Override
     public String toString() {
-        return "Vous devez avoir"+ action +" pour obtenir la récompense majeur"+ recompense +
-                "\nOu choisissez la recompense mineur " + lobbyMineurType.description;
+        return "Vous devez avoir"+ action +" pour obtenir la récompense de lobby majeur: "+ recompense +
+                "\nOu choisissez, sans condition, la recompense de lobby mineur: " + lobbyMineurType.description;
     }
 }
