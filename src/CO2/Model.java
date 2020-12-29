@@ -466,7 +466,6 @@ public class Model {
 		curPlayer = getCurrentPLayer();
 		if(curPlayer.getCEP() >= 1){
 			int nbCep = curPlayer.rewardSetupProject(greenEnergyTypes);
-			achatCEP(nbCep);
 			curPlayer.addCEP(nbCep);
 			curPlayer.removeCEP();
 			subvention.getProject().setMisEnPlace(true);
