@@ -661,8 +661,7 @@ public class Model {
 	 * 		   - l'index ou la centrale a été posé si cela est possible
 	 */
 	public int putCentral(Subvention projetMisEnPlaceChoisi) {
-		//TODO : Suis qui enleve le projet ne pas oublier de le faire aussi dans le modele
-		// Si le joueur n'as pas assez d'expertise, d'argent ou de ressources technologiques
+		// TODO : Suis qui enleve le projet ne pas oublier de le faire aussi dans le modele
 		if (!getCurrentPLayer().canConstruct(projetMisEnPlaceChoisi.getProject())) return -3;
 		// Si pas des scientifique sur projetMisEnplaceChoisi
 		if(projetMisEnPlaceChoisi.isStaffed()) return -2;
@@ -675,8 +674,6 @@ public class Model {
 				centrales.get(i).setOccupe(true);
 				// Affecation type
 				centrales.get(i).setType(projetMisEnPlaceChoisi.getProject().getCentralType());
-				// le joueur paye la centrale
-
 				// Si le joueur a un continent controlé on réduit le cout de 1 en prenant le cube du continent
 				int[] cout = {
 						projetMisEnPlaceChoisi.getProject().getCentralType().getCout()[0],
@@ -689,6 +686,7 @@ public class Model {
 						cout[1]--;
 					}
 				}
+				// le joueur paye la centrale
 				getCurrentPLayer().payCentral(cout);
 				// comme seul joueur, il prend le controlle du continent quand il met en place
 				giveControl(projetMisEnPlaceChoisi.getContinent());
