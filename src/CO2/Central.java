@@ -25,6 +25,7 @@ public class Central {
      * @return
      */
     public boolean energyEquals(greenEnergyTypes energyType) {
+        if(type == null || energyType == null) return false;
         if (energyType.equals(greenEnergyTypes.SOLAR) && type.equals(centralTypes.SOLAIRE)) return true;
         if (energyType.equals(greenEnergyTypes.BIOMASS) && type.equals(centralTypes.BIOMASSE)) return true;
         if (energyType.equals(greenEnergyTypes.FUSION) && type.equals(centralTypes.FUSIONFROIDE)) return true;
