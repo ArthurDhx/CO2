@@ -679,13 +679,15 @@ public class Model {
 
 				// Si le joueur a un continent controlé on réduit le cout de 1 en prenant le cube du continent
 				int[] cout = {
-					projetMisEnPlaceChoisi.getProject().getCentralType().getCout()[0],
-							projetMisEnPlaceChoisi.getProject().getCentralType().getCout()[1]
+						projetMisEnPlaceChoisi.getProject().getCentralType().getCout()[0],
+						projetMisEnPlaceChoisi.getProject().getCentralType().getCout()[1]
 				};
 				int index = curPlayer.getContinentsControlles().indexOf(projetMisEnPlaceChoisi.getContinent());
 				if (index >= 0 ) {
-					curPlayer.getContinentsControlles().get(index).removeRessTech();
-					cout[1]--;
+					if(	curPlayer.getContinentsControlles().get(index).getNbRessTech() > 0){
+						curPlayer.getContinentsControlles().get(index).removeRessTech();
+						cout[1]--;
+					}
 				}
 				getCurrentPLayer().payCentral(cout);
 				// comme seul joueur, il prend le controlle du continent quand il met en place
