@@ -88,6 +88,15 @@ public class ControllerActionGratuite implements EventHandler<ActionEvent> {
                     model.getCurrentPLayer().getCurrentScientifique().setSubvention(null);
                     model.getCurrentPLayer().setDeplacerScientifiqueDone(true);
                     sommetChoisi.setStaffedOnEnergy(model.getCurrentPLayer().getCurrentScientifique().getSubject());
+                    switch (model.getCurrentPLayer().getCurentScientifiqueId()){
+                        case 0:
+                            model.getCurrentPLayer().setCurrentScientifique(1);
+                            break;
+                        case 1,2,3:
+                            model.getCurrentPLayer().setCurrentScientifique(0);
+                            break;
+                    }
+                    model.getCurrentPLayer().setCurrentScientifique(0);
                 }
                 viewGame.hboxAction.resetHbox();
             });
