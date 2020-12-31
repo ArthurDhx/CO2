@@ -863,7 +863,7 @@ public class ViewGame {
 	public void isEndGame() throws IOException {
 		// si le nombre de décénnie max est atteinte => renvoie true par model.EndGame
 		if(model.endGame()){
-			if(model.getCo2() >= 500){ //Fin malheureuse
+			if(model.getCo2() >= 500 && !model.checkCentralVerte()){ //Fin malheureuse
 				displayFinMalheureuse();
 				AskReplay();
 				return;
