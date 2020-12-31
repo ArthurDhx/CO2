@@ -1,10 +1,16 @@
 package CO2;
 
+import javafx.scene.image.Image;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Random;
+
+import static org.mockito.Matchers.anyInt;
 
 public class PlayerUnitTest {
 
@@ -121,6 +127,24 @@ public class PlayerUnitTest {
     }
 
     @Test
+    public void testConstructionCentralSolaireImpossible() {
+        Project project = new Project(greenEnergyTypes.SOLAR);
+        Assert.assertFalse(p.canConstruct(project));
+    }
+
+    @Test
+    public void testConstructionCentralSolairePossible() {
+        Project project = new Project(greenEnergyTypes.SOLAR);
+
+        // necessite : 8€, 2 cubes de ressources technologiques et 2 d'expertise solaire
+        p.setArgent(8);
+        p.setResourcesTech(2);
+        p.addExpertise(greenEnergyTypes.SOLAR, 2);
+
+        Assert.assertTrue(p.canConstruct(project));
+    }
+
+    @Test
     public void testIncrementRessourcesTech() {
         Assert.assertEquals(0, p.getResourcesTech());
         p.addResourcesTech(5);
@@ -176,5 +200,26 @@ public class PlayerUnitTest {
         Assert.assertEquals(p.getObjectifCompagnie(), null);
         p.setObjectifCompagnie(objectif);
         Assert.assertEquals(p.getObjectifCompagnie(), objectif);
+    }
+
+    @Test
+    public void testGiveLobbyCard() {
+        // liste de lobby cards parmis lesquels choisir
+        ArrayList<LobbyCard> lobbyCardsList = new ArrayList<>();
+        for (greenEnergyTypes type : greenEnergyTypes.values()) {
+            lobbyCardsList.add(new LobbyCard<>(lobbyActionTypes.METTRE, type, lobbyMineurTypes.SCIENTIFIQUE));
+            lobbyCardsList.add(new LobbyCard<>(lobbyActionTypes.CONSTRUIRE, type, lobbyMineurTypes.ARGENT));
+            lobbyCardsList.add(new LobbyCard<>(lobbyActionTypes.SOMMET, type, lobbyMineurTypes.ARGENT));
+        }
+        ArrayList<LobbyCard> verifList;
+        verifList = new ArrayList<>(lobbyCardsList.subList(0,5));
+
+        // choisir les 5 premières cartes lobby de la liste
+        // id 0 car les cartes sont retires lorsqu'elles sont tirees
+        Random random = Mockito.mock(Random.class);
+        Mockito.when(random.nextInt(anyInt())).thenReturn(0,0,0,0,0);
+        p.giveLobbyCards(lobbyCardsList, 5, random);
+
+        Assert.assertEquals(verifList, p.getLobbyCards());
     }
 }

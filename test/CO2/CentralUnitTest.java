@@ -10,7 +10,6 @@ import java.io.IOException;
 
 public class CentralUnitTest {
 
-
     private Central centralePetrole;
     private Central centralCharbon;
     private Central centralGaz;

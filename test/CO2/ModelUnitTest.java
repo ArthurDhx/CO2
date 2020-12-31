@@ -100,35 +100,22 @@ public class ModelUnitTest {
     }
 
     @Test
-    public void testInitContinentAgendaTile() {
-        // test si les continents ont bien l'unique agendaTiles ["Reforesting", "Solar", "Fusion"]
-        List<greenEnergyTypes> listEnergies = new ArrayList<>();
-        listEnergies.add(greenEnergyTypes.REFORESTATION);
-        listEnergies.add(greenEnergyTypes.SOLAR);
-        listEnergies.add(greenEnergyTypes.FUSION);
-        Assert.assertEquals(listEnergies, model.getContinents()[0].getAgendaTile().getEnergies());
-    }
-
-    @Test
-    public void testPlacementPossibleTuileSolaireSurContinent() {
-        // tout les continents on l'agendaTiles ["Reforesting", "Solar", "Fusion"] dans ce sprint
-        Assert.assertTrue(model.getContinents()[0].getAgendaTile().isPossiblePlacement(greenEnergyTypes.SOLAR));
-    }
-
-    @Test
-    public void testPlacementImpossibleTuileRecyclageSurContinent() {
-        // tout les continents on l'agendaTiles ["Reforesting", "Solar", "Fusion"] dans ce sprint
-        Assert.assertFalse(model.getContinents()[0].getAgendaTile().isPossiblePlacement(greenEnergyTypes.RECYCLING));
-    }
-
-    @Test
-    public void testMettreEnPlaceProjet(){
+    public void testMettreEnPlaceProjetSolaire(){
+        // mettre en place un projet coute 1 CEP
+        // bonus mettre en place un projet solaire = 3 cubes de ressources
         Player p = model.getCurrentPLayer();
         Continent c = model.getContinents()[0];
+
+        // ressources init du joueur
         Assert.assertEquals(2,p.getCEP());
         Assert.assertEquals(0,p.getResourcesTech());
+
+        // proposer un projet pour pouvoir le mettre en place
         model.addProjectTileToSubvention(c,c.getSubventions().get(0),greenEnergyTypes.SOLAR); //propose un projet
-        model.mettreEnPlaceProjetByPlayer(greenEnergyTypes.SOLAR,c.getSubventions().get(0)); //met en place le projet
+        // mettre en place
+        Assert.assertTrue(model.mettreEnPlaceProjetByPlayer(greenEnergyTypes.SOLAR,c.getSubventions().get(0))); //met en place le projet
+
+        // ressources du joueur après avoir payer et recu la recompense
         Assert.assertEquals(1,p.getCEP());
         Assert.assertEquals(3,p.getResourcesTech());
     }
@@ -156,12 +143,20 @@ public class ModelUnitTest {
     }
 
     @Test
-    public void testControlleContinent() {
+    public void testControleContinent() {
         Player p = model.getCurrentPLayer();
         Continent continent = model.getContinents()[2];
+
+        // pas de controle
         Assert.assertFalse(p.hasControl(continent));
+        Assert.assertEquals(null, continent.getControlPlayer());
+
+        // donne le controle
         model.giveControl(continent);
+
+        // verif controle
         Assert.assertTrue(p.hasControl(continent));
+        Assert.assertEquals(p, continent.getControlPlayer());
     }
 
     //Ne fonctionne pas, je ne comprends pas pourquoi
@@ -183,22 +178,9 @@ public class ModelUnitTest {
 
     @Test
     public void testDonne5CartesLobbyAuJoueur() {
+        // verification model.init() donne 5 cartes au joueur
         Player p = model.getCurrentPLayer();
         Assert.assertEquals(5, p.getLobbyCards().size());
-    }
-
-    @Test
-    public void testCarteLobbyVerfifProposer() {
-        // carte lobby
-        Continent continent = model.getContinents()[0];
-        LobbyCard<Continent> card = new LobbyCard(lobbyActionTypes.PROPOSER, continent, lobbyMineurTypes.ARGENT);
-
-        Assert.assertFalse(model.playLobbyCard(card, true));
-
-        // conditions
-        continent.getSubventions().get(0).setProject(new Project(greenEnergyTypes.SOLAR));
-
-        Assert.assertTrue(model.playLobbyCard(card, true));
     }
 
     /**
