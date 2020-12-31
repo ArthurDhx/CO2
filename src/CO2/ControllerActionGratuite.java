@@ -194,6 +194,7 @@ public class ControllerActionGratuite implements EventHandler<ActionEvent> {
                 // ajout graphique scientifique si cette carte est joueur
                 if (resultat && lobbyCard.getLobbyActionType().equals(lobbyActionTypes.PROPOSER) && lobbyCard.getComplement().equals(subventionTypes.RECHERCHE)) {
                     viewGame.addScientifiqueToPane(model.getCurrentPLayer().getLastAddScientifiqueId());
+                    viewGame.deplacerScientifiqueReserve(model.getCurrentPLayer().getLastAddScientifique().getImgScientifique(),model.getCurrentPLayer().getScientifiques().size()-1);
                 }
                 if (!resultat) viewGame.displayAlertWithoutHeaderText("Action Impossible", "Veuillez finir vos tâches avant d'essayer de jouer la carte");
             });
