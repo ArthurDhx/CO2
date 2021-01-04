@@ -327,6 +327,14 @@ public class ModelUnitTest {
     public void testGiveRewardsSommetToPlayer(){
         model.giveRewardsSommetToPlayer(greenEnergyTypes.FUSION, model.getCurrentPLayer());
         System.out.println("le joueur a " + model.getCurrentPLayer().getExpertise(greenEnergyTypes.FUSION) + " d'expertise en fusion.");
+        model.giveRewardsSommetToPlayer(greenEnergyTypes.RECYCLING, model.getCurrentPLayer());
+        System.out.println("le joueur a " + model.getCurrentPLayer().getExpertise(greenEnergyTypes.RECYCLING) + " d'expertise en recycling.");
+        model.giveRewardsSommetToPlayer(greenEnergyTypes.BIOMASS, model.getCurrentPLayer());
+        System.out.println("le joueur a " + model.getCurrentPLayer().getExpertise(greenEnergyTypes.BIOMASS) + " d'expertise en biomass.");
+        model.giveRewardsSommetToPlayer(greenEnergyTypes.SOLAR, model.getCurrentPLayer());
+        System.out.println("le joueur a " + model.getCurrentPLayer().getExpertise(greenEnergyTypes.SOLAR) + " d'expertise en solaire.");
+        model.giveRewardsSommetToPlayer(greenEnergyTypes.REFORESTATION, model.getCurrentPLayer());
+        System.out.println("le joueur a " + model.getCurrentPLayer().getExpertise(greenEnergyTypes.REFORESTATION) + " d'expertise en reforestation.");
     }
     
     //@Test
