@@ -1,6 +1,7 @@
 package CO2;
 
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
 import org.mockito.Mockito;
@@ -302,6 +303,30 @@ public class ModelUnitTest {
             model.pullEvent(random);
             Assert.assertEquals(i, model.currentEvent);
         }
+    }
+
+    @Test
+    public void testGiveRewardsSommet(){
+        Continent europe = new Continent("Europe", 4, new Image(getClass().getResourceAsStream("images/Continents/Europe.jpg")), 0);
+        ArrayList<Subject> subject = new ArrayList<>();
+        subject.add(new Subject(greenEnergyTypes.FUSION));
+        subject.add(new Subject(greenEnergyTypes.RECYCLING));
+        SommetTile sommet = new SommetTile("Stockholm", europe, 4,subject, new ImageView(new Image(getClass().getResourceAsStream("images/Sommets/Stockholm.png"))));
+        sommet.setContinent(europe);
+        sommet.setSubjects(subject);
+        europe.setSommetTile(sommet);
+        Scientifique scientifique = new Scientifique();
+        for(Subject s : subject){
+            s.setScientifique(scientifique);
+            scientifique.setSommetTile(sommet);
+        }
+        Assert.assertEquals(sommet.getScientifiques(), model.giveRewardsSommet(sommet));
+    }
+
+    @Test
+    public void testGiveRewardsSommetToPlayer(){
+        model.giveRewardsSommetToPlayer(greenEnergyTypes.FUSION, model.getCurrentPLayer());
+        System.out.println("le joueur a " + model.getCurrentPLayer().getExpertise(greenEnergyTypes.FUSION) + " d'expertise en fusion.");
     }
     
     //@Test
