@@ -66,79 +66,39 @@ public class SommetUnitTest {
         Assert.assertEquals(2, sommetTile.getIndexSubject(sub3));
     }
 
-/*
-    @Before
-    public void setup() {
-        ArrayList<GreenEnergyTypes> lst = new ArrayList<>();
-        lst.add(GreenEnergyTypes.FUSION);
-        lst.add(GreenEnergyTypes.RECYCLING);
-        lst.add(GreenEnergyTypes.BIOMASS);
-        Image img = new Image(getClass().getResourceAsStream("images/Sommets/Paris.png"));
-        sommetTile = new SommetTile("Paris", lst.size(),lst,img);
-    }
-
     @Test
-    public void testGetSubjectIndex(){
-        Assert.assertEquals(GreenEnergyTypes.FUSION, sommetTile.getSubjectIndex(0));
-        Assert.assertEquals(GreenEnergyTypes.RECYCLING, sommetTile.getSubjectIndex(1));
-        Assert.assertEquals(GreenEnergyTypes.BIOMASS, sommetTile.getSubjectIndex(2));
-    }
-
-    @Test
-    public void testGetSubjectInSommet(){
-        Assert.assertTrue(sommetTile.getSubjectInSommet(GreenEnergyTypes.FUSION));
-        Assert.assertTrue(sommetTile.getSubjectInSommet(GreenEnergyTypes.RECYCLING));
-        Assert.assertTrue(sommetTile.getSubjectInSommet(GreenEnergyTypes.BIOMASS));
-        Assert.assertFalse(sommetTile.getSubjectInSommet(GreenEnergyTypes.SOLAR));
-    }
-
-    @Test
-    public void testSetAllStaffedAs1(){
-        sommetTile.setAllStaffedAs(true);
-        Assert.assertTrue(sommetTile.getStaffed().get(0));
-        Assert.assertTrue(sommetTile.getStaffed().get(1));
-        Assert.assertTrue(sommetTile.getStaffed().get(2));
-    }
-
-    @Test
-    public void testSetAllStaffedAs2(){
-        sommetTile.setAllStaffedAs(false);
-        Assert.assertFalse(sommetTile.getStaffed().get(0));
-        Assert.assertFalse(sommetTile.getStaffed().get(1));
-        Assert.assertFalse(sommetTile.getStaffed().get(2));
-    }
-
-    @Test
-    public void testSetStaffedAsOn(){
-        sommetTile.setStaffedAsOn(0, true);
-        sommetTile.setStaffedAsOn(1, false);
-        sommetTile.setStaffedAsOn(2, false);
-        Assert.assertTrue(sommetTile.getStaffed().get(0));
-        Assert.assertFalse(sommetTile.getStaffed().get(1));
-        Assert.assertFalse(sommetTile.getStaffed().get(2));
-    }
-
-    @Test
-    public void testIsAllStaffed1(){
-        sommetTile.setAllStaffedAs(true);
-        Assert.assertTrue(sommetTile.isAllStaffed());
-    }
-
-    @Test
-    public void testIsAllStaffed2(){
-        sommetTile.setStaffedAsOn(0, true);
-        sommetTile.setStaffedAsOn(1, false);
-        sommetTile.setStaffedAsOn(2, true);
-        Assert.assertFalse(sommetTile.isAllStaffed());
-    }
-
-    /*@Test
-    public void testSetStaffedScientifiquesAt(){
+    public void testGetScientifiques(){
+        ArrayList<Scientifique> scientifiques = new ArrayList<>();
+        ArrayList<Subject> subjects = new ArrayList<>();
+        Subject subject = new Subject(greenEnergyTypes.FUSION);
+        Subject subject1 = new Subject(greenEnergyTypes.BIOMASS);
+        subjects.add(subject); subjects.add(subject1);
+        sommetTile.setSubjects(subjects);
         Scientifique scientifique = new Scientifique();
+        subject.setScientifique(scientifique);
+        for(Subject s : subjects){
+            scientifiques.add(s.getScientifique());
+        }
+        Assert.assertEquals(scientifiques, sommetTile.getScientifiques());
+    }
 
+    @Test
+    public void testSetStaffedOnEnergy(){
+        Subject subject = new Subject(greenEnergyTypes.FUSION);
+        sommetTile.setStaffedOnEnergy(subject);
+    }
 
-        sommetTile.setStaffedScientifiquesAt(scientifique, 0);
-        Assert.assertEquals(scientifique, sommetTile.getScientifiques().get(0));
-    }*/
+    @Test
+    public void testIsStaffed(){
+        Subject subject = new Subject(greenEnergyTypes.FUSION);
+        sommetTile.setStaffedOnEnergy(subject);
+        Assert.assertTrue(sommetTile.isStaffed(subject));
+    }
+
+    @Test
+    public void testIsStaffed2(){
+        Subject subject = new Subject(greenEnergyTypes.FUSION);
+        Assert.assertFalse(sommetTile.isStaffed(subject));
+    }
 
 }
