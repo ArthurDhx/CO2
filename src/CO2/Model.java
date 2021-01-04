@@ -635,7 +635,7 @@ public class Model {
 	 * @param energy Energy verte ou était le scientifique
 	 * @param p Le joueur a donnné les bonus
 	 */
-	private void giveRewardsSommetToPlayer(greenEnergyTypes energy, Player p) {
+	public void giveRewardsSommetToPlayer(greenEnergyTypes energy, Player p) {
 		switch (energy){
 			case SOLAR:
 				p.addExpertise(SOLAR, 1);
@@ -767,7 +767,7 @@ public class Model {
 			getCurrentPLayer().setPointVictoire(getCurrentPLayer().getPointVictoire() + card.getNbPointDeVictoire()); // augmente points de victoires avec la carte
 			getCurrentPLayer().setResourcesTech(getCurrentPLayer().getResourcesTech()-1); // diminue ressources technologieques du joueur
 			getCurrentPLayer().addCarteObjectifONURemporte(1);
-			System.out.println("carte ONU n°"  + card.getId()+ " jouer !");
+			System.out.println("carte ONU jouer !");
 			onuCardsInGame.remove(card); // supprime la carte du jeu
 		}else{
 			throw new Exception("Pas de carte marquée ou/et pas assez de cubes de ressource technologique!");
