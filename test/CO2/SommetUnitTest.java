@@ -33,16 +33,35 @@ public class SommetUnitTest {
     }
 
     @Test
-    public void testHaveEnergy() {
+    public void testHaveEnergyAndUnoccupied() {
         Assert.assertTrue(sommetTile.haveEnergyAndUnoccupied(greenEnergyTypes.FUSION));
         Assert.assertTrue(sommetTile.haveEnergyAndUnoccupied(greenEnergyTypes.RECYCLING));
         Assert.assertTrue(sommetTile.haveEnergyAndUnoccupied(greenEnergyTypes.BIOMASS));
     }
 
     @Test
-    public void testHaveEnergy2() {
+    public void testHaveEnergyAndUnoccupied2() {
         Assert.assertFalse(sommetTile.haveEnergyAndUnoccupied(greenEnergyTypes.SOLAR));
     }
+
+    @Test
+    public void testHaveEnergyAndUnoccupied3() {
+        lst.get(0).setScientifique(new Scientifique());
+        Assert.assertFalse(sommetTile.haveEnergyAndUnoccupied(greenEnergyTypes.FUSION));
+    }
+
+    @Test
+    public void testHasEnergy() {
+        Assert.assertTrue(sommetTile.hasEnergy(greenEnergyTypes.FUSION));
+        Assert.assertTrue(sommetTile.hasEnergy(greenEnergyTypes.RECYCLING));
+        Assert.assertTrue(sommetTile.hasEnergy(greenEnergyTypes.BIOMASS));
+    }
+
+    @Test
+    public void testHasEnergy2() {
+        Assert.assertFalse(sommetTile.hasEnergy(greenEnergyTypes.SOLAR));
+    }
+
 
     @Test
     public void testIsFull() {
@@ -69,14 +88,9 @@ public class SommetUnitTest {
     @Test
     public void testGetScientifiques(){
         ArrayList<Scientifique> scientifiques = new ArrayList<>();
-        ArrayList<Subject> subjects = new ArrayList<>();
-        Subject subject = new Subject(greenEnergyTypes.FUSION);
-        Subject subject1 = new Subject(greenEnergyTypes.BIOMASS);
-        subjects.add(subject); subjects.add(subject1);
-        sommetTile.setSubjects(subjects);
         Scientifique scientifique = new Scientifique();
-        subject.setScientifique(scientifique);
-        for(Subject s : subjects){
+        lst.get(0).setScientifique(scientifique);
+        for(Subject s : lst){
             scientifiques.add(s.getScientifique());
         }
         Assert.assertEquals(scientifiques, sommetTile.getScientifiques());
@@ -84,21 +98,18 @@ public class SommetUnitTest {
 
     @Test
     public void testSetStaffedOnEnergy(){
-        Subject subject = new Subject(greenEnergyTypes.FUSION);
-        sommetTile.setStaffedOnEnergy(subject);
+        sommetTile.setStaffedOnEnergy(lst.get(0));
     }
 
     @Test
     public void testIsStaffed(){
-        Subject subject = new Subject(greenEnergyTypes.FUSION);
-        sommetTile.setStaffedOnEnergy(subject);
-        Assert.assertTrue(sommetTile.isStaffed(subject));
+        sommetTile.setStaffedOnEnergy(lst.get(0));
+        Assert.assertTrue(sommetTile.isStaffed(lst.get(0)));
     }
 
     @Test
     public void testIsStaffed2(){
-        Subject subject = new Subject(greenEnergyTypes.FUSION);
-        Assert.assertFalse(sommetTile.isStaffed(subject));
+        Assert.assertFalse(sommetTile.isStaffed(lst.get(0)));
     }
 
 }
